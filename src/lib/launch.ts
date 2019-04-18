@@ -1,0 +1,5 @@
+import './sdkMock'
+
+export default () => {
+
+}

@@ -1,0 +1,77 @@
+.account-card {
+  border-radius: 4px;
+  background-color: #ffffff;
+  overflow: hidden;
+  .account-top  {
+    padding: 15px 20px;
+    background-color: #fafbfc;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .account-top-address {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      strong {
+        font-size: 15px;
+        font-weight: normal;
+        letter-spacing: 0;
+        color: #191b31;
+      }
+      span {
+        width: 205px;
+        overflow: hidden;
+        font-family: PingFangSC;
+        font-size: 11px;
+        color: #777a8c;
+      }
+    }
+    .account-top-amount {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: right;
+      strong {
+          font-size: 21px;
+          font-weight: bold;
+          font-style: normal;
+          color: #191b31;
+        }
+      span  {
+        font-size: 13px;
+        font-weight: 300;
+        letter-spacing: 0.1px;
+        color: #191b31;
+      }
+    }
+  }
+  .account-bottom {
+    padding: 15px 20px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+    .split-line {
+      height: 0px;
+      margin: 12px 0;
+      border-bottom: solid 0.5px #f0f2f8;
+    }
+    > div  {
+      display: flex;
+      justify-content: space-between;
+      > div {
+
+      }
+    }
+    span {
+      display: block;
+      margin-bottom: 2px;
+      font-family: PingFangSC;
+      font-size: 11px;
+      color: #777a8c;
+    }
+    i {
+        font-size: 17px;
+        font-style: normal;
+        line-height: 1;
+        color: #191c1e;
+    }
+  }
+}

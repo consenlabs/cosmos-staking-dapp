@@ -1,0 +1,28 @@
+.home {
+  padding: 10px 10px 160px 10px;
+  > .banner {
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    padding: 10px 10px 20px 10px;
+    background-color: rgba(25, 27, 49, 0.8);
+    > div {
+      cursor: pointer;
+      box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+      img {
+        border-radius: 4px;
+        width: 100%;
+      }
+    }
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

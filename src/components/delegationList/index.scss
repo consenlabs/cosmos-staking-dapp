@@ -1,0 +1,33 @@
+.delegations {
+  margin-top: 10px;
+  .dl-card {
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    strong {
+
+    }
+    div {
+      display: flex;
+      flex-direction: column;
+      > span {
+          font-family: PingFangSC;
+          font-size: 11px;
+          color: #98a2a9;
+      }
+      > i  {
+        font-size: 15px;
+        font-weight: 500;
+        font-style: normal;
+        line-height: 1.73;
+        color: #098de6;
+      }
+    }
+  }
+}

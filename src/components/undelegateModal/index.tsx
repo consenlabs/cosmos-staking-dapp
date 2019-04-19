@@ -3,17 +3,17 @@ import { connect } from "react-redux"
 import { selectAccountInfo } from '../../lib/redux/selectors'
 import './index.scss'
 import Modal from 'react-modal'
-import { atom, uatom, thousandCommas, isExist, createTxPayload, createDelegateMsg } from 'lib/utils'
+import { atom, uatom, thousandCommas, isExist, createTxPayload, createUnDelegateMsg } from 'lib/utils'
 import { sendTransaction } from 'lib/sdk'
 import { validAmount } from 'lib/validator'
-import bannerConfig from '../../config/banner'
 import tokenConfig from '../../config/token'
-import feeConfig from '../../config/fee'
+// import feeConfig from '../../config/fee'
 // import * as sdk from '../../lib/sdk'
 
 interface Props {
   visible: boolean
   account: any
+  selectedDelegation: any
   onRequestClose: Function
   onDelegateSuccess: Function
 }
@@ -43,10 +43,11 @@ class CMP extends Component<Props> {
   afterOpenModal() { }
 
   onSubmit = () => {
-    const { account } = this.props
-    const { balance, address } = account
+    const { account, selectedDelegation } = this.props
+    const delegateBalance = selectedDelegation.shares
+    const { address } = account
     const { amount } = this.state
-    const [valid, msg] = validAmount(amount, atom(balance), feeConfig.retainFee)
+    const [valid, msg] = validAmount(amount, atom(delegateBalance))
     if (!valid) {
       return alert(msg)
     }
@@ -54,8 +55,13 @@ class CMP extends Component<Props> {
     // send delegate apiCall
     const txPayload = createTxPayload(
       address,
-      [createDelegateMsg(address, bannerConfig.operator_address, uatom(amount), tokenConfig.denom)],
-      'delegate from imToken',
+      [createUnDelegateMsg(
+        address,
+        selectedDelegation.validator_address,
+        uatom(amount),
+        tokenConfig.denom)
+      ],
+      'undelegate from imToken',
     )
 
     sendTransaction(txPayload).then(txHash => {
@@ -73,10 +79,13 @@ class CMP extends Component<Props> {
   }
 
   render() {
-    const { visible, onRequestClose, account } = this.props
-    const { balance } = account
+    const { visible, onRequestClose, selectedDelegation } = this.props
+
+    if (!selectedDelegation) return null
+
+    const delegateBalance = selectedDelegation.shares
     const { amount } = this.state
-    const atomBalance = isExist(balance) ? thousandCommas(atom(balance)) : 0
+    const atomBalance = isExist(delegateBalance) ? thousandCommas(atom(delegateBalance)) : 0
     const disabled = !amount
     return (
       <Modal
@@ -89,7 +98,7 @@ class CMP extends Component<Props> {
       >
         <div className="modal-inner">
           <div className="form-header">
-            <span>可用余额</span>
+            <span>已抵押</span>
             <i>{atomBalance} ATOM</i>
           </div>
           <input
@@ -100,7 +109,7 @@ class CMP extends Component<Props> {
             max={atomBalance}
             min={0.000001}
           />
-          <button disabled={disabled} className="form-button" onClick={this.onSubmit}>委托</button>
+          <button disabled={disabled} className="form-button" onClick={this.onSubmit}>取消委托</button>
         </div>
       </Modal>
     )

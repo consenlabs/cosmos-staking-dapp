@@ -7,6 +7,7 @@ import { atom, thousandCommas } from 'lib/utils'
 interface Props {
   delegations: any[]
   validators: any[]
+  onItemPress: Function
 }
 
 
@@ -14,10 +15,13 @@ class CMP extends Component<Props> {
 
   componentDidMount() { }
 
+  onPress = (delegation) => {
+    this.props.onItemPress(delegation)
+  }
+
   renderItem(d, v, index) {
-    console.log(v)
     if (!v) return null
-    return <div className="dl-card" key={index}>
+    return <div className="dl-card" key={index} onClick={() => this.onPress(d)}>
       <strong>{v.description.moniker}</strong>
       <div>
         <span>已委托</span>

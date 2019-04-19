@@ -4,6 +4,7 @@ import { selectValidators } from '../../lib/redux/selectors'
 import './index.scss'
 import { updateValidators, updateAccount, updateDelegations } from 'lib/redux/actions'
 import DelegateModal from '../../components/delegateModal'
+import UnDelegateModal from '../../components/undelegateModal'
 import AccountCard from '../../components/accountCard'
 import DelegationList from '../../components/delegationList'
 import * as api from 'lib/api'
@@ -17,15 +18,18 @@ interface Props {
   updateAccount: (value: any) => any
 }
 
-class Page extends Component<Props> {
+class Page extends Component<Props, any> {
 
   constructor(props) {
     super(props)
+    this.state = {
+      delegateModalVisible: false,
+      undelegateModalVisible: false,
+      selectedDelegation: null
+    }
   }
 
-  state = {
-    delegateModalVisible: false,
-  }
+
 
   componentWillMount() {
     this.updateAsyncData()
@@ -78,21 +82,35 @@ class Page extends Component<Props> {
     })
   }
 
+  handleUnDelegate = (delegation) => {
+    this.setState({
+      undelegateModalVisible: true,
+      selectedDelegation: delegation,
+    })
+  }
+
   handleModalClose = () => {
     this.setState({
       delegateModalVisible: false,
+      undelegateModalVisible: false,
     })
   }
 
   render() {
-    const { delegateModalVisible } = this.state
+    const { delegateModalVisible, undelegateModalVisible, selectedDelegation } = this.state
     return (
       <div className="home" id="home">
         <AccountCard />
-        <DelegationList />
+        <DelegationList onItemPress={this.handleUnDelegate} />
         {this.renderDelegateBanner()}
         <DelegateModal
           visible={delegateModalVisible}
+          onRequestClose={this.handleModalClose}
+          onDelegateSuccess={this.updateAsyncData}
+        />
+        <UnDelegateModal
+          visible={undelegateModalVisible}
+          selectedDelegation={selectedDelegation}
           onRequestClose={this.handleModalClose}
           onDelegateSuccess={this.updateAsyncData}
         />

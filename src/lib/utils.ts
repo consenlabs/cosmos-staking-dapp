@@ -137,7 +137,11 @@ export const getRewardBalance = (rewards) => {
 export const getUnbondingBalance = (unbondingDelegations) => {
   let balance = 0
   unbondingDelegations.forEach(d => {
-    balance += (+d.balance - +d.initial_balance)
+    if (Array.isArray(d.entries)) {
+      d.entries.forEach(o => {
+        balance += o.balance * 1
+      })
+    }
   })
   return balance.toFixed(0)
 }

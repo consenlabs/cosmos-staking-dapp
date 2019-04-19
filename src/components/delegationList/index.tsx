@@ -2,12 +2,9 @@ import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { selectDelegations, selectValidators } from '../../lib/redux/selectors'
 import './index.scss'
-import { updateDelegations } from 'lib/redux/actions'
-import mockDelegations from '../../mocks/delegations'
-// import * as sdk from '../../lib/sdk'
+import { atom, thousandCommas } from 'lib/utils'
 
 interface Props {
-  updateDelegations: Function
   delegations: any[]
   validators: any[]
 }
@@ -15,16 +12,14 @@ interface Props {
 
 class CMP extends Component<Props> {
 
-  componentDidMount() {
-    this.props.updateDelegations(mockDelegations)
-  }
+  componentDidMount() { }
 
   renderItem(d, v, index) {
     return <div className="dl-card" key={index}>
       <strong>{v.description.moniker}</strong>
       <div>
         <span>已委托</span>
-        <i>{Number(d.shares / 1e6).toFixed(2)}</i>
+        <i>{thousandCommas(atom(d.shares))}</i>
       </div>
     </div>
   }
@@ -34,7 +29,7 @@ class CMP extends Component<Props> {
 
     return (
       <div className="delegations">
-        {delegations.map((d, index) => {
+        {!!delegations && delegations.map((d, index) => {
           const v = validators.find(el => el.operator_address === d.validator_address) || {}
           return this.renderItem(d, v, index)
         })}
@@ -50,8 +45,5 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = {
-  updateDelegations,
-}
-
+const mapDispatchToProps = {}
 export default connect(mapStateToProps, mapDispatchToProps)(CMP)

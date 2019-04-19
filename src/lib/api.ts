@@ -17,7 +17,7 @@ export async function initRequestDependency() {
 
 function get(url, params = {}) {
   return initRequestDependency().then(({ headers, provider }) => {
-    const _url = `${provider}/url`
+    const _url = `${provider}/${url}`
     return Axios({ method: 'get', url: _url, params, headers, }).then(res => {
       if (res.data) {
         return res.data
@@ -44,6 +44,7 @@ export function getAccount(address) {
   }
   const url = `auth/accounts/${address}`
   return get(url, {}).then(res => {
+    if (!res) throw new Error('no response')
     let account = res.value || emptyAccount
     if (res.type === `auth/DelayedVestingAccount`) {
       if (!account.BaseVestingAccount) {
@@ -63,7 +64,8 @@ export function getAccount(address) {
       err.message.includes(`failed to prove merkle proof`)) {
       return emptyAccount
     }
-    throw err
+    // throw err
+    console.warn(err)
   })
 }
 

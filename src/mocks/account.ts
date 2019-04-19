@@ -12,7 +12,7 @@ export default {
   },
   "account_number": "156",
   "sequence": "235",
-  balance: '1520000',
+  balance: '1521274859',
   rewardBalance: '230000',
   delegateBalance: '490000',
   refundingBalance: '632400',

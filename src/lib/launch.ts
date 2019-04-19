@@ -1,5 +1,3 @@
-import './sdkMock'
-
 export default () => {
 
 }

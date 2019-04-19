@@ -55,9 +55,8 @@
     }
     > div  {
       display: flex;
-      justify-content: space-between;
-      > div {
-
+      > div:first-child {
+        width: 204px;
       }
     }
     span {

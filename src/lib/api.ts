@@ -18,7 +18,7 @@ export async function initRequestDependency() {
 function get(url, params = {}) {
   return initRequestDependency().then(({ headers, provider }) => {
     const _url = `${provider}/${url}`
-    return Axios({ method: 'get', url: _url, params, headers, }).then(res => {
+    return Axios({ method: 'get', url: _url, params, headers }).then(res => {
       if (res.data) {
         return res.data
       } else {
@@ -69,23 +69,19 @@ export function getAccount(address) {
   })
 }
 
-export const getBalance = (address) => {
-  return getAccount(address).then(account => account.coins)
-}
-
 export const getDelegations = (address) => {
   const url = `staking/delegators/${address}/delegations`
-  return get(url, {})
+  return get(url, {}).then(delegations => delegations || [])
 }
 
 export const getRewards = (delegatorAddr) => {
   const url = `distribution/delegators/${delegatorAddr}/rewards`
-  return get(url, {})
+  return get(url, {}).then(rewards => rewards || [])
 }
 
 export const getUnbondingDelegations = (address) => {
   const url = `staking/delegators/${address}/unbonding_delegations`
-  return get(url, {})
+  return get(url, {}).then(unbondingDelegations => unbondingDelegations || [])
 }
 
 export const genDelegationTx = (delegatorAddr) => {
@@ -114,6 +110,7 @@ function serverRequest(url, method, params) {
       data: createRpcRequestData(method, params),
       timeout: 5,
       headers: headers,
+      withCredentials: true
     }).then(res => {
       if (res.data) {
         return res.data

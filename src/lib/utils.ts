@@ -1,5 +1,9 @@
 import BN from 'big.js'
 import numeral from 'numeral'
+import feeConfig from '../config/fee'
+
+BN.DP = 20
+BN.RM = 0
 
 // interface __MsgAmount {
 //   amount: string
@@ -11,13 +15,11 @@ interface __Msg {
   value: any
 }
 
-const DEFAULT_FEE = { "amount": [{ "amount": "2610", "denom": "muon" }], "gas": "30000" }
-
 export function createTxPayload(from: string, msg: __Msg[], memo: string) {
   const payload = {
     from: from,
     chainType: 'COSMOS',
-    fee: DEFAULT_FEE,
+    fee: feeConfig.transfer,
     msg,
     memo,
   }
@@ -41,9 +43,7 @@ export function createDelegateMsg(delegatorAddress, validatorAddress, amount, de
     "value": {
       "delegator_address": delegatorAddress,
       "validator_address": validatorAddress,
-      "value": {
-        "amount": { "amount": amount, "denom": denom },
-      }
+      "amount": { "amount": amount, "denom": denom },
     }
   }
 }
@@ -54,9 +54,7 @@ export function createUnDelegateMsg(delegatorAddress, validatorAddress, amount, 
     "value": {
       "delegator_address": delegatorAddress,
       "validator_address": validatorAddress,
-      "value": {
-        "amount": { "amount": amount, "denom": denom },
-      }
+      "amount": { "amount": amount, "denom": denom },
     }
   }
 }
@@ -67,9 +65,7 @@ export function createWithdrawMsg(delegatorAddress, validatorAddress, amount, de
     "value": {
       "delegator_address": delegatorAddress,
       "validator_address": validatorAddress,
-      "value": {
-        "amount": { "amount": amount, "denom": denom },
-      }
+      "amount": { "amount": amount, "denom": denom },
     }
   }
 }
@@ -106,9 +102,42 @@ export const atom = (uatom: string | number) => {
 }
 
 export const thousandCommas = (num: string | number) => {
-  return numeral(num).format('0,0.[00]')
+  return numeral(num).format('0,0.[0000]')
 }
 
 export const isExist = (o: any) => {
   return typeof o !== 'undefined'
+}
+
+export const getBalanceFromAccount = (account) => {
+  const v = account
+  if (!v || !v.coins || !Array.isArray(v.coins)) return 0
+  const atom = v.coins.find(
+    c => c.denom === 'uatom' || c.denom === 'muon'
+  )
+  return atom.amount || 0
+}
+
+export const getDeletationBalance = (delegations) => {
+  let balance = 0
+  delegations.forEach(d => {
+    balance += d.shares * 1
+  })
+  return balance.toFixed(0)
+}
+
+export const getRewardBalance = (rewards) => {
+  let balance = 0
+  rewards.forEach(d => {
+    balance += d.amount * 1
+  })
+  return balance.toFixed(0)
+}
+
+export const getUnbondingBalance = (unbondingDelegations) => {
+  let balance = 0
+  unbondingDelegations.forEach(d => {
+    balance += (+d.balance - +d.initial_balance)
+  })
+  return balance.toFixed(0)
 }

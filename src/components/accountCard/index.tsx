@@ -8,7 +8,6 @@ interface Props {
   account: any
 }
 
-
 class CMP extends Component<Props> {
 
   componentDidMount() { }
@@ -16,7 +15,7 @@ class CMP extends Component<Props> {
   render() {
     const { account } = this.props
     const { address, balance, rewardBalance, refundingBalance, delegateBalance } = account
-    const atomPrice = 5
+    const atomPrice = 30
 
     return (
       <div className="account-card">

@@ -8,6 +8,7 @@ import AccountCard from '../../components/accountCard'
 import DelegationList from '../../components/delegationList'
 import * as api from 'lib/api'
 import * as sdk from 'lib/sdk'
+import * as utils from 'lib/utils'
 
 interface Props {
   validators: any[]
@@ -27,6 +28,12 @@ class Page extends Component<Props> {
   }
 
   componentWillMount() {
+    this.updateAsyncData()
+  }
+
+  componentDidMount() { }
+
+  updateAsyncData = () => {
     const { updateAccount, updateDelegations, updateValidators } = this.props
 
     sdk.getAccounts().then(accounts => {
@@ -34,15 +41,28 @@ class Page extends Component<Props> {
 
       updateAccount({ address })
 
-      api.getAccount(address).then(updateAccount)
+      api.getRewards(address).then(utils.getRewardBalance).then(b => {
+        updateAccount({ rewardBalance: b })
+      })
 
-      api.getDelegations(address).then(updateDelegations)
+      api.getUnbondingDelegations(address).then(utils.getUnbondingBalance).then(b => {
+        updateAccount({ refundingBalance: b })
+      })
+
+      api.getAccount(address).then(accountInfo => {
+        const balance = utils.getBalanceFromAccount(accountInfo)
+        updateAccount({ ...accountInfo, balance })
+      })
+
+      api.getDelegations(address).then(delegations => {
+        const delegateBalance = utils.getDeletationBalance(delegations)
+        updateDelegations(delegations)
+        updateAccount({ delegateBalance })
+      })
     })
 
     api.getValidators().then(updateValidators)
   }
-
-  componentDidMount() { }
 
   renderDelegateBanner() {
     return <div className="banner">
@@ -74,6 +94,7 @@ class Page extends Component<Props> {
         <DelegateModal
           visible={delegateModalVisible}
           onRequestClose={this.handleModalClose}
+          onDelegateSuccess={this.updateAsyncData}
         />
       </div>
     )

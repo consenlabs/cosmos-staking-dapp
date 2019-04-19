@@ -7,12 +7,14 @@ import { atom, uatom, thousandCommas, isExist, createTxPayload, createDelegateMs
 import { sendTransaction } from 'lib/sdk'
 import { validAmount } from 'lib/validator'
 import bannerConfig from '../../config/banner'
+import tokenConfig from '../../config/token'
 // import * as sdk from '../../lib/sdk'
 
 interface Props {
   visible: boolean
   account: any
   onRequestClose: Function
+  onDelegateSuccess: Function
 }
 
 const customStyles = {
@@ -31,7 +33,7 @@ const customStyles = {
 class CMP extends Component<Props> {
 
   state = {
-    amount: '输入金额',
+    amount: '',
   }
 
   componentDidMount() {
@@ -51,13 +53,14 @@ class CMP extends Component<Props> {
     // send delegate apiCall
     const txPayload = createTxPayload(
       address,
-      [createDelegateMsg(address, bannerConfig.operator_address, uatom(amount), 'atom')],
+      [createDelegateMsg(address, bannerConfig.operator_address, uatom(amount), tokenConfig.denom)],
       'delegate from imToken',
     )
 
     sendTransaction(txPayload).then(txHash => {
       alert('发送成功: ' + txHash)
       this.props.onRequestClose()
+      this.props.onDelegateSuccess()
     }).catch(e => {
       alert('发送失败: ' + e.message)
     })

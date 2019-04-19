@@ -15,6 +15,8 @@ class CMP extends Component<Props> {
   componentDidMount() { }
 
   renderItem(d, v, index) {
+    console.log(v)
+    if (!v) return null
     return <div className="dl-card" key={index}>
       <strong>{v.description.moniker}</strong>
       <div>
@@ -30,7 +32,7 @@ class CMP extends Component<Props> {
     return (
       <div className="delegations">
         {!!delegations && delegations.map((d, index) => {
-          const v = validators.find(el => el.operator_address === d.validator_address) || {}
+          const v = validators.find(el => el.operator_address === d.validator_address)
           return this.renderItem(d, v, index)
         })}
       </div>

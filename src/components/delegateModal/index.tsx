@@ -61,6 +61,7 @@ class CMP extends Component<Props> {
       alert('发送成功: ' + txHash)
       this.props.onRequestClose()
       this.props.onDelegateSuccess()
+      console.log(txHash)
     }).catch(e => {
       alert('发送失败: ' + e.message)
     })

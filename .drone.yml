@@ -1,0 +1,45 @@
+pipeline:
+  build:
+    image: plugins/docker
+    repo: registry.cn-hongkong.aliyuncs.com/imtoken/cosmos-staking-dapp
+    environment:
+      - PLUGIN_DAEMON_OFF=true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /root/.docker/config.json:/root/.docker/config.json
+    tags:
+      - ${DRONE_COMMIT_BRANCH}
+      - ${DRONE_COMMIT_BRANCH}-${DRONE_BUILD_NUMBER}
+    when:
+      branch: [master, dev]
+      local: false
+  deploy-gcp-dev:
+    image: registry.cn-hongkong.aliyuncs.com/imtoken/drone-kubernetes
+    deployment: cosmos-staking-dapp-dev
+    namespace: biz
+    context: gcp-dev
+    volumes:
+      - /configs/kubernetes/config:/root/.kube/config
+    when:
+      branch: [ dev ]
+  deploy-gcp-staging:
+    image: registry.cn-hongkong.aliyuncs.com/imtoken/drone-kubernetes
+    deployment: cosmos-staking-dapp-staging
+    namespace: biz
+    context: gcp-staging
+    volumes:
+      - /configs/kubernetes/config:/root/.kube/config
+    when:
+      branch: [ dev ]
+  slack:
+    image: plugins/slack
+    webhook: https://hooks.slack.com/services/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
+    when:
+      status: [ success, failure ]
+    template: >
+      {{repo.name}}:{{build.branch}} | {{build.event}} | {{build.commit}} | {{build.author}} | {{build.link}} {{build.pull}} {{build.tag}}
+      {{#success build.status}}
+        👍
+      {{else}}
+        👎
+      {{/success}}

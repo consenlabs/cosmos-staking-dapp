@@ -75,7 +75,7 @@ export function createRedelegateMsg(delegatorAddress, validatorSrcAddress, valid
     "type": "cosmos-sdk/MsgBeginRedelegate",
     "value": {
       "delegator_address": delegatorAddress,
-      "validator_src_addressess": validatorSrcAddress,
+      "validator_src_address": validatorSrcAddress,
       "validator_dst_address": validatorDstAddress,
       "value": {
         "amount": { "amount": amount, "denom": denom },

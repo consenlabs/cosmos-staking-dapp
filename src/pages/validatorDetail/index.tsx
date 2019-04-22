@@ -54,7 +54,7 @@ class Page extends Component<Props> {
           </li>
           <li>
             <span>佣金</span>
-            <i>{(+v.commission.rate).toFixed(3)} %</i>
+            <i>{(v.commission.rate * 100).toFixed(1)} %</i>
           </li>
           <li>
             <span>年化收益</span>

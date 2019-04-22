@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { Link } from 'react-router-dom'
+import ValidatorLogo from '../../components/validatorLogo'
 import './index.scss'
 import { atom, thousandCommas } from 'lib/utils'
 
@@ -19,9 +20,8 @@ class CMP extends Component<Props> {
     const percent = (tokens / 237538998).toFixed(3)
 
     return <Link className="validator" to={`/validators/${v.operator_address}`}>
-      <div className="logo">
-        <img alt="logo" src={v.description.logo || '../../../images/default-validator.png'} />
-      </div>
+
+      <ValidatorLogo url={v.description.logo} />
       <div className="v-left">
         <strong>{v.description.moniker}</strong>
         <span>{thousandCommas(tokens)} ({percent}%)</span>

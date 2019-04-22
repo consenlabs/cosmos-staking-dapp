@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom'
 import { selectValidators, selectAccountInfo, selectDelegations } from '../../lib/redux/selectors'
 import { ellipsis, } from '../../lib/utils'
 import UnDelegateForm from '../../components/undelegateForm'
+import ValidatorLogo from '../../components/validatorLogo'
 import './index.scss'
 
 interface Props {
@@ -32,9 +33,7 @@ class Page extends Component<Props> {
         <div className="validator-detail">
           <section>
             <div className="top">
-              <div className="logo">
-                <img alt="logo" src={v.description.logo || '../../../images/default-validator.png'} />
-              </div>
+              <ValidatorLogo url={v.description.logo} />
               <div className="left">
                 <strong>{v.description.moniker}</strong>
                 <span>{ellipsis(v.operator_address, 24)}</span>

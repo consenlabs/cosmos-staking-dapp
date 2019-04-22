@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.c3f8b175.chunk.css",
-    "main.js": "/static/js/main.7d401675.chunk.js",
-    "main.js.map": "/static/js/main.7d401675.chunk.js.map",
-    "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
-    "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
-    "static/js/2.7c5bd376.chunk.js": "/static/js/2.7c5bd376.chunk.js",
-    "static/js/2.7c5bd376.chunk.js.map": "/static/js/2.7c5bd376.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.ee143b6444548c9a5d25cb7ec5e0d71e.js": "/precache-manifest.ee143b6444548c9a5d25cb7ec5e0d71e.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/main.c3f8b175.chunk.css.map": "/static/css/main.c3f8b175.chunk.css.map"
+    "main.css": "/cosmos/static/css/main.02c1f35f.chunk.css",
+    "main.js": "/cosmos/static/js/main.298b0426.chunk.js",
+    "main.js.map": "/cosmos/static/js/main.298b0426.chunk.js.map",
+    "runtime~main.js": "/cosmos/static/js/runtime~main.0778009f.js",
+    "runtime~main.js.map": "/cosmos/static/js/runtime~main.0778009f.js.map",
+    "static/js/2.85e354e8.chunk.js": "/cosmos/static/js/2.85e354e8.chunk.js",
+    "static/js/2.85e354e8.chunk.js.map": "/cosmos/static/js/2.85e354e8.chunk.js.map",
+    "index.html": "/cosmos/index.html",
+    "precache-manifest.4a914a13e11f29cf4231a866fecec84c.js": "/cosmos/precache-manifest.4a914a13e11f29cf4231a866fecec84c.js",
+    "service-worker.js": "/cosmos/service-worker.js",
+    "static/css/main.02c1f35f.chunk.css.map": "/cosmos/static/css/main.02c1f35f.chunk.css.map"
   }
 }

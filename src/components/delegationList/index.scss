@@ -10,14 +10,15 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    text-decoration: none;
     strong {
-
+      color: #191c1e;
     }
     div {
       display: flex;
       flex-direction: column;
       > span {
-          font-family: PingFangSC;
+          font-family: 'PingFang SC';
           font-size: 11px;
           color: #98a2a9;
       }

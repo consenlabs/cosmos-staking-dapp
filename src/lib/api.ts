@@ -31,7 +31,7 @@ function get(url, params = {}) {
 }
 
 export function getValidators() {
-  return get(`staking/validators`)
+  return get(`staking/validators`).then(validators => validators || [])
 }
 
 // Normalize account response

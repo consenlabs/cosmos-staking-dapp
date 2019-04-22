@@ -5,6 +5,8 @@ import { selectValidators } from '../../lib/redux/selectors'
 import Home from '../home'
 import Validators from '../validators'
 import ValidatorDetail from '../validatorDetail'
+import Delegate from '../delegate'
+import UnDelegate from '../undelegate'
 import './index.scss'
 import { updateValidators, updateAccount, updateDelegations } from 'lib/redux/actions'
 import * as api from 'lib/api'
@@ -61,6 +63,8 @@ class App extends Component<Props> {
         <Route exact path="/" component={Home} />
         <Route exact path="/validators" component={Validators} />
         <Route path="/validators/:id" component={ValidatorDetail} />
+        <Route path="/delegate/:id" component={Delegate} />
+        <Route path="/undelegate/:id" component={UnDelegate} />
       </Switch>
     </BrowserRouter>
   }

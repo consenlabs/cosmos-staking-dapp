@@ -22,7 +22,7 @@ class Page extends Component<Props> {
     const v = validators.find(v => v.operator_address === id)
 
     console.log(v, match)
-    if (!v) return <h1 className="error-404">404</h1>
+    if (!v) return <h1 className="loading-text">Loading...</h1>
 
     return (
       <div className="validator-detail">

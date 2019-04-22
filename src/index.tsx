@@ -4,11 +4,8 @@ import { Provider } from 'react-redux'
 import * as serviceWorker from './serviceWorker'
 import configureStore from './lib/redux/configureStore'
 
-import App from './pages/home'
+import App from './pages/app'
 import './index.scss'
-import launch from './lib/launch'
-
-launch()
 
 const store = configureStore(undefined)
 

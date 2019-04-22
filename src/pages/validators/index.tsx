@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
-import { selectValidators } from '../../lib/redux/selectors'
-import './index.css'
+import { withRouter } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
+import ValidatorList from '../../components/validatorList'
+import ValidatorDetail from '../validatorDetail'
+import NavBar from '../../components/navBar'
+import './index.scss'
 
 interface Props {
   validators: any[]
@@ -13,25 +17,25 @@ class Page extends Component<Props> {
 
   }
 
+
   render() {
-    const { validators } = this.props
     return (
-      <div>
-        {
-          validators.map(v => {
-            return <div>{v.description.moniker}</div>
-          })
-        }
+      <div className="validators">
+        <NavBar index={1} />
+        <Switch>
+          <Route exact path="/validators" component={ValidatorList} />
+          <Route path="/validators/:id" component={ValidatorDetail} />
+        </Switch>
+        <ValidatorList />
       </div>
     )
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = _state => {
   return {
-    validators: selectValidators(state),
   }
 }
 
 
-export default connect(mapStateToProps)(Page)
+export default withRouter(connect(mapStateToProps)(Page))

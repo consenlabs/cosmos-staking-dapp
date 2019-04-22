@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
+import { Link } from 'react-router-dom'
 import { selectDelegations, selectValidators } from '../../lib/redux/selectors'
 import './index.scss'
 import { atom, thousandCommas } from 'lib/utils'
@@ -7,7 +8,6 @@ import { atom, thousandCommas } from 'lib/utils'
 interface Props {
   delegations: any[]
   validators: any[]
-  onItemPress: Function
 }
 
 
@@ -15,19 +15,15 @@ class CMP extends Component<Props> {
 
   componentDidMount() { }
 
-  onPress = (delegation) => {
-    this.props.onItemPress(delegation)
-  }
-
   renderItem(d, v, index) {
     if (!v) return null
-    return <div className="dl-card" key={index} onClick={() => this.onPress(d)}>
+    return <Link className="dl-card" key={index} to={`/validators/${v.operator_address}`}>
       <strong>{v.description.moniker}</strong>
       <div>
         <span>已委托</span>
         <i>{thousandCommas(atom(d.shares))}</i>
       </div>
-    </div>
+    </Link>
   }
 
   render() {

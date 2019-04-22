@@ -1,4 +1,4 @@
 export default {
-  // denom: 'atom'
+  // denom: 'uatom'
   denom: 'muon'
 }

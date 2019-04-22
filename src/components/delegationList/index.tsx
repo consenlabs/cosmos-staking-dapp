@@ -18,7 +18,7 @@ class CMP extends Component<Props> {
 
   renderItem(d, v, index) {
     if (!v) return null
-    return <Link className="dl-card" key={index} to={`/validators/${v.operator_address}`}>
+    return <Link className="dl-card" key={index} to={`/validator/${v.operator_address}`}>
       <div className="top">
         <ValidatorLogo url={v.description.logo} />
         <strong>{v.description.moniker}</strong>

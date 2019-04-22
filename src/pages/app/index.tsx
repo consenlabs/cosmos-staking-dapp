@@ -62,7 +62,7 @@ class App extends Component<Props> {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/validators" component={Validators} />
-        <Route path="/validators/:id" component={ValidatorDetail} />
+        <Route path="/validator/:id" component={ValidatorDetail} />
         <Route path="/delegate/:id" component={Delegate} />
         <Route path="/undelegate/:id" component={UnDelegate} />
       </Switch>

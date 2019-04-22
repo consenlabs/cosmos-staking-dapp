@@ -40,7 +40,7 @@ class Page extends Component<Props> {
             </div>
           </section>
         </div>
-        <DelegateForm account={account} />
+        <DelegateForm account={account} validator={v} />
       </div>
     )
   }

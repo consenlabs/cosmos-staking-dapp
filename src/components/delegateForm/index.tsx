@@ -3,12 +3,12 @@ import './index.scss'
 import { atom, uatom, thousandCommas, isExist, createTxPayload, createDelegateMsg } from 'lib/utils'
 import { sendTransaction } from 'lib/sdk'
 import { validAmount } from 'lib/validator'
-import bannerConfig from '../../config/banner'
 import tokenConfig from '../../config/token'
 import feeConfig from '../../config/fee'
 
 interface Props {
   account: any
+  validator: any
 }
 
 class CMP extends Component<Props> {
@@ -23,7 +23,7 @@ class CMP extends Component<Props> {
   afterOpenModal() { }
 
   onSubmit = () => {
-    const { account } = this.props
+    const { account, validator } = this.props
     const { balance, address } = account
     const { amount } = this.state
     const [valid, msg] = validAmount(amount, atom(balance), feeConfig.retainFee)
@@ -34,7 +34,7 @@ class CMP extends Component<Props> {
     // send delegate apiCall
     const txPayload = createTxPayload(
       address,
-      [createDelegateMsg(address, bannerConfig.operator_address, uatom(amount), tokenConfig.denom)],
+      [createDelegateMsg(address, validator.operator_address, uatom(amount), tokenConfig.denom)],
       'delegate from imToken',
     )
 

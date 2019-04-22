@@ -5,6 +5,7 @@ import './index.scss'
 import NavBar from '../../components/navBar'
 import AccountCard from '../../components/accountCard'
 import DelegationList from '../../components/delegationList'
+import Banner from '../../components/banner'
 
 interface Props {
   validators: any[]
@@ -15,13 +16,6 @@ interface Props {
 
 class Page extends Component<Props, any> {
 
-  renderDelegateBanner() {
-    return <div className="banner">
-      <div onClick={() => { }}>
-        <img src="/images/banner.png" alt="staking" />
-      </div>
-    </div>
-  }
 
 
   render() {
@@ -30,7 +24,10 @@ class Page extends Component<Props, any> {
         <NavBar index={0} />
         <AccountCard />
         <DelegationList />
-        {this.renderDelegateBanner()}
+        <Banner
+          url="http://whale-token-im.b0.upaiyun.com/assets/images/sparkpool-cn-l.png"
+          address="cosmosvaloper1rwh0cxa72d3yle3r4l8gd7vyphrmjy2kpe4x72"
+        />
       </div>
     )
   }

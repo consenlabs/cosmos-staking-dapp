@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import { withRouter } from 'react-router-dom'
 import ValidatorList from '../../components/validatorList'
 import NavBar from '../../components/navBar'
+import Banner from '../../components/banner'
 import './index.scss'
 
 interface Props {
@@ -20,6 +21,10 @@ class Page extends Component<Props> {
     return (
       <div className="validators">
         <NavBar index={1} />
+        <Banner
+          address="cosmosvaloper1cgh5ksjwy2sd407lyre4l3uj2fdrqhpkzp06e6"
+          url="http://whale-token-im.b0.upaiyun.com/assets/images/hash-cn-s.png"
+        />
         <ValidatorList />
       </div>
     )

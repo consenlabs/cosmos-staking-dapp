@@ -19,7 +19,7 @@ class CMP extends Component<Props> {
     const tokens = atom(v.tokens)
     const percent = (tokens / 237538998).toFixed(3)
 
-    return <Link className="validator" to={`/validators/${v.operator_address}`}>
+    return <Link className="validator" to={`/validator/${v.operator_address}`}>
 
       <ValidatorLogo url={v.description.logo} />
       <div className="v-left">

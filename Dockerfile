@@ -3,7 +3,10 @@ FROM openresty/openresty:xenial
 # Copy a configuration file from the current directory
 COPY nginx.conf /usr/local/openresty/nginx/conf/
 
-COPY build/ /var/www/html/
+RUN mkdir -p /var/www/html/cosmos
+
+COPY build/ /var/www/html/cosmos
+COPY build/ /var/www/html
 
 # Append "daemon off;" to the beginning of the configuration
 

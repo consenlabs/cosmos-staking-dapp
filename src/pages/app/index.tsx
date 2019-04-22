@@ -58,7 +58,7 @@ class App extends Component<Props> {
   }
 
   render() {
-    return <BrowserRouter>
+    return <BrowserRouter basename="/cosmos">
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/validators" component={Validators} />

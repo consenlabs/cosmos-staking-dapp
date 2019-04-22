@@ -7,7 +7,8 @@ import tokenConfig from '../../config/token'
 
 interface Props {
   account: any
-  delegations: any
+  delegation: any
+  validator: any
 }
 
 class CMP extends Component<Props, any> {
@@ -16,7 +17,6 @@ class CMP extends Component<Props, any> {
     super(props)
     this.state = {
       amount: '',
-      selectedDelegation: props.delegations[0]
     }
   }
 
@@ -24,13 +24,13 @@ class CMP extends Component<Props, any> {
   componentDidMount() {
   }
 
-  afterOpenModal() { }
+  getSelectedDelegation = () => {
+
+  }
 
   onSubmit = () => {
-    const { account } = this.props
-    // TODO: handle select
-    const { selectedDelegation } = this.state
-    const delegateBalance = selectedDelegation.shares
+    const { account, delegation } = this.props
+    const delegateBalance = delegation.shares
     const { address } = account
     const { amount } = this.state
     const [valid, msg] = validAmount(amount, atom(delegateBalance))
@@ -43,7 +43,7 @@ class CMP extends Component<Props, any> {
       address,
       [createUnDelegateMsg(
         address,
-        selectedDelegation.validator_address,
+        delegation.validator_address,
         uatom(amount),
         tokenConfig.denom)
       ],
@@ -63,11 +63,11 @@ class CMP extends Component<Props, any> {
   }
 
   render() {
-    const { selectedDelegation } = this.state
+    const { delegation } = this.props
 
-    if (!selectedDelegation) return null
+    if (!delegation) return null
 
-    const delegateBalance = selectedDelegation.shares
+    const delegateBalance = delegation.shares
     const { amount } = this.state
     const atomBalance = isExist(delegateBalance) ? thousandCommas(atom(delegateBalance)) : 0
     const disabled = !amount

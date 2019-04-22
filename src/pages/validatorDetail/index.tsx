@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import { withRouter, Link } from 'react-router-dom'
 import { selectValidators } from '../../lib/redux/selectors'
 import { ellipsis, thousandCommas, atom } from '../../lib/utils'
+import ValidatorLogo from '../../components/validatorLogo'
 import './index.scss'
 
 interface Props {
@@ -28,9 +29,7 @@ class Page extends Component<Props> {
       <div className="validator-detail">
         <section>
           <div className="top">
-            <div className="logo">
-              <img alt="logo" src={v.description.logo || '../../../images/default-validator.png'} />
-            </div>
+            <ValidatorLogo url={v.description.logo} />
             <div className="left">
               <strong>{v.description.moniker}</strong>
               <span>{ellipsis(v.operator_address, 24)}</span>

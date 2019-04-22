@@ -24,6 +24,7 @@ class Page extends Component<Props> {
     const { validators, account, delegations, match } = this.props
     const id = match.params.id
     const v = validators.find(v => v.operator_address === id)
+    const delegation = delegations.find(d => d.validator_address === v.operator_address)
 
     console.log(v, match)
     if (!v) return <h1 className="loading-text">Loading...</h1>
@@ -41,7 +42,7 @@ class Page extends Component<Props> {
             </div>
           </section>
         </div>
-        <UnDelegateForm account={account} delegations={delegations} />
+        <UnDelegateForm account={account} delegation={delegation} validator={v} />
       </div>
     )
   }

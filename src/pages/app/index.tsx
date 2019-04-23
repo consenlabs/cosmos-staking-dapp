@@ -9,7 +9,7 @@ import Delegate from '../delegate'
 import UnDelegate from '../undelegate'
 import Vote from '../vote'
 import './index.scss'
-import { updateValidators, updateAccount, updateDelegations, updatePool, updateValidatorRewards } from 'lib/redux/actions'
+import { updateValidators, updateAccount, updateDelegations, updatePool, updateValidatorRewards, updateAtomPrice } from 'lib/redux/actions'
 import * as api from 'lib/api'
 import * as sdk from 'lib/sdk'
 import * as utils from 'lib/utils'
@@ -22,6 +22,7 @@ interface Props {
   updateAccount: (value: any) => any
   updatePool: (value: any) => any
   updateValidatorRewards: (value: any) => any
+  updateAtomPrice: (value: any) => any
 }
 
 class App extends Component<Props> {
@@ -41,7 +42,7 @@ class App extends Component<Props> {
   }
 
   updateAsyncData = () => {
-    const { updateAccount, updateDelegations, updateValidators, updatePool, updateValidatorRewards } = this.props
+    const { updateAccount, updateDelegations, updateValidators, updatePool, updateValidatorRewards, updateAtomPrice } = this.props
 
     sdk.getAccounts().then(accounts => {
       const address = accounts[0]
@@ -86,6 +87,7 @@ class App extends Component<Props> {
     })
 
     api.getValidators().then(updateValidators)
+    api.getAtomPrice().then(updateAtomPrice)
   }
 
   render() {
@@ -114,6 +116,7 @@ const mapDispatchToProps = {
   updateValidators,
   updatePool,
   updateValidatorRewards,
+  updateAtomPrice,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

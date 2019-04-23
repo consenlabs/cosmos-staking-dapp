@@ -11,6 +11,7 @@ const initialState = {
     bonded_tokens: 0,
   },
   validatorRewards: {},
+  price: {},
 }
 
 export default function device(state = initialState, action) {
@@ -33,6 +34,9 @@ export default function device(state = initialState, action) {
         return
       case types.UPDATE_VALIDATOR_REWARDS:
         draft.validatorRewards = action.payload.validatorRewards
+        return
+      case types.UPDATE_ATOM_PRICE:
+        draft.price = action.payload.price
         return
       default:
         return draft

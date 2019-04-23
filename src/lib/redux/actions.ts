@@ -44,3 +44,12 @@ export const updateValidatorRewards = (validatorRewards) => {
     }
   }
 }
+
+export const updateAtomPrice = (price) => {
+  return {
+    type: types.UPDATE_ATOM_PRICE,
+    payload: {
+      price,
+    }
+  }
+}

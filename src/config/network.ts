@@ -1,11 +1,13 @@
 const networkConfig = {
   dev: {
     denom: 'muon',
-    chainAPI: 'https://api.dev.tokenlon.im/v1/cosmos'
+    chainAPI: 'https://api.dev.tokenlon.im/v1/cosmos',
+    market: 'https://dexapi.dev.tokenlon.im/rpc',
   },
   prod: {
     denom: 'uatom',
-    chainAPI: 'https://api.tokenlon.im/v1/cosmos'
+    chainAPI: 'https://api.tokenlon.im/v1/cosmos',
+    market: 'https://mainnet-dexapi.token.im/rpc',
   },
 }
 

@@ -33,7 +33,7 @@ function get(url, params = {}) {
 }
 
 
-function rpc(method, params) {
+function rpc(url, method, params) {
   return initRequestDependency().then(({ headers }) => {
     const data = {
       jsonrpc: '2.0',
@@ -41,28 +41,18 @@ function rpc(method, params) {
       method,
       params,
     }
-    const url = getNetworkConfig().chainAPI
     return Axios({ method: 'post', url, data, headers }).then(res => {
       if (res.data) {
         return res.data.result
       } else {
         throw new Error(`null response ${url} ${JSON.stringify(params)}`)
       }
-    }).catch(error => {
-      console.warn(error)
     })
   })
 }
 
 function sortValidators(a, b) {
   return a.tokens * 1 > b.tokens * 1 ? -1 : 1
-}
-
-export function getValidators() {
-  return rpc(`wallet.getValidators`, []).then(validators => {
-    return (validators || []).map(v => ({ ...v, tokens: v.Tokens || v.tokens }))
-  })
-    .then(validators => validators.sort(sortValidators))
 }
 
 // Normalize account response
@@ -138,6 +128,19 @@ export const getMyRewardByValidator = (delegatorAddr, validatorAddr) => {
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ server rpc requests ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 
+export async function getValidators() {
+  const host = getNetworkConfig().chainAPI
+  return rpc(host, `wallet.getValidators`, []).then(validators => {
+    return (validators || []).map(v => ({ ...v, tokens: v.Tokens || v.tokens }))
+  }).then(validators => validators.sort(sortValidators))
+}
+
+export async function getAtomPrice() {
+  const host = getNetworkConfig().market
+  const params = [{ "chainType": "COSMOS", "address": "uatom" }]
+  return rpc(host, `market.getPrices`, params).then(prices => prices[0])
+}
+
 export function getTxListByAddress(delegator: string, validator: string) {
   const params = [{
     address: delegator,
@@ -147,5 +150,5 @@ export function getTxListByAddress(delegator: string, validator: string) {
       validator,
     }
   }]
-  return rpc('wallet.getMsgListByAddress', [params]).then(data => data || [])
+  return rpc(getNetworkConfig().chainAPI, 'wallet.getMsgListByAddress', [params]).then(data => data || [])
 }

@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { injectIntl, FormattedMessage } from 'react-intl'
-import { selectAccountInfo } from '../../lib/redux/selectors'
+import { selectAccountInfo, selectPrice } from '../../lib/redux/selectors'
 import './index.scss'
 import { toBN, atom, thousandCommas, ellipsis, isExist } from 'lib/utils'
 
 interface Props {
   account: any
+  price: any
 }
 
 class CMP extends Component<Props> {
@@ -14,9 +15,10 @@ class CMP extends Component<Props> {
   componentDidMount() { }
 
   render() {
-    const { account } = this.props
+    const { account, price = {} } = this.props
     const { address, balance, rewardBalance, refundingBalance, delegateBalance } = account
-    const atomPrice = 30
+    const atomPrice = price.price || 0
+    const currency = price.currency === 'CNY' ? '¥' : '$'
 
     return (
       <div className="account-card">
@@ -24,7 +26,7 @@ class CMP extends Component<Props> {
           <div className="account-top-address">
             <strong>Cosmos Wallet</strong>
             {address ? (
-              <span>{ellipsis(address, 24)}</span>  
+              <span>{ellipsis(address, 24)}</span>
             ) : (
               <FormattedMessage
                 id='accessing_account'
@@ -33,7 +35,7 @@ class CMP extends Component<Props> {
           </div>
           <div className="account-top-amount">
             <strong>{isExist(balance) ? thousandCommas(atom(balance)) : '~'}</strong>
-            <span>¥ {isExist(balance) ? thousandCommas(toBN(atom(balance)).times(atomPrice).toString()) : '~'}</span>
+            <span>{currency} {isExist(balance) ? thousandCommas(toBN(atom(balance)).times(atomPrice).toString()) : '~'}</span>
           </div>
         </div>
         <div className="account-bottom">
@@ -75,6 +77,7 @@ class CMP extends Component<Props> {
 const mapStateToProps = state => {
   return {
     account: selectAccountInfo(state),
+    price: selectPrice(state),
   }
 }
 

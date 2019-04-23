@@ -10,6 +10,8 @@ import getNetworkConfig from '../config/network'
 // let _headers = null
 let _provider = null
 
+const warnning = (err) => console.warn(err)
+
 export async function initRequestDependency() {
   return {
     // headers: _headers || await getHeaders(),
@@ -26,9 +28,7 @@ function get(url, params = {}) {
       } else {
         throw new Error(`null response ${url} ${JSON.stringify(params)}`)
       }
-    }).catch(error => {
-      console.warn(error)
-    })
+    }).catch(warnning)
   })
 }
 
@@ -139,7 +139,7 @@ export async function getAtomPrice() {
   const host = getNetworkConfig().market
   const currency = getLocale() === 'zh' ? 'CNY' : 'USDT'
   const params = [{ "chainType": "COSMOS", "address": "uatom", currency }]
-  return rpc(host, `market.getPrices`, params).then(prices => prices[0])
+  return rpc(host, `market.getPrices`, params).then(prices => prices[0]).catch(warnning)
 }
 
 export function getTxListByAddress(delegator: string, validator: string) {
@@ -151,5 +151,5 @@ export function getTxListByAddress(delegator: string, validator: string) {
       validator,
     }
   }]
-  return rpc(getNetworkConfig().chainAPI, 'wallet.getMsgListByAddress', [params]).then(data => data || [])
+  return rpc(getNetworkConfig().chainAPI, 'wallet.getMsgListByAddress', [params]).then(data => data || []).catch(warnning)
 }

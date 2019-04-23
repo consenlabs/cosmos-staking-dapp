@@ -31,12 +31,43 @@ function get(url, params = {}) {
   })
 }
 
+function getRpcHost(provider) {
+  let host = 'https://api.dev.tokenlon.im/v1/cosmos'
+  if (!/testnet/.test(provider)) {
+    host = 'https://api.tokenlon.im/v1/cosmos'
+  }
+  return host
+}
+
+function rpc(method, params) {
+  return initRequestDependency().then(({ headers, provider }) => {
+    const data = {
+      jsonrpc: '2.0',
+      id: 1,
+      method,
+      params,
+    }
+    const url = getRpcHost(provider)
+    return Axios({ method: 'post', url, data, headers }).then(res => {
+      if (res.data) {
+        return res.data.result
+      } else {
+        throw new Error(`null response ${url} ${JSON.stringify(params)}`)
+      }
+    }).catch(error => {
+      console.warn(error)
+    })
+  })
+}
+
 function sortValidators(a, b) {
   return a.tokens * 1 > b.tokens * 1 ? -1 : 1
 }
 
 export function getValidators() {
-  return get(`staking/validators`).then(validators => validators || [])
+  return rpc(`wallet.getValidators`, []).then(validators => {
+    return (validators || []).map(v => ({ ...v, tokens: v.Tokens || v.tokens }))
+  })
     .then(validators => validators.sort(sortValidators))
 }
 

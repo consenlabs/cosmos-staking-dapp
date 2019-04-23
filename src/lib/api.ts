@@ -1,26 +1,26 @@
 import Axios from "axios"
-import { getHeaders, getProvider } from './sdk'
-import { getRewardBalance } from './utils'
+import { getProvider } from './sdk'
+import { getRewardBalance, getLocale } from './utils'
 import getNetworkConfig from '../config/network'
 
 /**
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ node requests ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 
-let _headers = null
+// let _headers = null
 let _provider = null
 
 export async function initRequestDependency() {
   return {
-    headers: _headers || await getHeaders(),
+    // headers: _headers || await getHeaders(),
     provider: _provider || await getProvider()
   }
 }
 
 function get(url, params = {}) {
-  return initRequestDependency().then(({ headers, provider }) => {
+  return initRequestDependency().then(({ provider }) => {
     const _url = `${provider}/${url}`
-    return Axios({ method: 'get', url: _url, params, headers }).then(res => {
+    return Axios({ method: 'get', url: _url, params }).then(res => {
       if (res.data) {
         return res.data
       } else {
@@ -34,14 +34,14 @@ function get(url, params = {}) {
 
 
 function rpc(url, method, params) {
-  return initRequestDependency().then(({ headers }) => {
+  return initRequestDependency().then(({ }) => {
     const data = {
       jsonrpc: '2.0',
       id: 1,
       method,
       params,
     }
-    return Axios({ method: 'post', url, data, headers }).then(res => {
+    return Axios({ method: 'post', url, data }).then(res => {
       if (res.data) {
         return res.data.result
       } else {
@@ -137,7 +137,8 @@ export async function getValidators() {
 
 export async function getAtomPrice() {
   const host = getNetworkConfig().market
-  const params = [{ "chainType": "COSMOS", "address": "uatom" }]
+  const currency = getLocale() === 'zh' ? 'CNY' : 'USDT'
+  const params = [{ "chainType": "COSMOS", "address": "uatom", currency }]
   return rpc(host, `market.getPrices`, params).then(prices => prices[0])
 }
 

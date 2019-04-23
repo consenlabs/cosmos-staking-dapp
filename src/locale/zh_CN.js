@@ -22,6 +22,12 @@ const zh_CN = {
   input_amount: '输入金额',
   proposal_vote: '提案投票',
   coming_soon: '即将上线',
+  faq: '常见问题',
+  tutorial: '使用教程',
+  invalid_number: '金额不合法',
+  number_must_be_positive: '请输入大于 0 的金额',
+  gas_not_enough: '矿工费不够',
+  more_than_available: '超出可用数量',
 }
 
 export default zh_CN

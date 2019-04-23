@@ -31,7 +31,7 @@ class CMP extends Component<Props> {
     const { account, validator, history, intl } = this.props
     const { balance, address } = account
     const { amount } = this.state
-    const [valid, msg] = validAmount(amount, atom(balance), getFeeConfig().retainFee)
+    const [valid, msg] = validAmount(amount, atom(balance), getFeeConfig().retainFee, intl)
     if (!valid) {
       return Toast.error(msg)
     }

@@ -1,24 +1,24 @@
 import { toBN } from './utils'
 
-export const validAmount = (amount: number | string, balance: number | string, retainFee = 0) => {
+export const validAmount = (amount: number | string, balance: number | string, retainFee = 0, intl) => {
 
   const num = Number(amount)
 
   if (isNaN(num)) {
-    return [false, '金额不合法']
+    return [false, intl.formatMessage({ id: 'invalid_number' })]
   }
 
   if (num <= 0) {
-    return [false, '请输入大于 0 的金额']
+    return [false, intl.formatMessage({ id: 'number_must_be_positive' })]
   }
 
   const bnAmounnt = toBN(num)
 
   if (bnAmounnt.plus(retainFee).gt(balance)) {
     if (bnAmounnt.lt(balance)) {
-      return [false, '矿工费不够']
+      return [false, intl.formatMessage({ id: 'gas_not_enough' })]
     }
-    return [false, '超出可用数量']
+    return [false, intl.formatMessage({ id: 'more_than_available' })]
   }
 
   return [true, null]

@@ -35,7 +35,7 @@ class CMP extends Component<Props, any> {
     const delegateBalance = delegation.shares
     const { address } = account
     const { amount } = this.state
-    const [valid, msg] = validAmount(amount, atom(delegateBalance))
+    const [valid, msg] = validAmount(amount, atom(delegateBalance), 0, intl)
     if (!valid) {
       return Toast.error(msg)
     }

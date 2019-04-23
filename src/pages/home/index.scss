@@ -1,3 +1,51 @@
 .home {
   padding: 0px 10px 160px 10px;
 }
+
+.divier {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 4px;
+  padding-top: 10px;
+
+  .line {
+    height: 2px;
+    background-color: #272A47;
+    width: 40%;
+  }
+}
+
+.blocks {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  
+  .block-item {
+    border-radius: 4px;
+    border: solid 0.5px rgba(255, 255, 255, 0.18);
+    background-color: #2a2e5e;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    height: 64px;
+
+    span  {
+      font-size: 17px;
+      font-weight: 300;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: normal;
+      letter-spacing: 0.3px;
+      text-align: center;
+      color: #ffffff;
+      margin-left: 10px;
+    }
+  }
+}

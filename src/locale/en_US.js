@@ -22,6 +22,12 @@ const en_US = {
   input_amount: 'Input Amount',
   proposal_vote: 'Proposal Vote',
   coming_soon: 'Coming Soon',
+  faq: 'FAQ',
+  tutorial: 'Tutorial',
+  invalid_number: 'Invalid number',
+  number_must_be_positive: 'The number must be greater than 0',
+  gas_not_enough: 'Gas not enough',
+  more_than_available: 'The number is greater than available asset',
 }
 
 export default en_US

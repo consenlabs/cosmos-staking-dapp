@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { withRouter, Link } from 'react-router-dom'
 import { selectValidators } from '../../lib/redux/selectors'
-import { ellipsis, thousandCommas, atom } from '../../lib/utils'
+import { ellipsis, thousandCommas, atom, fPercent } from '../../lib/utils'
 import ValidatorLogo from '../../components/validatorLogo'
 import './index.scss'
 
@@ -53,11 +53,11 @@ class Page extends Component<Props> {
           </li> */}
           <li>
             <span>佣金</span>
-            <i>{(v.commission.rate * 100).toFixed(1)} %</i>
+            <i>{fPercent(v.commission.rate * 100, 1)}</i>
           </li>
           <li>
             <span>年化收益</span>
-            <i>{v.annualized_returns} %</i>
+            <i>{fPercent(v.annualized_returns, 3)}</i>
           </li>
         </ul>
 

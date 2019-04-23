@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { Link } from 'react-router-dom'
 import ValidatorLogo from '../../components/validatorLogo'
 import './index.scss'
-import { atom, thousandCommas } from 'lib/utils'
+import { atom, thousandCommas, fPercent } from 'lib/utils'
 
 interface Props {
   validator: any
@@ -20,17 +20,17 @@ class CMP extends Component<Props> {
     const v = validator
     const tokens = atom(v.tokens)
     const totalPoolBondedTokens = pool.bonded_tokens
-    const percent = totalPoolBondedTokens ? ((tokens / atom(totalPoolBondedTokens)) * 100).toFixed(3) : '~'
+    const percent = tokens / atom(totalPoolBondedTokens)
 
     return <Link className="validator" to={`/validator/${v.operator_address}`}>
 
       <ValidatorLogo url={v.description.logo} />
       <div className="v-left">
         <strong>{v.description.moniker}</strong>
-        <span>{thousandCommas(tokens)} ({percent}%)</span>
+        <span>{thousandCommas(tokens)} ({fPercent(percent, 3)})</span>
       </div>
       <div className="v-right">
-        <strong>7%</strong>
+        <strong>{fPercent(v.annualized_returns, 3)}</strong>
         <span>年化收益</span>
       </div>
     </Link>

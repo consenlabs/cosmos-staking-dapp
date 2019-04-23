@@ -108,6 +108,10 @@ export const thousandCommas = (num: string | number) => {
   return numeral(num).format('0,0.[0000]')
 }
 
+export const fPercent = (p: number, fixed = 3) => {
+  return !isNaN(Number(p)) ? `${(p * 100).toFixed(fixed)} %` : '~'
+}
+
 export const isExist = (o: any) => {
   return typeof o !== 'undefined'
 }

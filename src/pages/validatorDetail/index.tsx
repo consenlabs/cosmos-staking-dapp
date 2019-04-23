@@ -22,7 +22,6 @@ class Page extends Component<Props> {
     const id = match.params.id
     const v = validators.find(v => v.operator_address === id)
 
-    console.log(v, match)
     if (!v) return <h1 className="loading-text">Loading...</h1>
 
     return (
@@ -53,7 +52,7 @@ class Page extends Component<Props> {
           </li> */}
           <li>
             <span>佣金</span>
-            <i>{fPercent(v.commission.rate * 100, 1)}</i>
+            <i>{fPercent(v.commission.rate, 1)}</i>
           </li>
           <li>
             <span>年化收益</span>

@@ -112,6 +112,11 @@ export const fPercent = (p: number, fixed = 3) => {
   return !isNaN(Number(p)) ? `${(p * 100).toFixed(fixed)} %` : '~'
 }
 
+export const decimal = (num: string | number, place: number = 3): string => {
+  if (!num || Number(num) === 0) return '0'
+  return toBN(num).toFixed(place, 1)
+}
+
 export const isExist = (o: any) => {
   return typeof o !== 'undefined'
 }

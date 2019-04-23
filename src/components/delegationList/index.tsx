@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { selectDelegations, selectValidators, selectValidatorRewards } from '../../lib/redux/selectors'
 import ValidatorLogo from '../../components/validatorLogo'
 import './index.scss'
-import { atom, thousandCommas } from 'lib/utils'
+import { atom, thousandCommas, fPercent, decimal } from 'lib/utils'
 
 interface Props {
   delegations: any[]
@@ -29,7 +29,7 @@ class CMP extends Component<Props> {
         <ValidatorLogo url={v.description.logo} />
         <strong>{v.description.moniker}</strong>
         <div>
-          <i>{v.annualized_returns || '~'}</i>
+          <i>{fPercent(v.annualized_returns, 3) || '~'}</i>
           <span>年化收益</span>
         </div>
       </div>
@@ -47,7 +47,7 @@ class CMP extends Component<Props> {
 
         <div>
           <span>预计收益 (天)</span>
-          <i>~</i>
+          <i>{d.shares && v.annualized_returns ? decimal(atom(d.shares * v.annualized_returns / 365)) : '~'}</i>
         </div>
       </div>
 

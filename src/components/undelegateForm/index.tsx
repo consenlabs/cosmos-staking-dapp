@@ -6,6 +6,7 @@ import { validAmount } from 'lib/validator'
 import { pubsub } from 'lib/event'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import getNetworkConfig from '../../config/network'
+import logger from '../../lib/logger'
 
 interface Props {
   account: any
@@ -39,6 +40,8 @@ class CMP extends Component<Props, any> {
       return Toast.error(msg)
     }
 
+    logger().track('submit_undelegate')
+
     // send delegate apiCall
     const txPayload = createTxPayload(
       address,
@@ -53,10 +56,12 @@ class CMP extends Component<Props, any> {
 
     sendTransaction(txPayload).then(txHash => {
       Toast.success(txHash, { heading: intl.formatMessage({ id: 'sent_successfully' }) })
+      logger().track('submit_undelegate', { result: 'successful' })
       console.log(txHash)
       history.push('/')
       pubsub.emit('updateAsyncData')
     }).catch(e => {
+      logger().track('submit_undelegate', { result: 'failed', message: e.message })
       Toast.error(e.message, { heading: intl.formatMessage({ id: 'failed_to_send' }) })
     })
   }

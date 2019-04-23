@@ -6,6 +6,7 @@ import { selectValidators } from '../../lib/redux/selectors'
 import { ellipsis, thousandCommas, atom, fPercent, isiPhoneX } from '../../lib/utils'
 import ValidatorLogo from '../../components/validatorLogo'
 import './index.scss'
+import logger from '../../lib/logger'
 
 interface Props {
   validators: any
@@ -15,7 +16,9 @@ interface Props {
 class Page extends Component<Props> {
 
   componentDidMount() {
-
+    const { match } = this.props
+    const id = match.params.id
+    logger().track('to_validator_detail', { validator: id })
   }
 
   render() {

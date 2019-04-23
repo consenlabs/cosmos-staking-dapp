@@ -8,6 +8,7 @@ import AccountCard from '../../components/accountCard'
 import DelegationList from '../../components/delegationList'
 import Banner from '../../components/banner'
 import WaterMark from '../../components/walletMark'
+import logger from '../../lib/logger'
 
 interface Props {
   validators: any[]
@@ -17,6 +18,10 @@ interface Props {
 }
 
 class Page extends Component<Props, any> {
+  componentDidMount() {
+    logger().track('to_home')
+  }
+
   render() {
     return (
       <div className="home" id="home">

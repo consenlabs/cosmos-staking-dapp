@@ -6,6 +6,7 @@ import NavBar from '../../components/navBar'
 import Banner from '../../components/banner'
 import WaterMark from '../../components/walletMark'
 import './index.scss'
+import logger from '../../lib/logger'
 
 interface Props {
   validators: any[]
@@ -14,7 +15,7 @@ interface Props {
 class Page extends Component<Props> {
 
   componentDidMount() {
-
+    logger().track('to_validators_list')
   }
 
 

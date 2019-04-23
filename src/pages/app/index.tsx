@@ -7,6 +7,7 @@ import Validators from '../validators'
 import ValidatorDetail from '../validatorDetail'
 import Delegate from '../delegate'
 import UnDelegate from '../undelegate'
+import Vote from '../vote'
 import './index.scss'
 import { updateValidators, updateAccount, updateDelegations, updatePool, updateValidatorRewards } from 'lib/redux/actions'
 import * as api from 'lib/api'
@@ -95,6 +96,7 @@ class App extends Component<Props> {
         <Route path="/validator/:id" component={ValidatorDetail} />
         <Route path="/delegate/:id" component={Delegate} />
         <Route path="/undelegate/:id" component={UnDelegate} />
+        <Route path="/vote" component={Vote} />
       </Switch>
     </BrowserRouter>
   }

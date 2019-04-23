@@ -16,6 +16,10 @@
       align-items: center;
       text-decoration: none;
       strong {
+        white-space: nowrap;
+        max-width: 180px;
+        overflow: hidden;
+        text-overflow: ellipsis;
         margin-left: 17px;
         font-size: 15px;
         font-weight: normal;
@@ -29,7 +33,9 @@
         margin-left: auto;
         display: flex;
         flex-direction: column;
+        align-items: flex-end;
         > span {
+          text-align: right;
             font-family: 'PingFang SC';
             font-size: 11px;
             color: #98a2a9;

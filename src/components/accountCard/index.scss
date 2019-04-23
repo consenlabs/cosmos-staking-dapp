@@ -1,10 +1,13 @@
 .account-card {
   border-radius: 4px;
-  background-color: #ffffff;
   overflow: hidden;
+  box-shadow: 0 2px 8px 0 #00000019;
   .account-top  {
     padding: 15px 20px;
     background-color: #fafbfc;
+    border-radius: 4px 4px 0 0;
+    overflow: hidden;
+    background-image: linear-gradient(to top, #535a98, #2a2e5e);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -13,17 +16,19 @@
       flex-direction: column;
       justify-content: space-between;
       strong {
+        margin-bottom: 8px;
         font-size: 15px;
         font-weight: normal;
         letter-spacing: 0;
-        color: #191b31;
+        color: #ffffff;
       }
       span {
         width: 205px;
         overflow: hidden;
         font-family: 'PingFang SC';
-        font-size: 11px;
-        color: #777a8c;
+        font-size: 13px;
+        color: #fafbfc;
+        opacity: 0.5;
       }
     }
     .account-top-amount {
@@ -32,22 +37,27 @@
       justify-content: space-between;
       text-align: right;
       strong {
-          font-size: 21px;
+        margin-bottom: 8px;
+          font-size: 17px;
           font-weight: bold;
           font-style: normal;
-          color: #191b31;
+          color: #ffffff;
         }
       span  {
         font-size: 13px;
         font-weight: 300;
         letter-spacing: 0.1px;
-        color: #191b31;
+        color: #fafbfc;
+        opacity: 0.5;
       }
     }
   }
   .account-bottom {
     padding: 15px 20px;
-    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border-radius: 4px 4px 0 0;
+    box-shadow: 0 2px 8px 0 #00000019;
+    background-color: #ffffff;
     .split-line {
       height: 0px;
       margin: 12px 0;

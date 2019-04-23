@@ -19,14 +19,17 @@ class Page extends Component<Props> {
     return (
       <div className="vote-page">
         <WaterMark />
-        <div className="coming-soon">
-          <FormattedMessage
-            id='proposal_vote'
-          />
-          <FormattedMessage
-            id='coming_soon'
-          />
+        <div className="cs-img">
+          <div className="coming-soon">
+            <FormattedMessage
+              id='proposal_vote'
+            />
+            <FormattedMessage
+              id='coming_soon'
+            />
+          </div>
         </div>
+        <div className="bottom"></div>
       </div>
     )
   }

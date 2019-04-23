@@ -157,3 +157,10 @@ export const getUnbondingBalance = (unbondingDelegations) => {
   })
   return balance.toFixed(0)
 }
+
+export const isiPhoneX = () => {
+  if (typeof window !== 'undefined' && window) {
+    return /iphone/gi.test(window.navigator.userAgent) && window.screen.height >= 812;
+  }
+  return false
+}

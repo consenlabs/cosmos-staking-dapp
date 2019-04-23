@@ -27,6 +27,14 @@ interface Props {
 
 class App extends Component<Props> {
 
+  componentDidMount() {
+    if (!window['imToken']['callAPI']) {
+      setTimeout(() => {
+        utils.Toast.warn('请用 imToken 打开', { hideAfter: 10, position: 'top-center' })
+      }, 3000)
+    }
+  }
+
   componentWillMount() {
     this.updateAsyncData()
     pubsub.on('updateAsyncData', () => {

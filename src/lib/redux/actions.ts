@@ -44,3 +44,12 @@ export const updateLanguage = (language) => {
     }
   }
 }
+
+export const updateValidatorRewards = (validatorRewards) => {
+  return {
+    type: types.UPDATE_VALIDATOR_REWARDS,
+    payload: {
+      validatorRewards,
+    }
+  }
+}

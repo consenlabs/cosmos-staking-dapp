@@ -1,7 +1,7 @@
 import BN from 'big.js'
 import numeral from 'numeral'
 import cogoToast from 'cogo-toast'
-import feeConfig from '../config/fee'
+import getFeeConfig from '../config/fee'
 
 export const Toast = cogoToast
 
@@ -22,7 +22,7 @@ export function createTxPayload(from: string, msg: __Msg[], memo: string) {
   const payload = {
     from: from,
     chainType: 'COSMOS',
-    fee: feeConfig.transfer,
+    fee: getFeeConfig().transfer,
     msg,
     memo,
   }
@@ -110,6 +110,11 @@ export const thousandCommas = (num: string | number) => {
 
 export const fPercent = (p: number, fixed = 3) => {
   return !isNaN(Number(p)) ? `${(p * 100).toFixed(fixed)} %` : '~'
+}
+
+export const decimal = (num: string | number, place: number = 3): string => {
+  if (!num || Number(num) === 0) return '0'
+  return toBN(num).toFixed(place, 1)
 }
 
 export const isExist = (o: any) => {

@@ -1,29 +1,35 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { Link } from 'react-router-dom'
-import { selectDelegations, selectValidators } from '../../lib/redux/selectors'
+import { selectDelegations, selectValidators, selectValidatorRewards } from '../../lib/redux/selectors'
 import ValidatorLogo from '../../components/validatorLogo'
 import './index.scss'
-import { atom, thousandCommas } from 'lib/utils'
+import { atom, thousandCommas, fPercent, decimal } from 'lib/utils'
 
 interface Props {
   delegations: any[]
   validators: any[]
+  validatorRewards: any
 }
 
 
 class CMP extends Component<Props> {
 
-  componentDidMount() { }
+  componentDidMount() {
+  }
 
   renderItem(d, v, index) {
     if (!v) return null
+
+    const { validatorRewards } = this.props
+    const reward = validatorRewards[v.operator_address] || 0
+
     return <Link className="dl-card" key={index} to={`/validator/${v.operator_address}`}>
       <div className="top">
         <ValidatorLogo url={v.description.logo} />
         <strong>{v.description.moniker}</strong>
         <div>
-          <i>{v.annualized_returns || '~'}</i>
+          <i>{fPercent(v.annualized_returns, 3) || '~'}</i>
           <span>年化收益</span>
         </div>
       </div>
@@ -36,12 +42,12 @@ class CMP extends Component<Props> {
 
         <div>
           <span>收益</span>
-          <i>~</i>
+          <i>{reward ? thousandCommas(atom(reward)) : '~'}</i>
         </div>
 
         <div>
           <span>预计收益 (天)</span>
-          <i>~</i>
+          <i>{d.shares && v.annualized_returns ? decimal(atom(d.shares * v.annualized_returns / 365)) : '~'}</i>
         </div>
       </div>
 
@@ -66,6 +72,7 @@ const mapStateToProps = state => {
   return {
     validators: selectValidators(state),
     delegations: selectDelegations(state),
+    validatorRewards: selectValidatorRewards(state)
   }
 }
 

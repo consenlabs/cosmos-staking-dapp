@@ -1,14 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { withRouter } from 'react-router-dom'
-import ValidatorList from '../../components/validatorList'
-import NavBar from '../../components/navBar'
-import Banner from '../../components/banner'
 import WaterMark from '../../components/walletMark'
 import './index.scss'
 
 interface Props {
-  validators: any[]
 }
 
 class Page extends Component<Props> {
@@ -17,17 +13,12 @@ class Page extends Component<Props> {
 
   }
 
-
   render() {
+
     return (
-      <div className="validators">
+      <div className="vote-page">
         <WaterMark />
-        <NavBar index={1} />
-        <Banner
-          address="cosmosvaloper1cgh5ksjwy2sd407lyre4l3uj2fdrqhpkzp06e6"
-          url="http://whale-token-im.b0.upaiyun.com/assets/images/hash-cn-s.png"
-        />
-        <ValidatorList />
+        <div className="coming-soon">🚀 敬请期待...</div>
       </div>
     )
   }

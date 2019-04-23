@@ -3,12 +3,14 @@ import './index.scss'
 import { atom, uatom, thousandCommas, isExist, createTxPayload, createDelegateMsg, Toast } from 'lib/utils'
 import { sendTransaction } from 'lib/sdk'
 import { validAmount } from 'lib/validator'
-import tokenConfig from '../../config/token'
-import feeConfig from '../../config/fee'
+import { pubsub } from 'lib/event'
+import getNetworkConfig from '../../config/network'
+import getFeeConfig from '../../config/fee'
 
 interface Props {
   account: any
   validator: any
+  history: any
 }
 
 class CMP extends Component<Props> {
@@ -23,10 +25,10 @@ class CMP extends Component<Props> {
   afterOpenModal() { }
 
   onSubmit = () => {
-    const { account, validator } = this.props
+    const { account, validator, history } = this.props
     const { balance, address } = account
     const { amount } = this.state
-    const [valid, msg] = validAmount(amount, atom(balance), feeConfig.retainFee)
+    const [valid, msg] = validAmount(amount, atom(balance), getFeeConfig().retainFee)
     if (!valid) {
       return Toast.error(msg)
     }
@@ -34,13 +36,15 @@ class CMP extends Component<Props> {
     // send delegate apiCall
     const txPayload = createTxPayload(
       address,
-      [createDelegateMsg(address, validator.operator_address, uatom(amount), tokenConfig.denom)],
+      [createDelegateMsg(address, validator.operator_address, uatom(amount), getNetworkConfig().denom)],
       'delegate from imToken',
     )
 
     sendTransaction(txPayload).then(txHash => {
       Toast.success(txHash, { heading: '发送成功' })
       console.log(txHash)
+      history.push('/')
+      pubsub.emit('updateAsyncData')
     }).catch(e => {
       Toast.error(e.message, { heading: '发送失败' })
     })

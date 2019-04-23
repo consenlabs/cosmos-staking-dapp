@@ -22,19 +22,18 @@ class Page extends Component<Props> {
     const id = match.params.id
     const v = validators.find(v => v.operator_address === id)
 
-    console.log(v, match)
     if (!v) return <h1 className="loading-text">Loading...</h1>
 
     return (
       <div className="validator-detail">
         <section>
-          <div className="top">
+          <a className="top" href={v.description.website || 'javascript:void(0)'}>
             <ValidatorLogo url={v.description.logo} />
             <div className="left">
               <strong>{v.description.moniker}</strong>
               <span>{ellipsis(v.operator_address, 24)}</span>
             </div>
-          </div>
+          </a>
           <div className="desc">{v.description.details || 'no description'}</div>
         </section>
 
@@ -53,7 +52,7 @@ class Page extends Component<Props> {
           </li> */}
           <li>
             <span>佣金</span>
-            <i>{fPercent(v.commission.rate * 100, 1)}</i>
+            <i>{fPercent(v.commission.rate, 1)}</i>
           </li>
           <li>
             <span>年化收益</span>

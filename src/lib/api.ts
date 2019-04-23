@@ -1,5 +1,7 @@
 import Axios from "axios"
 import { getHeaders, getProvider } from './sdk'
+import { getRewardBalance } from './utils'
+import getNetworkConfig from '../config/network'
 
 /**
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ node requests ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -30,12 +32,36 @@ function get(url, params = {}) {
   })
 }
 
+
+function rpc(method, params) {
+  return initRequestDependency().then(({ headers }) => {
+    const data = {
+      jsonrpc: '2.0',
+      id: 1,
+      method,
+      params,
+    }
+    const url = getNetworkConfig().chainAPI
+    return Axios({ method: 'post', url, data, headers }).then(res => {
+      if (res.data) {
+        return res.data.result
+      } else {
+        throw new Error(`null response ${url} ${JSON.stringify(params)}`)
+      }
+    }).catch(error => {
+      console.warn(error)
+    })
+  })
+}
+
 function sortValidators(a, b) {
   return a.tokens * 1 > b.tokens * 1 ? -1 : 1
 }
 
 export function getValidators() {
-  return get(`staking/validators`).then(validators => validators || [])
+  return rpc(`wallet.getValidators`, []).then(validators => {
+    return (validators || []).map(v => ({ ...v, tokens: v.Tokens || v.tokens }))
+  })
     .then(validators => validators.sort(sortValidators))
 }
 
@@ -99,42 +125,20 @@ export const getStakePool = () => {
   return get(url, {}).then(pool => pool || {})
 }
 
+export const getMyRewardByValidator = (delegatorAddr, validatorAddr) => {
+  const url = `distribution/delegators/${delegatorAddr}/rewards/${validatorAddr}`
+  return get(url, {}).then(rewards => {
+    rewards = rewards || []
+    const balance = getRewardBalance(rewards)
+    return balance
+  })
+}
+
 /**
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ server rpc requests ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 
-function createRpcRequestData(method, params) {
-  return {
-    jsonrpc: '2.0',
-    id: 1,
-    method,
-    params: params || [],
-  }
-}
-
-function serverRequest(url, method, params) {
-  return initRequestDependency().then(({ headers }) => {
-    return Axios({
-      method: 'get',
-      url,
-      data: createRpcRequestData(method, params),
-      timeout: 5,
-      headers: headers,
-      withCredentials: true
-    }).then(res => {
-      if (res.data) {
-        return res.data
-      } else {
-        throw new Error(`null response ${url} ${method} ${JSON.stringify(params)}`)
-      }
-    }).catch(error => {
-      console.warn(error)
-    })
-  })
-}
-
 export function getTxListByAddress(delegator: string, validator: string) {
-  const url = `https://api.dev.tokenlon.im/v1/cosmos`
   const params = [{
     address: delegator,
     tags: {
@@ -143,5 +147,5 @@ export function getTxListByAddress(delegator: string, validator: string) {
       validator,
     }
   }]
-  return serverRequest(url, 'wallet.getMsgListByAddress', [params]).then(data => data || [])
+  return rpc('wallet.getMsgListByAddress', [params]).then(data => data || [])
 }

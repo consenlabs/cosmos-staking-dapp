@@ -15,6 +15,13 @@ body {
   background-color: #191b31;
 }
 
+a,a:hover,a:visited {
+  text-decoration: none;
+  strong, span, i {
+    text-decoration: none;
+  }
+}
+
 .ReactModal__Overlay {
   opacity: 0;
   transition: opacity 300ms ease-in-out;

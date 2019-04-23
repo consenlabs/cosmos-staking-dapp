@@ -7,11 +7,13 @@ import Validators from '../validators'
 import ValidatorDetail from '../validatorDetail'
 import Delegate from '../delegate'
 import UnDelegate from '../undelegate'
+import Vote from '../vote'
 import './index.scss'
-import { updateValidators, updateAccount, updateDelegations, updatePool, updateLanguage } from 'lib/redux/actions'
+import { updateValidators, updateAccount, updateDelegations, updatePool, updateLanguage, updateValidatorRewards } from 'lib/redux/actions'
 import * as api from 'lib/api'
 import * as sdk from 'lib/sdk'
 import * as utils from 'lib/utils'
+import { pubsub } from 'lib/event'
 
 interface Props {
   validators: any[]
@@ -19,6 +21,7 @@ interface Props {
   updateDelegations: (value: any) => any
   updateAccount: (value: any) => any
   updatePool: (value: any) => any
+  updateValidatorRewards: (value: any) => any
   updateLanguage: (value: any) => any
 }
 
@@ -42,10 +45,20 @@ class App extends Component<Props> {
 
   componentWillMount() {
     this.updateAsyncData()
+    pubsub.on('updateAsyncData', () => {
+      // refresh immediately
+      this.updateAsyncData()
+      // refresh after 30 seconds
+      setTimeout(this.updateAsyncData, 1000 * 30)
+    })
+  }
+
+  componentWillUnmount() {
+    pubsub.off('updateAsyncData')
   }
 
   updateAsyncData = () => {
-    const { updateAccount, updateDelegations, updateValidators, updatePool, updateLanguage } = this.props
+    const { updateAccount, updateDelegations, updateValidators, updatePool, updateLanguage, updateValidatorRewards } = this.props
 
     const searchObj = parseSearch(window.location.search) as any
     if (searchObj.locale) {
@@ -74,6 +87,18 @@ class App extends Component<Props> {
         const delegateBalance = utils.getDeletationBalance(delegations)
         updateDelegations(delegations)
         updateAccount({ delegateBalance })
+
+        const validatorRewards = {}
+        const promises = delegations.map(d => {
+          return api.getMyRewardByValidator(address, d.validator_address).then(balance => {
+            validatorRewards[d.validator_address] = balance
+            console.log(validatorRewards)
+          })
+        })
+
+        Promise.all(promises).then(() => {
+          updateValidatorRewards(validatorRewards)
+        })
       })
     })
 
@@ -93,6 +118,7 @@ class App extends Component<Props> {
         <Route path="/validator/:id" component={ValidatorDetail} />
         <Route path="/delegate/:id" component={Delegate} />
         <Route path="/undelegate/:id" component={UnDelegate} />
+        <Route path="/vote" component={Vote} />
       </Switch>
     </BrowserRouter>
   }
@@ -110,6 +136,7 @@ const mapDispatchToProps = {
   updateValidators,
   updatePool,
   updateLanguage,
+  updateValidatorRewards,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

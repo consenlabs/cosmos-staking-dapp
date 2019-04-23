@@ -3,12 +3,14 @@ import './index.scss'
 import { atom, uatom, thousandCommas, isExist, createTxPayload, createUnDelegateMsg, Toast } from 'lib/utils'
 import { sendTransaction } from 'lib/sdk'
 import { validAmount } from 'lib/validator'
-import tokenConfig from '../../config/token'
+import { pubsub } from 'lib/event'
+import getNetworkConfig from '../../config/network'
 
 interface Props {
   account: any
   delegation: any
   validator: any
+  history: any
 }
 
 class CMP extends Component<Props, any> {
@@ -24,12 +26,9 @@ class CMP extends Component<Props, any> {
   componentDidMount() {
   }
 
-  getSelectedDelegation = () => {
-
-  }
 
   onSubmit = () => {
-    const { account, delegation } = this.props
+    const { account, delegation, history } = this.props
     const delegateBalance = delegation.shares
     const { address } = account
     const { amount } = this.state
@@ -45,7 +44,7 @@ class CMP extends Component<Props, any> {
         address,
         delegation.validator_address,
         uatom(amount),
-        tokenConfig.denom)
+        getNetworkConfig().denom)
       ],
       'undelegate from imToken',
     )
@@ -53,6 +52,8 @@ class CMP extends Component<Props, any> {
     sendTransaction(txPayload).then(txHash => {
       Toast.success(txHash, { heading: '发送成功' })
       console.log(txHash)
+      history.push('/')
+      pubsub.emit('updateAsyncData')
     }).catch(e => {
       Toast.error(e.message, { heading: '发送失败' })
     })
@@ -62,10 +63,18 @@ class CMP extends Component<Props, any> {
     this.setState({ amount: event.target.value })
   }
 
+  renderEmpty() {
+    return <div className="form-inner">
+      <div className="form-empty">
+        <span>🤪 你在此验证者下没有抵押，无法赎回</span>
+      </div>
+    </div>
+  }
+
   render() {
     const { delegation } = this.props
 
-    if (!delegation) return null
+    if (!delegation) return this.renderEmpty()
 
     const delegateBalance = delegation.shares
     const { amount } = this.state

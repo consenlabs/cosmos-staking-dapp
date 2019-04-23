@@ -21,6 +21,9 @@ class Page extends Component<Props> {
         <WaterMark />
         <div className="coming-soon">
           <FormattedMessage
+            id='proposal_vote'
+          />
+          <FormattedMessage
             id='coming_soon'
           />
         </div>

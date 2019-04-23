@@ -72,7 +72,7 @@ class CMP extends Component<Props> {
         </div>
         <input
           type="number"
-          placeholder={intl.formatMessage({ id: 'input_number' })}
+          placeholder={intl.formatMessage({ id: 'input_amount' })}
           value={amount}
           onChange={this.onChange}
           max={atomBalance}

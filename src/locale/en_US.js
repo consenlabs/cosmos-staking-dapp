@@ -6,12 +6,12 @@ const en_US = {
   my_delegation: 'My delegation',
   delegated: 'Delegated',
   validators: 'Validators',
-  annualized_earnings: 'Annualized earnings',
-  anticipated_earnings: 'Anticipated earnings(day)',
+  annualized_earnings: 'Annualized returns',
+  anticipated_earnings: 'Anticipated returns(day)',
   unstake: 'Unstake',
   delegate: 'Delegate',
   accessing_account: 'Accessing account...',
-  commission: 'Commission',
+  commission: 'Commission Rate',
   total_delegation: 'Total delegation',
   validator_delegation: 'Validator delegation',
   staked: 'Staked',
@@ -19,8 +19,9 @@ const en_US = {
   sent_successfully: 'Successfully',
   without_delegation_couldnt_unstake: "🤪 You don't have any delegation in the validator, couldn't unstake",
   cancel_delegate: 'Cancel delegate',
-  input_number: 'Input number',
-  coming_soon: '🚀 Coming soon...',
+  input_amount: 'Input Amount',
+  proposal_vote: 'Proposal Vote',
+  coming_soon: 'Coming soon',
 }
 
 export default en_US

@@ -109,7 +109,7 @@ export const thousandCommas = (num: string | number) => {
 }
 
 export const fPercent = (p: number, fixed = 3) => {
-  return !isNaN(Number(p)) ? `${(p * 100).toFixed(fixed)} %` : '~'
+  return !isNaN(Number(p)) ? `${(p * 100).toFixed(fixed)}%` : '~'
 }
 
 export const decimal = (num: string | number, place: number = 3): string => {

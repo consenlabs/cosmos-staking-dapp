@@ -28,13 +28,13 @@ class CMP extends Component<Props> {
             {address ? (
               <span>{ellipsis(address, 24)}</span>
             ) : (
-              <FormattedMessage
-                id='accessing_account'
-              />
-            )}
+                <FormattedMessage
+                  id='accessing_account'
+                />
+              )}
           </div>
           <div className="account-top-amount">
-            <strong>{isExist(balance) ? thousandCommas(atom(balance)) : '~'}</strong>
+            <strong>{isExist(balance) ? `${thousandCommas(atom(balance))} ATOM` : '~'}</strong>
             <span>{currency} {isExist(balance) ? thousandCommas(toBN(atom(balance)).times(atomPrice).toString()) : '~'}</span>
           </div>
         </div>

@@ -84,9 +84,9 @@
     bottom: 0;
     display: flex;
     justify-content: center;
-    padding: 7px;
+    padding: 7px 15px;
     a {
-      width: 165px;
+      flex: 1;
       height: 45px;
       border-radius: 8px;
       &:first-child {

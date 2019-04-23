@@ -49,7 +49,7 @@ class CMP extends Component<Props> {
       Toast.success(txHash, { heading: intl.formatMessage({ id: 'sent_successfully' }) })
       logger().track('submit_delegate', { result: 'successful' })
       console.log(txHash)
-      history.push('/')
+      history.goBack()
       pubsub.emit('updateAsyncData')
     }).catch(e => {
       logger().track('submit_delegate', { result: 'failed', message: e.message })

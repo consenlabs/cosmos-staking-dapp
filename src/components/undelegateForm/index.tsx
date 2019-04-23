@@ -4,7 +4,7 @@ import { atom, uatom, thousandCommas, isExist, createTxPayload, createUnDelegate
 import { sendTransaction } from 'lib/sdk'
 import { validAmount } from 'lib/validator'
 import { pubsub } from 'lib/event'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import getNetworkConfig from '../../config/network'
 
 interface Props {
@@ -12,6 +12,7 @@ interface Props {
   delegation: any
   validator: any
   history: any
+  intl: any
 }
 
 class CMP extends Component<Props, any> {
@@ -29,7 +30,7 @@ class CMP extends Component<Props, any> {
 
 
   onSubmit = () => {
-    const { account, delegation, history } = this.props
+    const { account, delegation, history, intl } = this.props
     const delegateBalance = delegation.shares
     const { address } = account
     const { amount } = this.state
@@ -51,12 +52,12 @@ class CMP extends Component<Props, any> {
     )
 
     sendTransaction(txPayload).then(txHash => {
-      Toast.success(txHash, { heading: '发送成功' })
+      Toast.success(txHash, { heading: intl.formatMessage({ id: 'sent_successfully' }) })
       console.log(txHash)
       history.push('/')
       pubsub.emit('updateAsyncData')
     }).catch(e => {
-      Toast.error(e.message, { heading: '发送失败' })
+      Toast.error(e.message, { heading: intl.formatMessage({ id: 'failed_to_send' }) })
     })
   }
 
@@ -75,7 +76,7 @@ class CMP extends Component<Props, any> {
   }
 
   render() {
-    const { delegation } = this.props
+    const { delegation, intl } = this.props
 
     if (!delegation) return this.renderEmpty()
 
@@ -93,7 +94,7 @@ class CMP extends Component<Props, any> {
         </div>
         <input
           type="number"
-          placeholder="输入金额"
+          placeholder={intl.formatMessage({ id: 'input_number' })}
           value={amount}
           onChange={this.onChange}
           max={atomBalance}
@@ -109,5 +110,5 @@ class CMP extends Component<Props, any> {
   }
 }
 
-export default CMP
+export default injectIntl(CMP)
 

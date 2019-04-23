@@ -18,7 +18,9 @@ const en_US = {
   failed_to_send: 'Failed',
   sent_successfully: 'Successfully',
   without_delegation_couldnt_unstake: "🤪 You don't have any delegation in the validator, couldn't unstake",
-  cancel_delegate: 'Cancel delegate'
+  cancel_delegate: 'Cancel delegate',
+  input_number: 'Input number',
+  coming_soon: '🚀 Coming soon...',
 }
 
 export default en_US

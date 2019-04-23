@@ -19,6 +19,8 @@ const zh_CN = {
   sent_successfully: '发送成功',
   without_delegation_couldnt_unstake: '🤪 你在此验证者下没有抵押，无法赎回',
   cancel_delegate: '取消委托',
+  input_number: '输入金额',
+  coming_soon: '🚀 敬请期待...',
 }
 
 export default zh_CN

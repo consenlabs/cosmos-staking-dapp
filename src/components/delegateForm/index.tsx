@@ -3,7 +3,7 @@ import './index.scss'
 import { atom, uatom, thousandCommas, isExist, createTxPayload, createDelegateMsg, Toast } from 'lib/utils'
 import { sendTransaction } from 'lib/sdk'
 import { validAmount } from 'lib/validator'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import { pubsub } from 'lib/event'
 import getNetworkConfig from '../../config/network'
 import getFeeConfig from '../../config/fee'
@@ -12,6 +12,7 @@ interface Props {
   account: any
   validator: any
   history: any
+  intl: any
 }
 
 class CMP extends Component<Props> {
@@ -26,7 +27,7 @@ class CMP extends Component<Props> {
   afterOpenModal() { }
 
   onSubmit = () => {
-    const { account, validator, history } = this.props
+    const { account, validator, history, intl } = this.props
     const { balance, address } = account
     const { amount } = this.state
     const [valid, msg] = validAmount(amount, atom(balance), getFeeConfig().retainFee)
@@ -42,12 +43,12 @@ class CMP extends Component<Props> {
     )
 
     sendTransaction(txPayload).then(txHash => {
-      Toast.success(txHash, { heading: '发送成功' })
+      Toast.success(txHash, { heading: intl.formatMessage({ id: 'sent_successfully' }) })
       console.log(txHash)
       history.push('/')
       pubsub.emit('updateAsyncData')
     }).catch(e => {
-      Toast.error(e.message, { heading: '发送失败' })
+      Toast.error(e.message, { heading: intl.formatMessage({ id: 'failed_to_send' }) })
     })
   }
 
@@ -56,7 +57,7 @@ class CMP extends Component<Props> {
   }
 
   render() {
-    const { account } = this.props
+    const { account, intl } = this.props
     const { balance } = account
     const { amount } = this.state
     const atomBalance = isExist(balance) ? thousandCommas(atom(balance)) : 0
@@ -71,7 +72,7 @@ class CMP extends Component<Props> {
         </div>
         <input
           type="number"
-          placeholder="输入金额"
+          placeholder={intl.formatMessage({ id: 'input_number' })}
           value={amount}
           onChange={this.onChange}
           max={atomBalance}
@@ -87,4 +88,4 @@ class CMP extends Component<Props> {
   }
 }
 
-export default CMP
+export default injectIntl(CMP)

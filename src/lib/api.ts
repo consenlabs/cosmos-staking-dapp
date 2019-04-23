@@ -32,23 +32,16 @@ function get(url, params = {}) {
   })
 }
 
-function getRpcHost(provider) {
-  let host = 'https://api.dev.tokenlon.im/v1/cosmos'
-  if (!/testnet/.test(provider)) {
-    host = 'https://api.tokenlon.im/v1/cosmos'
-  }
-  return host
-}
 
 function rpc(method, params) {
-  return initRequestDependency().then(({ headers, provider }) => {
+  return initRequestDependency().then(({ headers }) => {
     const data = {
       jsonrpc: '2.0',
       id: 1,
       method,
       params,
     }
-    const url = getRpcHost(provider)
+    const url = getNetworkConfig().chainAPI
     return Axios({ method: 'post', url, data, headers }).then(res => {
       if (res.data) {
         return res.data.result
@@ -145,38 +138,7 @@ export const getMyRewardByValidator = (delegatorAddr, validatorAddr) => {
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ server rpc requests ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 
-function createRpcRequestData(method, params) {
-  return {
-    jsonrpc: '2.0',
-    id: 1,
-    method,
-    params: params || [],
-  }
-}
-
-function serverRequest(url, method, params) {
-  return initRequestDependency().then(({ headers }) => {
-    return Axios({
-      method: 'get',
-      url,
-      data: createRpcRequestData(method, params),
-      timeout: 5,
-      headers: headers,
-      withCredentials: true
-    }).then(res => {
-      if (res.data) {
-        return res.data
-      } else {
-        throw new Error(`null response ${url} ${method} ${JSON.stringify(params)}`)
-      }
-    }).catch(error => {
-      console.warn(error)
-    })
-  })
-}
-
 export function getTxListByAddress(delegator: string, validator: string) {
-  const url = getNetworkConfig().chainAPI
   const params = [{
     address: delegator,
     tags: {
@@ -185,5 +147,5 @@ export function getTxListByAddress(delegator: string, validator: string) {
       validator,
     }
   }]
-  return serverRequest(url, 'wallet.getMsgListByAddress', [params]).then(data => data || [])
+  return rpc('wallet.getMsgListByAddress', [params]).then(data => data || [])
 }

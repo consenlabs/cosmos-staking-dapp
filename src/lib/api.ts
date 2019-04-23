@@ -139,7 +139,7 @@ export async function getAtomPrice() {
   const host = getNetworkConfig().market
   const currency = getLocale() === 'zh' ? 'CNY' : 'USDT'
   const params = [{ "chainType": "COSMOS", "address": "uatom", currency }]
-  return rpc(host, `market.getPrices`, params).then(prices => prices[0]).catch(warnning)
+  return rpc(host, `market.getPrice`, params).then(prices => prices || {}).catch(warnning)
 }
 
 export function getTxListByAddress(delegator: string, validator: string) {

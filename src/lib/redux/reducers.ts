@@ -9,7 +9,8 @@ const initialState = {
   pool: {
     not_bonded_tokens: 0,
     bonded_tokens: 0,
-  }
+  },
+  language: 'zh',
 }
 
 export default function device(state = initialState, action) {
@@ -29,6 +30,9 @@ export default function device(state = initialState, action) {
         return
       case types.UPDATE_POOL:
         draft.pool = action.payload.pool
+        return
+      case types.UPDATE_LANGUAGE:
+        draft.language = action.payload.language
         return
       default:
         return draft

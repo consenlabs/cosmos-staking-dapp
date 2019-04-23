@@ -35,3 +35,12 @@ export const updatePool = (pool) => {
     }
   }
 }
+
+export const updateLanguage = (language) => {
+  return {
+    type: types.UPDATE_LANGUAGE,
+    payload: {
+      language,
+    }
+  }
+}

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
+import { injectIntl, FormattedMessage } from 'react-intl'
 import { selectAccountInfo } from '../../lib/redux/selectors'
 import './index.scss'
 import { toBN, atom, thousandCommas, ellipsis, isExist } from 'lib/utils'
@@ -32,7 +33,9 @@ class CMP extends Component<Props> {
         <div className="account-bottom">
           <div>
             <div>
-              <span>可用余额</span>
+              <FormattedMessage
+                id='available_asset'
+              />
               <i>{isExist(balance) ? thousandCommas(atom(balance)) : '~'}</i>
             </div>
             <div>
@@ -66,4 +69,4 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CMP)
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(CMP))

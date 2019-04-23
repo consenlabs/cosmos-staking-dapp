@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { withRouter } from 'react-router-dom'
+import { injectIntl } from 'react-intl'
 import './index.scss'
 import NavBar from '../../components/navBar'
 import AccountCard from '../../components/accountCard'
@@ -15,9 +16,6 @@ interface Props {
 }
 
 class Page extends Component<Props, any> {
-
-
-
   render() {
     return (
       <div className="home" id="home">
@@ -42,4 +40,4 @@ const mapDispatchToProps = {
 
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Page))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(injectIntl(Page)))

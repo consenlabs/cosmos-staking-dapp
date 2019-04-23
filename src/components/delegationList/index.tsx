@@ -57,7 +57,7 @@ class CMP extends Component<Props> {
           <FormattedMessage
             id='anticipated_earnings'
           />
-          <i>{d.shares && v.annualized_returns ? decimal(atom(d.shares * v.annualized_returns / 365)) : '~'}</i>
+          <i>{d.shares && v.annualized_returns ? `+${decimal(atom(d.shares * v.annualized_returns / 365))}` : '~'}</i>
         </div>
       </div>
 

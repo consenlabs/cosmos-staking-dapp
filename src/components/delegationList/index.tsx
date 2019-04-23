@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { Link } from 'react-router-dom'
+import { FormattedMessage } from 'react-intl'
 import { selectDelegations, selectValidators, selectValidatorRewards } from '../../lib/redux/selectors'
 import ValidatorLogo from '../../components/validatorLogo'
 import './index.scss'
@@ -30,23 +31,31 @@ class CMP extends Component<Props> {
         <strong>{v.description.moniker}</strong>
         <div>
           <i>{fPercent(v.annualized_returns, 3) || '~'}</i>
-          <span>年化收益</span>
+          <FormattedMessage
+            id='annualized_earnings'
+          />
         </div>
       </div>
       <div className="split-line"></div>
       <div className="bottom">
         <div>
-          <span>已委托</span>
+          <FormattedMessage
+            id='delegated'
+          />
           <i>{thousandCommas(atom(d.shares))}</i>
         </div>
 
         <div>
-          <span>收益</span>
+          <FormattedMessage
+            id='earnings'
+          />
           <i>{reward ? thousandCommas(atom(reward)) : '~'}</i>
         </div>
 
         <div>
-          <span>预计收益 (天)</span>
+          <FormattedMessage
+            id='anticipated_earnings'
+          />
           <i>{d.shares && v.annualized_returns ? decimal(atom(d.shares * v.annualized_returns / 365)) : '~'}</i>
         </div>
       </div>

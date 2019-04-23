@@ -4,6 +4,7 @@ import { atom, uatom, thousandCommas, isExist, createTxPayload, createUnDelegate
 import { sendTransaction } from 'lib/sdk'
 import { validAmount } from 'lib/validator'
 import { pubsub } from 'lib/event'
+import { FormattedMessage } from 'react-intl'
 import getNetworkConfig from '../../config/network'
 
 interface Props {
@@ -66,7 +67,9 @@ class CMP extends Component<Props, any> {
   renderEmpty() {
     return <div className="form-inner">
       <div className="form-empty">
-        <span>🤪 你在此验证者下没有抵押，无法赎回</span>
+        <FormattedMessage
+          id='without_delegation_couldnt_unstake'
+        />
       </div>
     </div>
   }
@@ -83,7 +86,9 @@ class CMP extends Component<Props, any> {
     return (
       <div className="form-inner">
         <div className="form-header">
-          <span>已抵押</span>
+          <FormattedMessage
+            id='staked'
+          />
           <i>{atomBalance} ATOM</i>
         </div>
         <input
@@ -94,7 +99,11 @@ class CMP extends Component<Props, any> {
           max={atomBalance}
           min={0.000001}
         />
-        <button disabled={disabled} className="form-button" onClick={this.onSubmit}>取消委托</button>
+        <button disabled={disabled} className="form-button" onClick={this.onSubmit}>
+          <FormattedMessage
+            id='cancel_delegate'
+          />
+        </button>
       </div>
     )
   }

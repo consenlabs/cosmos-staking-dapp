@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { FormattedMessage } from 'react-intl'
 import './index.scss'
 
 interface Props {
@@ -16,11 +17,15 @@ class CMP extends Component<Props> {
     return <div className="navbar">
       <div>
         <Link className={index === 0 ? "selected" : ""} to="/">
-          我的委托
-      </Link>
+          <FormattedMessage
+            id='my_delegation'
+          />
+        </Link>
         <Link className={index === 1 ? "selected" : ""} to="/validators">
-          验证者
-      </Link>
+          <FormattedMessage
+            id='validators'
+          />
+        </Link>
       </div>
     </div>
   }

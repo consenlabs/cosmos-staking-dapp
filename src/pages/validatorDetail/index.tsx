@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { withRouter, Link } from 'react-router-dom'
+import { FormattedMessage } from 'react-intl'
 import { selectValidators } from '../../lib/redux/selectors'
 import { ellipsis, thousandCommas, atom, fPercent, isiPhoneX } from '../../lib/utils'
 import ValidatorLogo from '../../components/validatorLogo'
@@ -39,11 +40,15 @@ class Page extends Component<Props> {
 
         <ul>
           <li>
-            <span>总委托</span>
+            <FormattedMessage
+              id='total_delegation'
+            />
             <i>{thousandCommas(atom(v.tokens))} ATOM</i>
           </li>
           <li>
-            <span>验证者委托</span>
+            <FormattedMessage
+              id='validator_delegation'
+            />
             <i>{thousandCommas(atom(v.delegator_shares))} ATOM</i>
           </li>
           {/* <li>
@@ -51,18 +56,30 @@ class Page extends Component<Props> {
             <i>~</i>
           </li> */}
           <li>
-            <span>佣金</span>
+            <FormattedMessage
+              id='commission'
+            />
             <i>{fPercent(v.commission.rate, 1)}</i>
           </li>
           <li>
-            <span>年化收益</span>
+            <FormattedMessage
+              id='annualized_earnings'
+            />
             <i>{fPercent(v.annualized_returns, 3)}</i>
           </li>
         </ul>
 
         <div className="toolbar" style={{ bottom: isiPhoneX() ? 40 : 0 }}>
-          <Link to={`/undelegate/${v.operator_address}`}>赎回</Link>
-          <Link to={`/delegate/${v.operator_address}`}>委托</Link>
+          <Link to={`/undelegate/${v.operator_address}`}>
+            <FormattedMessage
+              id='unstake'
+            />
+          </Link>
+          <Link to={`/delegate/${v.operator_address}`}>
+            <FormattedMessage
+              id='delegate'
+            />
+          </Link>
         </div>
       </div>
     )

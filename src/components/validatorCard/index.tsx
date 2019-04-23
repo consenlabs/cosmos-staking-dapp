@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import ValidatorLogo from '../../components/validatorLogo'
 import './index.scss'
 import { atom, thousandCommas, fPercent } from 'lib/utils'
+import { FormattedMessage } from 'react-intl'
 
 interface Props {
   validator: any
@@ -31,7 +32,9 @@ class CMP extends Component<Props> {
       </div>
       <div className="v-right">
         <strong>{fPercent(v.annualized_returns, 3)}</strong>
-        <span>年化收益</span>
+        <FormattedMessage
+          id='annualized_earnings'
+        />
       </div>
     </Link>
   }

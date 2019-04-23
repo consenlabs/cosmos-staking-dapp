@@ -3,6 +3,7 @@ import './index.scss'
 import { atom, uatom, thousandCommas, isExist, createTxPayload, createDelegateMsg, Toast } from 'lib/utils'
 import { sendTransaction } from 'lib/sdk'
 import { validAmount } from 'lib/validator'
+import { FormattedMessage } from 'react-intl'
 import { pubsub } from 'lib/event'
 import getNetworkConfig from '../../config/network'
 import getFeeConfig from '../../config/fee'
@@ -63,7 +64,9 @@ class CMP extends Component<Props> {
     return (
       <div className="form-inner">
         <div className="form-header">
-          <span>可用余额</span>
+          <FormattedMessage
+            id='available_asset'
+          />
           <i>{atomBalance} ATOM</i>
         </div>
         <input
@@ -74,7 +77,11 @@ class CMP extends Component<Props> {
           max={atomBalance}
           min={0.000001}
         />
-        <button disabled={disabled} className="form-button" onClick={this.onSubmit}>委托</button>
+        <button disabled={disabled} className="form-button" onClick={this.onSubmit}>
+          <FormattedMessage
+            id='delegate'
+          />
+        </button>
       </div>
     )
   }

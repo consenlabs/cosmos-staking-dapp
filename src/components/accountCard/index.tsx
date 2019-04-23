@@ -23,7 +23,13 @@ class CMP extends Component<Props> {
         <div className="account-top">
           <div className="account-top-address">
             <strong>Cosmos Wallet</strong>
-            <span>{ellipsis(address || '获取账号中...', 24)}</span>
+            {address ? (
+              <span>{ellipsis(address, 24)}</span>  
+            ) : (
+              <FormattedMessage
+                id='accessing_account'
+              />
+            )}
           </div>
           <div className="account-top-amount">
             <strong>{isExist(balance) ? thousandCommas(atom(balance)) : '~'}</strong>
@@ -39,18 +45,24 @@ class CMP extends Component<Props> {
               <i>{isExist(balance) ? thousandCommas(atom(balance)) : '~'}</i>
             </div>
             <div>
-              <span>收益</span>
+              <FormattedMessage
+                id='earnings'
+              />
               <i>{isExist(rewardBalance) ? thousandCommas(atom(rewardBalance)) : '~'}</i>
             </div>
           </div>
           <div className="split-line"></div>
           <div>
             <div>
-              <span>委托</span>
+              <FormattedMessage
+                id='delegation'
+              />
               <i>{isExist(delegateBalance) ? thousandCommas(atom(delegateBalance)) : '~'}</i>
             </div>
             <div>
-              <span>赎回中</span>
+              <FormattedMessage
+                id='unstaking'
+              />
               <i>{isExist(refundingBalance) ? thousandCommas(atom(refundingBalance)) : '~'}</i>
             </div>
           </div>

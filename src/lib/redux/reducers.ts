@@ -10,7 +10,6 @@ const initialState = {
     not_bonded_tokens: 0,
     bonded_tokens: 0,
   },
-  language: 'zh',
   validatorRewards: {},
 }
 
@@ -31,9 +30,6 @@ export default function device(state = initialState, action) {
         return
       case types.UPDATE_POOL:
         draft.pool = action.payload.pool
-        return
-      case types.UPDATE_LANGUAGE:
-        draft.language = action.payload.language
         return
       case types.UPDATE_VALIDATOR_REWARDS:
         draft.validatorRewards = action.payload.validatorRewards

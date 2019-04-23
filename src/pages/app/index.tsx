@@ -9,7 +9,7 @@ import Delegate from '../delegate'
 import UnDelegate from '../undelegate'
 import Vote from '../vote'
 import './index.scss'
-import { updateValidators, updateAccount, updateDelegations, updatePool, updateLanguage, updateValidatorRewards } from 'lib/redux/actions'
+import { updateValidators, updateAccount, updateDelegations, updatePool, updateValidatorRewards } from 'lib/redux/actions'
 import * as api from 'lib/api'
 import * as sdk from 'lib/sdk'
 import * as utils from 'lib/utils'
@@ -22,23 +22,6 @@ interface Props {
   updateAccount: (value: any) => any
   updatePool: (value: any) => any
   updateValidatorRewards: (value: any) => any
-  updateLanguage: (value: any) => any
-}
-
-
-function parseSearch(str) {
-  if(str == undefined) return
-    str = str.substr(1)
-    var arr = str.split("&"),
-        obj = {},
-        newArr = []
-    arr.map((value) => {
-      newArr = value.split("=")
-      if(newArr[0] != undefined) {
-        obj[newArr[0]] = newArr[1]
-      }
-    })
-  return obj
 }
 
 class App extends Component<Props> {
@@ -58,12 +41,7 @@ class App extends Component<Props> {
   }
 
   updateAsyncData = () => {
-    const { updateAccount, updateDelegations, updateValidators, updatePool, updateLanguage, updateValidatorRewards } = this.props
-
-    const searchObj = parseSearch(window.location.search) as any
-    if (searchObj.locale) {
-      updateLanguage(searchObj.locale || 'en-US')
-    }
+    const { updateAccount, updateDelegations, updateValidators, updatePool, updateValidatorRewards } = this.props
 
     sdk.getAccounts().then(accounts => {
       const address = accounts[0]
@@ -135,7 +113,6 @@ const mapDispatchToProps = {
   updateDelegations,
   updateValidators,
   updatePool,
-  updateLanguage,
   updateValidatorRewards,
 }
 

@@ -6,18 +6,18 @@ import en_US from './locale/en_US'
 import zh from 'react-intl/locale-data/zh'
 import en from 'react-intl/locale-data/en'
 
-addLocaleData([...zh,...en])
+addLocaleData([...zh, ...en])
 
 interface Props {
-  locale: string
-  localeMessage: any
   children: any
 }
 
 
 class Inter extends Component<Props, any> {
   render() {
-    let { locale, localeMessage, children } = this.props
+    let { children } = this.props
+    const locale = getLocale()
+    const localeMessage = chooseLocale(locale)
     return (
       <IntlProvider key={locale} locale={locale} messages={localeMessage}>
         {children}
@@ -26,23 +26,26 @@ class Inter extends Component<Props, any> {
   }
 }
 
-function chooseLocale(val) {
-  let _val = val || navigator.language.split('_')[0]
-  switch (_val) {
+function getLocale() {
+  let val = navigator.language || ''
+  return val.toLowerCase().split('_')[0]
+}
+
+function chooseLocale(locale) {
+  switch (locale) {
     case 'en':
       return en_US
     case 'zh':
       return zh_CN
     default:
-      return en_US
+      return zh_CN
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (_state) => {
   return {
-    locale: state.language,
-    localeMessage: chooseLocale(state.language)
-  } 
+
+  }
 }
 
 let Intl = connect(mapStateToProps)(Inter)

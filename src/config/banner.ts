@@ -16,7 +16,7 @@ export default [
       zh_big: 'https://aws-v2-cdn.token.im/cosmos/collaborators/sparkpool-zh-big.png',
       zh_small: 'https://aws-v2-cdn.token.im/cosmos/collaborators/sparkpool-zh-small.png',
       en_big: 'https://aws-v2-cdn.token.im/cosmos/collaborators/sparkpool-en-big.png',
-      en_small: 'https://aws-v2-cdn.token.im/cosmos/collaborators/sparkpoo-en-small.png',
+      en_small: 'https://aws-v2-cdn.token.im/cosmos/collaborators/sparkpool-en-small.png',
     }
   },
 ]

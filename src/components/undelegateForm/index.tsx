@@ -3,12 +3,14 @@ import './index.scss'
 import { atom, uatom, thousandCommas, isExist, createTxPayload, createUnDelegateMsg, Toast } from 'lib/utils'
 import { sendTransaction } from 'lib/sdk'
 import { validAmount } from 'lib/validator'
+import { pubsub } from 'lib/event'
 import tokenConfig from '../../config/token'
 
 interface Props {
   account: any
   delegation: any
   validator: any
+  history: any
 }
 
 class CMP extends Component<Props, any> {
@@ -24,12 +26,9 @@ class CMP extends Component<Props, any> {
   componentDidMount() {
   }
 
-  getSelectedDelegation = () => {
-
-  }
 
   onSubmit = () => {
-    const { account, delegation } = this.props
+    const { account, delegation, history } = this.props
     const delegateBalance = delegation.shares
     const { address } = account
     const { amount } = this.state
@@ -53,6 +52,8 @@ class CMP extends Component<Props, any> {
     sendTransaction(txPayload).then(txHash => {
       Toast.success(txHash, { heading: '发送成功' })
       console.log(txHash)
+      history.push('/')
+      pubsub.emit('updateAsyncData')
     }).catch(e => {
       Toast.error(e.message, { heading: '发送失败' })
     })

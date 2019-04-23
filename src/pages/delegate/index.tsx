@@ -11,16 +11,17 @@ interface Props {
   validators: any
   account: any
   match: any
+  history: any
 }
 
 class Page extends Component<Props> {
 
   componentDidMount() {
-
+    console.log(this.props)
   }
 
   render() {
-    const { validators, account, match } = this.props
+    const { validators, account, match, history } = this.props
     const id = match.params.id
     const v = validators.find(v => v.operator_address === id)
 
@@ -40,7 +41,7 @@ class Page extends Component<Props> {
             </div>
           </section>
         </div>
-        <DelegateForm account={account} validator={v} />
+        <DelegateForm account={account} validator={v} history={history} />
       </div>
     )
   }

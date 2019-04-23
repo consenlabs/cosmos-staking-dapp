@@ -3,12 +3,14 @@ import './index.scss'
 import { atom, uatom, thousandCommas, isExist, createTxPayload, createDelegateMsg, Toast } from 'lib/utils'
 import { sendTransaction } from 'lib/sdk'
 import { validAmount } from 'lib/validator'
+import { pubsub } from 'lib/event'
 import tokenConfig from '../../config/token'
 import feeConfig from '../../config/fee'
 
 interface Props {
   account: any
   validator: any
+  history: any
 }
 
 class CMP extends Component<Props> {
@@ -23,7 +25,7 @@ class CMP extends Component<Props> {
   afterOpenModal() { }
 
   onSubmit = () => {
-    const { account, validator } = this.props
+    const { account, validator, history } = this.props
     const { balance, address } = account
     const { amount } = this.state
     const [valid, msg] = validAmount(amount, atom(balance), feeConfig.retainFee)
@@ -41,6 +43,8 @@ class CMP extends Component<Props> {
     sendTransaction(txPayload).then(txHash => {
       Toast.success(txHash, { heading: '发送成功' })
       console.log(txHash)
+      history.push('/')
+      pubsub.emit('updateAsyncData')
     }).catch(e => {
       Toast.error(e.message, { heading: '发送失败' })
     })

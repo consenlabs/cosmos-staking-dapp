@@ -12,6 +12,7 @@ import { updateValidators, updateAccount, updateDelegations, updatePool } from '
 import * as api from 'lib/api'
 import * as sdk from 'lib/sdk'
 import * as utils from 'lib/utils'
+import { pubsub } from 'lib/event'
 
 interface Props {
   validators: any[]
@@ -25,6 +26,16 @@ class App extends Component<Props> {
 
   componentWillMount() {
     this.updateAsyncData()
+    pubsub.on('updateAsyncData', () => {
+      // refresh immediately
+      this.updateAsyncData()
+      // refresh after 30 seconds
+      setTimeout(this.updateAsyncData, 1000 * 30)
+    })
+  }
+
+  componentWillUnmount() {
+    pubsub.off('updateAsyncData')
   }
 
   updateAsyncData = () => {

@@ -86,7 +86,7 @@ class App extends Component<Props> {
       updatePool(pool)
     })
 
-    api.getValidators().then(updateValidators)
+    api.getValidators().then(updateValidators).catch(err => console.warn(err))
     api.getAtomPrice().then(updateAtomPrice)
   }
 

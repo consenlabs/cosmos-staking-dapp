@@ -8,6 +8,7 @@ import AccountCard from '../../components/accountCard'
 import DelegationList from '../../components/delegationList'
 import Banner from '../../components/banner'
 import WaterMark from '../../components/walletMark'
+import { Toast } from '../../lib/utils'
 import logger from '../../lib/logger'
 import LOGO from '../../assets/cosmos.svg'
 import FAQ from '../../assets/faq.svg'
@@ -24,6 +25,11 @@ interface Props {
 class Page extends Component<Props, any> {
   componentDidMount() {
     logger().track('to_home')
+    if (!window['imToken']['callAPI']) {
+      setTimeout(() => {
+        Toast.warn('请用 imToken 打开', { hideAfter: 10 })
+      }, 0)
+    }
   }
 
   render() {

@@ -23,7 +23,6 @@
         color: #ffffff;
       }
       span {
-        width: 205px;
         overflow: hidden;
         font-family: 'PingFang SC';
         font-size: 13px;
@@ -38,6 +37,7 @@
       text-align: right;
       strong {
         margin-bottom: 8px;
+        white-space: nowrap;
           font-size: 17px;
           font-weight: bold;
           font-style: normal;

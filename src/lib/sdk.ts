@@ -2,7 +2,8 @@ window['imToken'] = window['imToken'] || {
   callPromisifyAPI: (apiName: string, _payload: any): Promise<any> => {
     switch (apiName) {
       case 'cosmos.getAccounts':
-        return Promise.resolve(['cosmos18ptg027t5cumqzkhpn726uhdqdadh88ss7ytv3'])
+        return Promise.resolve([])
+      // return Promise.resolve(['cosmos1zt57jwmlfl77k9urjha2xupgpk2j90axd9pxss'])
       // return Promise.resolve(['cosmos1y0a8sc5ayv52f2fm5t7hr2g88qgljzk4jcz78f'])
       case 'cosmos.getProvider':
         // return Promise.resolve('https://stargate.cosmos.network')
@@ -22,7 +23,8 @@ const imToken = window['imToken']
  */
 
 export function getAccounts() {
-  return imToken.callPromisifyAPI('cosmos.getAccounts')
+  // return Promise.resolve(['cosmos1zt57jwmlfl77k9urjha2xupgpk2j90axd9pxss'])
+  return imToken.callPromisifyAPI('cosmos.getAccounts').catch(err => console.warn(err))
 }
 
 export function getProvider() {

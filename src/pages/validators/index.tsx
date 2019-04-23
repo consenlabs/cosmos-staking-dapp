@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom'
 import ValidatorList from '../../components/validatorList'
 import NavBar from '../../components/navBar'
 import Banner from '../../components/banner'
+import WaterMark from '../../components/walletMark'
 import './index.scss'
 
 interface Props {
@@ -20,6 +21,7 @@ class Page extends Component<Props> {
   render() {
     return (
       <div className="validators">
+        <WaterMark />
         <NavBar index={1} />
         <Banner
           address="cosmosvaloper1cgh5ksjwy2sd407lyre4l3uj2fdrqhpkzp06e6"

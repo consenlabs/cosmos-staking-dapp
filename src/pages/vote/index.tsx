@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { withRouter } from 'react-router-dom'
+import WaterMark from '../../components/walletMark'
 import './index.scss'
 
 interface Props {
@@ -16,7 +17,8 @@ class Page extends Component<Props> {
 
     return (
       <div className="vote-page">
-        <div>🚀 敬请期待...</div>
+        <WaterMark />
+        <div className="coming-soon">🚀 敬请期待...</div>
       </div>
     )
   }

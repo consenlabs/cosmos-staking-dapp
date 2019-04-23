@@ -1,7 +1,7 @@
 import BN from 'big.js'
 import numeral from 'numeral'
 import cogoToast from 'cogo-toast'
-import feeConfig from '../config/fee'
+import getFeeConfig from '../config/fee'
 
 export const Toast = cogoToast
 
@@ -22,7 +22,7 @@ export function createTxPayload(from: string, msg: __Msg[], memo: string) {
   const payload = {
     from: from,
     chainType: 'COSMOS',
-    fee: feeConfig.transfer,
+    fee: getFeeConfig().transfer,
     msg,
     memo,
   }

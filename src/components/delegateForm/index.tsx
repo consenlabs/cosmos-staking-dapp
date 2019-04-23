@@ -4,8 +4,8 @@ import { atom, uatom, thousandCommas, isExist, createTxPayload, createDelegateMs
 import { sendTransaction } from 'lib/sdk'
 import { validAmount } from 'lib/validator'
 import { pubsub } from 'lib/event'
-import tokenConfig from '../../config/token'
-import feeConfig from '../../config/fee'
+import getNetworkConfig from '../../config/network'
+import getFeeConfig from '../../config/fee'
 
 interface Props {
   account: any
@@ -28,7 +28,7 @@ class CMP extends Component<Props> {
     const { account, validator, history } = this.props
     const { balance, address } = account
     const { amount } = this.state
-    const [valid, msg] = validAmount(amount, atom(balance), feeConfig.retainFee)
+    const [valid, msg] = validAmount(amount, atom(balance), getFeeConfig().retainFee)
     if (!valid) {
       return Toast.error(msg)
     }
@@ -36,7 +36,7 @@ class CMP extends Component<Props> {
     // send delegate apiCall
     const txPayload = createTxPayload(
       address,
-      [createDelegateMsg(address, validator.operator_address, uatom(amount), tokenConfig.denom)],
+      [createDelegateMsg(address, validator.operator_address, uatom(amount), getNetworkConfig().denom)],
       'delegate from imToken',
     )
 

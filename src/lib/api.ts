@@ -1,6 +1,7 @@
 import Axios from "axios"
 import { getHeaders, getProvider } from './sdk'
 import { getRewardBalance } from './utils'
+import getNetworkConfig from '../config/network'
 
 /**
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ node requests ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -175,7 +176,7 @@ function serverRequest(url, method, params) {
 }
 
 export function getTxListByAddress(delegator: string, validator: string) {
-  const url = `https://api.dev.tokenlon.im/v1/cosmos`
+  const url = getNetworkConfig().chainAPI
   const params = [{
     address: delegator,
     tags: {

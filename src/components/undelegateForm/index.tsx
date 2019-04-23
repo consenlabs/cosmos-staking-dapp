@@ -4,7 +4,7 @@ import { atom, uatom, thousandCommas, isExist, createTxPayload, createUnDelegate
 import { sendTransaction } from 'lib/sdk'
 import { validAmount } from 'lib/validator'
 import { pubsub } from 'lib/event'
-import tokenConfig from '../../config/token'
+import getNetworkConfig from '../../config/network'
 
 interface Props {
   account: any
@@ -44,7 +44,7 @@ class CMP extends Component<Props, any> {
         address,
         delegation.validator_address,
         uatom(amount),
-        tokenConfig.denom)
+        getNetworkConfig().denom)
       ],
       'undelegate from imToken',
     )

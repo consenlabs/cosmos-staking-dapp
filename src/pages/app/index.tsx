@@ -55,6 +55,8 @@ class App extends Component<Props> {
     sdk.getAccounts().then(accounts => {
       const address = accounts[0]
 
+      if (!address) return false
+
       updateAccount({ address })
 
       api.getRewards(address).then(utils.getRewardBalance).then(b => {

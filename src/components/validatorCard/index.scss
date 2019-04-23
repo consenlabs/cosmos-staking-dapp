@@ -12,7 +12,7 @@
   text-decoration: none;
   .v-left {
       flex: 1;
-      padding: 2px 0;
+      height: 42px;
       margin-left: 10px;
       display: flex;
       flex-direction: column;
@@ -25,14 +25,11 @@
           font-size: 15px;
           font-weight: normal;
           font-style: normal;
-          line-height: 1.07;
           letter-spacing: 0.2px;
           color: #191c1e;
       }
       span {
           display: block;
-          width: 135px;
-          height: 11px;
           white-space: nowrap;
           font-family: 'PingFang SC';
           font-size: 11px;
@@ -45,7 +42,7 @@
   }
   .v-right {
       flex: 1;
-      padding: 2px 0;
+      height: 42px;
       margin-left: auto;
       display: flex;
       flex-direction: column;
@@ -56,7 +53,6 @@
           font-size: 15px;
           font-weight: 500;
           font-style: normal;
-          line-height: 1.07;
           letter-spacing: normal;
           text-align: right;
           color: #098de6;

@@ -31,8 +31,8 @@ class CMP extends Component<Props, any> {
 
 
   onSubmit = () => {
-    const { account, delegation, history, intl } = this.props
-    const delegateBalance = delegation.shares
+    const { account, delegation = {}, history, intl } = this.props
+    const delegateBalance = delegation.shares || 0
     const { address } = account
     const { amount } = this.state
     const [valid, msg] = validAmount(amount, atom(delegateBalance), 0, intl)
@@ -58,7 +58,7 @@ class CMP extends Component<Props, any> {
       Toast.success(txHash, { heading: intl.formatMessage({ id: 'sent_successfully' }) })
       logger().track('submit_undelegate', { result: 'successful' })
       console.log(txHash)
-      history.push('/')
+      history.goBack()
       pubsub.emit('updateAsyncData')
     }).catch(e => {
       logger().track('submit_undelegate', { result: 'failed', message: e.message })
@@ -81,9 +81,9 @@ class CMP extends Component<Props, any> {
   }
 
   render() {
-    const { delegation, intl } = this.props
+    const { delegation = {}, intl } = this.props
 
-    if (!delegation) return this.renderEmpty()
+    // if (!delegation) return this.renderEmpty()
 
     const delegateBalance = delegation.shares
     const { amount } = this.state

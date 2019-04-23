@@ -27,13 +27,13 @@ class Page extends Component<Props> {
     return (
       <div className="validator-detail">
         <section>
-          <div className="top">
+          <a className="top" href={v.description.website || 'javascript:void(0)'}>
             <ValidatorLogo url={v.description.logo} />
             <div className="left">
               <strong>{v.description.moniker}</strong>
               <span>{ellipsis(v.operator_address, 24)}</span>
             </div>
-          </div>
+          </a>
           <div className="desc">{v.description.details || 'no description'}</div>
         </section>
 

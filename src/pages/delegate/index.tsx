@@ -5,6 +5,7 @@ import { selectValidators, selectAccountInfo } from '../../lib/redux/selectors'
 import { ellipsis, } from '../../lib/utils'
 import DelegateForm from '../../components/delegateForm'
 import ValidatorLogo from '../../components/validatorLogo'
+import Loading from '../../components/loading'
 import './index.scss'
 
 interface Props {
@@ -26,7 +27,7 @@ class Page extends Component<Props> {
     const v = validators.find(v => v.operator_address === id)
 
     console.log(v, match)
-    if (!v) return <h1 className="loading-text">Loading...</h1>
+    if (!v) return <Loading />
 
     return (
       <div className="delegate-page">

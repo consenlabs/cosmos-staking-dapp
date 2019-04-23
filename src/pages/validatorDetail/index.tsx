@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl'
 import { selectValidators } from '../../lib/redux/selectors'
 import { ellipsis, thousandCommas, atom, fPercent, isiPhoneX } from '../../lib/utils'
 import ValidatorLogo from '../../components/validatorLogo'
+import Loading from '../../components/loading'
 import './index.scss'
 import logger from '../../lib/logger'
 
@@ -26,7 +27,7 @@ class Page extends Component<Props> {
     const id = match.params.id
     const v = validators.find(v => v.operator_address === id)
 
-    if (!v) return <h1 className="loading-text">Loading...</h1>
+    if (!v) return <Loading />
 
     return (
       <div className="validator-detail">

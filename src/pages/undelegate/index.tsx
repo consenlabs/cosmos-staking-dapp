@@ -5,6 +5,7 @@ import { selectValidators, selectAccountInfo, selectDelegations } from '../../li
 import { ellipsis, } from '../../lib/utils'
 import UnDelegateForm from '../../components/undelegateForm'
 import ValidatorLogo from '../../components/validatorLogo'
+import Loading from '../../components/loading'
 import './index.scss'
 
 interface Props {
@@ -26,7 +27,7 @@ class Page extends Component<Props> {
     const id = match.params.id
     const v = validators.find(v => v.operator_address === id)
 
-    if (!v) return <h1 className="loading-text">Loading...</h1>
+    if (!v) return <Loading />
 
     const delegation = delegations.find(d => d.validator_address === v.operator_address)
 

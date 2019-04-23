@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 import { selectDelegations, selectValidators, selectValidatorRewards } from '../../lib/redux/selectors'
 import ValidatorLogo from '../../components/validatorLogo'
+import Loading from '../../components/loading'
 import './index.scss'
 import { atom, thousandCommas, fPercent, decimal } from 'lib/utils'
 
@@ -65,6 +66,8 @@ class CMP extends Component<Props> {
 
   render() {
     const { delegations, validators } = this.props
+
+    if (!delegations || !delegations.length) return <Loading />
 
     return (
       <div className="delegations">

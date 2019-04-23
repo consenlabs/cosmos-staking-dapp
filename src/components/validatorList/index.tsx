@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import { withRouter } from 'react-router-dom'
 import { selectValidators, selectPool } from '../../lib/redux/selectors'
 import ValidatorCard from '../../components/validatorCard'
+import Loading from '../../components/loading'
 import './index.scss'
 
 interface Props {
@@ -19,6 +20,9 @@ class Page extends Component<Props> {
 
   render() {
     const { validators, pool } = this.props
+
+    if (!validators || !validators.length) return <Loading />
+
     return (
       <div className="validator-list">
         {

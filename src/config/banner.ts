@@ -3,20 +3,20 @@ export default [
     name: 'hash',
     operator_address: 'cosmosvaloper1cgh5ksjwy2sd407lyre4l3uj2fdrqhpkzp06e6',
     imgs: {
-      cn_l: 'http://whale-token-im.b0.upaiyun.com/assets/images/hash-cn-l.png',
-      cn_s: 'http://whale-token-im.b0.upaiyun.com/assets/images/hash-cn-s.png',
-      en_l: 'http://whale-token-im.b0.upaiyun.com/assets/images/hash-eng-l.png',
-      en_s: 'http://whale-token-im.b0.upaiyun.com/assets/images/hash-eng-s.png',
+      zh_big: 'https://aws-v2-cdn.token.im/cosmos/collaborators/hash-zh-big.png',
+      zh_small: 'https://aws-v2-cdn.token.im/cosmos/collaborators/hash-zh-small.png',
+      en_big: 'https://aws-v2-cdn.token.im/cosmos/collaborators/hash-en-big.png',
+      en_small: 'https://aws-v2-cdn.token.im/cosmos/collaborators/hash-en-small.png',
     }
   },
   {
     name: 'SparkPool',
     operator_address: 'cosmosvaloper1rwh0cxa72d3yle3r4l8gd7vyphrmjy2kpe4x72',
     imgs: {
-      cn_l: 'http://whale-token-im.b0.upaiyun.com/assets/images/sparkpool-cn-l.png',
-      cn_s: 'http://whale-token-im.b0.upaiyun.com/assets/images/sparkpool-cn-s.png',
-      en_l: 'http://whale-token-im.b0.upaiyun.com/assets/images/sparkpoo-eng-l.png',
-      en_s: 'http://whale-token-im.b0.upaiyun.com/assets/images/sparkpoo-eng-s.png',
+      zh_big: 'https://aws-v2-cdn.token.im/cosmos/collaborators/sparkpool-zh-big.png',
+      zh_small: 'https://aws-v2-cdn.token.im/cosmos/collaborators/sparkpool-zh-small.png',
+      en_big: 'https://aws-v2-cdn.token.im/cosmos/collaborators/sparkpool-en-big.png',
+      en_small: 'https://aws-v2-cdn.token.im/cosmos/collaborators/sparkpoo-en-small.png',
     }
   },
 ]

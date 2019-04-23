@@ -20,12 +20,11 @@ function getRandomBanner(size) {
   smallSelected = smallSelected || bannerConfig[Math.abs(index - 1)]
 
   const selectedConfig = size === 'big' ? bigSelected : smallSelected
-  const localeKey = locale === 'en' ? 'en' : 'cn'
-  const sizeKey = size === 'big' ? 'l' : 's'
-  console.log(sizeKey, localeKey, selectedConfig, bigSelected, smallSelected)
+  console.log(selectedConfig, bigSelected, smallSelected)
 
+  console.log(locale, size)
   return {
-    url: selectedConfig.imgs[`${localeKey}_${sizeKey}`],
+    url: selectedConfig.imgs[`${locale}_${size}`],
     address: selectedConfig.operator_address,
   }
 }
@@ -36,6 +35,7 @@ class CMP extends Component<Props, any> {
   constructor(props) {
     super(props)
     this.state = getRandomBanner(props.size)
+    console.log(this.state)
   }
 
   componentDidMount() { }

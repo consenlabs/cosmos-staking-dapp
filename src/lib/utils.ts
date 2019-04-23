@@ -167,5 +167,7 @@ export const isiPhoneX = () => {
 
 export const getLocale = () => {
   let val = navigator.language || ''
-  return val.toLowerCase().split('_')[0] || 'zh'
+  const locale = val.toLowerCase().split(/[^\w+]/ig)[0] || 'zh'
+  return locale
+
 }

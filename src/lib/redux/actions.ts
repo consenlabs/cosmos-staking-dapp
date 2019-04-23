@@ -26,3 +26,12 @@ export const updateDelegations = (delegations) => {
     }
   }
 }
+
+export const updatePool = (pool) => {
+  return {
+    type: types.UPDATE_POOL,
+    payload: {
+      pool,
+    }
+  }
+}

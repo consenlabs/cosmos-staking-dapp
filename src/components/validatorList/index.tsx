@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { withRouter } from 'react-router-dom'
-import { selectValidators } from '../../lib/redux/selectors'
+import { selectValidators, selectPool } from '../../lib/redux/selectors'
 import ValidatorCard from '../../components/validatorCard'
 import './index.scss'
 
 interface Props {
   validators: any[]
+  pool: any
 }
 
 class Page extends Component<Props> {
@@ -17,12 +18,12 @@ class Page extends Component<Props> {
 
 
   render() {
-    const { validators } = this.props
+    const { validators, pool } = this.props
     return (
       <div className="validator-list">
         {
           validators.map(v => {
-            return <ValidatorCard validator={v} key={v.operator_address} />
+            return <ValidatorCard validator={v} key={v.operator_address} pool={pool} />
           })
         }
       </div>
@@ -33,6 +34,7 @@ class Page extends Component<Props> {
 const mapStateToProps = state => {
   return {
     validators: selectValidators(state),
+    pool: selectPool(state)
   }
 }
 

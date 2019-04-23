@@ -18,6 +18,10 @@
       flex-direction: column;
       justify-content: space-between;
       strong {
+          white-space: nowrap;
+          max-width: 200px;
+          overflow: hidden;
+          text-overflow: ellipsis;
           font-size: 15px;
           font-weight: normal;
           font-style: normal;

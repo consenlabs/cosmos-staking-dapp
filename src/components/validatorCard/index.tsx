@@ -7,6 +7,7 @@ import { atom, thousandCommas } from 'lib/utils'
 
 interface Props {
   validator: any
+  pool: any
 }
 
 class CMP extends Component<Props> {
@@ -15,9 +16,11 @@ class CMP extends Component<Props> {
 
   render() {
 
-    const v = this.props.validator
+    const { pool, validator } = this.props
+    const v = validator
     const tokens = atom(v.tokens)
-    const percent = (tokens / 237538998).toFixed(3)
+    const totalPoolBondedTokens = pool.bonded_tokens
+    const percent = totalPoolBondedTokens ? ((tokens / atom(totalPoolBondedTokens)) * 100).toFixed(3) : '~'
 
     return <Link className="validator" to={`/validator/${v.operator_address}`}>
 

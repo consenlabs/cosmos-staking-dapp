@@ -30,8 +30,13 @@ function get(url, params = {}) {
   })
 }
 
+function sortValidators(a, b) {
+  return a.tokens * 1 > b.tokens * 1 ? -1 : 1
+}
+
 export function getValidators() {
   return get(`staking/validators`).then(validators => validators || [])
+    .then(validators => validators.sort(sortValidators))
 }
 
 // Normalize account response
@@ -84,9 +89,14 @@ export const getUnbondingDelegations = (address) => {
   return get(url, {}).then(unbondingDelegations => unbondingDelegations || [])
 }
 
-export const genDelegationTx = (delegatorAddr) => {
+export const getDelegationTx = (delegatorAddr) => {
   const url = `staking/delegators/${delegatorAddr}/delegations`
   return get(url, {})
+}
+
+export const getStakePool = () => {
+  const url = `staking/pool`
+  return get(url, {}).then(pool => pool || {})
 }
 
 /**

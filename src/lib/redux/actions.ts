@@ -35,3 +35,12 @@ export const updatePool = (pool) => {
     }
   }
 }
+
+export const updateValidatorRewards = (validatorRewards) => {
+  return {
+    type: types.UPDATE_VALIDATOR_REWARDS,
+    payload: {
+      validatorRewards,
+    }
+  }
+}

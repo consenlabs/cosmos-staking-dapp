@@ -8,7 +8,7 @@ import ValidatorDetail from '../validatorDetail'
 import Delegate from '../delegate'
 import UnDelegate from '../undelegate'
 import './index.scss'
-import { updateValidators, updateAccount, updateDelegations, updatePool } from 'lib/redux/actions'
+import { updateValidators, updateAccount, updateDelegations, updatePool, updateValidatorRewards } from 'lib/redux/actions'
 import * as api from 'lib/api'
 import * as sdk from 'lib/sdk'
 import * as utils from 'lib/utils'
@@ -20,6 +20,7 @@ interface Props {
   updateDelegations: (value: any) => any
   updateAccount: (value: any) => any
   updatePool: (value: any) => any
+  updateValidatorRewards: (value: any) => any
 }
 
 class App extends Component<Props> {
@@ -39,7 +40,7 @@ class App extends Component<Props> {
   }
 
   updateAsyncData = () => {
-    const { updateAccount, updateDelegations, updateValidators, updatePool } = this.props
+    const { updateAccount, updateDelegations, updateValidators, updatePool, updateValidatorRewards } = this.props
 
     sdk.getAccounts().then(accounts => {
       const address = accounts[0]
@@ -63,6 +64,18 @@ class App extends Component<Props> {
         const delegateBalance = utils.getDeletationBalance(delegations)
         updateDelegations(delegations)
         updateAccount({ delegateBalance })
+
+        const validatorRewards = {}
+        const promises = delegations.map(d => {
+          return api.getMyRewardByValidator(address, d.validator_address).then(balance => {
+            validatorRewards[d.validator_address] = balance
+            console.log(validatorRewards)
+          })
+        })
+
+        Promise.all(promises).then(() => {
+          updateValidatorRewards(validatorRewards)
+        })
       })
     })
 
@@ -98,6 +111,7 @@ const mapDispatchToProps = {
   updateDelegations,
   updateValidators,
   updatePool,
+  updateValidatorRewards
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

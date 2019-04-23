@@ -9,7 +9,8 @@ const initialState = {
   pool: {
     not_bonded_tokens: 0,
     bonded_tokens: 0,
-  }
+  },
+  validatorRewards: {},
 }
 
 export default function device(state = initialState, action) {
@@ -29,6 +30,9 @@ export default function device(state = initialState, action) {
         return
       case types.UPDATE_POOL:
         draft.pool = action.payload.pool
+        return
+      case types.UPDATE_VALIDATOR_REWARDS:
+        draft.validatorRewards = action.payload.validatorRewards
         return
       default:
         return draft

@@ -1,5 +1,6 @@
 import Axios from "axios"
 import { getHeaders, getProvider } from './sdk'
+import { getRewardBalance } from './utils'
 
 /**
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ node requests ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -97,6 +98,15 @@ export const getDelegationTx = (delegatorAddr) => {
 export const getStakePool = () => {
   const url = `staking/pool`
   return get(url, {}).then(pool => pool || {})
+}
+
+export const getMyRewardByValidator = (delegatorAddr, validatorAddr) => {
+  const url = `distribution/delegators/${delegatorAddr}/rewards/${validatorAddr}`
+  return get(url, {}).then(rewards => {
+    rewards = rewards || []
+    const balance = getRewardBalance(rewards)
+    return balance
+  })
 }
 
 /**

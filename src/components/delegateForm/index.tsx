@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './index.scss'
-import { atom, uatom, thousandCommas, isExist, createTxPayload, createDelegateMsg } from 'lib/utils'
+import { atom, uatom, thousandCommas, isExist, createTxPayload, createDelegateMsg, Toast } from 'lib/utils'
 import { sendTransaction } from 'lib/sdk'
 import { validAmount } from 'lib/validator'
 import tokenConfig from '../../config/token'
@@ -28,7 +28,7 @@ class CMP extends Component<Props> {
     const { amount } = this.state
     const [valid, msg] = validAmount(amount, atom(balance), feeConfig.retainFee)
     if (!valid) {
-      return alert(msg)
+      return Toast.error(msg)
     }
 
     // send delegate apiCall
@@ -39,10 +39,10 @@ class CMP extends Component<Props> {
     )
 
     sendTransaction(txPayload).then(txHash => {
-      alert('发送成功: ' + txHash)
+      Toast.success(txHash, { heading: '发送成功' })
       console.log(txHash)
     }).catch(e => {
-      alert('发送失败: ' + e.message)
+      Toast.error(e.message, { heading: '发送失败' })
     })
   }
 

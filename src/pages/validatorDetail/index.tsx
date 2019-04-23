@@ -47,10 +47,10 @@ class Page extends Component<Props> {
             <span>验证者委托</span>
             <i>{thousandCommas(atom(v.delegator_shares))} ATOM</i>
           </li>
-          <li>
+          {/* <li>
             <span>委托者</span>
             <i>~</i>
-          </li>
+          </li> */}
           <li>
             <span>佣金</span>
             <i>{(v.commission.rate * 100).toFixed(1)} %</i>

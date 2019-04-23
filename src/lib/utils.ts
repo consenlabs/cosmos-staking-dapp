@@ -1,6 +1,9 @@
 import BN from 'big.js'
 import numeral from 'numeral'
+import cogoToast from 'cogo-toast'
 import feeConfig from '../config/fee'
+
+export const Toast = cogoToast
 
 BN.DP = 20
 BN.RM = 0

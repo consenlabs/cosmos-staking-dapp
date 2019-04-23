@@ -63,10 +63,18 @@ class CMP extends Component<Props, any> {
     this.setState({ amount: event.target.value })
   }
 
+  renderEmpty() {
+    return <div className="form-inner">
+      <div className="form-empty">
+        <span>🤪 你在此验证者下没有抵押，无法赎回</span>
+      </div>
+    </div>
+  }
+
   render() {
     const { delegation } = this.props
 
-    if (!delegation) return null
+    if (!delegation) return this.renderEmpty()
 
     const delegateBalance = delegation.shares
     const { amount } = this.state

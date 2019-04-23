@@ -16,7 +16,7 @@ class Page extends Component<Props> {
 
     return (
       <div className="vote-page">
-        <div>敬请期待...</div>
+        <div>🚀 敬请期待...</div>
       </div>
     )
   }

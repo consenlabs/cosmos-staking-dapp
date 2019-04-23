@@ -5,6 +5,7 @@ import zh_CN from './locale/zh_CN'
 import en_US from './locale/en_US'
 import zh from 'react-intl/locale-data/zh'
 import en from 'react-intl/locale-data/en'
+import { getLocale } from 'lib/utils'
 
 addLocaleData([...zh, ...en])
 
@@ -24,11 +25,6 @@ class Inter extends Component<Props, any> {
       </IntlProvider>
     )
   }
-}
-
-function getLocale() {
-  let val = navigator.language || ''
-  return val.toLowerCase().split('_')[0]
 }
 
 function chooseLocale(locale) {

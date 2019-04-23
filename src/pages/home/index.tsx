@@ -24,10 +24,7 @@ class Page extends Component<Props, any> {
         <NavBar index={0} />
         <AccountCard />
         <DelegationList />
-        <Banner
-          url="http://whale-token-im.b0.upaiyun.com/assets/images/sparkpool-cn-l.png"
-          address="cosmosvaloper1rwh0cxa72d3yle3r4l8gd7vyphrmjy2kpe4x72"
-        />
+        <Banner size="big" />
       </div>
     )
   }

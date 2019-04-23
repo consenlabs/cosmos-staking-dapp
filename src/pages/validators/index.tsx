@@ -23,10 +23,7 @@ class Page extends Component<Props> {
       <div className="validators">
         <WaterMark />
         <NavBar index={1} />
-        <Banner
-          address="cosmosvaloper1cgh5ksjwy2sd407lyre4l3uj2fdrqhpkzp06e6"
-          url="http://whale-token-im.b0.upaiyun.com/assets/images/hash-cn-s.png"
-        />
+        <Banner size="small" />
         <ValidatorList />
       </div>
     )

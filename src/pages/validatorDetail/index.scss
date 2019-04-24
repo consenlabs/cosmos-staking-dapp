@@ -96,6 +96,46 @@
     padding: 10px;
     border-radius: 8px 8px 0 0;
     background-color: #ffffff;
+    flex-direction: column;
+    .delegate-status {
+      padding-top: 5px;
+      > span {
+          margin-left: 10px;
+          font-family: 'PingFang SC';
+          font-size: 13px;
+          letter-spacing: 0.2px;
+          color: #777a8c;
+      }
+      .delegate-status-bottom {
+        margin-top:13px;
+        height: 70px;
+        padding: 0 18px;
+        border-radius: 8px;
+        border: solid 0.5px #d2d4dd;
+        background-color: #ffffff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        > div {
+          text-align: center;
+          span {
+            display: block;
+            margin-bottom: 5px;
+            font-family: 'PingFang SC';
+            font-size: 11px;
+            letter-spacing: normal;
+            color: #98a2a9;
+          }
+          i {
+            font-size: 15px;
+            font-weight: 500;
+            font-style: normal;
+            letter-spacing: normal;
+            color: #098de6;
+          }
+        }
+      }
+    }
   }
 
   .toolbar {

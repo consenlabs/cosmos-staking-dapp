@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { withRouter, Link } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
-import { selectValidators, selectAccountInfo } from '../../lib/redux/selectors'
+import { selectValidators, selectAccountInfo, selectDelegations, selectValidatorRewards } from '../../lib/redux/selectors'
 import { ellipsis, fAtom, fPercent, isiPhoneX } from '../../lib/utils'
 import ValidatorLogo from '../../components/validatorLogo'
 import Loading from '../../components/loading'
@@ -13,6 +13,8 @@ import { getTxListByAddress } from '../../lib/api'
 
 interface Props {
   validators: any
+  delegations: any
+  validatorRewards: any
   account: any
   match: any
 }
@@ -39,12 +41,16 @@ class Page extends Component<Props, any> {
   }
 
   render() {
-    const { validators, match } = this.props
+    const { validators, delegations, validatorRewards, match } = this.props
     const { txs } = this.state
     const id = match.params.id
     const v = validators.find(v => v.operator_address === id)
 
     if (!v) return <Loading />
+
+    const d = delegations.find(o => o.validator_address === v.operator_address)
+    const reward = validatorRewards[v.operator_address] || 0
+
 
     return (
       <div className="validator-detail-page">
@@ -94,6 +100,23 @@ class Page extends Component<Props, any> {
 
         {!!(txs && txs.length) &&
           <div className="list-area">
+            <div className="delegate-status">
+              <span>委托状态</span>
+              <div className="delegate-status-bottom">
+                <div>
+                  <FormattedMessage id='delegated' />
+                  <i>{fAtom(d.shares)}</i>
+                </div>
+                <div>
+                  <FormattedMessage id='rewards' />
+                  <i>{fAtom(reward)}</i>
+                </div>
+                <div>
+                  <FormattedMessage id='rewards_per_day' />
+                  <i>{d.shares && v.annualized_returns ? `+${fAtom(d.shares * v.annualized_returns / 365, 3)}` : '~'}</i>
+                </div>
+              </div>
+            </div>
             <TxList txs={txs} />
           </div>
         }
@@ -118,7 +141,9 @@ class Page extends Component<Props, any> {
 const mapStateToProps = state => {
   return {
     validators: selectValidators(state),
+    delegations: selectDelegations(state),
     account: selectAccountInfo(state),
+    validatorRewards: selectValidatorRewards(state),
   }
 }
 

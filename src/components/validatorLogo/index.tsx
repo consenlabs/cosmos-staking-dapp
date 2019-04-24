@@ -13,7 +13,7 @@ class CMP extends Component<Props> {
     const { url } = this.props
     const placeholder = 'https://aws-v2-cdn.token.im/cosmos/atom.png'
 
-    return <div className="logo">
+    return <div className={`logo ${!url ? 'default' : ''}`}>
       <img alt="logo" src={url || placeholder} title="logo" />
     </div>
   }

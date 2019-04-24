@@ -30,7 +30,7 @@ class CMP extends Component<Props> {
         <span>{`${fAtom(v.tokens)} ATOM`} ({fPercent(percent, 2)})</span>
       </div>
       <div className="v-right">
-        <strong>{fPercent(v.annualized_returns, 1)}</strong>
+        <strong>{fPercent(v.annualized_returns, 2)}</strong>
         <FormattedMessage
           id='yield'
         />

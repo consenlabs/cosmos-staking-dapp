@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import './index.scss'
-import { atom, uatom, fAtom, isExist, createTxPayload, createUnDelegateMsg, Toast } from 'lib/utils'
+import { uatom, fAtom, isExist, createTxPayload, createUnDelegateMsg, Toast } from 'lib/utils'
 import { sendTransaction } from 'lib/sdk'
 import { validAmount } from 'lib/validator'
 import { pubsub } from 'lib/event'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import getNetworkConfig from '../../config/network'
+import { feeAmount } from '../../config/fee'
 import logger from '../../lib/logger'
 
 interface Props {
@@ -35,7 +36,7 @@ class CMP extends Component<Props, any> {
     const delegateBalance = delegation.shares || 0
     const { address } = account
     const { amount } = this.state
-    const [valid, msg] = validAmount(amount, atom(delegateBalance), 0, intl)
+    const [valid, msg] = validAmount(uatom(amount), delegateBalance, feeAmount, intl)
     if (!valid) {
       return Toast.error(msg)
     }

@@ -88,9 +88,9 @@ export function createRedelegateMsg(delegatorAddress, validatorSrcAddress, valid
   }
 }
 
-export const ellipsis = (str: string, num: number = 20): string => {
-  if (str && str.length > num) {
-    return `${str.substring(0, num / 2)}...${str.substring(str.length - num / 2, str.length)}`
+export const ellipsis = (str: string, lead: number = 12, tail: number = 6): string => {
+  if (str && str.length > lead + tail + 8) {
+    return `${str.substring(0, lead)}...${str.substring(str.length - tail, str.length)}`
   }
   return str
 }

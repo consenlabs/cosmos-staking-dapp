@@ -27,7 +27,7 @@ class CMP extends Component<Props> {
           <div className="account-top-address">
             <strong>Cosmos Wallet</strong>
             {address ? (
-              <span>{ellipsis(address, 16)}</span>
+              <span>{ellipsis(address)}</span>
             ) : (
                 <FormattedMessage
                   id='accessing_account'

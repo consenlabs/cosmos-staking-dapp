@@ -41,7 +41,7 @@ class Page extends Component<Props> {
               <ValidatorLogo url={v.description.logo} />
               <div className="left">
                 <strong>{v.description.moniker}</strong>
-                <span>{ellipsis(v.operator_address, 24)}</span>
+                <span>{ellipsis(v.operator_address)}</span>
               </div>
             </div>
           </section>

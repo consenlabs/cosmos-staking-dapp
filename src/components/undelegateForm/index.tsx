@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './index.scss'
-import { atom, uatom, thousandCommas, isExist, createTxPayload, createUnDelegateMsg, Toast } from 'lib/utils'
+import { atom, uatom, fAtom, isExist, createTxPayload, createUnDelegateMsg, Toast } from 'lib/utils'
 import { sendTransaction } from 'lib/sdk'
 import { validAmount } from 'lib/validator'
 import { pubsub } from 'lib/event'
@@ -87,7 +87,7 @@ class CMP extends Component<Props, any> {
 
     const delegateBalance = delegation.shares
     const { amount } = this.state
-    const atomBalance = isExist(delegateBalance) ? thousandCommas(atom(delegateBalance)) : 0
+    const atomBalance = isExist(delegateBalance) ? fAtom(delegateBalance) : 0
     const disabled = !amount
     return (
       <div className="form-inner">

@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { withRouter, Link } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 import { selectValidators } from '../../lib/redux/selectors'
-import { ellipsis, thousandCommas, atom, fPercent, isiPhoneX } from '../../lib/utils'
+import { ellipsis, fAtom, fPercent, isiPhoneX } from '../../lib/utils'
 import ValidatorLogo from '../../components/validatorLogo'
 import Loading from '../../components/loading'
 import './index.scss'
@@ -49,13 +49,13 @@ class Page extends Component<Props> {
             <FormattedMessage
               id='total_delegation'
             />
-            <i>{thousandCommas(atom(v.tokens))} ATOM</i>
+            <i>{fAtom(v.tokens)} ATOM</i>
           </li>
           <li>
             <FormattedMessage
               id='validator_delegation'
             />
-            <i>{thousandCommas(atom(v.tokens - v.delegator_shares))} ATOM</i>
+            <i>{fAtom(v.tokens - v.delegator_shares)} ATOM</i>
           </li>
           {/* <li>
             <span>委托者</span>
@@ -71,7 +71,7 @@ class Page extends Component<Props> {
             <FormattedMessage
               id='annualized_earnings'
             />
-            <i>{fPercent(v.annualized_returns, 3)}</i>
+            <i>{fPercent(v.annualized_returns, 2)}</i>
           </li>
         </ul>
 

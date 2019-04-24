@@ -15,9 +15,13 @@ function getRandomBanner(size) {
   const locale = getLocale()
   console.log(size)
 
-  const index = Date.now() % 2
-  bigSelected = bigSelected || bannerConfig[index]
-  smallSelected = smallSelected || bannerConfig[Math.abs(index - 1)]
+  // const index = Date.now() % 2
+  // bigSelected = bigSelected || bannerConfig[index]
+  // smallSelected = smallSelected || bannerConfig[Math.abs(index - 1)]
+  
+  // TEMP
+  bigSelected = bannerConfig[1]
+  smallSelected = bannerConfig[1]
 
   const selectedConfig = size === 'big' ? bigSelected : smallSelected
   console.log(selectedConfig, bigSelected, smallSelected)

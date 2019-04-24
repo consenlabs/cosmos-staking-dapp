@@ -1,6 +1,6 @@
-import { toBN } from './utils'
+import { toBN, atom } from './utils'
 
-export const validAmount = (amount: number | string, balance: number | string, retainFee = 0, intl) => {
+export const validAmount = (amount: number | string, balance: number | string = 0, feeAmount, intl) => {
 
   const num = Number(amount)
 
@@ -14,17 +14,18 @@ export const validAmount = (amount: number | string, balance: number | string, r
 
   const bnAmounnt = toBN(num)
 
-  const sAmount = bnAmounnt.toString()
-  const fraction = sAmount.split('.')[1]
+  const uAmount = atom(amount)
+  const fraction = uAmount.split('.')[1]
   if (fraction && fraction.length > 6) {
     return [false, intl.formatMessage({ id: 'decimal_length_must_lt_six' })]
   }
 
-  if (bnAmounnt.plus(retainFee).gt(balance)) {
-    if (bnAmounnt.lt(balance)) {
-      return [false, intl.formatMessage({ id: 'gas_not_enough' })]
-    }
+  if (bnAmounnt.gt(balance)) {
     return [false, intl.formatMessage({ id: 'more_than_available' })]
+  }
+
+  if (bnAmounnt.plus(feeAmount).gt(balance)) {
+    return [false, intl.formatMessage({ id: 'gas_not_enough' })]
   }
 
   return [true, null]

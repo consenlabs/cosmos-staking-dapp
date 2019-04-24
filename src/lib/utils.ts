@@ -2,6 +2,7 @@ import BN from 'big.js'
 import numeral from 'numeral'
 import cogoToast from 'cogo-toast'
 import getFeeConfig from '../config/fee'
+import msgTypes from './msgTypes'
 
 export const Toast = cogoToast
 
@@ -31,7 +32,7 @@ export function createTxPayload(from: string, msg: __Msg[], memo: string) {
 
 export function createTransferMsg(fromAddr, toAddr, amount, denom) {
   return {
-    "type": "cosmos-sdk/MsgSend",
+    "type": msgTypes.send,
     "value": {
       "amount": [{ "amount": amount, "denom": denom }],
       "from_address": fromAddr,
@@ -42,7 +43,7 @@ export function createTransferMsg(fromAddr, toAddr, amount, denom) {
 
 export function createDelegateMsg(delegatorAddress, validatorAddress, amount, denom) {
   return {
-    "type": "cosmos-sdk/MsgDelegate",
+    "type": msgTypes.delegate,
     "value": {
       "delegator_address": delegatorAddress,
       "validator_address": validatorAddress,
@@ -53,7 +54,7 @@ export function createDelegateMsg(delegatorAddress, validatorAddress, amount, de
 
 export function createUnDelegateMsg(delegatorAddress, validatorAddress, amount, denom) {
   return {
-    "type": "cosmos-sdk/MsgUndelegate",
+    "type": msgTypes.undelegate,
     "value": {
       "delegator_address": delegatorAddress,
       "validator_address": validatorAddress,
@@ -64,7 +65,7 @@ export function createUnDelegateMsg(delegatorAddress, validatorAddress, amount, 
 
 export function createWithdrawMsg(delegatorAddress, validatorAddress, amount, denom) {
   return {
-    "type": "cosmos-sdk/MsgWithdrawDelegationReward",
+    "type": msgTypes.withdraw,
     "value": {
       "delegator_address": delegatorAddress,
       "validator_address": validatorAddress,
@@ -75,7 +76,7 @@ export function createWithdrawMsg(delegatorAddress, validatorAddress, amount, de
 
 export function createRedelegateMsg(delegatorAddress, validatorSrcAddress, validatorDstAddress, amount, denom) {
   return {
-    "type": "cosmos-sdk/MsgBeginRedelegate",
+    "type": msgTypes.redelegate,
     "value": {
       "delegator_address": delegatorAddress,
       "validator_src_address": validatorSrcAddress,
@@ -87,9 +88,9 @@ export function createRedelegateMsg(delegatorAddress, validatorSrcAddress, valid
   }
 }
 
-export const ellipsis = (str: string, num: number = 20): string => {
-  if (str && str.length > num) {
-    return `${str.substring(0, num / 2)}...${str.substring(str.length - num / 2, str.length)}`
+export const ellipsis = (str: string, lead: number = 12, tail: number = 6): string => {
+  if (str && str.length > lead + tail + 8) {
+    return `${str.substring(0, lead)}...${str.substring(str.length - tail, str.length)}`
   }
   return str
 }
@@ -101,11 +102,11 @@ export const toBN = (x) => {
 }
 
 export const uatom = (atom: string | number) => {
-  return new BN(atom, 10).times(1e6).toString()
+  return new BN(atom, 10).times(1e6).toFixed()
 }
 
 export const atom = (uatom: string | number) => {
-  return new BN(uatom).div(1e6).toString()
+  return new BN(uatom).div(1e6).toFixed()
 }
 
 /**
@@ -117,7 +118,7 @@ export const atom = (uatom: string | number) => {
  */
 export const formatSmartBalance = (num: number | string, decimalLength: number = 4) => {
   const valueBN = toBN(num)
-  const valueString = valueBN.toString()
+  const valueString = valueBN.toFixed()
 
   if (valueBN.eq(valueBN.toFixed(0, 1))) {
     return thousandCommas(valueString, 0)
@@ -208,5 +209,9 @@ export const getLocale = () => {
   let val = navigator.language || ''
   const locale = val.toLowerCase().split(/[^\w+]/ig)[0] || 'zh'
   return locale
+}
 
+export const getAmountFromMsg = (msg) => {
+  const amountObj = msg.value.amount
+  return amountObj && amountObj.amount
 }

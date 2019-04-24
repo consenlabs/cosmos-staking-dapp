@@ -19,7 +19,7 @@ class CMP extends Component<Props> {
     const { address, balance, rewardBalance, refundingBalance, delegateBalance } = account
     const atomPrice = price.price || 0
     const currency = price.currency === 'CNY' ? '¥' : '$'
-    const totalBalance = toBN(balance || 0).plus(rewardBalance || 0).plus(refundingBalance || 0).plus(delegateBalance || 0).toString()
+    const totalBalance = toBN(balance || 0).plus(rewardBalance || 0).plus(refundingBalance || 0).plus(delegateBalance || 0).toFixed()
 
     return (
       <div className="account-card">
@@ -27,7 +27,7 @@ class CMP extends Component<Props> {
           <div className="account-top-address">
             <strong>Cosmos Wallet</strong>
             {address ? (
-              <span>{ellipsis(address, 16)}</span>
+              <span>{ellipsis(address)}</span>
             ) : (
                 <FormattedMessage
                   id='accessing_account'
@@ -36,20 +36,20 @@ class CMP extends Component<Props> {
           </div>
           <div className="account-top-amount">
             <strong>{isExist(balance) ? `${fAtom(totalBalance)} ATOM` : '~'}</strong>
-            <span>{currency} {isExist(balance) ? fAtom(toBN(totalBalance).times(atomPrice).toString()) : '~'}</span>
+            <span>{currency} {isExist(balance) ? fAtom(toBN(totalBalance).times(atomPrice).toFixed()) : '~'}</span>
           </div>
         </div>
         <div className="account-bottom">
           <div>
             <div>
               <FormattedMessage
-                id='available_asset'
+                id='available_balance'
               />
               <i>{fAtom(balance)}</i>
             </div>
             <div>
               <FormattedMessage
-                id='delegation'
+                id='delegations'
               />
               <i>{fAtom(delegateBalance)}</i>
             </div>
@@ -58,13 +58,13 @@ class CMP extends Component<Props> {
           <div>
             <div>
               <FormattedMessage
-                id='earnings'
+                id='rewards'
               />
               <i>{fAtom(rewardBalance)}</i>
             </div>
             <div>
               <FormattedMessage
-                id='unstaking'
+                id='undelegating'
               />
               <i>{fAtom(refundingBalance)}</i>
             </div>

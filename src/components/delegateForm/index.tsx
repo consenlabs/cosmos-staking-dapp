@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import './index.scss'
-import { atom, uatom, fAtom, isExist, createTxPayload, createDelegateMsg, Toast } from 'lib/utils'
+import { uatom, fAtom, isExist, createTxPayload, createDelegateMsg, Toast } from 'lib/utils'
 import { sendTransaction } from 'lib/sdk'
 import { validAmount } from 'lib/validator'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { pubsub } from 'lib/event'
 import getNetworkConfig from '../../config/network'
-import getFeeConfig from '../../config/fee'
+import { feeAmount } from '../../config/fee'
 import logger from '../../lib/logger'
 
 interface Props {
@@ -31,7 +31,7 @@ class CMP extends Component<Props> {
     const { account, validator, history, intl } = this.props
     const { balance, address } = account
     const { amount } = this.state
-    const [valid, msg] = validAmount(amount, atom(balance), getFeeConfig().retainFee, intl)
+    const [valid, msg] = validAmount(uatom(amount), balance, feeAmount, intl)
     if (!valid) {
       return Toast.error(msg)
     }
@@ -71,7 +71,7 @@ class CMP extends Component<Props> {
       <div className="form-inner">
         <div className="form-header">
           <FormattedMessage
-            id='available_asset'
+            id='available_balance'
           />
           <i>{atomBalance} ATOM</i>
         </div>

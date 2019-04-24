@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import { connect } from "react-redux"
+import { injectIntl } from 'react-intl'
 import { selectValidators } from '../../lib/redux/selectors'
 import Home from '../home'
 import Validators from '../validators'
@@ -23,14 +24,16 @@ interface Props {
   updatePool: (value: any) => any
   updateValidatorRewards: (value: any) => any
   updateAtomPrice: (value: any) => any
+  intl: any
 }
 
 class App extends Component<Props> {
 
   componentDidMount() {
+    const { intl } = this.props
     if (!window['imToken']['callAPI']) {
       setTimeout(() => {
-        utils.Toast.warn('请在 imToken 中打开', { hideAfter: 5, position: 'top-center' })
+        utils.Toast.warn(intl.formatMessage({ id: 'please_open_in_imtoken' }), { hideAfter: 5, position: 'top-center' })
       }, 6000)
     }
   }
@@ -130,4 +133,4 @@ const mapDispatchToProps = {
   updateAtomPrice,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(App))

@@ -18,7 +18,7 @@ class CMP extends Component<Props> {
       <div>
         <Link className={index === 0 ? "selected" : ""} to="/">
           <FormattedMessage
-            id='my_delegation'
+            id='my_delegations'
           />
         </Link>
         <Link className={index === 1 ? "selected" : ""} to="/validators">

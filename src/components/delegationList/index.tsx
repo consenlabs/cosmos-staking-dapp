@@ -32,7 +32,7 @@ class CMP extends Component<Props> {
         <div>
           <i>{fPercent(v.annualized_returns, 2) || '~'}</i>
           <FormattedMessage
-            id='annualized_earnings'
+            id='yield'
           />
         </div>
       </div>
@@ -40,21 +40,21 @@ class CMP extends Component<Props> {
       <div className="bottom">
         <div>
           <FormattedMessage
-            id='delegated'
+            id='delegations'
           />
           <i>{fAtom(d.shares)}</i>
         </div>
 
         <div>
           <FormattedMessage
-            id='earnings'
+            id='rewards'
           />
           <i>{fAtom(reward)}</i>
         </div>
 
         <div>
           <FormattedMessage
-            id='anticipated_earnings'
+            id='rewards_per_day'
           />
           <i>{d.shares && v.annualized_returns ? `+${fAtom(d.shares * v.annualized_returns / 365, 3)}` : '~'}</i>
         </div>

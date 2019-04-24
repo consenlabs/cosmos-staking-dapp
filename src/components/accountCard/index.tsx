@@ -49,18 +49,18 @@ class CMP extends Component<Props> {
             </div>
             <div>
               <FormattedMessage
-                id='earnings'
+                id='delegation'
               />
-              <i>{fAtom(rewardBalance)}</i>
+              <i>{fAtom(delegateBalance)}</i>
             </div>
           </div>
           <div className="split-line"></div>
           <div>
             <div>
               <FormattedMessage
-                id='delegation'
+                id='earnings'
               />
-              <i>{fAtom(delegateBalance)}</i>
+              <i>{fAtom(rewardBalance)}</i>
             </div>
             <div>
               <FormattedMessage

@@ -1,5 +1,5 @@
 const zh_CN = {
-  available_asset: '可用余额',
+  available_asset: '可用',
   earnings: '收益',
   delegation: '委托',
   unstaking: '赎回中',

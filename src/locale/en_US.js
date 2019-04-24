@@ -1,5 +1,5 @@
 const en_US = {
-  available_asset: 'Available Asset',
+  available_asset: 'Available',
   earnings: 'Earnings',
   delegation: 'Delegation',
   unstaking: 'Unstaking',

@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "5426c5a12f096694eceff6e1f6040cc2",
+    "revision": "54f4a7415acc31fdd7b6a572c35e30f3",
     "url": "/cosmos/index.html"
   },
   {
-    "revision": "8e039ed891d7f23b52df",
-    "url": "/cosmos/static/css/main.98dcc112.chunk.css"
+    "revision": "4c56f70997e7ad0cd4bd",
+    "url": "/cosmos/static/css/main.b825abd8.chunk.css"
   },
   {
-    "revision": "75e6cd99ebe1e9fc47e0",
-    "url": "/cosmos/static/js/2.bfc743dc.chunk.js"
+    "revision": "8e9fbae1b793b22d11c3",
+    "url": "/cosmos/static/js/2.f429b240.chunk.js"
   },
   {
-    "revision": "8e039ed891d7f23b52df",
-    "url": "/cosmos/static/js/main.f16b7b54.chunk.js"
+    "revision": "4c56f70997e7ad0cd4bd",
+    "url": "/cosmos/static/js/main.2924b824.chunk.js"
   },
   {
     "revision": "9f0e0699e6d67b9d0eb9",

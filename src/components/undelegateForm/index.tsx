@@ -81,7 +81,7 @@ class CMP extends Component<Props, any> {
       <div className="form-inner">
         <div className="form-header">
           <FormattedMessage
-            id='staked'
+            id='delegated'
           />
           <i>{atomBalance} ATOM</i>
         </div>

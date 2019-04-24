@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/cosmos/static/css/main.b825abd8.chunk.css",
-    "main.js": "/cosmos/static/js/main.2924b824.chunk.js",
-    "main.js.map": "/cosmos/static/js/main.2924b824.chunk.js.map",
+    "main.css": "/cosmos/static/css/main.301c4715.chunk.css",
+    "main.js": "/cosmos/static/js/main.d01cdf7e.chunk.js",
+    "main.js.map": "/cosmos/static/js/main.d01cdf7e.chunk.js.map",
     "runtime~main.js": "/cosmos/static/js/runtime~main.0778009f.js",
     "runtime~main.js.map": "/cosmos/static/js/runtime~main.0778009f.js.map",
     "static/js/2.f429b240.chunk.js": "/cosmos/static/js/2.f429b240.chunk.js",
     "static/js/2.f429b240.chunk.js.map": "/cosmos/static/js/2.f429b240.chunk.js.map",
     "index.html": "/cosmos/index.html",
-    "precache-manifest.4406e6d7e24444597f19bb8e4a91394c.js": "/cosmos/precache-manifest.4406e6d7e24444597f19bb8e4a91394c.js",
+    "precache-manifest.ad2ab42bcdfe556878bd4bb44f02e1a6.js": "/cosmos/precache-manifest.ad2ab42bcdfe556878bd4bb44f02e1a6.js",
     "service-worker.js": "/cosmos/service-worker.js",
-    "static/css/main.b825abd8.chunk.css.map": "/cosmos/static/css/main.b825abd8.chunk.css.map",
+    "static/css/main.301c4715.chunk.css.map": "/cosmos/static/css/main.301c4715.chunk.css.map",
     "static/media/cosmos.svg": "/cosmos/static/media/cosmos.b8b0a545.svg",
     "static/media/faq.svg": "/cosmos/static/media/faq.f4c90403.svg",
     "static/media/turtorial.svg": "/cosmos/static/media/turtorial.9f45c1c4.svg"

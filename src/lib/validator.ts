@@ -1,6 +1,6 @@
 import { toBN, atom } from './utils'
 
-export const validAmount = (amount: number | string, balance: number | string, feeAmount, intl) => {
+export const validAmount = (amount: number | string, balance: number | string = 0, feeAmount, intl) => {
 
   const num = Number(amount)
 

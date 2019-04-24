@@ -102,11 +102,11 @@ export const toBN = (x) => {
 }
 
 export const uatom = (atom: string | number) => {
-  return new BN(atom, 10).times(1e6).toString()
+  return new BN(atom, 10).times(1e6).toFixed()
 }
 
 export const atom = (uatom: string | number) => {
-  return new BN(uatom).div(1e6).toString()
+  return new BN(uatom).div(1e6).toFixed()
 }
 
 /**
@@ -118,7 +118,7 @@ export const atom = (uatom: string | number) => {
  */
 export const formatSmartBalance = (num: number | string, decimalLength: number = 4) => {
   const valueBN = toBN(num)
-  const valueString = valueBN.toString()
+  const valueString = valueBN.toFixed()
 
   if (valueBN.eq(valueBN.toFixed(0, 1))) {
     return thousandCommas(valueString, 0)

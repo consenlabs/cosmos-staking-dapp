@@ -70,20 +70,8 @@ class CMP extends Component<Props, any> {
     this.setState({ amount: event.target.value })
   }
 
-  renderEmpty() {
-    return <div className="form-inner">
-      <div className="form-empty">
-        <FormattedMessage
-          id='without_delegation_couldnt_unstake'
-        />
-      </div>
-    </div>
-  }
-
   render() {
     const { delegation = {}, intl } = this.props
-
-    // if (!delegation) return this.renderEmpty()
 
     const delegateBalance = delegation.shares
     const { amount } = this.state
@@ -107,7 +95,7 @@ class CMP extends Component<Props, any> {
         />
         <button disabled={disabled} className="form-button" onClick={this.onSubmit}>
           <FormattedMessage
-            id='cancel_delegate'
+            id='undelegate'
           />
         </button>
       </div>

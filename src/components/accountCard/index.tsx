@@ -43,13 +43,13 @@ class CMP extends Component<Props> {
           <div>
             <div>
               <FormattedMessage
-                id='available_asset'
+                id='available_balance'
               />
               <i>{fAtom(balance)}</i>
             </div>
             <div>
               <FormattedMessage
-                id='delegation'
+                id='delegations'
               />
               <i>{fAtom(delegateBalance)}</i>
             </div>
@@ -58,13 +58,13 @@ class CMP extends Component<Props> {
           <div>
             <div>
               <FormattedMessage
-                id='earnings'
+                id='rewards'
               />
               <i>{fAtom(rewardBalance)}</i>
             </div>
             <div>
               <FormattedMessage
-                id='unstaking'
+                id='undelegating'
               />
               <i>{fAtom(refundingBalance)}</i>
             </div>

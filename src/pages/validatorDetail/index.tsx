@@ -47,13 +47,13 @@ class Page extends Component<Props> {
         <ul>
           <li>
             <FormattedMessage
-              id='total_delegation'
+              id='total_delegations'
             />
             <i>{fAtom(v.tokens)} ATOM</i>
           </li>
           <li>
             <FormattedMessage
-              id='validator_delegation'
+              id='validator_delegations'
             />
             <i>{fAtom(v.tokens - v.delegator_shares)} ATOM</i>
           </li>
@@ -63,13 +63,13 @@ class Page extends Component<Props> {
           </li> */}
           <li>
             <FormattedMessage
-              id='commission'
+              id='commission_rate'
             />
             <i>{fPercent(v.commission.rate, 1)}</i>
           </li>
           <li>
             <FormattedMessage
-              id='annualized_earnings'
+              id='yield'
             />
             <i className="emphasize">{fPercent(v.annualized_returns, 2)}</i>
           </li>
@@ -78,7 +78,7 @@ class Page extends Component<Props> {
         <div className="toolbar" style={{ bottom: isiPhoneX() ? 40 : 0 }}>
           <Link to={`/undelegate/${v.operator_address}`}>
             <FormattedMessage
-              id='unstake'
+              id='undelegate'
             />
           </Link>
           <Link to={`/delegate/${v.operator_address}`}>

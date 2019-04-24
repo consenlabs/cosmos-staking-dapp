@@ -32,7 +32,7 @@ class CMP extends Component<Props> {
       <div className="v-right">
         <strong>{fPercent(v.annualized_returns, 1)}</strong>
         <FormattedMessage
-          id='annualized_earnings'
+          id='yield'
         />
       </div>
     </Link>

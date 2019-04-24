@@ -68,12 +68,12 @@ class Page extends Component<Props, any> {
             />
             <i>{fAtom(v.tokens)} ATOM</i>
           </li>
-          <li>
+          {/* <li>
             <FormattedMessage
               id='validator_delegations'
             />
             <i>{fAtom(v.tokens - v.delegator_shares)} ATOM</i>
-          </li>
+          </li> */}
           {/* <li>
             <span>委托者</span>
             <i>~</i>

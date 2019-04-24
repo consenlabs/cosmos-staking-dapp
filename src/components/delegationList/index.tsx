@@ -40,7 +40,7 @@ class CMP extends Component<Props> {
       <div className="bottom">
         <div>
           <FormattedMessage
-            id='delegated'
+            id='delegations'
           />
           <i>{fAtom(d.shares)}</i>
         </div>

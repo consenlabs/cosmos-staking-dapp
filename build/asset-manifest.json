@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/cosmos/static/css/main.f10060c8.chunk.css",
-    "main.js": "/cosmos/static/js/main.90fda17b.chunk.js",
-    "main.js.map": "/cosmos/static/js/main.90fda17b.chunk.js.map",
+    "main.css": "/cosmos/static/css/main.b912ccb6.chunk.css",
+    "main.js": "/cosmos/static/js/main.bd100287.chunk.js",
+    "main.js.map": "/cosmos/static/js/main.bd100287.chunk.js.map",
     "runtime~main.js": "/cosmos/static/js/runtime~main.0778009f.js",
     "runtime~main.js.map": "/cosmos/static/js/runtime~main.0778009f.js.map",
-    "static/js/2.48134961.chunk.js": "/cosmos/static/js/2.48134961.chunk.js",
-    "static/js/2.48134961.chunk.js.map": "/cosmos/static/js/2.48134961.chunk.js.map",
+    "static/js/2.f429b240.chunk.js": "/cosmos/static/js/2.f429b240.chunk.js",
+    "static/js/2.f429b240.chunk.js.map": "/cosmos/static/js/2.f429b240.chunk.js.map",
     "index.html": "/cosmos/index.html",
-    "precache-manifest.95065a9c65a5a25d01f7e0f6df9274d0.js": "/cosmos/precache-manifest.95065a9c65a5a25d01f7e0f6df9274d0.js",
+    "precache-manifest.07408993fc6366269a8a1ca25449c928.js": "/cosmos/precache-manifest.07408993fc6366269a8a1ca25449c928.js",
     "service-worker.js": "/cosmos/service-worker.js",
-    "static/css/main.f10060c8.chunk.css.map": "/cosmos/static/css/main.f10060c8.chunk.css.map",
+    "static/css/main.b912ccb6.chunk.css.map": "/cosmos/static/css/main.b912ccb6.chunk.css.map",
     "static/media/cosmos.svg": "/cosmos/static/media/cosmos.b8b0a545.svg",
     "static/media/faq.svg": "/cosmos/static/media/faq.f4c90403.svg",
     "static/media/turtorial.svg": "/cosmos/static/media/turtorial.9f45c1c4.svg"

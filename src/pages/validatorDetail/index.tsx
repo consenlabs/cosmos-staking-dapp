@@ -2,35 +2,52 @@ import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { withRouter, Link } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
-import { selectValidators } from '../../lib/redux/selectors'
+import { selectValidators, selectAccountInfo } from '../../lib/redux/selectors'
 import { ellipsis, fAtom, fPercent, isiPhoneX } from '../../lib/utils'
 import ValidatorLogo from '../../components/validatorLogo'
 import Loading from '../../components/loading'
+import TxList from '../../components/txList'
 import './index.scss'
 import logger from '../../lib/logger'
+import { getTxListByAddress } from '../../lib/api'
 
 interface Props {
   validators: any
+  account: any
   match: any
 }
 
-class Page extends Component<Props> {
+class Page extends Component<Props, any> {
+
+  state = {
+    txs: []
+  }
 
   componentDidMount() {
-    const { match } = this.props
+    const { account, match } = this.props
     const id = match.params.id
+
     logger().track('to_validator_detail', { validator: id })
+
+    if (!id || !account.address) return false
+
+    getTxListByAddress(account.address, id).then(txs => {
+      if (txs && txs.length) {
+        this.setState({ txs })
+      }
+    })
   }
 
   render() {
     const { validators, match } = this.props
+    const { txs } = this.state
     const id = match.params.id
     const v = validators.find(v => v.operator_address === id)
 
     if (!v) return <Loading />
 
     return (
-      <div className="validator-detail">
+      <div className="validator-detail-page">
         <section>
           <a className="top" href={v.description.website || '#'}>
             <ValidatorLogo url={v.description.logo} />
@@ -75,6 +92,12 @@ class Page extends Component<Props> {
           </li>
         </ul>
 
+        {!!(txs && txs.length) &&
+          <div className="list-area">
+            <TxList txs={txs} />
+          </div>
+        }
+
         <div className="toolbar" style={{ bottom: isiPhoneX() ? 40 : 0 }}>
           <Link to={`/undelegate/${v.operator_address}`}>
             <FormattedMessage
@@ -94,7 +117,8 @@ class Page extends Component<Props> {
 
 const mapStateToProps = state => {
   return {
-    validators: selectValidators(state)
+    validators: selectValidators(state),
+    account: selectAccountInfo(state),
   }
 }
 

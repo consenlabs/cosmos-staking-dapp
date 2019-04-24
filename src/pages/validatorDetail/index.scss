@@ -1,4 +1,7 @@
-.validator-detail {
+.validator-detail-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
   section:first-child {
     padding: 20px;
     .top {
@@ -85,6 +88,14 @@
           }
       }
     }
+  }
+
+  .list-area {
+    display: flex;
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px 8px 0 0;
+    background-color: #ffffff;
   }
 
   .toolbar {

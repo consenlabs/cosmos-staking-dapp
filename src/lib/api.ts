@@ -2,6 +2,7 @@ import Axios from "axios"
 import { getProvider } from './sdk'
 import { getRewardBalance, getLocale } from './utils'
 import getNetworkConfig from '../config/network'
+import msgTypes from './msgTypes'
 
 /**
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ node requests ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -145,11 +146,13 @@ export async function getAtomPrice() {
 export function getTxListByAddress(delegator: string, validator: string) {
   const params = [{
     address: delegator,
-    tags: {
-      action: ['delegate', 'undelegate'],
-      delegator,
-      validator,
-    }
+    relativeAddress: validator,
+    msgTypes: [
+      msgTypes.delegate,
+      msgTypes.undelegate,
+      msgTypes.withdraw,
+      msgTypes.redelegate,
+    ],
   }]
-  return rpc(getNetworkConfig().chainAPI, 'wallet.getMsgListByAddress', [params]).then(data => data || []).catch(warnning)
+  return rpc(getNetworkConfig().chainAPI, 'wallet.getMsgListByAddress', params).then(data => data || []).catch(warnning)
 }

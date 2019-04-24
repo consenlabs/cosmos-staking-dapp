@@ -6,6 +6,8 @@ const zh_CN = {
   delegated: '已委托',
   undelegate: '赎回',
   undelegating: '赎回中',
+  withdraw: '赎回收益',
+  redelegate: '重新委托',
   my_delegations: '我的委托',
   validators: '验证节点',
   yield: '预计年化收益',

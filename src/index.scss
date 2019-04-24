@@ -37,9 +37,12 @@ a,a:hover,a:visited {
 
 #ct-container  {
   #ct-top {
-    div {
+    &>div {
       word-wrap: break-word;
       word-break: break-all;
+      justify-content: flex-start;
+      padding: 0 10px;
+      margin: 8px 20px;
     }
   }
 }

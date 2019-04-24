@@ -28,6 +28,7 @@ const zh_CN = {
   decimal_length_must_lt_six: '小数位不能超过 6 位',
   gas_not_enough: '矿工费不够',
   more_than_available: '超出可用数量',
+  please_open_in_imtoken: '请在 imToken 中打开',
 }
 
 export default zh_CN

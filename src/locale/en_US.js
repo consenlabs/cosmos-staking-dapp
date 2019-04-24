@@ -28,6 +28,7 @@ const en_US = {
   decimal_length_must_lt_six: 'Decimal length must less than 6',
   gas_not_enough: 'Gas not enough',
   more_than_available: 'The number is greater than available asset',
+  please_open_in_imtoken: 'Please open in imToken',
 }
 
 export default en_US

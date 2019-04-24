@@ -55,7 +55,7 @@ class Page extends Component<Props> {
             <FormattedMessage
               id='validator_delegation'
             />
-            <i>{thousandCommas(atom(v.delegator_shares))} ATOM</i>
+            <i>{thousandCommas(atom(v.tokens - v.delegator_shares))} ATOM</i>
           </li>
           {/* <li>
             <span>委托者</span>

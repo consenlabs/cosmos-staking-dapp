@@ -6,10 +6,10 @@ import { selectValidators, selectAccountInfo, selectDelegations, selectValidator
 import { ellipsis, fAtom, fPercent, isiPhoneX } from '../../lib/utils'
 import ValidatorLogo from '../../components/validatorLogo'
 import Loading from '../../components/loading'
-// import TxList from '../../components/txList'
+import TxList from '../../components/txList'
 import './index.scss'
 import logger from '../../lib/logger'
-// import { getTxListByAddress } from '../../lib/api'
+import { getTxListByAddress } from '../../lib/api'
 
 interface Props {
   validators: any
@@ -25,19 +25,35 @@ class Page extends Component<Props, any> {
     txs: []
   }
 
+  componentWillMount() {
+    this.updateTxs(this.props)
+  }
+
   componentDidMount() {
-    const { account, match } = this.props
+    const { match } = this.props
     const id = match.params.id
 
     logger().track('to_validator_detail', { validator: id })
+  }
 
-    if (!id || !account.address) return false
 
-    // getTxListByAddress(account.address, id).then(txs => {
-    //   if (txs && txs.length) {
-    //     this.setState({ txs })
-    //   }
-    // })
+  componentWillReceiveProps(nextProps) {
+    this.updateTxs(nextProps)
+  }
+
+  fetched = false
+  updateTxs = (props) => {
+    const { account, match } = props
+    const id = match.params.id
+
+    if (this.fetched || !id || !account.address) return false
+    this.fetched = true
+
+    getTxListByAddress(account.address, id).then(txs => {
+      if (txs && txs.length) {
+        this.setState({ txs })
+      }
+    })
   }
 
   render() {
@@ -50,7 +66,6 @@ class Page extends Component<Props, any> {
 
     const d = delegations.find(o => o.validator_address === v.operator_address)
     const reward = validatorRewards[v.operator_address] || 0
-    console.log(d, reward, txs)
 
 
     return (
@@ -99,7 +114,7 @@ class Page extends Component<Props, any> {
           </li>
         </ul>
 
-        {/* {!!(txs && txs.length) &&
+        {!!(txs && txs.length) &&
           <div className="list-area" style={{ 'paddingBottom': isiPhoneX() ? 100 : 60 }}>
             <div className="delegate-status">
               <span>委托状态</span>
@@ -120,9 +135,9 @@ class Page extends Component<Props, any> {
             </div>
             <TxList txs={txs} />
           </div>
-        } */}
+        }
 
-        <div className="toolbar" style={{ bottom: isiPhoneX() ? 40 : 0 }}>
+        <div className={`toolbar ${txs.length ? 'has-tx' : ''}`} style={{ bottom: isiPhoneX() ? 40 : 0 }}>
           <Link to={`/undelegate/${v.operator_address}`}>
             <FormattedMessage
               id='undelegate'

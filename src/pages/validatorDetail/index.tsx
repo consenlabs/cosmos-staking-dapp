@@ -71,7 +71,7 @@ class Page extends Component<Props> {
             <FormattedMessage
               id='annualized_earnings'
             />
-            <i>{fPercent(v.annualized_returns, 2)}</i>
+            <i className="emphasize">{fPercent(v.annualized_returns, 2)}</i>
           </li>
         </ul>
 

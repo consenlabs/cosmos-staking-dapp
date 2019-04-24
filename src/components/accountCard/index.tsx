@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { selectAccountInfo, selectPrice } from '../../lib/redux/selectors'
 import './index.scss'
-import { toBN, atom, thousandCommas, ellipsis, isExist } from 'lib/utils'
+import { toBN, fAtom, ellipsis, isExist } from 'lib/utils'
 
 interface Props {
   account: any
@@ -19,6 +19,7 @@ class CMP extends Component<Props> {
     const { address, balance, rewardBalance, refundingBalance, delegateBalance } = account
     const atomPrice = price.price || 0
     const currency = price.currency === 'CNY' ? '¥' : '$'
+    const totalBalance = toBN(balance || 0).plus(rewardBalance || 0).plus(refundingBalance || 0).plus(delegateBalance || 0).toString()
 
     return (
       <div className="account-card">
@@ -34,8 +35,8 @@ class CMP extends Component<Props> {
               )}
           </div>
           <div className="account-top-amount">
-            <strong>{isExist(balance) ? `${thousandCommas(atom(balance))} ATOM` : '~'}</strong>
-            <span>{currency} {isExist(balance) ? thousandCommas(toBN(atom(balance)).times(atomPrice).toString()) : '~'}</span>
+            <strong>{isExist(balance) ? `${fAtom(totalBalance)} ATOM` : '~'}</strong>
+            <span>{currency} {isExist(balance) ? fAtom(toBN(totalBalance).times(atomPrice).toString()) : '~'}</span>
           </div>
         </div>
         <div className="account-bottom">
@@ -44,28 +45,28 @@ class CMP extends Component<Props> {
               <FormattedMessage
                 id='available_asset'
               />
-              <i>{isExist(balance) ? thousandCommas(atom(balance)) : '~'}</i>
+              <i>{fAtom(balance)}</i>
             </div>
             <div>
               <FormattedMessage
-                id='earnings'
+                id='delegation'
               />
-              <i>{isExist(rewardBalance) ? thousandCommas(atom(rewardBalance)) : '~'}</i>
+              <i>{fAtom(delegateBalance)}</i>
             </div>
           </div>
           <div className="split-line"></div>
           <div>
             <div>
               <FormattedMessage
-                id='delegation'
+                id='earnings'
               />
-              <i>{isExist(delegateBalance) ? thousandCommas(atom(delegateBalance)) : '~'}</i>
+              <i>{fAtom(rewardBalance)}</i>
             </div>
             <div>
               <FormattedMessage
                 id='unstaking'
               />
-              <i>{isExist(refundingBalance) ? thousandCommas(atom(refundingBalance)) : '~'}</i>
+              <i>{fAtom(refundingBalance)}</i>
             </div>
           </div>
         </div>

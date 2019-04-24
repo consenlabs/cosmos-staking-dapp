@@ -78,6 +78,11 @@
           line-height: 1.54;
           letter-spacing: 0.2px;
           color: #ffffff;
+          &.emphasize {
+            font-size: 17px;
+            line-height: 1.18;
+            color: #098de6;
+          }
       }
     }
   }

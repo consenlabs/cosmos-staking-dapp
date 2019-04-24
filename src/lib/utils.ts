@@ -94,7 +94,11 @@ export const ellipsis = (str: string, num: number = 20): string => {
   return str
 }
 
-export const toBN = (x) => new BN(x)
+export const toBN = (x) => {
+  if (isNaN(Number(x))) return new BN(0)
+  if (x instanceof BN) return x
+  return new BN(x)
+}
 
 export const uatom = (atom: string | number) => {
   return new BN(atom, 10).times(1e6).toString()
@@ -104,17 +108,52 @@ export const atom = (uatom: string | number) => {
   return new BN(uatom).div(1e6).toString()
 }
 
-export const thousandCommas = (num: string | number) => {
-  return numeral(num).format('0,0.[0000]')
+/**
+ * used for render balance in jsx
+ * the decimals length depend on the value
+ * if value < 1, at least keep the non-zero and following four places
+ * if integer, keep interger
+ * if otherwise, keep ${decimalLength} places decimals
+ */
+export const formatSmartBalance = (num: number | string, decimalLength: number = 4) => {
+  const valueBN = toBN(num)
+  const valueString = valueBN.toString()
+
+  if (valueBN.eq(valueBN.toFixed(0, 1))) {
+    return thousandCommas(valueString, 0)
+  }
+
+  if (valueBN.lt(1)) {
+    for (let i = 2; i < valueString.length; i++) {
+      if (valueString[i] !== '0') {
+        let max = i - 2 + 4
+        max = max > 10 ? 10 : max
+        return thousandCommas(valueString, Math.max(max, decimalLength))
+      }
+    }
+  }
+
+  return thousandCommas(valueString, decimalLength)
+}
+
+/**
+ * format uatom balance in atom
+ * used for render balance in jsx
+ * don't used for calc
+ */
+export const fAtom = (uatom: string | number, decimalLength = 4) => {
+  if (isNaN(Number(uatom))) return '~'
+  return formatSmartBalance(atom(uatom), decimalLength)
+}
+
+
+export const thousandCommas = (num: string | number, place: number = 4) => {
+  const decimals = '0'.repeat(place)
+  return numeral(num).format(`0,0.[${decimals}]`)
 }
 
 export const fPercent = (p: number, fixed = 3) => {
   return !isNaN(Number(p)) ? `${(p * 100).toFixed(fixed)}%` : '~'
-}
-
-export const decimal = (num: string | number, place: number = 3): string => {
-  if (!num || Number(num) === 0) return '0'
-  return toBN(num).toFixed(place, 1)
 }
 
 export const isExist = (o: any) => {

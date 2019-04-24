@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl'
 import { selectDelegations, selectValidators, selectValidatorRewards } from '../../lib/redux/selectors'
 import ValidatorLogo from '../../components/validatorLogo'
 import './index.scss'
-import { atom, thousandCommas, fPercent, decimal } from 'lib/utils'
+import { fPercent, fAtom } from 'lib/utils'
 
 interface Props {
   delegations: any[]
@@ -30,7 +30,7 @@ class CMP extends Component<Props> {
         <ValidatorLogo url={v.description.logo} />
         <strong>{v.description.moniker}</strong>
         <div>
-          <i>{fPercent(v.annualized_returns, 3) || '~'}</i>
+          <i>{fPercent(v.annualized_returns, 2) || '~'}</i>
           <FormattedMessage
             id='annualized_earnings'
           />
@@ -42,21 +42,21 @@ class CMP extends Component<Props> {
           <FormattedMessage
             id='delegated'
           />
-          <i>{thousandCommas(atom(d.shares))}</i>
+          <i>{fAtom(d.shares)}</i>
         </div>
 
         <div>
           <FormattedMessage
             id='earnings'
           />
-          <i>{reward ? thousandCommas(atom(reward)) : '~'}</i>
+          <i>{fAtom(reward)}</i>
         </div>
 
         <div>
           <FormattedMessage
             id='anticipated_earnings'
           />
-          <i>{d.shares && v.annualized_returns ? `+${decimal(atom(d.shares * v.annualized_returns / 365))}` : '~'}</i>
+          <i>{d.shares && v.annualized_returns ? `+${fAtom(d.shares * v.annualized_returns / 365, 3)}` : '~'}</i>
         </div>
       </div>
 

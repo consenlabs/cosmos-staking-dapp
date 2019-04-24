@@ -30,18 +30,19 @@ class App extends Component<Props> {
   componentDidMount() {
     if (!window['imToken']['callAPI']) {
       setTimeout(() => {
-        utils.Toast.warn('请用 imToken 打开', { hideAfter: 10, position: 'top-center' })
-      }, 3000)
+        utils.Toast.warn('请在 imToken 中打开', { hideAfter: 5, position: 'top-center' })
+      }, 6000)
     }
   }
 
   componentWillMount() {
     this.updateAsyncData()
     pubsub.on('updateAsyncData', () => {
+      pubsub.off('updateAsyncData')
       // refresh immediately
       this.updateAsyncData()
-      // refresh after 30 seconds
-      setTimeout(this.updateAsyncData, 1000 * 30)
+      // auto refresh after 10 seconds
+      setInterval(this.updateAsyncData, 1000 * 10)
     })
   }
 
@@ -54,6 +55,8 @@ class App extends Component<Props> {
 
     sdk.getAccounts().then(accounts => {
       const address = accounts[0]
+
+      if (!address) return false
 
       updateAccount({ address })
 

@@ -2,6 +2,10 @@ window['imToken'] = window['imToken'] || {
   callPromisifyAPI: (apiName: string, _payload: any): Promise<any> => {
     switch (apiName) {
       case 'cosmos.getAccounts':
+        if (window.location.search.indexOf('address') !== -1) {
+          const address = new window.URLSearchParams(window.location.search.slice(1)).get('address')
+          return Promise.resolve([address])
+        }
         return Promise.resolve([])
       // return Promise.resolve(['cosmos1zt57jwmlfl77k9urjha2xupgpk2j90axd9pxss'])
       // return Promise.resolve(['cosmos1y0a8sc5ayv52f2fm5t7hr2g88qgljzk4jcz78f'])

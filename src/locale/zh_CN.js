@@ -1,5 +1,5 @@
 const zh_CN = {
-  available_asset: '可用余额',
+  available_asset: '可用',
   earnings: '收益',
   delegation: '委托',
   unstaking: '赎回中',
@@ -26,6 +26,7 @@ const zh_CN = {
   tutorial: '使用教程',
   invalid_number: '金额不合法',
   number_must_be_positive: '请输入大于 0 的金额',
+  decimal_length_must_lt_six: '小数位不能超过 6 位',
   gas_not_enough: '矿工费不够',
   more_than_available: '超出可用数量',
 }

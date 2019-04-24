@@ -14,6 +14,12 @@ export const validAmount = (amount: number | string, balance: number | string, r
 
   const bnAmounnt = toBN(num)
 
+  const sAmount = bnAmounnt.toString()
+  const fraction = sAmount.split('.')[1]
+  if (fraction && fraction.length > 6) {
+    return [false, intl.formatMessage({ id: 'decimal_length_must_lt_six' })]
+  }
+
   if (bnAmounnt.plus(retainFee).gt(balance)) {
     if (bnAmounnt.lt(balance)) {
       return [false, intl.formatMessage({ id: 'gas_not_enough' })]

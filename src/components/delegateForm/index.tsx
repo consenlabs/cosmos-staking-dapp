@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './index.scss'
-import { atom, uatom, thousandCommas, isExist, createTxPayload, createDelegateMsg, Toast } from 'lib/utils'
+import { atom, uatom, fAtom, isExist, createTxPayload, createDelegateMsg, Toast } from 'lib/utils'
 import { sendTransaction } from 'lib/sdk'
 import { validAmount } from 'lib/validator'
 import { FormattedMessage, injectIntl } from 'react-intl'
@@ -65,7 +65,7 @@ class CMP extends Component<Props> {
     const { account, intl } = this.props
     const { balance } = account
     const { amount } = this.state
-    const atomBalance = isExist(balance) ? thousandCommas(atom(balance)) : 0
+    const atomBalance = isExist(balance) ? fAtom(balance) : 0
     const disabled = !amount
     return (
       <div className="form-inner">

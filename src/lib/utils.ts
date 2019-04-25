@@ -213,7 +213,7 @@ export const isiPhoneX = () => {
 export const getLocale = () => {
   let val = navigator.language || ''
   const locale = val.toLowerCase().split(/[^\w+]/ig)[0] || 'zh'
-  return locale
+  return locale === 'en' ? 'en' : 'zh'
 }
 
 export const getAmountFromMsg = (msg) => {

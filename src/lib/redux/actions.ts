@@ -53,3 +53,12 @@ export const updateAtomPrice = (price) => {
     }
   }
 }
+
+export const updateSortby = (sortBy) => {
+  return {
+    type: types.UPDATE_SORTBY,
+    payload: {
+      sortBy,
+    }
+  }
+}

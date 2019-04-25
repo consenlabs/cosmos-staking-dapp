@@ -23,7 +23,7 @@ class CMP extends Component<Props> {
     const percent = atom(v.tokens) / atom(totalPoolBondedTokens)
 
     return <Link className="validator" to={`/validator/${v.operator_address}`}>
-
+      <div className="validator-rank-badge">{v.sortIndex + 1}</div>
       <ValidatorLogo url={v.description.logo} />
       <div className="v-left">
         <strong>{v.description.moniker}</strong>

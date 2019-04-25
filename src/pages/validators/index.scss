@@ -1,3 +1,24 @@
 .validators {
     padding: 0 10px 60px 10px;
 }
+
+.sort-bar {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-end;
+
+    p {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        margin: 0px;
+        padding: 10px;
+        margin-bottom: 10px;
+        padding-top: 0px;
+        span {
+            font-size: 13px;
+            color: white;
+        }
+    }
+}

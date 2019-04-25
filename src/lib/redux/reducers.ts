@@ -12,6 +12,7 @@ const initialState = {
   },
   validatorRewards: {},
   price: {},
+  sortBy: 'tokens',
 }
 
 export default function device(state = initialState, action) {
@@ -37,6 +38,9 @@ export default function device(state = initialState, action) {
         return
       case types.UPDATE_ATOM_PRICE:
         draft.price = action.payload.price
+        return
+      case types.UPDATE_SORTBY:
+        draft.sortBy = action.payload.sortBy
         return
       default:
         return draft

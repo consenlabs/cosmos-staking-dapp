@@ -36,7 +36,8 @@ class CMP extends Component<Props> {
       return Toast.error(intl.formatMessage({ id: msg }))
     }
 
-    logger().track('submit_delegate')
+    const logOpt = { validator: validator.operator_address, moniker: validator.description.moniker }
+    logger().track('submit_delegate', logOpt)
 
     // send delegate apiCall
     const txPayload = createTxPayload(
@@ -47,12 +48,12 @@ class CMP extends Component<Props> {
 
     sendTransaction(txPayload).then(txHash => {
       Toast.success(txHash, { heading: intl.formatMessage({ id: 'sent_successfully' }) })
-      logger().track('submit_delegate', { result: 'successful' })
+      logger().track('submit_delegate', { result: 'successful', ...logOpt })
       console.log(txHash)
       history.goBack()
       pubsub.emit('updateAsyncData')
     }).catch(e => {
-      logger().track('submit_delegate', { result: 'failed', message: e.message })
+      logger().track('submit_delegate', { result: 'failed', message: e.message, ...logOpt })
       Toast.error(e.message, { heading: intl.formatMessage({ id: 'failed_to_send' }) })
     })
   }

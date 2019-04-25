@@ -133,7 +133,10 @@ export async function getValidators() {
   const host = getNetworkConfig().chainAPI
   return rpc(host, `wallet.getValidators`, []).then(validators => {
     return (validators || []).map(v => ({ ...v, tokens: v.Tokens || v.tokens }))
-  }).then(validators => validators.sort(sortValidators))
+  }).then(validators => validators.sort(sortValidators).map(
+    (v, index) => {
+      return { ...v, sortIndex: index }
+    }))
 }
 
 export async function getAtomPrice() {

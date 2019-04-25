@@ -92,6 +92,7 @@
 
   .list-area {
     display: flex;
+    flex: 1;
     padding: 10px;
     border-radius: 8px 8px 0 0;
     background-color: #ffffff;
@@ -145,10 +146,6 @@
     display: flex;
     justify-content: center;
     padding: 7px 15px;
-    &.has-tx {
-      background-color: #fafbfc;
-      border-top: 1px solid #e6e8eb;
-    }
     a {
       flex: 1;
       height: 45px;

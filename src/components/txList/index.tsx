@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import dayjs from 'dayjs'
 import './index.scss'
 import { FormattedMessage } from 'react-intl'
 import { fAtom, getAmountFromMsg } from 'lib/utils'
@@ -26,17 +25,16 @@ class CMP extends Component<Props> {
     const isOut = [msgTypes.send, msgTypes.delegate, msgTypes.redelegate].includes(tx.msgType)
     const amount = getAmountFromMsg(tx)
     const msgKey = this.getKeyOfType(tx.msgType)
-    const date = dayjs(tx.timestamp * 1000).format('YYYY-MM-DD HH:mm:ss')
 
-    return <a className="tx-item" key={tx.rowId} href={`https://www.mintscan.io/txs/${tx.txHash}`}>
+    return <div className="tx-item" key={tx.rowId}>
       <div className="i-left">
         <FormattedMessage id={msgKey} />
-        <i>{date}</i>
+        <i>{tx.timestamp}</i>
       </div>
       <div className={`i-right ${isOut ? "delegate" : ""}`}>
         {`${isOut ? '-' : '+'} ${fAtom(amount)} ATOM`}
       </div>
-    </a>
+    </div>
   }
 
   render() {

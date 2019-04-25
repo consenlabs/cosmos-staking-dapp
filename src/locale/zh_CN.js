@@ -29,6 +29,10 @@ const zh_CN = {
   gas_not_enough: '矿工费不够',
   more_than_available: '超出可用数量',
   please_open_in_imtoken: '请在 imToken 中打开',
+  sort: '排序',
+  delegator_shares: '排名',
+  annualized_returns: '年化利率',
+  cancel: '取消',
 }
 
 export default zh_CN

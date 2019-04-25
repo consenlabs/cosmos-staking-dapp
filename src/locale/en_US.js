@@ -29,6 +29,10 @@ const en_US = {
   gas_not_enough: 'Gas not enough',
   more_than_available: 'The number is greater than available asset',
   please_open_in_imtoken: 'Please open in imToken',
+  sort: 'Sort',
+  delegator_shares: 'Delegator shares',
+  annualized_returns: 'Annualized returns',
+  cancel: 'Cancel',
 }
 
 export default en_US

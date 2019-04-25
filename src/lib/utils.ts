@@ -150,6 +150,7 @@ export const fAtom = (uatom: string | number, decimalLength = 4) => {
 
 export const thousandCommas = (num: string | number, place: number = 4) => {
   const decimals = '0'.repeat(place)
+  if (Number(num) < 1) return Number(num).toFixed(place).replace(/[0]+$/, '')
   return numeral(num).format(`0,0.[${decimals}]`)
 }
 
@@ -159,6 +160,11 @@ export const fPercent = (p: number, fixed = 3) => {
 
 export const isExist = (o: any) => {
   return typeof o !== 'undefined'
+}
+
+export const getDailyReward = (delegateShares, annualizedTeturns) => {
+  const dailyReward = toBN(delegateShares).times(annualizedTeturns).div(365).toFixed()
+  return fAtom(dailyReward, 3)
 }
 
 export const getBalanceFromAccount = (account) => {

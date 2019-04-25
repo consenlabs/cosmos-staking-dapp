@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl'
 import { selectDelegations, selectValidators, selectValidatorRewards } from '../../lib/redux/selectors'
 import ValidatorLogo from '../../components/validatorLogo'
 import './index.scss'
-import { fPercent, fAtom } from 'lib/utils'
+import { getDailyReward, fPercent, fAtom } from 'lib/utils'
 
 interface Props {
   delegations: any[]
@@ -56,7 +56,7 @@ class CMP extends Component<Props> {
           <FormattedMessage
             id='rewards_per_day'
           />
-          <i>{d.shares && v.annualized_returns ? `+${fAtom(d.shares * v.annualized_returns / 365, 3)}` : '~'}</i>
+          <i>{d.shares && v.annualized_returns ? `+${getDailyReward(d.shares, v.annualized_returns)}` : '~'}</i>
         </div>
       </div>
 

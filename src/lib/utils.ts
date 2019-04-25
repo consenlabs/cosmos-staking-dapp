@@ -6,7 +6,7 @@ import msgTypes from './msgTypes'
 
 export const Toast = cogoToast
 
-BN.DP = 20
+BN.DP = 40
 BN.RM = 0
 
 // interface __MsgAmount {
@@ -102,11 +102,11 @@ export const toBN = (x) => {
 }
 
 export const uatom = (atom: string | number) => {
-  return new BN(atom, 10).times(1e6).toFixed()
+  return toBN(atom).times(1e6).toFixed()
 }
 
 export const atom = (uatom: string | number) => {
-  return new BN(uatom).div(1e6).toFixed()
+  return toBN(uatom).div(1e6).toFixed()
 }
 
 /**
@@ -128,13 +128,13 @@ export const formatSmartBalance = (num: number | string, decimalLength: number =
     for (let i = 2; i < valueString.length; i++) {
       if (valueString[i] !== '0') {
         let max = i - 2 + 4
-        max = max > 10 ? 10 : max
-        return thousandCommas(valueString, Math.max(max, decimalLength))
+        max = max > BN.DP ? BN.DP : max
+        return valueBN.toFixed(Math.max(max, decimalLength)).replace(/[0]+$/, '')
       }
     }
   }
 
-  return thousandCommas(valueString, decimalLength)
+  return thousandCommas(valueBN.toFixed(decimalLength), decimalLength)
 }
 
 /**
@@ -150,7 +150,6 @@ export const fAtom = (uatom: string | number, decimalLength = 4) => {
 
 export const thousandCommas = (num: string | number, place: number = 4) => {
   const decimals = '0'.repeat(place)
-  if (Number(num) < 1) return Number(num).toFixed(place).replace(/[0]+$/, '')
   return numeral(num).format(`0,0.[${decimals}]`)
 }
 

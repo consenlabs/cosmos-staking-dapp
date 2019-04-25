@@ -2,7 +2,7 @@ import { toBN, atom } from './utils'
 
 export const isDecimalOverflow = (num: string, length) => {
   const fraction = num.split('.')[1]
-  return fraction && fraction.length > length
+  return !!(fraction && fraction.length > length)
 }
 
 export const validDelegate = (inputAmount, availableBalance = 0, feeAmount) => {
@@ -19,8 +19,7 @@ export const validDelegate = (inputAmount, availableBalance = 0, feeAmount) => {
 
   const bnAmounnt = toBN(num)
 
-  const uAmount = atom(inputAmount)
-  if (isDecimalOverflow(uAmount, 6)) {
+  if (isDecimalOverflow(atom(inputAmount), 6)) {
     return [false, 'decimal_length_must_lt_six']
   }
 
@@ -47,8 +46,7 @@ export const validUndelegate = (inputAmount, delegatedNumber = 0, feeAmount, ava
     return [false, 'number_must_be_positive']
   }
 
-  const uAmount = atom(inputAmount)
-  if (isDecimalOverflow(uAmount, 6)) {
+  if (isDecimalOverflow(atom(inputAmount), 6)) {
     return [false, 'decimal_length_must_lt_six']
   }
 

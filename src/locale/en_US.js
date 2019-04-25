@@ -31,7 +31,7 @@ const en_US = {
   please_open_in_imtoken: 'Please open in imToken',
   sort: 'Sort',
   tokens: 'Delegated Tokens',
-  annualized_returns: 'Annualized returns',
+  annualized_returns: 'Yield',
   cancel: 'Cancel',
 }
 

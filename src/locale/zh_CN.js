@@ -31,7 +31,7 @@ const zh_CN = {
   please_open_in_imtoken: '请在 imToken 中打开',
   sort: '排序',
   tokens: '委托数量',
-  annualized_returns: '年化利率',
+  annualized_returns: '年化收益率',
   cancel: '取消',
 }
 

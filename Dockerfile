@@ -25,5 +25,4 @@ RUN cp -r build/* /var/www/html
 # Expose ports
 EXPOSE 80
 
-# Set the default command to execute
-# when creating a new container
+CMD ["nginx", "-g", "daemon off;"]

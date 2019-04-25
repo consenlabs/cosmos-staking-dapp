@@ -27,6 +27,7 @@ class CMP extends Component<Props> {
 
     return <Link className="dl-card" key={index} to={`/validator/${v.operator_address}`}>
       <div className="top">
+        <div className="validator-rank-badge">{v.sortIndex + 1}</div>
         <ValidatorLogo url={v.description.logo} />
         <strong>{v.description.moniker}</strong>
         <div>

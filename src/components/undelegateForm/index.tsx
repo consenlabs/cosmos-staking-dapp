@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './index.scss'
 import { uatom, fAtom, isExist, createTxPayload, createUnDelegateMsg, Toast } from 'lib/utils'
 import { sendTransaction } from 'lib/sdk'
-import { validAmount } from 'lib/validator'
+import { validUndelegate } from 'lib/validator'
 import { pubsub } from 'lib/event'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import getNetworkConfig from '../../config/network'
@@ -34,11 +34,11 @@ class CMP extends Component<Props, any> {
   onSubmit = () => {
     const { account, delegation = {}, history, intl } = this.props
     const delegateBalance = delegation.shares || 0
-    const { address } = account
+    const { address, balance } = account
     const { amount } = this.state
-    const [valid, msg] = validAmount(uatom(amount), delegateBalance, feeAmount, intl)
+    const [valid, msg] = validUndelegate(uatom(amount), delegateBalance, feeAmount, balance)
     if (!valid) {
-      return Toast.error(msg)
+      return Toast.error(intl.formatMessage({ id: msg }))
     }
 
     logger().track('submit_undelegate')

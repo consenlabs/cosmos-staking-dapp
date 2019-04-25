@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './index.scss'
 import { uatom, fAtom, isExist, createTxPayload, createDelegateMsg, Toast } from 'lib/utils'
 import { sendTransaction } from 'lib/sdk'
-import { validAmount } from 'lib/validator'
+import { validDelegate } from 'lib/validator'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { pubsub } from 'lib/event'
 import getNetworkConfig from '../../config/network'
@@ -31,9 +31,9 @@ class CMP extends Component<Props> {
     const { account, validator, history, intl } = this.props
     const { balance, address } = account
     const { amount } = this.state
-    const [valid, msg] = validAmount(uatom(amount), balance, feeAmount, intl)
+    const [valid, msg] = validDelegate(uatom(amount), balance, feeAmount)
     if (!valid) {
-      return Toast.error(msg)
+      return Toast.error(intl.formatMessage({ id: msg }))
     }
 
     logger().track('submit_delegate')

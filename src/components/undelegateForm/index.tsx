@@ -32,7 +32,7 @@ class CMP extends Component<Props, any> {
 
 
   onSubmit = () => {
-    const { account, delegation = {}, history, intl } = this.props
+    const { account, delegation = {}, history, intl, validator } = this.props
     const delegateBalance = delegation.shares || 0
     const { address, balance } = account
     const { amount } = this.state
@@ -41,7 +41,7 @@ class CMP extends Component<Props, any> {
       return Toast.error(intl.formatMessage({ id: msg }))
     }
 
-    logger().track('submit_undelegate')
+    logger().track('submit_undelegate', { validator: validator.operator_address, moniker: validator.description.moniker })
 
     // send delegate apiCall
     const txPayload = createTxPayload(

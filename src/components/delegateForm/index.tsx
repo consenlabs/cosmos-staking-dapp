@@ -36,7 +36,7 @@ class CMP extends Component<Props> {
       return Toast.error(intl.formatMessage({ id: msg }))
     }
 
-    logger().track('submit_delegate')
+    logger().track('submit_delegate', { validator: validator.operator_address, moniker: validator.description.moniker })
 
     // send delegate apiCall
     const txPayload = createTxPayload(

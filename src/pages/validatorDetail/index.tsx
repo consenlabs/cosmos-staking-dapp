@@ -26,10 +26,11 @@ class Page extends Component<Props, any> {
   }
 
   componentDidMount() {
-    const { account, match } = this.props
+    const { account, match, validators } = this.props
     const id = match.params.id
+    const v = validators.find(v => v.operator_address === id)
 
-    logger().track('to_validator_detail', { validator: id })
+    logger().track('to_validator_detail', { validator: id, moniker: v ? v.description.moniker : '' })
 
     if (!id || !account.address) return false
 

@@ -30,7 +30,7 @@ const zh_CN = {
   more_than_available: '超出可用数量',
   please_open_in_imtoken: '请在 imToken 中打开',
   sort: '排序',
-  delegator_shares: '排名',
+  tokens: '委托数量',
   annualized_returns: '年化利率',
   cancel: '取消',
 }

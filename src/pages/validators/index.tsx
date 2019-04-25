@@ -27,7 +27,7 @@ class Page extends Component<Props, any> {
       actionsheetVisible: false,
     }
   }
-  
+
   componentDidMount() {
     logger().track('to_validators_list')
   }
@@ -47,7 +47,7 @@ class Page extends Component<Props, any> {
         />
         {actionsheetVisible && (
           <ActionSheet
-            options={['delegator_shares', 'annualized_returns'].map(t => ({ locale: intl.formatMessage({ id: t }), key: t}))}
+            options={['tokens', 'annualized_returns'].map(t => ({ locale: intl.formatMessage({ id: t }), key: t }))}
             title={intl.formatMessage({ id: 'sort' })}
             close={() => this.setState({ actionsheetVisible: false })}
             onSelect={(option) => this.props.updateSortby(option)}

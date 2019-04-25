@@ -30,7 +30,7 @@ const en_US = {
   more_than_available: 'The number is greater than available asset',
   please_open_in_imtoken: 'Please open in imToken',
   sort: 'Sort',
-  delegator_shares: 'Delegator shares',
+  tokens: 'Delegated Tokens',
   annualized_returns: 'Annualized returns',
   cancel: 'Cancel',
 }

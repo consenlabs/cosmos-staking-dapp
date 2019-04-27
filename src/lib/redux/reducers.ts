@@ -12,7 +12,7 @@ const initialState = {
   },
   validatorRewards: {},
   price: {},
-  sortBy: 'tokens',
+  sortBy: 'delegators',
 }
 
 export default function device(state = initialState, action) {

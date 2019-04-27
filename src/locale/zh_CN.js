@@ -16,7 +16,7 @@ const zh_CN = {
   commission_rate: '手续费',
   total_delegations: '总委托',
   validator_delegations: '验证者委托',
-  delegators: '委托者',
+  delegators: '委托人数',
   failed_to_send: '发送失败',
   sent_successfully: '发送成功',
   input_amount: '输入金额',

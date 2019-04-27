@@ -23,11 +23,18 @@ class Page extends Component<Props> {
     const { validators, pool, sortBy } = this.props
 
     if (!validators || !validators.length) return <Loading />
-    
+    const sortedList = validators.sort((a, b) => {
+      // if annualized_returns is same, sort by tokens
+      if (sortBy === 'annualized_returns' && a[sortBy] == b[sortBy]) {
+        return b['tokens'] - a['tokens'] > 0 ? 1 : -1
+      }
+      return b[sortBy] - a[sortBy] > 0 ? 1 : -1
+    })
+
     return (
       <div className="validator-list">
         {
-          validators.sort((a, b) => b[sortBy] - a[sortBy] > 0 ? 1 : -1).map(v => {
+          sortedList.map(v => {
             return <ValidatorCard validator={v} key={v.operator_address} pool={pool} />
           })
         }

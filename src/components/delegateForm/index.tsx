@@ -84,6 +84,12 @@ class CMP extends Component<Props> {
           max={atomBalance}
           min={0.000001}
         />
+        <div className="form-footer">
+          <FormattedMessage
+            id='fee'
+          />
+          <span>{`${fAtom(feeAmount)} ATOM`}</span>
+        </div>
         <button disabled={disabled} className="form-button" onClick={this.onSubmit}>
           <FormattedMessage
             id='delegate'

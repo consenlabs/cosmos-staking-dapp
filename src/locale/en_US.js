@@ -25,13 +25,14 @@ const en_US = {
   invalid_number: 'Invalid number',
   number_must_be_positive: 'The number must be greater than 0',
   decimal_length_must_lt_six: 'Decimal length must less than 6',
-  gas_not_enough: 'Gas not enough',
+  fee_not_enough: 'Fee not enough',
   more_than_available: 'The number is greater than available asset',
   please_open_in_imtoken: 'Please open in imToken',
   sort: 'Sort',
   delegators: 'Delegators',
   bonded_tokens: 'Bonded Tokens',
   cancel: 'Cancel',
+  fee: 'Fee',
 }
 
 export default en_US

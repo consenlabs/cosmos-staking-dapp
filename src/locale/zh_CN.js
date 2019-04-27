@@ -25,13 +25,14 @@ const zh_CN = {
   invalid_number: '金额不合法',
   number_must_be_positive: '请输入大于 0 的金额',
   decimal_length_must_lt_six: '小数位不能超过 6 位',
-  gas_not_enough: '矿工费不够',
+  fee_not_enough: '可用余额不足以支付矿工费', // 待优化
   more_than_available: '超出可用数量',
   please_open_in_imtoken: '请在 imToken 中打开',
   sort: '排序',
   delegators: '委托者',
   bonded_tokens: '委托代币',
   cancel: '取消',
+  fee: '交易费',
 }
 
 export default zh_CN

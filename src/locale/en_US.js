@@ -14,9 +14,7 @@ const en_US = {
   rewards_per_day: 'Rewards (Est. per day)',
   accessing_account: 'Accessing Account...',
   commission_rate: 'Commission Rate',
-  total_delegations: 'Total Delegations',
-  validator_delegations: 'Validator Delegations',
-  delegators: 'Delegators Number',
+  self_bonded_tokens: 'Self Bonded Tokens',
   failed_to_send: 'Failed',
   sent_successfully: 'Successfully',
   input_amount: 'Input Amount',
@@ -31,8 +29,8 @@ const en_US = {
   more_than_available: 'The number is greater than available asset',
   please_open_in_imtoken: 'Please open in imToken',
   sort: 'Sort',
-  tokens: 'Delegated Tokens',
-  annualized_returns: 'Yield',
+  delegators: 'Delegators',
+  bonded_tokens: 'Bonded Tokens',
   cancel: 'Cancel',
 }
 

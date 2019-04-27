@@ -73,13 +73,13 @@ class Page extends Component<Props, any> {
         <ul>
           <li>
             <FormattedMessage
-              id='total_delegations'
+              id='bonded_tokens'
             />
             <i>{fAtom(v.tokens)} ATOM</i>
           </li>
           <li>
             <FormattedMessage
-              id='validator_delegations'
+              id='self_bonded_tokens'
             />
             <i>{fAtom(v.self_delegator_tokens)} ATOM</i>
           </li>

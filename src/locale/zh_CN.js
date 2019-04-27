@@ -14,9 +14,7 @@ const zh_CN = {
   rewards_per_day: '预计收益(天)',
   accessing_account: '获取账号中...',
   commission_rate: '手续费',
-  total_delegations: '总委托',
-  validator_delegations: '验证者委托',
-  delegators: '委托人数',
+  self_bonded_tokens: '验证节点委托代币',
   failed_to_send: '发送失败',
   sent_successfully: '发送成功',
   input_amount: '输入金额',
@@ -31,8 +29,8 @@ const zh_CN = {
   more_than_available: '超出可用数量',
   please_open_in_imtoken: '请在 imToken 中打开',
   sort: '排序',
-  tokens: '委托数量',
-  annualized_returns: '年化收益率',
+  delegators: '委托者',
+  bonded_tokens: '委托代币',
   cancel: '取消',
 }
 

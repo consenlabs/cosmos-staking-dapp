@@ -47,7 +47,7 @@ class Page extends Component<Props, any> {
         />
         {actionsheetVisible && (
           <ActionSheet
-            options={['tokens', 'annualized_returns', 'delegators'].map(t => ({ locale: intl.formatMessage({ id: t }), key: t }))}
+            options={['delegators', 'bonded_tokens', 'yield'].map(t => ({ locale: intl.formatMessage({ id: t }), key: t }))}
             title={intl.formatMessage({ id: 'sort' })}
             close={() => this.setState({ actionsheetVisible: false })}
             onSelect={(option) => this.props.updateSortby(option)}

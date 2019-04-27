@@ -24,11 +24,17 @@ class Page extends Component<Props> {
 
     if (!validators || !validators.length) return <Loading />
     const sortedList = validators.sort((a, b) => {
+      const sortKey = {
+        yield: 'annualized_returns',
+        bonded_tokens: 'tokens',
+        delegators: 'delegators',
+      }[sortBy]
+
       // if annualized_returns is same, sort by tokens
-      if (sortBy === 'annualized_returns' && a[sortBy] == b[sortBy]) {
+      if (sortBy === 'yield' && a[sortKey] == b[sortKey]) {
         return b['tokens'] - a['tokens'] > 0 ? 1 : -1
       }
-      return b[sortBy] - a[sortBy] > 0 ? 1 : -1
+      return b[sortKey] - a[sortKey] > 0 ? 1 : -1
     })
 
     return (

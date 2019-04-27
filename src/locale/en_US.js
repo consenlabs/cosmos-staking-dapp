@@ -16,6 +16,7 @@ const en_US = {
   commission_rate: 'Commission Rate',
   total_delegations: 'Total Delegations',
   validator_delegations: 'Validator Delegations',
+  delegators: 'Delegators',
   failed_to_send: 'Failed',
   sent_successfully: 'Successfully',
   input_amount: 'Input Amount',

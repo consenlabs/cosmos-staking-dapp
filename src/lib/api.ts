@@ -93,7 +93,9 @@ export function getAccount(address) {
 
 export const getDelegations = (address) => {
   const url = `staking/delegators/${address}/delegations`
-  return get(url, {}).then(delegations => delegations || [])
+  return get(url, {}).then(delegations => (delegations || []).sort(
+    (a, b) => b.shares - a.shares
+  ))
 }
 
 export const getRewards = (delegatorAddr) => {

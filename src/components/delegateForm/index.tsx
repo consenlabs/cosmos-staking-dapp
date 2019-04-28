@@ -1,80 +1,139 @@
 import React, { Component } from 'react'
 import './index.scss'
-import { uatom, fAtom, isExist, createTxPayload, createDelegateMsg, Toast } from 'lib/utils'
+import { uatom, fAtom, isExist, createTxPayload, createDelegateMsg, createWithdrawMsg, createRedelegateMsg, Toast } from 'lib/utils'
 import { sendTransaction } from 'lib/sdk'
 import { validDelegate } from 'lib/validator'
 import { FormattedMessage, injectIntl } from 'react-intl'
+import Modal from 'react-modal'
 import { pubsub } from 'lib/event'
+import ValidatorLogo from '../../components/validatorLogo'
 import getNetworkConfig from '../../config/network'
 import { feeAmount } from '../../config/fee'
 import logger from '../../lib/logger'
 
+const customStyles = {
+  content: {
+    top: 'auto',
+    left: '0',
+    right: '0',
+    bottom: '-8px',
+    borderRadius: '8px',
+    padding: '0'
+  },
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)'
+  }
+};
+
+const selectLabels = ['available_balance', 'rewards', 'other_delegations']
+
 interface Props {
+  reward: any
   account: any
   validator: any
+  validators: any
+  delegations: any
   history: any
   intl: any
 }
 
-class CMP extends Component<Props> {
+class CMP extends Component<Props, any> {
 
-  state = {
-    amount: '',
-  }
-
-  componentDidMount() {
-  }
-
-  afterOpenModal() { }
-
-  onSubmit = () => {
-    const { account, validator, history, intl } = this.props
-    const { balance, address } = account
-    const { amount } = this.state
-    const [valid, msg] = validDelegate(uatom(amount), balance, feeAmount)
-    if (!valid) {
-      return Toast.error(intl.formatMessage({ id: msg }))
+  constructor(props) {
+    super(props)
+    this.state = {
+      amount: '',
+      modalVisible: false,
+      selectingDelegation: false,
+      sourceType: 0,
+      sourceObject: {
+        key: selectLabels[0],
+        value: props.account.balance,
+      }
     }
-
-    const logOpt = { validator: validator.operator_address, moniker: validator.description.moniker }
-    logger().track('submit_delegate', logOpt)
-
-    // send delegate apiCall
-    const txPayload = createTxPayload(
-      address,
-      [createDelegateMsg(address, validator.operator_address, uatom(amount), getNetworkConfig().denom)],
-      'delegate from imToken',
-    )
-
-    sendTransaction(txPayload).then(txHash => {
-      Toast.success(txHash, { heading: intl.formatMessage({ id: 'sent_successfully' }) })
-      logger().track('submit_delegate', { result: 'successful', ...logOpt })
-      console.log(txHash)
-      history.goBack()
-      pubsub.emit('updateAsyncData')
-    }).catch(e => {
-      logger().track('submit_delegate', { result: 'failed', message: e.message, ...logOpt })
-      Toast.error(e.message, { heading: intl.formatMessage({ id: 'failed_to_send' }) })
-    })
   }
 
-  onChange = (event) => {
-    this.setState({ amount: event.target.value })
+  renderSelectorModal = () => {
+    const { modalVisible, selectingDelegation } = this.state
+
+    return <Modal
+      isOpen={modalVisible}
+      style={customStyles}
+      contentLabel="Delegate Modal"
+      onRequestClose={this.hideDelegateSourceModal}
+      appElement={document.body}
+    >
+      {!selectingDelegation ? this.renderTypeSelector() : this.renderDelegations()}
+    </Modal>
+  }
+
+  renderTypeSelector = () => {
+
+    const { account, intl, reward } = this.props
+    const { sourceType } = this.state
+
+    return <div className="modal-inner type-selector">
+      <header>{intl.formatMessage({ id: 'select_funds_type' })}</header>
+      <ul className="delegate-type-list">
+        <li onClick={() => this.selectType(0)}>
+          <div>
+            <label>{intl.formatMessage({ id: selectLabels[0] })}</label>
+            <span>{fAtom(account.balance)} ATOM</span>
+          </div>
+          {sourceType === 0 && <b>✓</b>}
+        </li>
+        <li onClick={() => this.selectType(1)}>
+          <div>
+            <label>{intl.formatMessage({ id: selectLabels[1] })}</label>
+            <span>{fAtom(reward, 6, '0')} ATOM</span>
+          </div>
+          {sourceType === 1 && <b>✓</b>}
+        </li>
+        <li onClick={() => this.selectType(2)}>
+          <div>
+            <label>{intl.formatMessage({ id: selectLabels[2] })}</label>
+          </div>
+        </li>
+      </ul>
+      <div className="split-margin"></div>
+      <footer>{intl.formatMessage({ id: 'cancel' })}</footer>
+    </div>
+  }
+
+  renderDelegations = () => {
+    const { delegations, validators, intl } = this.props
+    return <div className="modal-inner type-selector">
+      <header>{intl.formatMessage({ id: 'other_delegations' })}</header>
+      <div className="m-delegations">
+        {!!delegations && delegations.map((d) => {
+          const v = validators.find(el => el.operator_address === d.validator_address)
+          return <div className="dl-item" key={v.operator_address} onClick={() => {
+            this.handleSelectDelegation(d, v)
+          }}>
+            <div className="validator-rank-badge">{v.sortIndex + 1}</div>
+            <ValidatorLogo url={v.description.logo} />
+            <div className="dl-item-info">
+              <strong>{v.description.moniker}</strong>
+              <i>{fAtom(d.shares)} ATOM</i>
+            </div>
+          </div>
+        })}
+      </div>
+    </div>
   }
 
   render() {
     const { account, intl } = this.props
+    const { amount, sourceObject } = this.state
     const { balance } = account
-    const { amount } = this.state
     const atomBalance = isExist(balance) ? fAtom(balance) : 0
     const disabled = !amount
     return (
       <div className="form-inner">
-        <div className="form-header">
-          <FormattedMessage
-            id='available_balance'
-          />
-          <i>{atomBalance} ATOM</i>
+        <div className="form-header" onClick={this.showDelegateSourceModal}>
+          <FormattedMessage id={sourceObject.key} />
+          <i>{fAtom(sourceObject.value, 6, '0')} ATOM</i>
+          <b></b>
         </div>
         <input
           type="number"
@@ -95,9 +154,144 @@ class CMP extends Component<Props> {
             id='delegate'
           />
         </button>
+        {this.renderSelectorModal()}
       </div>
     )
   }
+
+  onSubmit = () => {
+    const { account, validator, history, intl } = this.props
+    const { amount, sourceObject, sourceType } = this.state
+    const { address } = account
+    const [valid, msg] = validDelegate(uatom(amount), sourceObject.value, feeAmount)
+    if (!valid) {
+      return Toast.error(intl.formatMessage({ id: msg }))
+    }
+
+    const logOpt = { validator: validator.operator_address, moniker: validator.description.moniker }
+    logger().track('submit_delegate', logOpt)
+
+    let msgs: any = null
+
+    switch (sourceType) {
+      case 0:
+        msgs = [
+          createDelegateMsg(
+            address,
+            validator.operator_address,
+            uatom(amount),
+            getNetworkConfig().denom)
+        ]
+        break
+      case 1:
+        msgs = [
+          createWithdrawMsg(
+            address,
+            validator.operator_address,
+            uatom(amount),
+            getNetworkConfig().denom),
+
+          createDelegateMsg(
+            address,
+            validator.operator_address,
+            uatom(amount),
+            getNetworkConfig().denom)
+        ]
+      case 2:
+        msgs = [
+          createRedelegateMsg(
+            address,
+            sourceObject.validator_src_address,
+            validator.operator_address,
+            uatom(amount),
+            getNetworkConfig().denom)
+        ]
+      default:
+    }
+    // send delegate apiCall
+    const memo = [
+      'delegate from imToken',
+      'withdraw & delegate from imToken',
+      'redelegate from imToken',
+    ][sourceType]
+
+    const txPayload = createTxPayload(
+      address,
+      msgs,
+      memo,
+    )
+
+    sendTransaction(txPayload).then(txHash => {
+      Toast.success(txHash, { heading: intl.formatMessage({ id: 'sent_successfully' }) })
+      logger().track('submit_delegate', { result: 'successful', ...logOpt })
+      console.log(txHash)
+      history.goBack()
+      pubsub.emit('updateAsyncData')
+    }).catch(e => {
+      logger().track('submit_delegate', { result: 'failed', message: e.message, ...logOpt })
+      Toast.error(e.message, { heading: intl.formatMessage({ id: 'failed_to_send' }) })
+    })
+  }
+
+  onChange = (event) => {
+    this.setState({ amount: event.target.value })
+  }
+
+  showDelegateSourceModal = () => {
+    this.setState({ modalVisible: true })
+  }
+
+  hideDelegateSourceModal = () => {
+    this.setState({ modalVisible: false, selectingDelegation: false })
+  }
+
+  handleSelectDelegation = (delegation, validator) => {
+    this.setState({
+      sourceType: 2,
+      sourceObject: {
+        key: validator.description.moniker,
+        value: delegation.shares,
+        validator_src_address: delegation.validator_address,
+      },
+      modalVisible: false,
+      selectingDelegation: false,
+    })
+  }
+
+  selectType = (index) => {
+    const { account, reward } = this.props
+    switch (index) {
+      case 0:
+        this.setState({
+          sourceType: index,
+          sourceObject: {
+            key: selectLabels[index],
+            value: account.balance
+          },
+          modalVisible: false,
+        })
+        break;
+      case 1:
+        this.setState({
+          sourceType: index,
+          sourceObject: {
+            key: selectLabels[index],
+            value: reward
+          },
+          modalVisible: false,
+        })
+        break;
+      case 2:
+        this.setState({
+          selectingDelegation: true,
+        })
+        break;
+      default:
+        return
+    }
+  }
 }
+
+
 
 export default injectIntl(CMP)

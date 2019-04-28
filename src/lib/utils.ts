@@ -142,8 +142,8 @@ export const formatSmartBalance = (num: number | string, defaultDecimalLength: n
  * used for render balance in jsx
  * don't used for calc
  */
-export const fAtom = (uatom: string | number, decimalLength = 4) => {
-  if (isNaN(Number(uatom))) return '~'
+export const fAtom = (uatom: string | number, decimalLength = 4, placeholader = '~') => {
+  if (isNaN(Number(uatom))) return placeholader
   return formatSmartBalance(atom(uatom), decimalLength)
 }
 

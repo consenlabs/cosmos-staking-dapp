@@ -33,6 +33,8 @@ const en_US = {
   bonded_tokens: 'Bonded Tokens',
   cancel: 'Cancel',
   fee: 'Fee',
+  select_funds_type: 'Select Funds Type',
+  other_delegations: 'Other Delegations',
 }
 
 export default en_US

@@ -33,6 +33,8 @@ const zh_CN = {
   bonded_tokens: '委托代币',
   cancel: '取消',
   fee: '交易费',
+  select_funds_type: '选择资金类型',
+  other_delegations: '其他委托',
 }
 
 export default zh_CN

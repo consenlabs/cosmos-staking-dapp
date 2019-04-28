@@ -28,7 +28,6 @@ class Page extends Component<Props> {
     const id = match.params.id
     const v = validators.find(v => v.operator_address === id)
 
-    console.log(v, match)
     if (!v) return <Loading />
 
     const reward = validatorRewards[v.operator_address]

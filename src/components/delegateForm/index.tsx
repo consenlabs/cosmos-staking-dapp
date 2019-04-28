@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './index.scss'
-import { uatom, fAtom, isExist, createTxPayload, createDelegateMsg, createWithdrawMsg, createRedelegateMsg, Toast } from 'lib/utils'
+import { uatom, fAtom, createTxPayload, createDelegateMsg, createWithdrawMsg, createRedelegateMsg, Toast } from 'lib/utils'
 import { sendTransaction } from 'lib/sdk'
 import { validDelegate } from 'lib/validator'
 import { FormattedMessage, injectIntl } from 'react-intl'
@@ -123,10 +123,8 @@ class CMP extends Component<Props, any> {
   }
 
   render() {
-    const { account, intl } = this.props
+    const { intl } = this.props
     const { amount, sourceObject } = this.state
-    const { balance } = account
-    const atomBalance = isExist(balance) ? fAtom(balance) : 0
     const disabled = !amount
     return (
       <div className="form-inner">
@@ -140,8 +138,6 @@ class CMP extends Component<Props, any> {
           placeholder={intl.formatMessage({ id: 'input_amount' })}
           value={amount}
           onChange={this.onChange}
-          max={atomBalance}
-          min={0.000001}
         />
         <div className="form-footer">
           <FormattedMessage

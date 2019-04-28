@@ -5,24 +5,10 @@ import { sendTransaction } from 'lib/sdk'
 import { validUndelegate } from 'lib/validator'
 import { pubsub } from 'lib/event'
 import { FormattedMessage, injectIntl } from 'react-intl'
-import Modal from 'react-modal'
+import Modal from '../../components/modal'
 import getNetworkConfig from '../../config/network'
 import { feeAmount } from '../../config/fee'
 import logger from '../../lib/logger'
-
-const customStyles = {
-  content: {
-    top: 'auto',
-    left: '0',
-    right: '0',
-    bottom: '-8px',
-    borderRadius: '8px',
-    padding: '0'
-  },
-  overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)'
-  }
-};
 
 const selectLabels = ['delegated', 'rewards']
 
@@ -55,7 +41,6 @@ class CMP extends Component<Props, any> {
 
     return <Modal
       isOpen={modalVisible}
-      style={customStyles}
       contentLabel="Delegate Modal"
       onRequestClose={this.hideDelegateSourceModal}
       appElement={document.body}
@@ -88,7 +73,7 @@ class CMP extends Component<Props, any> {
         </li>
       </ul>
       <div className="split-margin"></div>
-      <footer>{intl.formatMessage({ id: 'cancel' })}</footer>
+      <footer onClick={this.hideDelegateSourceModal}>{intl.formatMessage({ id: 'cancel' })}</footer>
     </div>
   }
 
@@ -132,7 +117,6 @@ class CMP extends Component<Props, any> {
     const memo = [
       'undelegate from imToken',
       'withdraw from imToken',
-      'redelegate from imToken',
     ][sourceType]
 
     // send delegate apiCall

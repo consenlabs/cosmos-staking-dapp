@@ -60,7 +60,7 @@ describe('test validDelegate', () => {
       inputAmount: 6100000,
       availableBalance: 7000000,
       feeAmount: 1000000,
-      result: [false, 'gas_not_enough']
+      result: [false, 'fee_not_enough']
     }, {
       inputAmount: 4,
       availableBalance: 7,
@@ -119,7 +119,7 @@ describe('test validUndelegate', () => {
       delegatedNumber: 9,
       availableBalance: 3,
       feeAmount: 4,
-      result: [false, 'gas_not_enough']
+      result: [false, 'fee_not_enough']
     }, {
       inputAmount: 4,
       delegatedNumber: 9,

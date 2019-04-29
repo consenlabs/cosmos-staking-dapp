@@ -84,10 +84,10 @@ describe('test utils methods', () => {
       result: '0.1'
     }, {
       input: '0.000000000012',
-      result: '0.000000000012',
+      result: '0',
     }, {
-      input: '0.00000000001234567',
-      result: '0.00000000001234',
+      input: '0.00234567',
+      result: '0.002345',
     }, {
       input: undefined,
       result: '0',
@@ -111,14 +111,14 @@ describe('test utils methods', () => {
 
   describe('test fAtom', () => {
     const cases = [{
-      input: '0.1',
-      result: '0.0000001'
+      input: '1',
+      result: '0.000001'
     }, {
       input: '0.000000000012',
-      result: '0.000000000000000012',
+      result: '0',
     }, {
-      input: '0.00000000001234567',
-      result: '0.00000000000000001234',
+      input: '234567.123456789',
+      result: '0.234567',
     }, {
       input: undefined,
       result: '~',

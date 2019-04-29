@@ -28,7 +28,7 @@ export const validDelegate = (inputAmount, availableBalance = 0, feeAmount) => {
   }
 
   if (bnAmounnt.plus(feeAmount).gt(availableBalance)) {
-    return [false, 'gas_not_enough']
+    return [false, 'fee_not_enough']
   }
 
   return [true, null]
@@ -55,7 +55,7 @@ export const validUndelegate = (inputAmount, delegatedNumber = 0, feeAmount, ava
   }
 
   if (toBN(feeAmount).gt(availableBalance)) {
-    return [false, 'gas_not_enough']
+    return [false, 'fee_not_enough']
   }
 
   return [true, null]

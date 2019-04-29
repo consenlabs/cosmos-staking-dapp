@@ -27,6 +27,19 @@
       color: #777a8c;
     }
   }
+  .form-footer {
+    text-align: right;
+    margin-top: 15px;
+    font-family: 'PingFang SC';
+    font-size: 13px;
+    font-style: normal;
+    line-height: 1.54;
+    letter-spacing: 0.2px;
+    color: #777a8c;
+    span, i {
+      padding-right: 4px;
+    }
+  }
   input {
     -webkit-appearance:none;
     height: 50px;

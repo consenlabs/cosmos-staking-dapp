@@ -116,7 +116,7 @@ export const atom = (uatom: string | number) => {
  * if integer, keep interger
  * if otherwise, keep ${decimalLength} places decimals
  */
-export const formatSmartBalance = (num: number | string, decimalLength: number = 4) => {
+export const formatSmartBalance = (num: number | string, defaultDecimalLength: number = 4, maxDecimalLength: number = 6) => {
   const valueBN = toBN(num)
   const valueString = valueBN.toFixed()
 
@@ -126,15 +126,15 @@ export const formatSmartBalance = (num: number | string, decimalLength: number =
 
   if (valueBN.lt(1)) {
     for (let i = 2; i < valueString.length; i++) {
+      if (i >= 2 + maxDecimalLength) return '0'  // if 0.000000* return 0
       if (valueString[i] !== '0') {
-        let max = i - 2 + 4
-        max = max > BN.DP ? BN.DP : max
-        return valueBN.toFixed(Math.max(max, decimalLength)).replace(/[0]+$/, '')
+        let max = Math.min(maxDecimalLength, i + defaultDecimalLength) // display 0. + maxDecimalLength zero at most.
+        return valueBN.toFixed(Math.max(max, defaultDecimalLength)).replace(/[0]+$/, '')
       }
     }
   }
 
-  return thousandCommas(valueBN.toFixed(decimalLength), decimalLength)
+  return thousandCommas(valueBN.toFixed(defaultDecimalLength), defaultDecimalLength)
 }
 
 /**

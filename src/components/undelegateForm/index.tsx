@@ -52,7 +52,6 @@ class CMP extends Component<Props, any> {
   renderTypeSelector = () => {
 
     const { intl, reward, delegation } = this.props
-    const { sourceType } = this.state
 
     return <div className="modal-inner type-selector">
       <header>{intl.formatMessage({ id: 'select_funds_type' })}</header>
@@ -62,14 +61,12 @@ class CMP extends Component<Props, any> {
             <label>{intl.formatMessage({ id: selectLabels[0] })}</label>
             <span>{fAtom(delegation.shares, 6, '0')} ATOM</span>
           </div>
-          {sourceType === 0 && <b>✓</b>}
         </li>
         <li onClick={() => this.selectType(1)}>
           <div>
             <label>{intl.formatMessage({ id: selectLabels[1] })}</label>
             <span>{fAtom(reward, 6, '0')} ATOM</span>
           </div>
-          {sourceType === 1 && <b>✓</b>}
         </li>
       </ul>
       <div className="split-margin"></div>

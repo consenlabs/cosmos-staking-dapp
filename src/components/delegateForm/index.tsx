@@ -55,7 +55,6 @@ class CMP extends Component<Props, any> {
   renderTypeSelector = () => {
 
     const { account, delegations, validator, intl } = this.props
-    const { sourceType } = this.state
     const _delegations = delegations.filter(d => d.validator_address !== validator.operator_address)
     const hasDelegation = _delegations && _delegations.length > 0
 
@@ -67,7 +66,6 @@ class CMP extends Component<Props, any> {
             <label>{intl.formatMessage({ id: selectLabels[0] })}</label>
             <span>{fAtom(account.balance)} ATOM</span>
           </div>
-          {sourceType === 0 && <b>✓</b>}
         </li>
         {/* <li onClick={() => this.selectType(1)}>
           <div>

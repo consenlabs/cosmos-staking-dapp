@@ -180,7 +180,7 @@ class Page extends Component<Props, any> {
         <div className="blocksWrap">
           {advs.map(ad => {
             return (
-              <div className="block"><span>{ad}</span></div>
+              <div className="block" key={ad}><span>{ad}</span></div>
             )
           })}
         </div>

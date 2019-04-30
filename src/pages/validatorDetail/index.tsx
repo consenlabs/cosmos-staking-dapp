@@ -11,6 +11,8 @@ import './index.scss'
 import logger from '../../lib/logger'
 import linkSVG from '../../assets/link.svg'
 import { getTxListByAddress } from '../../lib/api'
+import bannerConfig from '../../config/banner'
+import Arrow from '../../assets/arrow.svg'
 
 interface Props {
   validators: any
@@ -98,6 +100,8 @@ class Page extends Component<Props, any> {
           </div>
         </section>
 
+        {this.renderActivity()}
+
         <section>
           <p className="title">
             <FormattedMessage
@@ -105,6 +109,9 @@ class Page extends Component<Props, any> {
             />
           </p>
           <div className="desc">{v.description.details || 'no description'}</div>
+
+          {this.renderAdvantage()}
+
         </section>
 
         {this.renderTxs()}
@@ -120,6 +127,61 @@ class Page extends Component<Props, any> {
               id='delegate'
             />
           </Link>
+        </div>
+      </div>
+    )
+  }
+
+  renderActivity() {
+    const { match } = this.props
+    const id = match.params.id
+    const v = bannerConfig.find(v => v.operator_address === id)
+
+    if (!v) return null
+
+    return (
+      <section>
+        <p className="title">
+          <FormattedMessage
+            id='activity'
+          />
+        </p>
+        <a className="box" href="">
+          <div>
+            <p>
+              <FormattedMessage
+                id='free_commission_high_yield'
+              />
+            </p>
+            <span className="date">2019-4-25 ~ 2019-5-30</span>
+          </div>
+          <img src={Arrow} />
+        </a>
+      </section>
+    )
+  }
+
+  renderAdvantage() {
+    const { match } = this.props
+    const id = match.params.id
+    const v = bannerConfig.find(v => v.operator_address === id)
+
+    if (!v) return null
+
+    const advs = ['高可用', '抗 DDOS', '哨兵节点']
+    return (
+      <div className="advantage">
+        <p className="title">
+          <FormattedMessage
+            id='advantage'
+          />
+        </p>
+        <div className="blocksWrap">
+          {advs.map(ad => {
+            return (
+              <div className="block"><span>{ad}</span></div>
+            )
+          })}
         </div>
       </div>
     )

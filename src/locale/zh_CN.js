@@ -39,6 +39,9 @@ const zh_CN = {
   none: '暂无',
   intro: '简介',
   transactions: '交易记录',
+  activity: '活动',
+  free_commission_high_yield: '免佣金，高收益',
+  advantage: '特点',
 }
 
 export default zh_CN

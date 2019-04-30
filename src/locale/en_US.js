@@ -39,6 +39,9 @@ const en_US = {
   none: 'None',
   intro: 'Intro',
   transactions: 'Transactions',
+  activity: 'Activity',
+  free_commission_high_yield: 'Free commission, high yield',
+  advantage: 'Advantage',
 }
 
 export default en_US

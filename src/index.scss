@@ -48,18 +48,21 @@ a,a:hover,a:visited {
       align-items: flex-start;
       padding: 0 10px;
       margin: 8px 20px;
-      padding-left: 12px;
+      padding-left: 12px !important;
       &:last-child {
         padding: 10px;
         min-height: unset !important;
         &>div {
-          margin-left: 15px;
+          margin-left: 12px !important;
           h4 {
-            font-size: 13px;
+            font-size: 15px;
           }
           div {
             font-size: 13px;
             margin-top: 2px;
+          }
+          h4+div {
+            color: #777a8c;
           }
         }
       }

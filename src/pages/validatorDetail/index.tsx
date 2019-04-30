@@ -6,11 +6,11 @@ import { selectValidators, selectAccountInfo, selectDelegations, selectValidator
 import { ellipsis, fAtom, fPercent, isiPhoneX } from '../../lib/utils'
 import ValidatorLogo from '../../components/validatorLogo'
 import Loading from '../../components/loading'
-// import TxList from '../../components/txList'
+import TxList from '../../components/txList'
 import './index.scss'
 import logger from '../../lib/logger'
 import linkSVG from '../../assets/link.svg'
-// import { getTxListByAddress } from '../../lib/api'
+import { getTxListByAddress } from '../../lib/api'
 
 interface Props {
   validators: any
@@ -35,11 +35,11 @@ class Page extends Component<Props, any> {
 
     if (!id || !account.address) return false
 
-    // getTxListByAddress(account.address, id).then(txs => {
-    //   if (txs && txs.length) {
-    //     this.setState({ txs })
-    //   }
-    // })
+    getTxListByAddress(account.address, id).then(txs => {
+      if (txs && txs.length) {
+        this.setState({ txs })
+      }
+    })
   }
 
   render() {
@@ -103,7 +103,7 @@ class Page extends Component<Props, any> {
           </li>
         </ul>
 
-        {/* {!!(txs && txs.length) &&
+        {!!(txs && txs.length) &&
           <div className="list-area" style={{ 'paddingBottom': isiPhoneX() ? 100 : 60 }}>
             <div className="delegate-status">
               <span>委托状态</span>
@@ -124,7 +124,7 @@ class Page extends Component<Props, any> {
             </div>
             <TxList txs={txs} />
           </div>
-        } */}
+        }
 
         <div className="toolbar" style={{ bottom: isiPhoneX() ? 40 : 0 }}>
           <Link to={`/undelegate/${v.operator_address}`}>

@@ -138,6 +138,7 @@ class Page extends Component<Props, any> {
     const v = bannerConfig.find(v => v.operator_address === id)
 
     if (!v) return null
+    return null // TODO: hidden activity right now, need  activity link update
 
     return (
       <section>

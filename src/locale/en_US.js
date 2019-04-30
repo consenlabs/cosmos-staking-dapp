@@ -37,6 +37,8 @@ const en_US = {
   other_delegations: 'Other Delegations',
   change: 'Change',
   none: 'None',
+  intro: 'Intro',
+  transactions: 'Transactions',
 }
 
 export default en_US

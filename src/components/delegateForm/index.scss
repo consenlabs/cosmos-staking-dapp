@@ -51,6 +51,9 @@
     font-style: normal;
     letter-spacing: 0.2px;
     color: #777a8c;
+    > div:last-child {
+      margin-left: auto;
+    }
     span, i {
       padding-right: 4px;
     }

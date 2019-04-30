@@ -202,10 +202,12 @@ class CMP extends Component<Props, any> {
           />
         }
         <div className="form-footer">
-          <div>
-            <FormattedMessage id='withdraw_all' />
-            <span>{displayAmount} ATOM</span>
-          </div>
+          {isWithdraw &&
+            <div>
+              <FormattedMessage id='withdraw_all' />
+              <span>{displayAmount} ATOM</span>
+            </div>
+          }
           <div>
             <FormattedMessage id='fee' />
             <span>{`${fAtom(feeAmount)} ATOM`}</span>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './index.scss'
-import { uatom, fAtom, createWithdrawMsg, createTxPayload, createUnDelegateMsg, Toast, toBN } from 'lib/utils'
+import { uatom, fAtom, createWithdrawMsg, createTxPayload, createUnDelegateMsg, Toast, toBN, isiPhoneX } from 'lib/utils'
 import { sendTransaction } from 'lib/sdk'
 import { validUndelegate } from 'lib/validator'
 import { pubsub } from 'lib/event'
@@ -73,7 +73,7 @@ class CMP extends Component<Props, any> {
         </li>
       </ul>
       <div className="split-margin"></div>
-      <footer onClick={this.hideDelegateSourceModal}>{intl.formatMessage({ id: 'cancel' })}</footer>
+      <footer onClick={this.hideDelegateSourceModal} style={{ paddingBottom: isiPhoneX() ? '40px' : '0' }}>{intl.formatMessage({ id: 'cancel' })}</footer>
     </div>
   }
 

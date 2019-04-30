@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './index.scss'
-import { uatom, fAtom, createTxPayload, createDelegateMsg, createWithdrawMsg, createRedelegateMsg, Toast } from 'lib/utils'
+import { uatom, fAtom, createTxPayload, createDelegateMsg, createWithdrawMsg, createRedelegateMsg, Toast, isiPhoneX } from 'lib/utils'
 import { sendTransaction } from 'lib/sdk'
 import { validDelegate } from 'lib/validator'
 import { FormattedMessage, injectIntl } from 'react-intl'
@@ -54,9 +54,10 @@ class CMP extends Component<Props, any> {
 
   renderTypeSelector = () => {
 
-    const { account, delegations, intl } = this.props
+    const { account, delegations, validator, intl } = this.props
     const { sourceType } = this.state
-    const hasDelegation = delegations && delegations.length > 0
+    const _delegations = delegations.filter(d => d.validator_address !== validator.operator_address)
+    const hasDelegation = _delegations && _delegations.length > 0
 
     return <div className="modal-inner type-selector">
       <header>{intl.formatMessage({ id: 'select_funds_type' })}</header>
@@ -84,16 +85,18 @@ class CMP extends Component<Props, any> {
         </li>
       </ul>
       <div className="split-margin"></div>
-      <footer onClick={this.hideDelegateSourceModal}>{intl.formatMessage({ id: 'cancel' })}</footer>
+      <footer onClick={this.hideDelegateSourceModal} style={{ paddingBottom: isiPhoneX() ? '40px' : '0' }}>{intl.formatMessage({ id: 'cancel' })}</footer>
     </div>
   }
 
   renderDelegations = () => {
-    const { delegations, validators, intl } = this.props
+    const { delegations, validators, intl, validator } = this.props
+    const _delegations = delegations.filter(d => d.validator_address !== validator.operator_address)
+
     return <div className="modal-inner type-selector">
       <header>{intl.formatMessage({ id: 'other_delegations' })}</header>
       <div className="m-delegations">
-        {!!delegations && delegations.map((d) => {
+        {!!_delegations && _delegations.map((d) => {
           const v = validators.find(el => el.operator_address === d.validator_address)
           return <div className="dl-item" key={v.operator_address} onClick={() => {
             this.handleSelectDelegation(d, v)

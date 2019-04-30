@@ -35,6 +35,8 @@ const zh_CN = {
   fee: '交易费',
   select_funds_type: '选择资金类型',
   other_delegations: '其他委托',
+  change: '更换',
+  none: '暂无',
 }
 
 export default zh_CN

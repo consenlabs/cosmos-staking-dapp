@@ -108,8 +108,7 @@ class CMP extends Component<Props, any> {
           createWithdrawMsg(
             address,
             validator.operator_address,
-            uatom(amount),
-            getNetworkConfig().denom),
+          ),
         ]
       default:
     }

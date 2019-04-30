@@ -63,13 +63,12 @@ export function createUnDelegateMsg(delegatorAddress, validatorAddress, amount, 
   }
 }
 
-export function createWithdrawMsg(delegatorAddress, validatorAddress, amount, denom) {
+export function createWithdrawMsg(delegatorAddress, validatorAddress) {
   return {
     "type": msgTypes.withdraw,
     "value": {
       "delegator_address": delegatorAddress,
       "validator_address": validatorAddress,
-      "amount": { "amount": amount, "denom": denom },
     }
   }
 }
@@ -81,9 +80,7 @@ export function createRedelegateMsg(delegatorAddress, validatorSrcAddress, valid
       "delegator_address": delegatorAddress,
       "validator_src_address": validatorSrcAddress,
       "validator_dst_address": validatorDstAddress,
-      "value": {
-        "amount": { "amount": amount, "denom": denom },
-      }
+      "amount": { "amount": amount, "denom": denom },
     }
   }
 }

@@ -27,7 +27,7 @@ class CMP extends Component<Props> {
       <ValidatorLogo url={v.description.logo} />
       <div className="v-left">
         <strong>{v.description.moniker}</strong>
-        <span>{`${fAtom(v.tokens)} ATOM`} / {v.delegators}</span>
+        <span>{`${fAtom(v.tokens, 0)} ATOM`} / {v.delegators}</span>
       </div>
       <div className="v-right">
         <strong>{fPercent(v.annualized_returns, 2)}</strong>

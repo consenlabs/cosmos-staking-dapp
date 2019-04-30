@@ -30,10 +30,8 @@ class Page extends Component<Props> {
 
     if (!v) return <Loading />
 
-    const delegation = delegations.find(d => d.validator_address === v.operator_address)
+    const delegation = delegations.find(d => d.validator_address === v.operator_address) || {}
     const reward = validatorRewards[v.operator_address]
-
-    if (!delegation) return <Loading />
 
     return (
       <div className="delegate-page">

@@ -54,8 +54,9 @@ class CMP extends Component<Props, any> {
 
   renderTypeSelector = () => {
 
-    const { account, intl, reward } = this.props
+    const { account, delegations, intl } = this.props
     const { sourceType } = this.state
+    const hasDelegation = delegations && delegations.length > 0
 
     return <div className="modal-inner type-selector">
       <header>{intl.formatMessage({ id: 'select_funds_type' })}</header>
@@ -67,17 +68,19 @@ class CMP extends Component<Props, any> {
           </div>
           {sourceType === 0 && <b>✓</b>}
         </li>
-        <li onClick={() => this.selectType(1)}>
+        {/* <li onClick={() => this.selectType(1)}>
           <div>
             <label>{intl.formatMessage({ id: selectLabels[1] })}</label>
             <span>{fAtom(reward, 6, '0')} ATOM</span>
           </div>
           {sourceType === 1 && <b>✓</b>}
-        </li>
-        <li onClick={() => this.selectType(2)}>
+        </li> */}
+        <li onClick={hasDelegation ? () => this.selectType(2) : () => { }}>
           <div>
             <label>{intl.formatMessage({ id: selectLabels[2] })}</label>
           </div>
+          {hasDelegation ? <em>{intl.formatMessage({ id: 'change' })}<i></i></em> : <em>{intl.formatMessage({ id: 'none' })}</em>}
+
         </li>
       </ul>
       <div className="split-margin"></div>
@@ -168,9 +171,7 @@ class CMP extends Component<Props, any> {
         msgs = [
           createWithdrawMsg(
             address,
-            validator.operator_address,
-            uatom(amount),
-            getNetworkConfig().denom),
+            validator.operator_address),
 
           createDelegateMsg(
             address,

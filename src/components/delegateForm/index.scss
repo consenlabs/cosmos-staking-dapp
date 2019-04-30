@@ -12,6 +12,11 @@
     border-radius: 4px;
     border: solid 0.5px #ffffff2c;
     span {
+      display: block;
+      max-width: 140px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
       padding-left: 20px;
       font-family: 'PingFang SC';
       font-size: 15px;
@@ -118,7 +123,7 @@
     height: 65px;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     border-bottom: 0.5px solid #e7e7ea;
     &:last-child {
@@ -136,6 +141,23 @@
         font-size: 13px;
         letter-spacing: 0.2px;
         color: #777a8c;
+      }
+    }
+    em {
+      margin-right: 19px;
+      font-size: 13px;
+      font-style: normal;
+      letter-spacing: 0.2px;
+      color: #777a8c;
+      i {
+        margin: -2px 0 0 7px;
+        display: inline-block;
+        width: 7px;
+        height: 7px;
+        transform: rotate(-135deg);
+        border: solid 1px #808995;
+        border-top: none;
+        border-right: none;
       }
     }
     b {

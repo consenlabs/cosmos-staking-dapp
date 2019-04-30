@@ -35,6 +35,8 @@ const en_US = {
   fee: 'Fee',
   select_funds_type: 'Select Funds Type',
   other_delegations: 'Other Delegations',
+  change: 'Change',
+  none: 'None',
 }
 
 export default en_US

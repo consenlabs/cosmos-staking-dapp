@@ -194,7 +194,7 @@ class Page extends Component<Props, any> {
     if (!txs || !txs.length) return null
 
     return (
-      <section className="list-area" style={{ 'paddingBottom': isiPhoneX() ? 100 : 60 }}>
+      <section className="list-area" style={{ 'paddingBottom': isiPhoneX() ? '100px' : '60px' }}>
         <p className="title">
           <FormattedMessage
             id='transactions'

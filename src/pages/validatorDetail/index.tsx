@@ -116,7 +116,7 @@ class Page extends Component<Props, any> {
 
         {this.renderTxs()}
 
-        <div className="toolbar" style={{ bottom: isiPhoneX() ? 40 : 0 }}>
+        <div className="toolbar" style={{ paddingBottom: isiPhoneX() ? 40 : 0 }}>
           <Link to={`/undelegate/${v.operator_address}`}>
             <FormattedMessage
               id='undelegate'

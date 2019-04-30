@@ -6,11 +6,13 @@ import { selectValidators, selectAccountInfo, selectDelegations, selectValidator
 import { ellipsis, fAtom, fPercent, isiPhoneX } from '../../lib/utils'
 import ValidatorLogo from '../../components/validatorLogo'
 import Loading from '../../components/loading'
-// import TxList from '../../components/txList'
+import TxList from '../../components/txList'
 import './index.scss'
 import logger from '../../lib/logger'
 import linkSVG from '../../assets/link.svg'
-// import { getTxListByAddress } from '../../lib/api'
+import { getTxListByAddress } from '../../lib/api'
+import bannerConfig from '../../config/banner'
+import Arrow from '../../assets/arrow.svg'
 
 interface Props {
   validators: any
@@ -26,34 +28,43 @@ class Page extends Component<Props, any> {
     txs: []
   }
 
+  componentWillMount() {
+    this.updateTxs(this.props)
+  }
+
   componentDidMount() {
-    const { account, match, validators } = this.props
+    const { match, validators } = this.props
     const id = match.params.id
     const v = validators.find(v => v.operator_address === id)
 
     logger().track('to_validator_detail', { validator: id, moniker: v ? v.description.moniker : '' })
+  }
 
-    if (!id || !account.address) return false
+  componentWillReceiveProps(nextProps) {
+    this.updateTxs(nextProps)
+  }
 
-    // getTxListByAddress(account.address, id).then(txs => {
-    //   if (txs && txs.length) {
-    //     this.setState({ txs })
-    //   }
-    // })
+  fetched = false
+  updateTxs = (props) => {
+    const { account, match } = props
+    const id = match.params.id
+
+    if (this.fetched || !id || !account.address) return false
+    this.fetched = true
+
+    getTxListByAddress(account.address, id).then(txs => {
+      if (txs && txs.length) {
+        this.setState({ txs })
+      }
+    })
   }
 
   render() {
-    const { validators, delegations, validatorRewards, match } = this.props
-    const { txs } = this.state
+    const { validators, match } = this.props
     const id = match.params.id
     const v = validators.find(v => v.operator_address === id)
 
     if (!v) return <Loading />
-
-    const d = delegations.find(o => o.validator_address === v.operator_address)
-    const reward = validatorRewards[v.operator_address] || 0
-    console.log(d, reward, txs)
-
 
     return (
       <div className="validator-detail-page">
@@ -67,66 +78,45 @@ class Page extends Component<Props, any> {
               <span>{ellipsis(v.operator_address)}</span>
             </div>
           </a>
-          <div className="desc">{v.description.details || 'no description'}</div>
+          <div className="flexWrap">
+            <div className="col first">
+              <FormattedMessage
+                id='bonded_tokens'
+              />
+              <p>{fAtom(v.tokens)} ATOM</p>
+            </div>
+            <div className="col">
+              <FormattedMessage
+                id='delegators'
+              />
+              <p>{v.delegators}</p>
+            </div>
+            <div className="col">
+              <FormattedMessage
+                id='yield'
+              />
+              <p className="emphasize">{fPercent(v.annualized_returns, 2)}</p>
+            </div>
+          </div>
         </section>
 
-        <ul>
-          <li>
-            <FormattedMessage
-              id='bonded_tokens'
-            />
-            <i>{fAtom(v.tokens)} ATOM</i>
-          </li>
-          <li>
-            <FormattedMessage
-              id='self_bonded_tokens'
-            />
-            <i>{fAtom(v.self_delegator_tokens)} ATOM</i>
-          </li>
-          <li>
-            <FormattedMessage
-              id='delegators'
-            />
-            <i>{v.delegators}</i>
-          </li>
-          <li>
-            <FormattedMessage
-              id='commission_rate'
-            />
-            <i>{fPercent(v.commission.rate, 1)}</i>
-          </li>
-          <li>
-            <FormattedMessage
-              id='yield'
-            />
-            <i className="emphasize">{fPercent(v.annualized_returns, 2)}</i>
-          </li>
-        </ul>
+        {this.renderActivity()}
 
-        {/* {!!(txs && txs.length) &&
-          <div className="list-area" style={{ 'paddingBottom': isiPhoneX() ? 100 : 60 }}>
-            <div className="delegate-status">
-              <span>委托状态</span>
-              <div className="delegate-status-bottom">
-                <div>
-                  <FormattedMessage id='delegated' />
-                  <i>{fAtom(d.shares)}</i>
-                </div>
-                <div>
-                  <FormattedMessage id='rewards' />
-                  <i>{fAtom(reward)}</i>
-                </div>
-                <div>
-                  <FormattedMessage id='rewards_per_day' />
-                  <i>{d.shares && v.annualized_returns ? `+${fAtom(d.shares * v.annualized_returns / 365, 3)}` : '~'}</i>
-                </div>
-              </div>
-            </div>
-            <TxList txs={txs} />
-          </div>
-        } */}
+        <section>
+          <p className="title">
+            <FormattedMessage
+              id='intro'
+            />
+          </p>
+          <div className="desc">{v.description.details || 'no description'}</div>
 
-        <div className="toolbar" style={{ bottom: isiPhoneX() ? 40 : 0 }}>
+          {this.renderAdvantage()}
+
+        </section>
+
+        {this.renderTxs()}
+
+        <div className="toolbar" style={{ paddingBottom: isiPhoneX() ? 40 : 0 }}>
           <Link to={`/undelegate/${v.operator_address}`}>
             <FormattedMessage
               id='undelegate'
@@ -140,6 +130,80 @@ class Page extends Component<Props, any> {
         </div>
       </div>
     )
+  }
+
+  renderActivity() {
+    const { match } = this.props
+    const id = match.params.id
+    const v = bannerConfig.find(v => v.operator_address === id)
+
+    if (!v) return null
+    return null // TODO: hidden activity right now, need  activity link update
+
+    return (
+      <section>
+        <p className="title">
+          <FormattedMessage
+            id='activity'
+          />
+        </p>
+        <a className="box" href="">
+          <div>
+            <p>
+              <FormattedMessage
+                id='free_commission_high_yield'
+              />
+            </p>
+            <span className="date">2019-4-25 ~ 2019-5-30</span>
+          </div>
+          <img src={Arrow} />
+        </a>
+      </section>
+    )
+  }
+
+  renderAdvantage() {
+    const { match } = this.props
+    const id = match.params.id
+    const v = bannerConfig.find(v => v.operator_address === id)
+
+    if (!v) return null
+
+    const advs = ['高可用', '抗 DDOS', '哨兵节点']
+    return (
+      <div className="advantage">
+        <p className="title">
+          <FormattedMessage
+            id='advantage'
+          />
+        </p>
+        <div className="blocksWrap">
+          {advs.map(ad => {
+            return (
+              <div className="block" key={ad}><span>{ad}</span></div>
+            )
+          })}
+        </div>
+      </div>
+    )
+  }
+
+  renderTxs() {
+    const { txs } = this.state
+
+    if (!txs || !txs.length) return null
+
+    return (
+      <section className="list-area" style={{ 'paddingBottom': isiPhoneX() ? '100px' : '60px' }}>
+        <p className="title">
+          <FormattedMessage
+            id='transactions'
+          />
+        </p>
+        <TxList txs={txs} />
+      </section>
+    )
+
   }
 }
 

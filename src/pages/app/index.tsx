@@ -85,7 +85,6 @@ class App extends Component<Props> {
         const promises = delegations.map(d => {
           return api.getMyRewardByValidator(address, d.validator_address).then(balance => {
             validatorRewards[d.validator_address] = balance
-            console.log(validatorRewards)
           })
         })
 

@@ -7,6 +7,7 @@ const en_US = {
   undelegate: 'Undelegate',
   undelegating: 'Undelegating',
   withdraw: 'Withdraw Rewards',
+  withdraw_all: 'Withdraw All',
   redelegate: 'Redelegate',
   my_delegations: 'My Delegations',
   validators: 'Validators',
@@ -33,6 +34,15 @@ const en_US = {
   bonded_tokens: 'Bonded Tokens',
   cancel: 'Cancel',
   fee: 'Fee',
+  select_funds_type: 'Select Funds Type',
+  other_delegations: 'Other Delegations',
+  change: 'Change',
+  none: 'None',
+  intro: 'Intro',
+  transactions: 'Transactions',
+  activity: 'Activity',
+  free_commission_high_yield: 'Free commission, high yield',
+  advantage: 'Advantage',
 }
 
 export default en_US

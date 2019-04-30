@@ -37,6 +37,8 @@ const zh_CN = {
   other_delegations: '其他委托',
   change: '更换',
   none: '暂无',
+  intro: '简介',
+  transactions: '交易记录',
 }
 
 export default zh_CN

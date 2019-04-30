@@ -1,20 +1,20 @@
 .tx-list {
-    padding: 0 10px;
+    // padding: 0 10px;
     .tx-item {
         display: flex;
         justify-content: space-between;
         align-items: center;
         height: 68px;
-        border-bottom: solid 0.5px #e6e8eb;
+        border-bottom: solid 0.5px #282a3e;
         .i-left {
             span {
                 display: block;
                 font-family: 'PingFang SC';
-                font-size: 14px;
+                font-size: 15px;
                 font-weight: 500;
-                font-style: normal;
+                line-height: 1.47;
                 letter-spacing: 0.2px;
-                color: #11293b;
+                color: #f9fbfb;
             }
             i {
                 font-family: 'PingFang SC';
@@ -29,6 +29,7 @@
             font-family: 'PingFang SC';
             font-size: 12px;
             font-weight: 500;
+            line-height: 1.5;
             letter-spacing: 0.1px;
             color: #01c6d0;
             &.delegate {

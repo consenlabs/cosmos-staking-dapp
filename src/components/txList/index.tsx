@@ -8,6 +8,27 @@ interface Props {
   txs: any[]
 }
 
+const formatTime = (timestamp) => {
+  const date = new Date(timestamp * 1000)
+  const year = date.getFullYear()
+  let month = '' + (date.getMonth() + 1)
+  month = month.length < 2 ? `0${month}` : `${month}`
+
+  let day = '' + date.getDate()
+  day = day.length < 2 ? `0${day}` : `${day}`
+
+  let h = '' + date.getHours()
+  h = h.length < 2 ? `0${h}` : `${h}`
+
+  let m = '' + date.getMinutes()
+  m = m.length < 2 ? `0${m}` : `${m}`
+
+  let s = '' + date.getSeconds()
+  s = s.length < 2 ? `0${s}` : `${s}`
+
+  return `${year}-${month}-${day} ${h}:${m}:${s}`
+}
+
 class CMP extends Component<Props> {
 
   getKeyOfType(type) {
@@ -29,7 +50,7 @@ class CMP extends Component<Props> {
     return <div className="tx-item" key={tx.rowId}>
       <div className="i-left">
         <FormattedMessage id={msgKey} />
-        <i>{tx.timestamp}</i>
+        <i>{formatTime(tx.timestamp)}</i>
       </div>
       <div className={`i-right ${isOut ? "delegate" : ""}`}>
         {`${isOut ? '-' : '+'} ${fAtom(amount)} ATOM`}

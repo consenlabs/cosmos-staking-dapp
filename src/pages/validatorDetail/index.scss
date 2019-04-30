@@ -2,8 +2,57 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  section:first-child {
+  section {
     padding: 20px;
+    padding-bottom: 0;
+
+    .title {
+      font-size: 13px;
+      line-height: 1;
+      letter-spacing: 0.2px;
+      color: #777a8c;
+      margin-bottom: 10px;
+    }
+
+    .desc {
+      font-size: 13px;
+      font-weight: normal;
+      line-height: 1.77;
+      letter-spacing: 0.3px;
+      color: #ffffff;
+    }
+
+    .flexWrap {
+      display: flex;
+      margin-top: 20px;
+      .col {
+        flex: 1;
+        &.first {
+          margin-right: 30px;
+        }
+        span {
+          font-size: 13px;
+          font-weight: normal;
+          line-height: 1.54;
+          letter-spacing: 0.2px;
+          color: #777a8c;
+        }
+        p {
+          font-size: 13px;
+          font-weight: 500;
+          line-height: 1.54;
+          letter-spacing: 0.2px;
+          color: #ffffff;
+          margin: 0;
+          &.emphasize {
+            color: #098de6;
+          }
+        }
+      }
+    }
+
+  }
+  section:first-child {
     .top {
       display: flex;
       flex-direction: row;
@@ -29,7 +78,7 @@
             height: 13px;
             margin-left: 8px;
           }
-        
+
         }
         span {
             display: block;
@@ -46,56 +95,12 @@
           }
       }
     }
-
-    .desc {
-      margin-top: 17px;
-      font-size: 13px;
-      font-weight: normal;
-      line-height: 1.54;
-      letter-spacing: 0.2px;
-      color: #777a8c;
-    }
   }
 
-  ul {
-    margin: 0 20px;
-    padding: 20px 0;
-    border-top: solid 0.5px #2b2d41;
-    li {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 10px;
-      span {
-          font-family: 'PingFang SC';
-          font-size: 13px;
-          line-height: 1.54;
-          letter-spacing: 0.2px;
-          color: #777a8c;
-      }
-      i {
-          font-family: 'PingFang SC';
-          font-size: 13px;
-          font-weight: 500;
-          font-style: normal;
-          font-stretch: normal;
-          line-height: 1.54;
-          letter-spacing: 0.2px;
-          color: #ffffff;
-          &.emphasize {
-            font-size: 17px;
-            line-height: 1.18;
-            color: #098de6;
-          }
-      }
-    }
-  }
 
   .list-area {
     display: flex;
     flex: 1;
-    padding: 10px;
-    border-radius: 8px 8px 0 0;
-    background-color: #ffffff;
     flex-direction: column;
     .delegate-status {
       padding-top: 5px;
@@ -146,6 +151,10 @@
     display: flex;
     justify-content: center;
     padding: 7px 15px;
+    // opacity: 0.86;
+    // -webkit-backdrop-filter: blur(9.8px);
+    // backdrop-filter: blur(9.8px);
+    // background-color: #22273a;
     a {
       flex: 1;
       height: 45px;

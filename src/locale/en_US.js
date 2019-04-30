@@ -7,6 +7,7 @@ const en_US = {
   undelegate: 'Undelegate',
   undelegating: 'Undelegating',
   withdraw: 'Withdraw Rewards',
+  withdraw_all: 'Withdraw All',
   redelegate: 'Redelegate',
   my_delegations: 'My Delegations',
   validators: 'Validators',

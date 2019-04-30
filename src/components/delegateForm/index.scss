@@ -42,12 +42,13 @@
     }
   }
   .form-footer {
-    text-align: right;
-    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 20px 0 10px 0;
     font-family: 'PingFang SC';
     font-size: 13px;
     font-style: normal;
-    line-height: 1.54;
     letter-spacing: 0.2px;
     color: #777a8c;
     span, i {

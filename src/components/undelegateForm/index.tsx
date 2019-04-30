@@ -184,25 +184,32 @@ class CMP extends Component<Props, any> {
     const isWithdraw = sourceType === 1
     const cantWithdraw = !sourceObject.value || !toBN(sourceObject.value).gt(0)
     const disabled = isWithdraw ? cantWithdraw : !amount
+    const displayAmount = fAtom(sourceObject.value, 6, '0')
     return (
       <div className="form-inner">
         <div className="form-header" onClick={this.showDelegateSourceModal}>
           <FormattedMessage id={sourceObject.key} />
-          <i>{fAtom(sourceObject.value, 6, '0')} ATOM</i>
+          <i>{displayAmount} ATOM</i>
           <b></b>
         </div>
-        <input
-          type={isWithdraw ? 'text' : 'number'}
-          placeholder={intl.formatMessage({ id: 'input_amount' })}
-          value={isWithdraw ? fAtom(sourceObject.value, 6, '0') : amount}
-          disabled={isWithdraw}
-          onChange={this.onChange}
-        />
-        <div className="form-footer">
-          <FormattedMessage
-            id='fee'
+        {!isWithdraw &&
+          <input
+            type={isWithdraw ? 'text' : 'number'}
+            placeholder={intl.formatMessage({ id: 'input_amount' })}
+            value={amount}
+            disabled={isWithdraw}
+            onChange={this.onChange}
           />
-          <span>{`${fAtom(feeAmount)} ATOM`}</span>
+        }
+        <div className="form-footer">
+          <div>
+            <FormattedMessage id='withdraw_all' />
+            <span>{displayAmount} ATOM</span>
+          </div>
+          <div>
+            <FormattedMessage id='fee' />
+            <span>{`${fAtom(feeAmount)} ATOM`}</span>
+          </div>
         </div>
         <button disabled={disabled} className="form-button" onClick={this.onSubmit}>
           <FormattedMessage

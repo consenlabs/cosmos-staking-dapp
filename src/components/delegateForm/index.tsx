@@ -58,7 +58,7 @@ class CMP extends Component<Props, any> {
     const _delegations = delegations.filter(d => d.validator_address !== validator.operator_address)
     const hasDelegation = _delegations && _delegations.length > 0
 
-    return <div className="modal-inner type-selector">
+    return <div className="modal-inner type-selector" style={{ paddingBottom: isiPhoneX() ? '20px' : '0' }}>
       <header>{intl.formatMessage({ id: 'select_funds_type' })}</header>
       <ul className="delegate-type-list">
         <li onClick={() => this.selectType(0)}>
@@ -83,7 +83,7 @@ class CMP extends Component<Props, any> {
         </li>
       </ul>
       <div className="split-margin"></div>
-      <footer onClick={this.hideDelegateSourceModal} style={{ paddingBottom: isiPhoneX() ? '40px' : '0' }}>{intl.formatMessage({ id: 'cancel' })}</footer>
+      <footer onClick={this.hideDelegateSourceModal}>{intl.formatMessage({ id: 'cancel' })}</footer>
     </div>
   }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './index.scss'
-import { uatom, fAtom, createWithdrawMsg, createTxPayload, createUnDelegateMsg, Toast } from 'lib/utils'
+import { uatom, fAtom, createWithdrawMsg, createTxPayload, createUnDelegateMsg, Toast, toBN } from 'lib/utils'
 import { sendTransaction } from 'lib/sdk'
 import { validUndelegate } from 'lib/validator'
 import { pubsub } from 'lib/event'
@@ -83,10 +83,12 @@ class CMP extends Component<Props, any> {
     const { account, history, intl, validator } = this.props
     const { address, balance } = account
     const { amount, sourceObject, sourceType } = this.state
+
     const [valid, msg] = validUndelegate(uatom(amount), sourceObject.value, feeAmount, balance)
     if (!valid) {
       return Toast.error(intl.formatMessage({ id: msg }))
     }
+
 
     const logOpt = { validator: validator.operator_address, moniker: validator.description.moniker }
     logger().track('submit_undelegate', logOpt)
@@ -181,8 +183,8 @@ class CMP extends Component<Props, any> {
     const { intl } = this.props
     const { amount, sourceObject, sourceType } = this.state
     const isWithdraw = sourceType === 1
-
-    const disabled = isWithdraw ? !sourceObject.value : !amount
+    const cantWithdraw = !sourceObject.value || !toBN(sourceObject.value).gt(0)
+    const disabled = isWithdraw ? cantWithdraw : !amount
     return (
       <div className="form-inner">
         <div className="form-header" onClick={this.showDelegateSourceModal}>

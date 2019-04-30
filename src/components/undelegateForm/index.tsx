@@ -179,9 +179,10 @@ class CMP extends Component<Props, any> {
 
   render() {
     const { intl } = this.props
-    const { amount, sourceObject } = this.state
+    const { amount, sourceObject, sourceType } = this.state
+    const isWithdraw = sourceType === 1
 
-    const disabled = !amount
+    const disabled = isWithdraw ? !sourceObject.value : !amount
     return (
       <div className="form-inner">
         <div className="form-header" onClick={this.showDelegateSourceModal}>
@@ -190,9 +191,10 @@ class CMP extends Component<Props, any> {
           <b></b>
         </div>
         <input
-          type="number"
+          type={isWithdraw ? 'text' : 'number'}
           placeholder={intl.formatMessage({ id: 'input_amount' })}
-          value={amount}
+          value={isWithdraw ? fAtom(sourceObject.value, 6, '0') : amount}
+          disabled={isWithdraw}
           onChange={this.onChange}
         />
         <div className="form-footer">

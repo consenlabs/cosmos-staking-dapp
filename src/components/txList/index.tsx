@@ -33,9 +33,11 @@ class CMP extends Component<Props> {
         <FormattedMessage id={msgKey} />
         <i>{date}</i>
       </div>
-      <div className={`i-right ${isOut ? "delegate" : ""}`}>
-        {`${isOut ? '-' : '+'} ${fAtom(amount)} ATOM`}
-      </div>
+      {tx.msgType !== msgTypes.withdraw &&
+        <div className={`i-right ${isOut ? "delegate" : ""}`}>
+          {`${isOut ? '-' : '+'} ${fAtom(amount)} ATOM`}
+        </div>
+      }
     </a>
   }
 

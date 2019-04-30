@@ -84,9 +84,11 @@ class CMP extends Component<Props, any> {
     const { address, balance } = account
     const { amount, sourceObject, sourceType } = this.state
 
-    const [valid, msg] = validUndelegate(uatom(amount), sourceObject.value, feeAmount, balance)
-    if (!valid) {
-      return Toast.error(intl.formatMessage({ id: msg }))
+    if (sourceType === 0) {
+      const [valid, msg] = validUndelegate(uatom(amount), sourceObject.value, feeAmount, balance)
+      if (!valid) {
+        return Toast.error(intl.formatMessage({ id: msg }))
+      }
     }
 
 

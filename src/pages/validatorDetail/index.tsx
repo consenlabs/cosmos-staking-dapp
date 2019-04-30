@@ -26,14 +26,29 @@ class Page extends Component<Props, any> {
     txs: []
   }
 
+  componentWillMount() {
+    this.updateTxs(this.props)
+  }
+
   componentDidMount() {
-    const { account, match, validators } = this.props
+    const { match, validators } = this.props
     const id = match.params.id
     const v = validators.find(v => v.operator_address === id)
 
     logger().track('to_validator_detail', { validator: id, moniker: v ? v.description.moniker : '' })
+  }
 
-    if (!id || !account.address) return false
+  componentWillReceiveProps(nextProps) {
+    this.updateTxs(nextProps)
+  }
+
+  fetched = false
+  updateTxs = (props) => {
+    const { account, match } = props
+    const id = match.params.id
+
+    if (this.fetched || !id || !account.address) return false
+    this.fetched = true
 
     getTxListByAddress(account.address, id).then(txs => {
       if (txs && txs.length) {

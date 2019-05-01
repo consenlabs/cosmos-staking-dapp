@@ -119,7 +119,7 @@ class Page extends Component<Props, any> {
         <div className="toolbar" style={{ paddingBottom: isiPhoneX() ? 40 : 0 }}>
           <Link to={`/undelegate/${v.operator_address}`}>
             <FormattedMessage
-              id='undelegate'
+              id='tmp_i18n_unstake'
             />
           </Link>
           <Link to={`/delegate/${v.operator_address}`}>

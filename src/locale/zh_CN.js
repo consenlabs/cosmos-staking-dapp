@@ -9,6 +9,7 @@ const zh_CN = {
   withdraw: '赎回收益',
   withdraw_all: '全部赎回',
   redelegate: '重新委托',
+  tmp_i18n_unstake: '赎回',
   my_delegations: '我的委托',
   validators: '验证节点',
   yield: '预计年化收益',

@@ -215,7 +215,7 @@ class CMP extends Component<Props, any> {
         </div>
         <button disabled={disabled} className="form-button" onClick={this.onSubmit}>
           <FormattedMessage
-            id='undelegate'
+            id='tmp_i18n_unstake'
           />
         </button>
         {this.renderSelectorModal()}

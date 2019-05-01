@@ -9,6 +9,7 @@ const en_US = {
   withdraw: 'Withdraw Rewards',
   withdraw_all: 'Withdraw All',
   redelegate: 'Redelegate',
+  tmp_i18n_unstake: 'Withdraw',
   my_delegations: 'My Delegations',
   validators: 'Validators',
   yield: 'Yield',

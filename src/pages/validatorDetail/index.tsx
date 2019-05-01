@@ -168,8 +168,9 @@ class Page extends Component<Props, any> {
     const v = bannerConfig.find(v => v.operator_address === id)
 
     if (!v) return null
+    return null
 
-    const advs = ['高可用', '抗 DDOS', '哨兵节点']
+    const advs = ['hide_availability', 'anti_ddos', 'sentry_node']
     return (
       <div className="advantage">
         <p className="title">
@@ -180,7 +181,9 @@ class Page extends Component<Props, any> {
         <div className="blocksWrap">
           {advs.map(ad => {
             return (
-              <div className="block" key={ad}><span>{ad}</span></div>
+              <div className="block" key={ad}><FormattedMessage
+                id={ad}
+              /></div>
             )
           })}
         </div>

@@ -44,6 +44,9 @@ const en_US = {
   activity: 'Activity',
   free_commission_high_yield: 'Free commission, high yield',
   advantage: 'Advantage',
+  high_availability: 'High Availability',
+  anti_ddos: 'Anti DDOS',
+  sentry_node: 'Sentry Node',
 }
 
 export default en_US

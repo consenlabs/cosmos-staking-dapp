@@ -44,6 +44,9 @@ const zh_CN = {
   activity: '活动',
   free_commission_high_yield: '免佣金，高收益',
   advantage: '特点',
+  hide_availability: '高可用',
+  anti_ddos: '抗 DDOS',
+  sentry_node: '哨兵节点',
 }
 
 export default zh_CN

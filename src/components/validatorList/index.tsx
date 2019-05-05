@@ -23,7 +23,16 @@ class Page extends Component<Props> {
     const { validators, pool, sortBy } = this.props
 
     if (!validators || !validators.length) return <Loading />
-    const sortedList = validators.sort((a, b) => {
+
+    /**
+     * only display the unjail validator
+     * only display the bonded validator (status === 2)
+     */
+    const bondedValidators = validators.filter(v => {
+      return !v.jailed && v.status === 2
+    })
+
+    const sortedList = bondedValidators.sort((a, b) => {
       const sortKey = {
         yield: 'annualized_returns',
         bonded_tokens: 'tokens',

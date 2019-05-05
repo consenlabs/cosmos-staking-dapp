@@ -86,6 +86,11 @@ class CMP extends Component<Props, any> {
       if (!valid) {
         return Toast.error(intl.formatMessage({ id: msg }))
       }
+    } else {
+      // validate balance >= fee
+      if (toBN(balance).lt(feeAmount)) {
+        return Toast.error(intl.formatMessage({ id: 'fee_not_enough' }))
+      }
     }
 
 

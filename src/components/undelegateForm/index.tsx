@@ -138,8 +138,10 @@ class CMP extends Component<Props, any> {
       history.goBack()
       pubsub.emit('updateAsyncData')
     }).catch(e => {
-      logger().track('submit_undelegate', { result: 'failed', message: e.message, ...logOpt })
-      Toast.error(e.message, { heading: intl.formatMessage({ id: 'failed_to_send' }) })
+      if (e.errorCode !== 1001) {
+        logger().track('submit_undelegate', { result: 'failed', message: e.message, ...logOpt })
+        Toast.error(e.message, { heading: intl.formatMessage({ id: 'failed_to_send' }) })
+      }
     })
   }
 

@@ -7,7 +7,8 @@ import { pubsub } from 'lib/event'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import Modal from '../../components/modal'
 import getNetworkConfig from '../../config/network'
-import { feeAmount } from '../../config/fee'
+import { getFeeAmountByType } from '../../config/fee'
+import msgTypes from '../../lib/msgTypes'
 import logger from '../../lib/logger'
 
 const selectLabels = ['delegated', 'rewards']
@@ -74,12 +75,23 @@ class CMP extends Component<Props, any> {
     </div>
   }
 
-
+  getFeeAmount = () => {
+    const { sourceType } = this.state
+    switch (sourceType) {
+      case 0:
+        return getFeeAmountByType(msgTypes.undelegate)
+      case 1:
+        return getFeeAmountByType(msgTypes.withdraw)
+      default:
+        return getFeeAmountByType(msgTypes.redelegate)
+    }
+  }
 
   onSubmit = () => {
     const { account, history, intl, validator } = this.props
     const { address, balance } = account
     const { amount, sourceObject, sourceType } = this.state
+    const feeAmount = this.getFeeAmount()
 
     if (sourceType === 0) {
       const [valid, msg] = validUndelegate(uatom(amount), sourceObject.value, feeAmount, balance)
@@ -129,6 +141,7 @@ class CMP extends Component<Props, any> {
       address,
       msgs,
       memo,
+      msgs[0].type
     )
 
     sendTransaction(txPayload).then(txHash => {
@@ -217,7 +230,7 @@ class CMP extends Component<Props, any> {
           }
           <div>
             <FormattedMessage id='fee' />
-            <span>{`${fAtom(feeAmount)} ATOM`}</span>
+            <span>{`${fAtom(this.getFeeAmount())} ATOM`}</span>
           </div>
         </div>
         <button disabled={disabled} className="form-button" onClick={this.onSubmit}>

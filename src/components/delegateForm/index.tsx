@@ -8,7 +8,8 @@ import Modal from '../../components/modal'
 import { pubsub } from 'lib/event'
 import ValidatorLogo from '../../components/validatorLogo'
 import getNetworkConfig from '../../config/network'
-import { feeAmount } from '../../config/fee'
+import { getFeeAmountByType } from '../../config/fee'
+import msgTypes from '../../lib/msgTypes'
 import logger from '../../lib/logger'
 
 const selectLabels = ['available_balance', 'rewards', 'other_delegations']
@@ -132,7 +133,7 @@ class CMP extends Component<Props, any> {
           <FormattedMessage
             id='fee'
           />
-          <span>{`${fAtom(feeAmount)} ATOM`}</span>
+          <span>{`${fAtom(this.getFeeAmount())} ATOM`}</span>
         </div>
         <button disabled={disabled} className="form-button" onClick={this.onSubmit}>
           <FormattedMessage
@@ -144,11 +145,23 @@ class CMP extends Component<Props, any> {
     )
   }
 
+  getFeeAmount = () => {
+    const { sourceType } = this.state
+    switch (sourceType) {
+      case 0:
+        return getFeeAmountByType(msgTypes.delegate)
+      case 1:
+        return getFeeAmountByType(msgTypes.redelegate)
+      default:
+        return getFeeAmountByType(msgTypes.redelegate)
+    }
+  }
+
   onSubmit = () => {
     const { account, validator, history, intl } = this.props
     const { amount, sourceObject, sourceType } = this.state
     const { address } = account
-    const [valid, msg] = validDelegate(uatom(amount), sourceObject.value, feeAmount)
+    const [valid, msg] = validDelegate(uatom(amount), sourceObject.value, this.getFeeAmount())
     if (!valid) {
       return Toast.error(intl.formatMessage({ id: msg }))
     }
@@ -202,6 +215,7 @@ class CMP extends Component<Props, any> {
       address,
       msgs,
       memo,
+      msgs[0].type
     )
 
     sendTransaction(txPayload).then(txHash => {

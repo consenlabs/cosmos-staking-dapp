@@ -5,7 +5,7 @@ export const isDecimalOverflow = (num: string, length) => {
   return !!(fraction && fraction.length > length)
 }
 
-export const validDelegate = (inputAmount, availableBalance = 0, feeAmount) => {
+export const validDelegate = (inputAmount, availableAmount = 0, feeAmount, isRedelegate: boolean, availableBalance = 0) => {
 
   const num = Number(inputAmount)
 
@@ -23,12 +23,18 @@ export const validDelegate = (inputAmount, availableBalance = 0, feeAmount) => {
     return [false, 'decimal_length_must_lt_six']
   }
 
-  if (bnAmounnt.gt(availableBalance)) {
+  if (bnAmounnt.gt(availableAmount)) {
     return [false, 'more_than_available']
   }
 
-  if (bnAmounnt.plus(feeAmount).gt(availableBalance)) {
-    return [false, 'fee_not_enough']
+  if (isRedelegate) {
+    if (toBN(feeAmount).gt(availableBalance)) {
+      return [false, 'fee_not_enough']
+    }
+  } else {
+    if (bnAmounnt.plus(feeAmount).gt(availableAmount)) {
+      return [false, 'fee_not_enough']
+    }
   }
 
   return [true, null]

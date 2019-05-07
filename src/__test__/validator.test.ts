@@ -32,50 +32,82 @@ describe('test validDelegate', () => {
   const cases = [
     {
       inputAmount: 'aaaa',
-      availableBalance: 7,
+      availableAmount: 7,
       feeAmount: 1,
-      result: [false, 'invalid_number']
+      isRedelegate: false,
+      result: [false, 'invalid_number'],
     },
     {
       inputAmount: undefined,
-      availableBalance: 7,
+      availableAmount: 7,
       feeAmount: 1,
-      result: [false, 'invalid_number']
+      isRedelegate: false,
+      result: [false, 'invalid_number'],
     }, {
       inputAmount: 0,
-      availableBalance: 7,
+      availableAmount: 7,
       feeAmount: 1,
+      isRedelegate: false,
       result: [false, 'number_must_be_positive']
     }, {
       inputAmount: '0.1',
-      availableBalance: 7,
+      availableAmount: 7,
       feeAmount: 1,
+      isRedelegate: false,
       result: [false, 'decimal_length_must_lt_six']
     }, {
       inputAmount: '81000000',
-      availableBalance: 7000000,
+      availableAmount: 7000000,
       feeAmount: 1000000,
+      isRedelegate: false,
       result: [false, 'more_than_available']
     }, {
       inputAmount: 6100000,
-      availableBalance: 7000000,
+      availableAmount: 7000000,
       feeAmount: 1000000,
+      isRedelegate: false,
       result: [false, 'fee_not_enough']
+    },
+    {
+      inputAmount: 9000000,
+      availableAmount: 7000000,
+      feeAmount: 1100000,
+      availableBalance: 2000000,
+      isRedelegate: true, // redelegate
+      result: [false, 'more_than_available']
+    },
+    {
+      inputAmount: 6000000,
+      availableAmount: 7000000,
+      feeAmount: 2000000,
+      availableBalance: 1000000,
+      isRedelegate: true, // redelegate
+      result: [false, 'fee_not_enough']
+    },
+    {
+      inputAmount: 6000000,
+      availableAmount: 7000000,
+      feeAmount: 2000000,
+      availableBalance: 3000000,
+      isRedelegate: true, // redelegate
+      result: [true, null]
     }, {
       inputAmount: 4,
-      availableBalance: 7,
+      availableAmount: 7,
       feeAmount: 1,
+      isRedelegate: false,
       result: [true, null]
     }, {
       inputAmount: 6,
-      availableBalance: 7,
+      availableAmount: 7,
       feeAmount: 1,
+      isRedelegate: false,
       result: [true, null]
     }]
 
   cases.forEach(c => {
-    it(`validDelegate: ${c.inputAmount} ${c.availableBalance} ${c.feeAmount} => ${c.result}`, () => {
-      expect(validDelegate(c.inputAmount, c.availableBalance, c.feeAmount)).toEqual(c.result)
+    it(`validDelegate: ${c.inputAmount} ${c.availableAmount} ${c.feeAmount} ${c.availableBalance} => ${c.result}`, () => {
+      expect(validDelegate(c.inputAmount, c.availableAmount, c.feeAmount, c.isRedelegate, c.availableBalance)).toEqual(c.result)
     })
   })
 })

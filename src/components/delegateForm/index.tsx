@@ -161,7 +161,8 @@ class CMP extends Component<Props, any> {
     const { account, validator, history, intl } = this.props
     const { amount, sourceObject, sourceType } = this.state
     const { address } = account
-    const [valid, msg] = validDelegate(uatom(amount), sourceObject.value, this.getFeeAmount())
+    const isRedelegate = sourceType === 2
+    const [valid, msg] = validDelegate(uatom(amount), sourceObject.value, this.getFeeAmount(), isRedelegate, account.balance)
     if (!valid) {
       return Toast.error(intl.formatMessage({ id: msg }))
     }

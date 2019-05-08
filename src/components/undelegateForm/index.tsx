@@ -222,12 +222,6 @@ class CMP extends Component<Props, any> {
           />
         }
         <div className="form-footer">
-          {isWithdraw &&
-            <div>
-              <FormattedMessage id='withdraw_all' />
-              <span>{displayAmount} ATOM</span>
-            </div>
-          }
           <div>
             <FormattedMessage id='fee' />
             <span>{`${fAtom(this.getFeeAmount())} ATOM`}</span>
@@ -235,7 +229,7 @@ class CMP extends Component<Props, any> {
         </div>
         <button disabled={disabled} className="form-button" onClick={this.onSubmit}>
           <FormattedMessage
-            id='tmp_i18n_unstake'
+            id={isWithdraw ? 'withdraw_all' : 'tmp_i18n_unstake'}
           />
         </button>
         {this.renderSelectorModal()}

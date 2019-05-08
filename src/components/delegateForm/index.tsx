@@ -144,10 +144,12 @@ class CMP extends Component<Props, any> {
           onChange={this.onChange}
         />
         <div className="form-footer">
-          <FormattedMessage
-            id='fee'
-          />
-          <span>{`${fAtom(this.getFeeAmount())} ATOM`}</span>
+          <div>
+            <FormattedMessage
+              id='fee'
+            />
+            <span>{`${fAtom(this.getFeeAmount())} ATOM`}</span>
+          </div>
         </div>
         <button disabled={disabled} className="form-button" onClick={this.onSubmit}>
           <FormattedMessage

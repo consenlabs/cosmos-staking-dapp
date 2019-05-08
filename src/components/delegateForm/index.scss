@@ -103,6 +103,20 @@
     font-size: 17px;
     letter-spacing: 0.2px;
     color: #191c1e;
+    position: relative;
+    > div {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      width: 50px;
+      img {
+        position: absolute;
+        top: 12px;
+        left: 15px;
+        width: 25px;
+        height: 25px;
+      }
+    }
   }
 
   .split-margin {

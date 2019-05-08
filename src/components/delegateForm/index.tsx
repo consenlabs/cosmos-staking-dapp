@@ -11,6 +11,7 @@ import getNetworkConfig from '../../config/network'
 import { getFeeAmountByType } from '../../config/fee'
 import msgTypes from '../../lib/msgTypes'
 import logger from '../../lib/logger'
+import modalBackSVG from '../../assets/modal-back.svg'
 
 const selectLabels = ['available_balance', 'rewards', 'other_delegations']
 
@@ -52,6 +53,10 @@ class CMP extends Component<Props, any> {
     >
       {!selectingDelegation ? this.renderTypeSelector() : this.renderDelegations()}
     </Modal>
+  }
+
+  backModal = () => {
+    this.setState({ selectingDelegation: false })
   }
 
   renderTypeSelector = () => {
@@ -107,7 +112,12 @@ class CMP extends Component<Props, any> {
     })
 
     return <div className="modal-inner type-selector">
-      <header>{intl.formatMessage({ id: 'other_delegations' })}</header>
+      <header>
+        <div onClick={this.backModal}>
+          <img src={modalBackSVG} />
+        </div>
+        {intl.formatMessage({ id: 'other_delegations' })}
+      </header>
       <div className="m-delegations">
         {!!_delegations && _delegations.map((d) => {
           const v = validators.find(el => el.operator_address === d.validator_address)

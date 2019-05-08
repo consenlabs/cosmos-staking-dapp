@@ -118,6 +118,28 @@ export const getStakePool = () => {
   return get(url, {}).then(pool => pool || {})
 }
 
+/**
+ * [
+  {
+    "delegator_address": "cosmos18ptg027t5cumqzkhpn726uhdqdadh88ss7ytv3",
+    "validator_src_address": "cosmosvaloper1cgh5ksjwy2sd407lyre4l3uj2fdrqhpkzp06e6",
+    "validator_dst_address": "cosmosvaloper1rwh0cxa72d3yle3r4l8gd7vyphrmjy2kpe4x72",
+    "entries": [
+      {
+        "creation_height": "97157",
+        "completion_time": "2019-05-21T09:43:35.605908506Z",
+        "initial_balance": "2200000",
+        "shares_dst": "2200000.000000000000000000"
+      }
+    ]
+  }
+]
+ */
+export const getRedelegations = (delegateAddr) => {
+  const url = `staking/redelegations?delegator=${delegateAddr}`
+  return get(url, {}).then(redelegations => redelegations || [])
+}
+
 export const getMyRewardByValidator = (delegatorAddr, validatorAddr) => {
   const url = `distribution/delegators/${delegatorAddr}/rewards/${validatorAddr}`
   return get(url, {}).then(rewards => {

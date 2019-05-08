@@ -20,6 +20,7 @@ interface Props {
   validator: any
   validators: any
   delegations: any
+  redelegations: any
   history: any
   intl: any
 }
@@ -89,8 +90,21 @@ class CMP extends Component<Props, any> {
   }
 
   renderDelegations = () => {
-    const { delegations, validators, intl, validator } = this.props
-    const _delegations = delegations.filter(d => d.validator_address !== validator.operator_address)
+    const { delegations, validators, intl, validator, redelegations } = this.props
+    let _delegations = delegations.filter(d => d.validator_address !== validator.operator_address)
+
+    _delegations = _delegations.slice(0).map(d => {
+      const redelegation = redelegations.find(r => r.validator_dst_address === d.validator_address)
+      if (redelegation && Array.isArray(redelegation.entries)) {
+        if (redelegation.entries.some(e => {
+          // if completion_time is later than now, can't redelegate
+          return new Date(e.completion_time).getTime() > new Date().getTime()
+        })) {
+          d.incompletion = true
+        }
+      }
+      return d
+    })
 
     return <div className="modal-inner type-selector">
       <header>{intl.formatMessage({ id: 'other_delegations' })}</header>
@@ -246,6 +260,13 @@ class CMP extends Component<Props, any> {
   }
 
   handleSelectDelegation = (delegation, validator) => {
+    const { intl } = this.props
+
+    if (delegation.incompletion) {
+      Toast.warn(intl.formatMessage({ id: 'redelegate_incompletion' }), { hideAfter: 5 })
+      return false
+    }
+
     this.setState({
       sourceType: 2,
       sourceObject: {

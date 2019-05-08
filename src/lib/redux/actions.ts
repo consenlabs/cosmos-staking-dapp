@@ -27,6 +27,15 @@ export const updateDelegations = (delegations) => {
   }
 }
 
+export const updateRedelegations = (redelegations) => {
+  return {
+    type: types.UPDATE_REDELEGATIONS,
+    payload: {
+      redelegations,
+    }
+  }
+}
+
 export const updatePool = (pool) => {
   return {
     type: types.UPDATE_POOL,

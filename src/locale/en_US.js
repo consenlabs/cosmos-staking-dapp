@@ -47,6 +47,7 @@ const en_US = {
   high_availability: 'High Availability',
   anti_ddos: 'Anti DDOS',
   sentry_node: 'Sentry Node',
+  redelegate_incompletion: 'Last Redelegate to this validator is still in process!'
 }
 
 export default en_US

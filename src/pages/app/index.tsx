@@ -10,7 +10,7 @@ import Delegate from '../delegate'
 import UnDelegate from '../undelegate'
 import Vote from '../vote'
 import './index.scss'
-import { updateValidators, updateAccount, updateDelegations, updatePool, updateValidatorRewards, updateAtomPrice } from 'lib/redux/actions'
+import { updateValidators, updateAccount, updateDelegations, updateRedelegations, updateValidatorRewards, updateAtomPrice } from 'lib/redux/actions'
 import * as api from 'lib/api'
 import * as sdk from 'lib/sdk'
 import * as utils from 'lib/utils'
@@ -20,6 +20,7 @@ interface Props {
   validators: any[]
   updateValidators: (value: any) => any
   updateDelegations: (value: any) => any
+  updateRedelegations: (value: any) => any
   updateAccount: (value: any) => any
   updatePool: (value: any) => any
   updateValidatorRewards: (value: any) => any
@@ -54,7 +55,7 @@ class App extends Component<Props> {
   }
 
   updateAsyncData = () => {
-    const { updateAccount, updateDelegations, updateValidators, updatePool, updateValidatorRewards, updateAtomPrice } = this.props
+    const { updateAccount, updateDelegations, updateRedelegations, updateValidators, updateValidatorRewards, updateAtomPrice } = this.props
 
     sdk.getAccounts().then(accounts => {
       const address = accounts[0]
@@ -92,11 +93,10 @@ class App extends Component<Props> {
           updateValidatorRewards(validatorRewards)
         })
       })
-    })
 
-    api.getStakePool().then(pool => {
-      console.log(pool)
-      updatePool(pool)
+      api.getRedelegations(address).then(redelegations => {
+        updateRedelegations(redelegations)
+      })
     })
 
     api.getValidators().then(updateValidators).catch(err => console.warn(err))
@@ -127,7 +127,7 @@ const mapDispatchToProps = {
   updateAccount,
   updateDelegations,
   updateValidators,
-  updatePool,
+  updateRedelegations,
   updateValidatorRewards,
   updateAtomPrice,
 }

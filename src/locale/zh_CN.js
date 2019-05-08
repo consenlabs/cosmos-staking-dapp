@@ -47,6 +47,7 @@ const zh_CN = {
   hide_availability: '高可用',
   anti_ddos: '抗 DDOS',
   sentry_node: '哨兵节点',
+  redelegate_incompletion: '上一次更换委托到此节点还在进行中，等待完成才可操作!',
 }
 
 export default zh_CN

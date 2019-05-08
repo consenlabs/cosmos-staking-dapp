@@ -6,6 +6,7 @@ const initialState = {
   },
   validators: [],
   delegations: [],
+  redelegations: [],
   pool: {
     not_bonded_tokens: 0,
     bonded_tokens: 0,
@@ -29,6 +30,9 @@ export default function device(state = initialState, action) {
         return
       case types.UPDATE_DELEGATIONS:
         draft.delegations = action.payload.delegations
+        return
+      case types.UPDATE_REDELEGATIONS:
+        draft.redelegations = action.payload.redelegations
         return
       case types.UPDATE_POOL:
         draft.pool = action.payload.pool

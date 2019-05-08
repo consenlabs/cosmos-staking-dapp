@@ -4,7 +4,7 @@ const zh_CN = {
   delegations: '委托',
   delegate: '委托',
   delegated: '已委托',
-  undelegate: '赎回',
+  undelegate: '取消委托',
   undelegating: '赎回中',
   withdraw: '赎回收益',
   withdraw_all: '全部赎回',

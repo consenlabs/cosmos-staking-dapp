@@ -114,7 +114,7 @@ class CMP extends Component<Props, any> {
     return <div className="modal-inner type-selector">
       <header>
         <div onClick={this.backModal}>
-          <img src={modalBackSVG} />
+          <img src={modalBackSVG} alt="back" />
         </div>
         {intl.formatMessage({ id: 'other_delegations' })}
       </header>
@@ -220,6 +220,7 @@ class CMP extends Component<Props, any> {
             uatom(amount),
             getNetworkConfig().denom)
         ]
+        break
       case 2:
         msgs = [
           createRedelegateMsg(
@@ -229,6 +230,7 @@ class CMP extends Component<Props, any> {
             uatom(amount),
             getNetworkConfig().denom)
         ]
+        break
       default:
     }
     // send delegate apiCall
@@ -250,7 +252,15 @@ class CMP extends Component<Props, any> {
       logger().track('submit_delegate', { result: 'successful', ...logOpt })
       console.log(txHash)
       history.goBack()
-      pubsub.emit('updateAsyncData')
+      pubsub.emit('sendTxSuccess', {
+        txHash,
+        status: 'PENDING',
+        msgType: msgs[0].type,
+        value: msgs[0].value,
+        fee: txPayload.fee,
+        validatorId: validator.operator_address,
+        timestamp: (Date.now() / 1000).toFixed(0)
+      })
     }).catch(e => {
       if (e.errorCode !== 1001) {
         logger().track('submit_delegate', { result: 'failed', message: e.message, ...logOpt })

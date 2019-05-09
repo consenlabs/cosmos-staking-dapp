@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { withRouter, Link } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
-import { selectValidators, selectAccountInfo, selectDelegations, selectValidatorRewards } from '../../lib/redux/selectors'
+import { selectValidators, selectAccountInfo, selectDelegations, selectValidatorRewards, selectPendingTxs } from '../../lib/redux/selectors'
+import { removePendingTx } from 'lib/redux/actions'
 import { ellipsis, fAtom, fPercent, isiPhoneX } from '../../lib/utils'
 import ValidatorLogo from '../../components/validatorLogo'
 import Loading from '../../components/loading'
@@ -18,45 +19,89 @@ interface Props {
   validators: any
   delegations: any
   validatorRewards: any
+  pendingTxs: any
   account: any
   match: any
+  removePendingTx: (value: any) => any
 }
+
+/**
+ * cache txs result in memory, render before remote tx loaded
+ */
+const validatorTxsCache = {}
 
 class Page extends Component<Props, any> {
 
-  state = {
-    txs: []
+  constructor(props) {
+    super(props)
+    this.state = {
+      txs: [],
+    }
   }
 
   componentWillMount() {
     this.updateTxs(this.props)
+    this.polling()
   }
+
+  componentWillUnmount() {
+    this.pollingTimer && clearInterval(this.pollingTimer)
+  }
+
+
 
   componentDidMount() {
     const { match, validators } = this.props
     const id = match.params.id
     const v = validators.find(v => v.operator_address === id)
 
+    let txs = []
+    if (v) {
+      txs = validatorTxsCache[v.operator_address] || []
+    }
+    this.setState({ txs: this.mergeWithPendingTx(txs) })
+
     logger().track('to_validator_detail', { validator: id, moniker: v ? v.description.moniker : '' })
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.updateTxs(nextProps)
+  pollingTimer: any = null
+
+  polling = () => {
+    this.pollingTimer && clearInterval(this.pollingTimer)
+    this.pollingTimer = setInterval(() => this.updateTxs(this.props), 5000)
   }
 
-  fetched = false
   updateTxs = (props) => {
     const { account, match } = props
     const id = match.params.id
 
-    if (this.fetched || !id || !account.address) return false
-    this.fetched = true
+    if (!id || !account.address) return false
 
     getTxListByAddress(account.address, id).then(txs => {
       if (txs && txs.length) {
-        this.setState({ txs })
+        validatorTxsCache[id] = txs
+        this.setState({ txs: this.mergeWithPendingTx(txs) })
       }
     })
+  }
+
+  mergeWithPendingTx = (txs) => {
+    const { pendingTxs, match, removePendingTx } = this.props
+    const id = match.params.id
+    const toAddedTxs: any = []
+
+    for (let txHash in pendingTxs) {
+      const pendingTx = pendingTxs[txHash]
+      if (pendingTx.validatorId === id) {
+        const pendingTxInRemote = txs.find(tx => tx.txHash === txHash)
+        if (pendingTxInRemote) {
+          removePendingTx(pendingTxInRemote.txHash)
+        } else {
+          toAddedTxs.push(pendingTx)
+        }
+      }
+    }
+    return toAddedTxs.concat(txs)
   }
 
   render() {
@@ -73,7 +118,7 @@ class Page extends Component<Props, any> {
             <ValidatorLogo url={v.description.logo} />
             <div className="left">
               <strong>{v.description.moniker}
-                <img src={linkSVG} />
+                <img src={linkSVG} alt="website" />
               </strong>
               <span>{ellipsis(v.operator_address)}</span>
             </div>
@@ -216,8 +261,13 @@ const mapStateToProps = state => {
     delegations: selectDelegations(state),
     account: selectAccountInfo(state),
     validatorRewards: selectValidatorRewards(state),
+    pendingTxs: selectPendingTxs(state),
   }
 }
 
+const mapDispatchToProps = {
+  removePendingTx,
+}
 
-export default withRouter(connect(mapStateToProps)(Page))
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Page))

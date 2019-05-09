@@ -12,7 +12,6 @@
                 font-family: 'PingFang SC';
                 font-size: 15px;
                 font-weight: 500;
-                line-height: 1.47;
                 letter-spacing: 0.2px;
                 color: #f9fbfb;
             }
@@ -29,11 +28,34 @@
             font-family: 'PingFang SC';
             font-size: 12px;
             font-weight: 500;
-            line-height: 1.5;
             letter-spacing: 0.1px;
             color: #01c6d0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            i {
+                font-style: normal;
+            }
             &.delegate {
-                color: #098de6;
+                i {
+                    color: #098de6;
+                }
+            }
+            span {
+                margin-top: 7px;
+                font-size: 11px;
+                font-weight: 300;
+                letter-spacing: 0.1px;
+            }
+            &.pending {
+                span {
+                    color: #777a8c;
+                }
+            }
+            &.failed {
+                span {
+                    color: #f94a28;
+                }
             }
         }
     }

@@ -14,6 +14,7 @@ const initialState = {
   validatorRewards: {},
   price: {},
   sortBy: 'delegators',
+  pendingTxs: {},
 }
 
 export default function device(state = initialState, action) {
@@ -45,6 +46,14 @@ export default function device(state = initialState, action) {
         return
       case types.UPDATE_SORTBY:
         draft.sortBy = action.payload.sortBy
+        return
+      case types.ADD_PENDING_TX:
+        if (action.payload.tx && action.payload.tx.txHash) {
+          draft.pendingTxs[action.payload.tx.txHash] = action.payload.tx
+        }
+        return
+      case types.REMOVE_PENDING_TX:
+        delete draft.pendingTxs[action.payload.txHash]
         return
       default:
         return draft

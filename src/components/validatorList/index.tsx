@@ -41,7 +41,7 @@ class Page extends Component<Props> {
     const sortedList = bondedValidators.sort((a, b) => {
 
       // if annualized_returns is same, sort by delegators
-      if (sortBy === 'yield' && a[sortKey] == b[sortKey]) {
+      if (sortBy === 'yield' && a[sortKey] === b[sortKey]) {
         return b['delegators'] - a['delegators'] > 0 ? 1 : -1
       }
       return b[sortKey] - a[sortKey] > 0 ? 1 : -1

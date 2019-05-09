@@ -27,17 +27,17 @@ class CMP extends Component<Props> {
     const amount = getAmountFromMsg(tx)
     const msgKey = this.getKeyOfType(tx.msgType)
     const date = dayjs(tx.timestamp * 1000).format('YYYY-MM-DD HH:mm:ss')
+    const status = (tx.status || '').toLowerCase()
 
     return <a className="tx-item" key={tx.rowId} href={`https://www.mintscan.io/txs/${tx.txHash}`}>
       <div className="i-left">
         <FormattedMessage id={msgKey} />
         <i>{date}</i>
       </div>
-      {tx.msgType !== msgTypes.withdraw &&
-        <div className={`i-right ${isOut ? "delegate" : ""}`}>
-          {`${isOut ? '-' : '+'} ${fAtom(amount)} ATOM`}
-        </div>
-      }
+      <div className={`i-right ${isOut ? "delegate" : ""} ${status}`}>
+        {tx.msgType !== msgTypes.withdraw && <i>{`${isOut ? '-' : '+'} ${fAtom(amount)} ATOM`}</i>}
+        {(status === 'pending' || status === 'failed') && <FormattedMessage id={`tx_${status}`} />}
+      </div>
     </a>
   }
 
@@ -45,9 +45,12 @@ class CMP extends Component<Props> {
     const { txs } = this.props
 
     if (!txs || !txs.length) return null
+    const _txs = txs.sort((a, b) => {
+      return b.timestamp - a.timestamp
+    })
 
     return <div className="tx-list">
-      {txs.map(tx => {
+      {_txs.map(tx => {
         return this.renderItem(tx)
       })}
     </div>

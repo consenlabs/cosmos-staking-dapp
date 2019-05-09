@@ -128,6 +128,7 @@ class CMP extends Component<Props, any> {
             validator.operator_address,
           ),
         ]
+        break
       default:
     }
 
@@ -149,7 +150,15 @@ class CMP extends Component<Props, any> {
       logger().track('submit_undelegate', { result: 'successful', ...logOpt })
       console.log(txHash)
       history.goBack()
-      pubsub.emit('updateAsyncData')
+      pubsub.emit('sendTxSuccess', {
+        txHash,
+        status: 'PENDING',
+        msgType: msgs[0].type,
+        msg: msgs[0],
+        fee: txPayload.fee,
+        validatorId: validator.operator_address,
+        timestamp: (Date.now() / 1000).toFixed(0)
+      })
     }).catch(e => {
       if (e.errorCode !== 1001) {
         logger().track('submit_undelegate', { result: 'failed', message: e.message, ...logOpt })

@@ -71,3 +71,21 @@ export const updateSortby = (sortBy) => {
     }
   }
 }
+
+export const addPendingTx = (tx) => {
+  return {
+    type: types.ADD_PENDING_TX,
+    payload: {
+      tx,
+    }
+  }
+}
+
+export const removePendingTx = (txHash: string) => {
+  return {
+    type: types.REMOVE_PENDING_TX,
+    payload: {
+      txHash,
+    }
+  }
+}

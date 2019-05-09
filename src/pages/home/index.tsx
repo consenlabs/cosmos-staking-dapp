@@ -44,7 +44,7 @@ class Page extends Component<Props, any> {
     return (
       <div className="divier">
         <div className="line"></div>
-        <img src={LOGO} />
+        <img src={LOGO} alt="" />
         <div className="line"></div>
       </div>
     )
@@ -58,14 +58,14 @@ class Page extends Component<Props, any> {
     return (
       <div className='blocks'>
         <a className='block-item' style={{ marginRight: 7 }} href={faqLink}>
-          <img src={FAQ} />
+          <img src={FAQ} alt="faq" />
           <FormattedMessage
             id='faq'
           />
         </a>
 
         <a className='block-item' style={{ marginLeft: 7 }} href={tutorialLink}>
-          <img src={TURTORIAL} />
+          <img src={TURTORIAL} alt="turtorial" />
           <FormattedMessage
             id='tutorial'
           />

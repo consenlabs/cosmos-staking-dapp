@@ -10,7 +10,7 @@ import Delegate from '../delegate'
 import UnDelegate from '../undelegate'
 import Vote from '../vote'
 import './index.scss'
-import { updateValidators, updateAccount, updateDelegations, updateRedelegations, updateValidatorRewards, updateAtomPrice } from 'lib/redux/actions'
+import { updateValidators, updateAccount, updateDelegations, updateRedelegations, updateValidatorRewards, updateAtomPrice, addPendingTx } from 'lib/redux/actions'
 import * as api from 'lib/api'
 import * as sdk from 'lib/sdk'
 import * as utils from 'lib/utils'
@@ -25,6 +25,7 @@ interface Props {
   updatePool: (value: any) => any
   updateValidatorRewards: (value: any) => any
   updateAtomPrice: (value: any) => any
+  addPendingTx: (value: any) => any
   intl: any
 }
 
@@ -39,23 +40,29 @@ class App extends Component<Props> {
     }
   }
 
+  _autoRefresh: any = null
+  _updateTimes: number = 0
+
   componentWillMount() {
+    const { addPendingTx } = this.props
     this.updateAsyncData()
-    pubsub.on('updateAsyncData', () => {
-      pubsub.off('updateAsyncData')
-      // refresh immediately
-      this.updateAsyncData()
+    pubsub.on('sendTxSuccess', (tx) => {
+      this._autoRefresh && clearInterval(this._autoRefresh)
+      this._updateTimes = 0
       // auto refresh after 10 seconds
-      setInterval(this.updateAsyncData, 1000 * 10)
+      this._autoRefresh = setInterval(this.updateAsyncData, 1000 * 10)
+      addPendingTx(tx)
     })
   }
 
   componentWillUnmount() {
-    pubsub.off('updateAsyncData')
+    pubsub.off('sendTxSuccess')
   }
 
   updateAsyncData = () => {
     const { updateAccount, updateDelegations, updateRedelegations, updateValidators, updateValidatorRewards, updateAtomPrice } = this.props
+
+    if (this._updateTimes > 10) return false
 
     sdk.getAccounts().then(accounts => {
       const address = accounts[0]
@@ -101,6 +108,8 @@ class App extends Component<Props> {
 
     api.getValidators().then(updateValidators).catch(err => console.warn(err))
     api.getAtomPrice().then(updateAtomPrice)
+
+    this._updateTimes++
   }
 
   render() {
@@ -130,6 +139,7 @@ const mapDispatchToProps = {
   updateRedelegations,
   updateValidatorRewards,
   updateAtomPrice,
+  addPendingTx,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(App))

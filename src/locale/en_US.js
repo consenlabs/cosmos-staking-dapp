@@ -18,7 +18,7 @@ const en_US = {
   commission_rate: 'Commission Rate',
   self_bonded_tokens: 'Self Bonded Tokens',
   failed_to_send: 'Failed',
-  sent_successfully: 'Successfully',
+  sent_successfully: 'Broadcast Successfully',
   input_amount: 'Input Amount',
   proposal_vote: 'Proposal Vote',
   coming_soon: 'Coming Soon',
@@ -47,7 +47,9 @@ const en_US = {
   high_availability: 'High Availability',
   anti_ddos: 'Anti DDOS',
   sentry_node: 'Sentry Node',
-  redelegate_incompletion: 'Last Redelegate to this validator is still in process!'
+  redelegate_incompletion: 'Last Redelegate to this validator is still in process!',
+  tx_pending: 'Pending',
+  tx_failed: 'Failed',
 }
 
 export default en_US

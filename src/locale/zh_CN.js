@@ -4,7 +4,7 @@ const zh_CN = {
   delegations: '委托',
   delegate: '委托',
   delegated: '已委托',
-  undelegate: '取消委托',
+  undelegate: '赎回委托',
   undelegating: '赎回中',
   withdraw: '赎回收益',
   withdraw_all: '全部赎回',
@@ -18,7 +18,7 @@ const zh_CN = {
   commission_rate: '手续费',
   self_bonded_tokens: '验证节点委托代币',
   failed_to_send: '发送失败',
-  sent_successfully: '发送成功',
+  sent_successfully: '广播成功',
   input_amount: '输入数量',
   proposal_vote: '提案投票',
   coming_soon: '即将上线',
@@ -48,6 +48,8 @@ const zh_CN = {
   anti_ddos: '抗 DDOS',
   sentry_node: '哨兵节点',
   redelegate_incompletion: '上一次更换委托到此节点还在进行中，等待完成才可操作!',
+  tx_pending: '正在打包',
+  tx_failed: '交易失败',
 }
 
 export default zh_CN

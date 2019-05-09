@@ -64,7 +64,7 @@ class Page extends Component<Props, any> {
           <FormattedMessage
             id={this.props.sortBy}
           />
-          <img src={SORT} />
+          <img src={SORT} alt="sort" />
         </p>
       </div>
     )

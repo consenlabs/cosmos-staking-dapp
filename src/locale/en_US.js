@@ -47,6 +47,7 @@ const en_US = {
   high_availability: 'High Availability',
   anti_ddos: 'Anti DDOS',
   sentry_node: 'Sentry Node',
+  unavailable: 'Unavailable',
   redelegate_incompletion: 'Last Redelegate to this validator is still in process!',
   tx_pending: 'Pending',
   tx_failed: 'Failed',

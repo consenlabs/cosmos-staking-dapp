@@ -130,6 +130,7 @@ class CMP extends Component<Props, any> {
               <strong>{v.description.moniker}</strong>
               <i>{fAtom(d.shares)} ATOM</i>
             </div>
+            {d.incompletion && <span className="status">{intl.formatMessage({ id: 'unavailable' })}</span>}
           </div>
         })}
       </div>

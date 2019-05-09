@@ -17,6 +17,8 @@ const customStyles = {
 }
 
 export default (props: any) => {
-  const style = { ...customStyles, ...props.styles }
+  const style = { ...customStyles }
+  style.content = { ...style.content, ...props.styles }
+  console.log(style)
   return <Modal {...props} style={style} />
 }

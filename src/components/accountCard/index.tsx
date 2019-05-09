@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { selectAccountInfo, selectPrice } from '../../lib/redux/selectors'
 import './index.scss'
+import AccountRewardBar from '../accountRewardBar'
 import { toBN, fAtom, ellipsis, isExist, t } from 'lib/utils'
 
 interface Props {
@@ -37,27 +38,30 @@ class CMP extends Component<Props> {
           </div>
         </div>
         <div className="account-bottom">
-          <div>
+          <div className="account-balance">
             <div>
-              <span>{t('available_balance')}</span>
-              <i>{fAtom(balance)}</i>
+              <div>
+                <span>{t('available_balance')}</span>
+                <i>{fAtom(balance)}</i>
+              </div>
+              <div>
+                <span>{t('delegations')}</span>
+                <i>{fAtom(delegateBalance)}</i>
+              </div>
             </div>
+            <div className="split-line"></div>
             <div>
-              <span>{t('delegations')}</span>
-              <i>{fAtom(delegateBalance)}</i>
+              <div>
+                <span>{t('rewards')}</span>
+                <i>{fAtom(rewardBalance)}</i>
+              </div>
+              <div>
+                <span>{t('undelegating')}</span>
+                <i>{fAtom(refundingBalance)}</i>
+              </div>
             </div>
           </div>
-          <div className="split-line"></div>
-          <div>
-            <div>
-              <span>{t('rewards')}</span>
-              <i>{fAtom(rewardBalance)}</i>
-            </div>
-            <div>
-              <span>{t('undelegating')}</span>
-              <i>{fAtom(refundingBalance)}</i>
-            </div>
-          </div>
+          <AccountRewardBar />
         </div>
       </div>
     )

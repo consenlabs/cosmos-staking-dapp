@@ -7,6 +7,7 @@ const en_US = {
   undelegate: 'Undelegate',
   undelegating: 'Undelegating',
   withdraw: 'Withdraw Rewards',
+  compound: 'Compound',
   withdraw_all: 'Withdraw All',
   redelegate: 'Redelegate',
   tmp_i18n_unstake: 'Withdraw',
@@ -51,6 +52,12 @@ const en_US = {
   redelegate_incompletion: 'Last Redelegate to this validator is still in process!',
   tx_pending: 'Pending',
   tx_failed: 'Failed',
+  confirm_withdraw: 'Confirm Withdraw',
+  withdraw_all_reward: 'Withdraw All Rewards',
+  confirm_compound: 'Confirm Compound',
+  compound_all_reward: 'Compound All Rewards to origin validator',
+  cancel: 'Cancel',
+  confirm: 'Confirm',
 }
 
 export default en_US

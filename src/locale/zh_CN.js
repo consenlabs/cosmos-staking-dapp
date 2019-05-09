@@ -7,6 +7,7 @@ const zh_CN = {
   undelegate: '赎回委托',
   undelegating: '赎回中',
   withdraw: '赎回收益',
+  compound: '收益复投',
   withdraw_all: '全部赎回',
   redelegate: '重新委托',
   tmp_i18n_unstake: '赎回',
@@ -51,6 +52,12 @@ const zh_CN = {
   redelegate_incompletion: '上一次更换委托到此节点还在进行中，等待完成才可操作!',
   tx_pending: '正在打包',
   tx_failed: '交易失败',
+  confirm_withdraw: '确认赎回',
+  withdraw_all_reward: '赎回全部收益',
+  confirm_compound: '确认复投',
+  compound_all_reward: '将全部收益复投至原节点',
+  cancel: '取消',
+  confirm: '确认',
 }
 
 export default zh_CN

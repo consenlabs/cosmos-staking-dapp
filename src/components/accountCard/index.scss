@@ -54,7 +54,6 @@
   }
   .account-bottom {
     margin-top: -10px;
-    padding: 15px 20px;
     overflow: hidden;
     border-radius: 4px 4px 0 0;
     box-shadow: 0 2px 8px 0 #00000019;
@@ -64,23 +63,26 @@
       margin: 12px 0;
       border-bottom: solid 0.5px #f0f2f8;
     }
-    > div  {
-      display: flex;
-      > div:first-child {
-        width: 204px;
+    .account-balance {
+      padding: 15px 20px;
+      > div  {
+        display: flex;
+        > div:first-child {
+          width: 204px;
+        }
       }
-    }
-    span {
-      display: block;
-      margin-bottom: 2px;
-      font-family: 'PingFang SC';
-      font-size: 11px;
-      color: #777a8c;
-    }
-    i {
-        font-size: 17px;
-        font-style: normal;
-        color: #191c1e;
+      span {
+        display: block;
+        margin-bottom: 2px;
+        font-family: 'PingFang SC';
+        font-size: 11px;
+        color: #777a8c;
+      }
+      i {
+          font-size: 17px;
+          font-style: normal;
+          color: #191c1e;
+      }
     }
   }
 }

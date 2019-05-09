@@ -46,9 +46,12 @@ class App extends Component<Props> {
     pubsub.on('sendTxSuccess', (tx) => {
       this._autoRefresh && clearInterval(this._autoRefresh)
       this._updateTimes = 0
-      // auto refresh after 10 seconds
       this._autoRefresh = setInterval(this.updateAsyncData, 1000 * 10)
-      addPendingTx(tx)
+      if (tx) {
+        addPendingTx(tx)
+      } else {
+        this.updateAsyncData()
+      }
     })
   }
 

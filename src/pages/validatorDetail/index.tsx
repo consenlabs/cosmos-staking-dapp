@@ -47,7 +47,11 @@ class Page extends Component<Props, any> {
     this.pollingTimer && clearInterval(this.pollingTimer)
   }
 
-
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.account.address && !this.props.account.address) {
+      this.updateTxs(nextProps)
+    }
+  }
 
   componentDidMount() {
     const { match, validators } = this.props

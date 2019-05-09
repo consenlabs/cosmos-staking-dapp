@@ -29,7 +29,7 @@ function get(url, params = {}) {
       } else {
         throw new Error(`null response ${url} ${JSON.stringify(params)}`)
       }
-    }).catch(warnning)
+    })
   })
 }
 
@@ -95,27 +95,27 @@ export const getDelegations = (address) => {
   const url = `staking/delegators/${address}/delegations`
   return get(url, {}).then(delegations => (delegations || []).sort(
     (a, b) => b.shares - a.shares
-  ))
+  )).catch(warnning)
 }
 
 export const getRewards = (delegatorAddr) => {
   const url = `distribution/delegators/${delegatorAddr}/rewards`
-  return get(url, {}).then(rewards => rewards || [])
+  return get(url, {}).then(rewards => rewards || []).catch(warnning)
 }
 
 export const getUnbondingDelegations = (address) => {
   const url = `staking/delegators/${address}/unbonding_delegations`
-  return get(url, {}).then(unbondingDelegations => unbondingDelegations || [])
+  return get(url, {}).then(unbondingDelegations => unbondingDelegations || []).catch(warnning)
 }
 
 export const getDelegationTx = (delegatorAddr) => {
   const url = `staking/delegators/${delegatorAddr}/delegations`
-  return get(url, {})
+  return get(url, {}).catch(warnning)
 }
 
 export const getStakePool = () => {
   const url = `staking/pool`
-  return get(url, {}).then(pool => pool || {})
+  return get(url, {}).then(pool => pool || {}).catch(warnning)
 }
 
 /**
@@ -137,7 +137,7 @@ export const getStakePool = () => {
  */
 export const getRedelegations = (delegateAddr) => {
   const url = `staking/redelegations?delegator=${delegateAddr}`
-  return get(url, {}).then(redelegations => redelegations || [])
+  return get(url, {}).then(redelegations => redelegations || []).catch(warnning)
 }
 
 export const getMyRewardByValidator = (delegatorAddr, validatorAddr) => {
@@ -146,6 +146,41 @@ export const getMyRewardByValidator = (delegatorAddr, validatorAddr) => {
     rewards = rewards || []
     const balance = getRewardBalance(rewards)
     return balance
+  }).catch(warnning)
+}
+
+export const getTxByHash = (txHash) => {
+  const url = `txs/${txHash}`
+  return get(url, {})
+}
+
+/**
+ * polling check tx
+ */
+export function checkTx(txHash, timer, repeatCount = 10) {
+
+  let count = 0
+
+  const check = (resolve, reject) => {
+    return getTxByHash(txHash).then(tx => {
+      if (tx && tx.height) {
+        resolve(tx)
+      }
+    }).catch(e => {
+      if (count > repeatCount) {
+        reject(e)
+        return
+      }
+      setTimeout(() => {
+        count++
+        check(resolve, reject)
+      }, timer || 5000)
+    })
+  }
+
+
+  return new Promise((resolve, reject) => {
+    check(resolve, reject)
   })
 }
 
@@ -183,3 +218,4 @@ export function getTxListByAddress(delegator: string, validator: string) {
   }]
   return rpc(getNetworkConfig().chainAPI, 'wallet.getMsgListByAddress', params).then(data => data || []).catch(warnning)
 }
+

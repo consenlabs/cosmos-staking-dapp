@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import { t, createWithdrawMsg, createDelegateMsg, createTxPayload, Toast, toBN, fAtom } from '../../lib/utils'
 import { getFeeParamsByMsgs } from '../../config/fee'
 import { sendTransaction } from '../../lib/sdk'
+import * as api from '../../lib/api'
 import { selectAccountInfo, selectDelegations, selectValidatorRewards } from '../../lib/redux/selectors'
 import './index.scss'
 import Modal from '../../components/modal'
@@ -13,7 +14,7 @@ import compoundBigIcon from '../../assets/big-compound.svg'
 
 import getNetworkConfig from '../../config/network'
 import logger from '../../lib/logger'
-// import { pubsub } from 'lib/event'
+import { pubsub } from 'lib/event'
 
 interface Props {
   account: any
@@ -38,15 +39,31 @@ class CMP extends Component<Props> {
     this.setState({ actionType, modalVisible: true })
   }
 
-  doWithdrawAll = () => {
-    const { delegations, account } = this.props
+  checkTxStatus = (txHash, callback) => {
+    console.log(txHash, callback)
+    api.checkTx(txHash, 3000, 10).then(() => {
+      callback()
+      pubsub.emit('sendTxSuccess')
+    }).catch(e => {
+      console.warn(e)
+      callback()
+      Toast.error(e.message)
+    })
+  }
 
-    if (!delegations.length) {
+  doWithdrawAll = () => {
+    const { delegations, account, validatorRewards } = this.props
+
+    const _hasRewardDelegation = delegations.filter(d => {
+      return Number(validatorRewards[d.validator_address]) > 0
+    })
+
+    if (!_hasRewardDelegation.length) {
       Toast.warn(t('no_delegations'))
       return false
     }
 
-    const msgs = delegations.map(d => {
+    const msgs = _hasRewardDelegation.map(d => {
       return createWithdrawMsg(d.delegator_address, d.validator_address)
     })
 
@@ -57,7 +74,7 @@ class CMP extends Component<Props> {
       return false
     }
 
-    const logOpt = { delegations: delegations }
+    const logOpt = { delegations: _hasRewardDelegation }
 
     const txPayload = createTxPayload(
       account.address,
@@ -68,7 +85,8 @@ class CMP extends Component<Props> {
     sendTransaction(txPayload).then(txHash => {
       logger().track('submit_withdraw_all', { result: 'successful', ...logOpt })
       console.log(txHash)
-      Toast.loading(txHash, { heading: t('sent_successfully') })
+      const hideLoading = Toast.loading(txHash, { heading: t('sent_successfully'), hideAfter: 0 })
+      this.checkTxStatus(txHash, hideLoading)
       // TODO: check status
     }).catch(e => {
       if (e.errorCode !== 1001) {
@@ -81,18 +99,22 @@ class CMP extends Component<Props> {
   }
 
   doCompound = () => {
-    const { delegations, account } = this.props
+    const { delegations, account, validatorRewards } = this.props
 
-    if (!delegations.length) {
+    const _hasRewardDelegation = delegations.filter(d => {
+      return Number(validatorRewards[d.validator_address]) > 0
+    })
+
+    if (!_hasRewardDelegation.length) {
       Toast.warn(t('no_delegations'))
       return false
     }
 
-    const withdrawMsgs = delegations.map(d => {
+    const withdrawMsgs = _hasRewardDelegation.map(d => {
       return createWithdrawMsg(d.delegator_address, d.validator_address)
     })
 
-    const delegateMsgs = delegations.map(d => {
+    const delegateMsgs = _hasRewardDelegation.map(d => {
       return createDelegateMsg(d.delegator_address, d.validator_address, d.shares, getNetworkConfig().denom)
     })
 
@@ -104,7 +126,7 @@ class CMP extends Component<Props> {
       return false
     }
 
-    const logOpt = { delegations: delegations }
+    const logOpt = { delegations: _hasRewardDelegation }
 
     const txPayload = createTxPayload(
       account.address,
@@ -113,10 +135,10 @@ class CMP extends Component<Props> {
     )
 
     sendTransaction(txPayload).then(txHash => {
-      Toast.loading(txHash, { heading: t('sent_successfully') })
       logger().track('submit_compound_all', { result: 'successful', ...logOpt })
+      const hideLoading = Toast.loading(txHash, { heading: t('sent_successfully'), hideAfter: 0 })
       console.log(txHash)
-      // TODO: check status
+      this.checkTxStatus(txHash, hideLoading)
     }).catch(e => {
       if (e.errorCode !== 1001) {
         logger().track('submit_compound_all', { result: 'failed', message: e.message, ...logOpt })

@@ -115,7 +115,8 @@ class CMP extends Component<Props> {
     })
 
     const delegateMsgs = _hasRewardDelegation.map(d => {
-      return createDelegateMsg(d.delegator_address, d.validator_address, d.shares, getNetworkConfig().denom)
+      const reward = validatorRewards[d.validator_address]
+      return createDelegateMsg(d.delegator_address, d.validator_address, reward, getNetworkConfig().denom)
     })
 
     const msgs = withdrawMsgs.concat(delegateMsgs)

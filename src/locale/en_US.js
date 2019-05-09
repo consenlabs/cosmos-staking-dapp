@@ -35,6 +35,7 @@ const en_US = {
   delegators: 'Delegators',
   bonded_tokens: 'Bonded Tokens',
   cancel: 'Cancel',
+  confirm: 'Confirm',
   fee: 'Fee',
   select_funds_type: 'Select Funds Type',
   other_delegations: 'Other Delegations',
@@ -56,8 +57,7 @@ const en_US = {
   withdraw_all_reward: 'Withdraw All Rewards',
   confirm_compound: 'Confirm Compound',
   compound_all_reward: 'Compound All Rewards to origin validator',
-  cancel: 'Cancel',
-  confirm: 'Confirm',
+  no_delegations: 'No Delegations',
 }
 
 export default en_US

@@ -35,6 +35,7 @@ const zh_CN = {
   delegators: '委托者',
   bonded_tokens: '委托代币',
   cancel: '取消',
+  confirm: '确认',
   fee: '交易费',
   select_funds_type: '选择资金类型',
   other_delegations: '其他委托',
@@ -56,8 +57,7 @@ const zh_CN = {
   withdraw_all_reward: '赎回全部收益',
   confirm_compound: '确认复投',
   compound_all_reward: '将全部收益复投至原节点',
-  cancel: '取消',
-  confirm: '确认',
+  no_delegations: '当前没有委托'
 }
 
 export default zh_CN

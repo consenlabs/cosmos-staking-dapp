@@ -141,7 +141,6 @@ class CMP extends Component<Props, any> {
       address,
       msgs,
       memo,
-      msgs[0].type
     )
 
     sendTransaction(txPayload).then(txHash => {

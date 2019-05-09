@@ -1,7 +1,8 @@
 import BN from 'big.js'
 import numeral from 'numeral'
 import cogoToast from 'cogo-toast'
-import { getFeeFiledByType } from '../config/fee'
+import { getFeeParamsByMsgs } from '../config/fee'
+import getNetworkConfig from '../config/network'
 import msgTypes from './msgTypes'
 import enTrans from '../locale/en_US'
 import zhTrans from '../locale/zh_CN'
@@ -21,11 +22,12 @@ interface __Msg {
   value: any
 }
 
-export function createTxPayload(from: string, msg: __Msg[], memo: string, feeType = msgTypes.redelegate) {
+export function createTxPayload(from: string, msg: __Msg[], memo: string) {
+  const { feeAmount, gasLimit } = getFeeParamsByMsgs(msg)
   const payload = {
     from: from,
     chainType: 'COSMOS',
-    fee: getFeeFiledByType(feeType),
+    fee: { "amount": [{ "amount": feeAmount, "denom": getNetworkConfig().denom }], "gas": gasLimit },
     msg,
     memo,
   }

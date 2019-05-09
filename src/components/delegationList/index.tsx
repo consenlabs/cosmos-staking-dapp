@@ -36,7 +36,7 @@ class CMP extends Component<Props> {
       </div>
       <div className="split-line"></div>
       <div className="bottom">
-        <div>
+        <div className="first">
           <span>{t('delegations')}</span>
           <i>{fAtom(d.shares)}</i>
         </div>
@@ -46,7 +46,7 @@ class CMP extends Component<Props> {
           <i>{fAtom(reward)}</i>
         </div>
 
-        <div>
+        <div className="last">
           <span>{t('rewards_per_day')}</span>
           <i>{d.shares && v.annualized_returns ? `+${getDailyReward(d.shares, v.annualized_returns)}` : '~'}</i>
         </div>

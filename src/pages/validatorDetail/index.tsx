@@ -128,8 +128,8 @@ class Page extends Component<Props, any> {
           </a>
           <div className="flexWrap">
             <div className="col first">
-              <span>{t('bonded_tokens')}</span>
-              <p>{fAtom(v.tokens)} ATOM</p>
+              <span>{t('bonded_tokens')}(ATOM)</span>
+              <p>{fAtom(v.tokens)}</p>
             </div>
             <div className="col">
               <span>{t('delegators')}</span>

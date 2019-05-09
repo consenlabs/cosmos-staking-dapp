@@ -6,11 +6,11 @@ const zh_CN = {
   delegated: '已委托',
   undelegate: '赎回委托',
   undelegating: '赎回中',
-  withdraw: '赎回收益',
-  compound: '收益复投',
+  withdraw: '赎回',
+  withdraw_reward: '赎回收益',
+  reinvest_reward: '复投收益',
   withdraw_all: '全部赎回',
   redelegate: '重新委托',
-  tmp_i18n_unstake: '赎回',
   my_delegations: '我的委托',
   validators: '验证节点',
   yield: '预计年化收益',
@@ -53,11 +53,9 @@ const zh_CN = {
   redelegate_incompletion: '上一次更换委托到此节点还在进行中，等待完成才可操作!',
   tx_pending: '正在打包',
   tx_failed: '交易失败',
-  confirm_withdraw: '确认赎回',
-  withdraw_all_reward: '赎回全部收益',
-  confirm_compound: '确认复投',
-  compound_all_reward: '将全部收益复投至原节点',
-  no_delegations: '当前没有委托'
+  withdraw_reward_desc: '赎回所有验证节点的收益',
+  reinvest_reward_desc: '委托所有验证节点的收益，让收益再次产生更多收益',
+  no_delegations: '当前没有委托的验证节点'
 }
 
 export default zh_CN

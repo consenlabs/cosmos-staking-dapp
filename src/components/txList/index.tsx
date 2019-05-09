@@ -15,7 +15,7 @@ class CMP extends Component<Props> {
       [msgTypes.send]: 'transfer',
       [msgTypes.delegate]: 'delegate',
       [msgTypes.undelegate]: 'undelegate',
-      [msgTypes.withdraw]: 'withdraw',
+      [msgTypes.withdraw]: 'withdraw-reward',
       [msgTypes.redelegate]: 'redelegate',
     }[type]
   }

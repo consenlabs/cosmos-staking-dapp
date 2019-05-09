@@ -62,7 +62,7 @@ class CMP extends Component<Props> {
     const txPayload = createTxPayload(
       account.address,
       msgs,
-      'withdraw all from imToken',
+      'withdraw rewards from imToken',
     )
 
     sendTransaction(txPayload).then(txHash => {
@@ -109,7 +109,7 @@ class CMP extends Component<Props> {
     const txPayload = createTxPayload(
       account.address,
       msgs,
-      'Compound all from imToken',
+      'Reinvest rewards from imToken',
     )
 
     sendTransaction(txPayload).then(txHash => {
@@ -129,11 +129,10 @@ class CMP extends Component<Props> {
   }
 
   renderWidthdrawBox = () => {
-    const { account } = this.props
     return <div className="reward-modal-inner">
       <img src={withdrawBigIcon} alt="withdraw-all" />
-      <span>{t('confirm_withdraw')}</span>
-      <div className="desc">{t('withdraw_all_reward')} {fAtom(account.rewardBalance)} ATOM</div>
+      <span>{t('withdraw_reward')}</span>
+      <div className="desc">{t('withdraw_reward_desc')}</div>
       <div className="buttons">
         <div className="button cancel-button" onClick={this.hideModal}>{t('cancel')}</div>
         <div className="button confirm-button" onClick={this.doWithdrawAll}>{t('confirm')}</div>
@@ -144,8 +143,8 @@ class CMP extends Component<Props> {
   renderCompoundBox = () => {
     return <div className="reward-modal-inner">
       <img src={compoundBigIcon} alt="compound" />
-      <span>{t('confirm_compound')}</span>
-      <div className="desc">{t('compound_all_reward')}</div>
+      <span>{t('reinvest_reward')}</span>
+      <div className="desc">{t('reinvest_reward_desc')}</div>
       <div className="buttons">
         <div className="button cancel-button" onClick={this.hideModal}>{t('cancel')}</div>
         <div className="button confirm-button" onClick={this.doCompound}>{t('confirm')}</div>
@@ -159,16 +158,16 @@ class CMP extends Component<Props> {
     return (
       <div className="reward-toolbar">
         <div onClick={() => { this.showModal(0) }}>
-          <img src={withdrawIcon} alt="withdraw-all" />
-          <span>{t('withdraw')}</span>
+          <img src={withdrawIcon} alt="withdraw_reward" />
+          <span>{t('withdraw_reward')}</span>
         </div>
         <div onClick={() => { this.showModal(1) }}>
-          <img src={compoundIcon} alt="compound" />
-          <span>{t('compound')}</span>
+          <img src={compoundIcon} alt="reinvest_reward" />
+          <span>{t('reinvest_reward')}</span>
         </div>
 
         <Modal isOpen={modalVisible}
-          contentLabel="Reword Modal"
+          contentLabel="Reward Modal"
           onRequestClose={this.hideModal}
           styles={{ margin: '10px', bottom: '0', borderRadius: '16px' }}
           appElement={document.body}>

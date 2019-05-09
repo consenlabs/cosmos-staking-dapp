@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
+import dayjs from 'dayjs'
 import { withRouter, Link } from 'react-router-dom'
 import { selectValidators, selectAccountInfo, selectDelegations, selectValidatorRewards, selectPendingTxs } from '../../lib/redux/selectors'
 import { removePendingTx } from 'lib/redux/actions'
-import { ellipsis, fAtom, fPercent, isiPhoneX, t } from '../../lib/utils'
+import { ellipsis, fAtom, fPercent, isiPhoneX, t, getLocale } from '../../lib/utils'
 import ValidatorLogo from '../../components/validatorLogo'
 import Loading from '../../components/loading'
 import TxList from '../../components/txList'
@@ -111,6 +112,9 @@ class Page extends Component<Props, any> {
     const { validators, match } = this.props
     const id = match.params.id
     const v = validators.find(v => v.operator_address === id)
+    const banner = bannerConfig.find(v => v.operator_address === id)
+    const locale = getLocale()
+    const desc = banner && banner.desc && banner.desc[locale]
 
     if (!v) return <Loading />
 
@@ -148,7 +152,7 @@ class Page extends Component<Props, any> {
           <p className="title">
             <span>{t('intro')}</span>
           </p>
-          <div className="desc">{v.description.details || 'no description'}</div>
+          <div className="desc">{desc || v.description.details || 'no description'}</div>
 
           {this.renderAdvantage()}
 
@@ -172,21 +176,22 @@ class Page extends Component<Props, any> {
     const { match } = this.props
     const id = match.params.id
     const v = bannerConfig.find(v => v.operator_address === id)
+    const locale = getLocale()
 
     if (!v) return null
-    return null // TODO: hidden activity right now, need  activity link update
+    const activity = v.activity
 
     return (
       <section>
         <p className="title">
           <span>{t('activity')}</span>
         </p>
-        <a className="box" href="">
+        <a className="box" href={activity.url}>
           <div>
             <p>
-              <span>{t('free_commission_high_yield')}</span>
+              <span>{activity.name[locale]}</span>
             </p>
-            <span className="date">2019-4-25 ~ 2019-5-30</span>
+            <span className="date">{dayjs(activity.time.start).format('YYYY-MM-DD')} ~ {dayjs(activity.time.end).format('YYYY-MM-DD')}</span>
           </div>
           <img src={Arrow} />
         </a>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import { connect } from "react-redux"
-import { injectIntl } from 'react-intl'
 import { selectValidators } from '../../lib/redux/selectors'
 import Home from '../home'
 import Validators from '../validators'
@@ -14,6 +13,7 @@ import { updateValidators, updateAccount, updateDelegations, updateRedelegations
 import * as api from 'lib/api'
 import * as sdk from 'lib/sdk'
 import * as utils from 'lib/utils'
+import { t } from '../../lib/utils'
 import { pubsub } from 'lib/event'
 
 interface Props {
@@ -22,20 +22,17 @@ interface Props {
   updateDelegations: (value: any) => any
   updateRedelegations: (value: any) => any
   updateAccount: (value: any) => any
-  updatePool: (value: any) => any
   updateValidatorRewards: (value: any) => any
   updateAtomPrice: (value: any) => any
   addPendingTx: (value: any) => any
-  intl: any
 }
 
 class App extends Component<Props> {
 
   componentDidMount() {
-    const { intl } = this.props
     if (!window['imToken']['callAPI']) {
       setTimeout(() => {
-        utils.Toast.warn(intl.formatMessage({ id: 'please_open_in_imtoken' }), { hideAfter: 5, position: 'top-center' })
+        utils.Toast.warn(t('please_open_in_imtoken'), { hideAfter: 5, position: 'top-center' })
       }, 6000)
     }
   }
@@ -142,4 +139,4 @@ const mapDispatchToProps = {
   addPendingTx,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(App))
+export default connect(mapStateToProps, mapDispatchToProps)(App)

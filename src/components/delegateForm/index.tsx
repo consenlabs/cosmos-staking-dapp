@@ -3,7 +3,7 @@ import './index.scss'
 import { uatom, fAtom, createTxPayload, createDelegateMsg, createWithdrawMsg, createRedelegateMsg, Toast, isiPhoneX } from 'lib/utils'
 import { sendTransaction } from 'lib/sdk'
 import { validDelegate } from 'lib/validator'
-import { FormattedMessage, injectIntl } from 'react-intl'
+import { t } from 'lib/utils'
 import Modal from '../../components/modal'
 import { pubsub } from 'lib/event'
 import ValidatorLogo from '../../components/validatorLogo'
@@ -23,7 +23,6 @@ interface Props {
   delegations: any
   redelegations: any
   history: any
-  intl: any
 }
 
 class CMP extends Component<Props, any> {
@@ -61,41 +60,41 @@ class CMP extends Component<Props, any> {
 
   renderTypeSelector = () => {
 
-    const { account, delegations, validator, intl } = this.props
+    const { account, delegations, validator } = this.props
     const _delegations = delegations.filter(d => d.validator_address !== validator.operator_address)
     const hasDelegation = _delegations && _delegations.length > 0
 
     return <div className="modal-inner type-selector" style={{ paddingBottom: isiPhoneX() ? '20px' : '0' }}>
-      <header>{intl.formatMessage({ id: 'select_funds_type' })}</header>
+      <header>{t('select_funds_type')}</header>
       <ul className="delegate-type-list">
         <li onClick={() => this.selectType(0)}>
           <div>
-            <label>{intl.formatMessage({ id: selectLabels[0] })}</label>
+            <label>{t(selectLabels[0])}</label>
             <span>{fAtom(account.balance)} ATOM</span>
           </div>
         </li>
         {/* <li onClick={() => this.selectType(1)}>
           <div>
-            <label>{intl.formatMessage({ id: selectLabels[1] })}</label>
+            <label>{t({ selectLabels[1] )}</label>
             <span>{fAtom(reward, 6, '0')} ATOM</span>
           </div>
           {sourceType === 1 && <b>✓</b>}
         </li> */}
         <li onClick={hasDelegation ? () => this.selectType(2) : () => { }}>
           <div>
-            <label>{intl.formatMessage({ id: selectLabels[2] })}</label>
+            <label>{t(selectLabels[2])}</label>
           </div>
-          {hasDelegation ? <em>{intl.formatMessage({ id: 'change' })}<i></i></em> : <em>{intl.formatMessage({ id: 'none' })}</em>}
+          {hasDelegation ? <em>{t('change')}<i></i></em> : <em>{t('none')}</em>}
 
         </li>
       </ul>
       <div className="split-margin"></div>
-      <footer onClick={this.hideDelegateSourceModal}>{intl.formatMessage({ id: 'cancel' })}</footer>
+      <footer onClick={this.hideDelegateSourceModal}>{t('cancel')}</footer>
     </div>
   }
 
   renderDelegations = () => {
-    const { delegations, validators, intl, validator, redelegations } = this.props
+    const { delegations, validators, validator, redelegations } = this.props
     let _delegations = delegations.filter(d => d.validator_address !== validator.operator_address)
 
     _delegations = _delegations.slice(0).map(d => {
@@ -116,7 +115,7 @@ class CMP extends Component<Props, any> {
         <div onClick={this.backModal}>
           <img src={modalBackSVG} alt="back" />
         </div>
-        {intl.formatMessage({ id: 'other_delegations' })}
+        {t('other_delegations')}
       </header>
       <div className="m-delegations">
         {!!_delegations && _delegations.map((d) => {
@@ -130,7 +129,7 @@ class CMP extends Component<Props, any> {
               <strong>{v.description.moniker}</strong>
               <i>{fAtom(d.shares)} ATOM</i>
             </div>
-            {d.incompletion && <span className="status">{intl.formatMessage({ id: 'unavailable' })}</span>}
+            {d.incompletion && <span className="status">{t('unavailable')}</span>}
           </div>
         })}
       </div>
@@ -138,34 +137,29 @@ class CMP extends Component<Props, any> {
   }
 
   render() {
-    const { intl } = this.props
     const { amount, sourceObject } = this.state
     const disabled = !amount
     return (
       <div className="form-inner">
         <div className="form-header" onClick={this.showDelegateSourceModal}>
-          <FormattedMessage id={sourceObject.key} />
+          <span>{t(sourceObject.key)}</span>
           <i>{fAtom(sourceObject.value, 6, '0')} ATOM</i>
           <b></b>
         </div>
         <input
           type="number"
-          placeholder={intl.formatMessage({ id: 'input_amount' })}
+          placeholder={t('input_amount')}
           value={amount}
           onChange={this.onChange}
         />
         <div className="form-footer">
           <div>
-            <FormattedMessage
-              id='fee'
-            />
+            <span>{t('fee')}</span>
             <span>{`${fAtom(this.getFeeAmount())} ATOM`}</span>
           </div>
         </div>
         <button disabled={disabled} className="form-button" onClick={this.onSubmit}>
-          <FormattedMessage
-            id='delegate'
-          />
+          <span>{t('delegate')}</span>
         </button>
         {this.renderSelectorModal()}
       </div>
@@ -185,13 +179,13 @@ class CMP extends Component<Props, any> {
   }
 
   onSubmit = () => {
-    const { account, validator, history, intl } = this.props
+    const { account, validator, history } = this.props
     const { amount, sourceObject, sourceType } = this.state
     const { address } = account
     const isRedelegate = sourceType === 2
     const [valid, msg] = validDelegate(uatom(amount), sourceObject.value, this.getFeeAmount(), isRedelegate, account.balance)
     if (!valid) {
-      return Toast.error(intl.formatMessage({ id: msg }))
+      return Toast.error(t(msg))
     }
 
     const logOpt = { validator: validator.operator_address, moniker: validator.description.moniker }
@@ -249,7 +243,7 @@ class CMP extends Component<Props, any> {
     )
 
     sendTransaction(txPayload).then(txHash => {
-      Toast.success(txHash, { heading: intl.formatMessage({ id: 'sent_successfully' }) })
+      Toast.success(txHash, { heading: t('sent_successfully') })
       logger().track('submit_delegate', { result: 'successful', ...logOpt })
       console.log(txHash)
       history.goBack()
@@ -265,7 +259,7 @@ class CMP extends Component<Props, any> {
     }).catch(e => {
       if (e.errorCode !== 1001) {
         logger().track('submit_delegate', { result: 'failed', message: e.message, ...logOpt })
-        Toast.error(e.message, { heading: intl.formatMessage({ id: 'failed_to_send' }) })
+        Toast.error(e.message, { heading: t('failed_to_send') })
       }
     })
   }
@@ -283,10 +277,9 @@ class CMP extends Component<Props, any> {
   }
 
   handleSelectDelegation = (delegation, validator) => {
-    const { intl } = this.props
 
     if (delegation.incompletion) {
-      Toast.warn(intl.formatMessage({ id: 'redelegate_incompletion' }), { hideAfter: 5 })
+      Toast.warn(t('redelegate_incompletion'), { hideAfter: 5 })
       return false
     }
 
@@ -338,4 +331,4 @@ class CMP extends Component<Props, any> {
 
 
 
-export default injectIntl(CMP)
+export default CMP

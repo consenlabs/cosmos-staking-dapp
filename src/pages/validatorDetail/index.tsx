@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { withRouter, Link } from 'react-router-dom'
-import { FormattedMessage } from 'react-intl'
 import { selectValidators, selectAccountInfo, selectDelegations, selectValidatorRewards, selectPendingTxs } from '../../lib/redux/selectors'
 import { removePendingTx } from 'lib/redux/actions'
-import { ellipsis, fAtom, fPercent, isiPhoneX } from '../../lib/utils'
+import { ellipsis, fAtom, fPercent, isiPhoneX, t } from '../../lib/utils'
 import ValidatorLogo from '../../components/validatorLogo'
 import Loading from '../../components/loading'
 import TxList from '../../components/txList'
@@ -125,21 +124,15 @@ class Page extends Component<Props, any> {
           </a>
           <div className="flexWrap">
             <div className="col first">
-              <FormattedMessage
-                id='bonded_tokens'
-              />
+              <span>{t('bonded_tokens')}</span>
               <p>{fAtom(v.tokens)} ATOM</p>
             </div>
             <div className="col">
-              <FormattedMessage
-                id='delegators'
-              />
+              <span>{t('delegators')}</span>
               <p>{v.delegators}</p>
             </div>
             <div className="col">
-              <FormattedMessage
-                id='yield'
-              />
+              <span>{t('yield')}</span>
               <p className="emphasize">{fPercent(v.annualized_returns, 2)}</p>
             </div>
           </div>
@@ -149,9 +142,7 @@ class Page extends Component<Props, any> {
 
         <section>
           <p className="title">
-            <FormattedMessage
-              id='intro'
-            />
+            <span>{t('intro')}</span>
           </p>
           <div className="desc">{v.description.details || 'no description'}</div>
 
@@ -163,14 +154,10 @@ class Page extends Component<Props, any> {
 
         <div className="toolbar" style={{ paddingBottom: isiPhoneX() ? 40 : 0 }}>
           <Link to={`/undelegate/${v.operator_address}`}>
-            <FormattedMessage
-              id='tmp_i18n_unstake'
-            />
+            <span>{t('tmp_i18n_unstake')}</span>
           </Link>
           <Link to={`/delegate/${v.operator_address}`}>
-            <FormattedMessage
-              id='delegate'
-            />
+            <span>{t('delegate')}</span>
           </Link>
         </div>
       </div>
@@ -188,16 +175,12 @@ class Page extends Component<Props, any> {
     return (
       <section>
         <p className="title">
-          <FormattedMessage
-            id='activity'
-          />
+          <span>{t('activity')}</span>
         </p>
         <a className="box" href="">
           <div>
             <p>
-              <FormattedMessage
-                id='free_commission_high_yield'
-              />
+              <span>{t('free_commission_high_yield')}</span>
             </p>
             <span className="date">2019-4-25 ~ 2019-5-30</span>
           </div>
@@ -219,16 +202,14 @@ class Page extends Component<Props, any> {
     return (
       <div className="advantage">
         <p className="title">
-          <FormattedMessage
-            id='advantage'
-          />
+          <span>{t('advantage')}</span>
         </p>
         <div className="blocksWrap">
           {advs.map(ad => {
             return (
-              <div className="block" key={ad}><FormattedMessage
-                id={ad}
-              /></div>
+              <div className="block" key={ad}>
+                <span>{t(ad)}</span>
+              </div>
             )
           })}
         </div>
@@ -244,9 +225,7 @@ class Page extends Component<Props, any> {
     return (
       <section className="list-area" style={{ 'paddingBottom': isiPhoneX() ? '100px' : '60px' }}>
         <p className="title">
-          <FormattedMessage
-            id='transactions'
-          />
+          <span>{t('transactions')}</span>
         </p>
         <TxList txs={txs} />
       </section>

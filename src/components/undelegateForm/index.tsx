@@ -3,8 +3,8 @@ import './index.scss'
 import { uatom, fAtom, createWithdrawMsg, createTxPayload, createUnDelegateMsg, Toast, toBN, isiPhoneX } from 'lib/utils'
 import { sendTransaction } from 'lib/sdk'
 import { validUndelegate } from 'lib/validator'
+import { t } from '../../lib/utils'
 import { pubsub } from 'lib/event'
-import { FormattedMessage, injectIntl } from 'react-intl'
 import Modal from '../../components/modal'
 import getNetworkConfig from '../../config/network'
 import { getFeeAmountByType } from '../../config/fee'
@@ -19,7 +19,6 @@ interface Props {
   delegation: any
   validator: any
   history: any
-  intl: any
 }
 
 class CMP extends Component<Props, any> {
@@ -52,26 +51,26 @@ class CMP extends Component<Props, any> {
 
   renderTypeSelector = () => {
 
-    const { intl, reward, delegation } = this.props
+    const { reward, delegation } = this.props
 
     return <div className="modal-inner type-selector" style={{ paddingBottom: isiPhoneX() ? '20px' : '0' }}>
-      <header>{intl.formatMessage({ id: 'select_funds_type' })}</header>
+      <header>{t('select_funds_type')}</header>
       <ul className="delegate-type-list">
         <li onClick={() => this.selectType(0)}>
           <div>
-            <label>{intl.formatMessage({ id: selectLabels[0] })}</label>
+            <label>{t(selectLabels[0])}</label>
             <span>{fAtom(delegation.shares, 6, '0')} ATOM</span>
           </div>
         </li>
         <li onClick={() => this.selectType(1)}>
           <div>
-            <label>{intl.formatMessage({ id: selectLabels[1] })}</label>
+            <label>{t(selectLabels[1])}</label>
             <span>{fAtom(reward, 6, '0')} ATOM</span>
           </div>
         </li>
       </ul>
       <div className="split-margin"></div>
-      <footer onClick={this.hideDelegateSourceModal}>{intl.formatMessage({ id: 'cancel' })}</footer>
+      <footer onClick={this.hideDelegateSourceModal}>{t('cancel')}</footer>
     </div>
   }
 
@@ -88,7 +87,7 @@ class CMP extends Component<Props, any> {
   }
 
   onSubmit = () => {
-    const { account, history, intl, validator } = this.props
+    const { account, history, validator } = this.props
     const { address, balance } = account
     const { amount, sourceObject, sourceType } = this.state
     const feeAmount = this.getFeeAmount()
@@ -96,12 +95,12 @@ class CMP extends Component<Props, any> {
     if (sourceType === 0) {
       const [valid, msg] = validUndelegate(uatom(amount), sourceObject.value, feeAmount, balance)
       if (!valid) {
-        return Toast.error(intl.formatMessage({ id: msg }))
+        return Toast.error(t(msg))
       }
     } else {
       // validate balance >= fee
       if (toBN(balance).lt(feeAmount)) {
-        return Toast.error(intl.formatMessage({ id: 'fee_not_enough' }))
+        return Toast.error(t('fee_not_enough'))
       }
     }
 
@@ -146,7 +145,7 @@ class CMP extends Component<Props, any> {
     )
 
     sendTransaction(txPayload).then(txHash => {
-      Toast.success(txHash, { heading: intl.formatMessage({ id: 'sent_successfully' }) })
+      Toast.success(txHash, { heading: t('sent_successfully') })
       logger().track('submit_undelegate', { result: 'successful', ...logOpt })
       console.log(txHash)
       history.goBack()
@@ -162,7 +161,7 @@ class CMP extends Component<Props, any> {
     }).catch(e => {
       if (e.errorCode !== 1001) {
         logger().track('submit_undelegate', { result: 'failed', message: e.message, ...logOpt })
-        Toast.error(e.message, { heading: intl.formatMessage({ id: 'failed_to_send' }) })
+        Toast.error(e.message, { heading: t('failed_to_send') })
       }
     })
   }
@@ -208,7 +207,6 @@ class CMP extends Component<Props, any> {
   }
 
   render() {
-    const { intl } = this.props
     const { amount, sourceObject, sourceType } = this.state
     const isWithdraw = sourceType === 1
     const cantWithdraw = !sourceObject.value || !toBN(sourceObject.value).gt(0)
@@ -217,14 +215,14 @@ class CMP extends Component<Props, any> {
     return (
       <div className="form-inner">
         <div className="form-header" onClick={this.showDelegateSourceModal}>
-          <FormattedMessage id={sourceObject.key} />
+          <span>{t(sourceObject.key)}</span>
           <i>{displayAmount} ATOM</i>
           <b></b>
         </div>
         {!isWithdraw &&
           <input
             type={isWithdraw ? 'text' : 'number'}
-            placeholder={intl.formatMessage({ id: 'input_amount' })}
+            placeholder={t('input_amount')}
             value={amount}
             disabled={isWithdraw}
             onChange={this.onChange}
@@ -232,14 +230,12 @@ class CMP extends Component<Props, any> {
         }
         <div className="form-footer">
           <div>
-            <FormattedMessage id='fee' />
+            <span>{t('fee')}</span>
             <span>{`${fAtom(this.getFeeAmount())} ATOM`}</span>
           </div>
         </div>
         <button disabled={disabled} className="form-button" onClick={this.onSubmit}>
-          <FormattedMessage
-            id={isWithdraw ? 'withdraw_all' : 'tmp_i18n_unstake'}
-          />
+          <span>{t(isWithdraw ? 'withdraw_all' : 'tmp_i18n_unstake')}</span>
         </button>
         {this.renderSelectorModal()}
       </div>
@@ -247,5 +243,5 @@ class CMP extends Component<Props, any> {
   }
 }
 
-export default injectIntl(CMP)
+export default CMP
 

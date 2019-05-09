@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { FormattedMessage } from 'react-intl'
+import { t } from '../../lib/utils'
 import './index.scss'
 
 interface Props {
@@ -17,14 +17,10 @@ class CMP extends Component<Props> {
     return <div className="navbar">
       <div>
         <Link className={index === 0 ? "selected" : ""} to="/">
-          <FormattedMessage
-            id='my_delegations'
-          />
+          <span>{t('my_delegations')}</span>
         </Link>
         <Link className={index === 1 ? "selected" : ""} to="/validators">
-          <FormattedMessage
-            id='validators'
-          />
+          <span>{t('validators')}</span>
         </Link>
       </div>
     </div>

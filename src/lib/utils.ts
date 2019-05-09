@@ -3,6 +3,8 @@ import numeral from 'numeral'
 import cogoToast from 'cogo-toast'
 import { getFeeFiledByType } from '../config/fee'
 import msgTypes from './msgTypes'
+import enTrans from '../locale/en_US'
+import zhTrans from '../locale/zh_CN'
 
 export const Toast = cogoToast
 
@@ -216,4 +218,14 @@ export const getLocale = () => {
 export const getAmountFromMsg = (msg) => {
   const amountObj = msg.value.amount
   return amountObj && amountObj.amount
+}
+
+let trans: any = null
+export const t = (key) => {
+  if (!trans) {
+    const locale = getLocale()
+    trans = (locale === 'zh' ? zhTrans : enTrans)
+  }
+
+  return trans[key] || key
 }

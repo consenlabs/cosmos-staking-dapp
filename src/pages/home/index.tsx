@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { withRouter } from 'react-router-dom'
-import { injectIntl, FormattedMessage } from 'react-intl'
 import './index.scss'
 import NavBar from '../../components/navBar'
 import AccountCard from '../../components/accountCard'
@@ -12,10 +11,10 @@ import logger from '../../lib/logger'
 import LOGO from '../../assets/cosmos.svg'
 import FAQ from '../../assets/faq.svg'
 import TURTORIAL from '../../assets/turtorial.svg'
+import { t, getLocale } from '../../lib/utils'
 
 interface Props {
   validators: any[]
-  intl: any
   updateValidators: (value: any) => any
   updateDelegations: (value: any) => any
   updateAccount: (value: any) => any
@@ -51,7 +50,7 @@ class Page extends Component<Props, any> {
   }
 
   renderBlocks = () => {
-    const locale = this.props.intl.locale
+    const locale = getLocale()
     const language = locale === 'en' ? 'en-us' : 'zh-cn'
     const faqLink = `https://support.token.im/hc/${language}/articles/360021933754`
     const tutorialLink = `https://support.token.im/hc/${language}/sections/360004052613`
@@ -59,16 +58,12 @@ class Page extends Component<Props, any> {
       <div className='blocks'>
         <a className='block-item' style={{ marginRight: 7 }} href={faqLink}>
           <img src={FAQ} alt="faq" />
-          <FormattedMessage
-            id='faq'
-          />
+          <span>{t('faq')}</span>
         </a>
 
         <a className='block-item' style={{ marginLeft: 7 }} href={tutorialLink}>
           <img src={TURTORIAL} alt="turtorial" />
-          <FormattedMessage
-            id='tutorial'
-          />
+          <span>{t('tutorial')}</span>
         </a>
       </div>
     )
@@ -84,4 +79,4 @@ const mapDispatchToProps = {
 
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(injectIntl(Page)))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Page))

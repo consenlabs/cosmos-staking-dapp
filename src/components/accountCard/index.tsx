@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
-import { injectIntl, FormattedMessage } from 'react-intl'
 import { selectAccountInfo, selectPrice } from '../../lib/redux/selectors'
 import './index.scss'
-import { toBN, fAtom, ellipsis, isExist } from 'lib/utils'
+import { toBN, fAtom, ellipsis, isExist, t } from 'lib/utils'
 
 interface Props {
   account: any
@@ -29,9 +28,7 @@ class CMP extends Component<Props> {
             {address ? (
               <span>{ellipsis(address)}</span>
             ) : (
-                <FormattedMessage
-                  id='accessing_account'
-                />
+                <span>{t('accessing_account')}</span>
               )}
           </div>
           <div className="account-top-amount">
@@ -42,30 +39,22 @@ class CMP extends Component<Props> {
         <div className="account-bottom">
           <div>
             <div>
-              <FormattedMessage
-                id='available_balance'
-              />
+              <span>{t('available_balance')}</span>
               <i>{fAtom(balance)}</i>
             </div>
             <div>
-              <FormattedMessage
-                id='delegations'
-              />
+              <span>{t('delegations')}</span>
               <i>{fAtom(delegateBalance)}</i>
             </div>
           </div>
           <div className="split-line"></div>
           <div>
             <div>
-              <FormattedMessage
-                id='rewards'
-              />
+              <span>{t('rewards')}</span>
               <i>{fAtom(rewardBalance)}</i>
             </div>
             <div>
-              <FormattedMessage
-                id='undelegating'
-              />
+              <span>{t('undelegating')}</span>
               <i>{fAtom(refundingBalance)}</i>
             </div>
           </div>
@@ -85,4 +74,4 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(CMP))
+export default connect(mapStateToProps, mapDispatchToProps)(CMP)

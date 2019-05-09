@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import * as serviceWorker from './serviceWorker'
 import configureStore from './lib/redux/configureStore'
-import Intl from './Intl'
 import App from './pages/app'
 import './index.scss'
 
@@ -11,9 +10,7 @@ const store = configureStore(undefined)
 
 ReactDOM.render(
   <Provider store={store}>
-    <Intl>
-      <App />
-    </Intl>
+    <App />
   </Provider>,
   document.getElementById('root')
 )

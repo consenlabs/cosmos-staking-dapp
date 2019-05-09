@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { Link } from 'react-router-dom'
-import { FormattedMessage } from 'react-intl'
 import { selectDelegations, selectValidators, selectValidatorRewards } from '../../lib/redux/selectors'
 import ValidatorLogo from '../../components/validatorLogo'
 import './index.scss'
-import { getDailyReward, fPercent, fAtom } from 'lib/utils'
+import { getDailyReward, fPercent, fAtom, t } from 'lib/utils'
 
 interface Props {
   delegations: any[]
@@ -32,31 +31,23 @@ class CMP extends Component<Props> {
         <strong>{v.description.moniker}</strong>
         <div>
           <i>{fPercent(v.annualized_returns, 2) || '~'}</i>
-          <FormattedMessage
-            id='yield'
-          />
+          <span>{t('yield')}</span>
         </div>
       </div>
       <div className="split-line"></div>
       <div className="bottom">
         <div>
-          <FormattedMessage
-            id='delegations'
-          />
+          <span>{t('delegations')}</span>
           <i>{fAtom(d.shares)}</i>
         </div>
 
         <div>
-          <FormattedMessage
-            id='rewards'
-          />
+          <span>{t('rewards')}</span>
           <i>{fAtom(reward)}</i>
         </div>
 
         <div>
-          <FormattedMessage
-            id='rewards_per_day'
-          />
+          <span>{t('rewards_per_day')}</span>
           <i>{d.shares && v.annualized_returns ? `+${getDailyReward(d.shares, v.annualized_returns)}` : '~'}</i>
         </div>
       </div>

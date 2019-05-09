@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { withRouter } from 'react-router-dom'
-import { FormattedMessage, injectIntl } from 'react-intl'
 import { updateSortby } from '../../lib/redux/actions'
 import { selectSortby } from '../../lib/redux/selectors'
+import { t } from '../../lib/utils'
 import ValidatorList from '../../components/validatorList'
 import NavBar from '../../components/navBar'
 import Banner from '../../components/banner'
@@ -15,7 +15,6 @@ import ActionSheet from '../../components/actionsheet'
 
 interface Props {
   validators: any[]
-  intl: any
   sortBy: string
   updateSortby: any
 }
@@ -34,7 +33,7 @@ class Page extends Component<Props, any> {
 
 
   render() {
-    const { intl, sortBy } = this.props
+    const { sortBy } = this.props
     const { actionsheetVisible } = this.state
     return (
       <div className="validators">
@@ -47,8 +46,8 @@ class Page extends Component<Props, any> {
         />
         {actionsheetVisible && (
           <ActionSheet
-            options={['delegators', 'bonded_tokens', 'yield'].map(t => ({ locale: intl.formatMessage({ id: t }), key: t }))}
-            title={intl.formatMessage({ id: 'sort' })}
+            options={['delegators', 'bonded_tokens', 'yield'].map(o => ({ locale: t(o), key: o }))}
+            title={t('sort')}
             close={() => this.setState({ actionsheetVisible: false })}
             onSelect={(option) => this.props.updateSortby(option)}
           />
@@ -61,9 +60,7 @@ class Page extends Component<Props, any> {
     return (
       <div className="sort-bar">
         <p onClick={() => this.setState({ actionsheetVisible: true })}>
-          <FormattedMessage
-            id={this.props.sortBy}
-          />
+          <span>{t(this.props.sortBy)}</span>
           <img src={SORT} alt="sort" />
         </p>
       </div>
@@ -81,4 +78,4 @@ const mapDispatchToProps = {
   updateSortby,
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(injectIntl(Page)))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Page))

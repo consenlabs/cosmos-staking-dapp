@@ -3,8 +3,7 @@ import { connect } from "react-redux"
 import { Link } from 'react-router-dom'
 import ValidatorLogo from '../../components/validatorLogo'
 import './index.scss'
-import { fAtom, fPercent } from 'lib/utils'
-import { FormattedMessage } from 'react-intl'
+import { fAtom, fPercent, t } from 'lib/utils'
 
 interface Props {
   validator: any
@@ -31,9 +30,7 @@ class CMP extends Component<Props> {
       </div>
       <div className="v-right">
         <strong>{fPercent(v.annualized_returns, 2)}</strong>
-        <FormattedMessage
-          id='yield'
-        />
+        <span>{t('yield')}</span>
       </div>
     </Link>
   }

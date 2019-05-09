@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { withRouter } from 'react-router-dom'
-import { FormattedMessage } from 'react-intl'
 import WaterMark from '../../components/walletMark'
+import { t } from '../../lib/utils'
 import './index.scss'
 
 interface Props {
@@ -21,12 +21,8 @@ class Page extends Component<Props> {
         <WaterMark />
         <div className="cs-img">
           <div className="coming-soon">
-            <FormattedMessage
-              id='proposal_vote'
-            />
-            <FormattedMessage
-              id='coming_soon'
-            />
+            <span>{t('proposal_vote')}</span>
+            <span>{t('coming_soon')}</span>
           </div>
         </div>
         <div className="bottom"></div>

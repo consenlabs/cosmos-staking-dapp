@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { FormattedMessage } from 'react-intl'
+import { t } from '../../lib/utils'
 import './index.scss'
 
 interface Props {
@@ -31,9 +31,7 @@ class ActionSheet extends Component<Props, any> {
           </div>
           <div className="item cancel" onClick={close}>
             <p>
-              <FormattedMessage
-                id='cancel'
-              />
+              <span>{t('cancel')}</span>
             </p>
           </div>
         </div>

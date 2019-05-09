@@ -129,10 +129,11 @@ class CMP extends Component<Props> {
   }
 
   renderWidthdrawBox = () => {
+    const { account } = this.props
     return <div className="reward-modal-inner">
       <img src={withdrawBigIcon} alt="withdraw-all" />
       <span>{t('withdraw_reward')}</span>
-      <div className="desc">{t('withdraw_reward_desc')}</div>
+      <div className="desc">{t('withdraw_reward_desc')} {fAtom(account.rewardBalance)} ATOM</div>
       <div className="buttons">
         <div className="button cancel-button" onClick={this.hideModal}>{t('cancel')}</div>
         <div className="button confirm-button" onClick={this.doWithdrawAll}>{t('confirm')}</div>
@@ -141,10 +142,11 @@ class CMP extends Component<Props> {
   }
 
   renderCompoundBox = () => {
+    const { account } = this.props
     return <div className="reward-modal-inner">
       <img src={compoundBigIcon} alt="compound" />
       <span>{t('reinvest_reward')}</span>
-      <div className="desc">{t('reinvest_reward_desc')}</div>
+      <div className="desc">{t('reinvest_reward_desc')} {fAtom(account.rewardBalance)} ATOM</div>
       <div className="buttons">
         <div className="button cancel-button" onClick={this.hideModal}>{t('cancel')}</div>
         <div className="button confirm-button" onClick={this.doCompound}>{t('confirm')}</div>

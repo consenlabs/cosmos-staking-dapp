@@ -53,8 +53,8 @@ const zh_CN = {
   redelegate_incompletion: '上一次更换委托到此节点还在进行中，等待完成才可操作!',
   tx_pending: '正在打包',
   tx_failed: '交易失败',
-  withdraw_reward_desc: '赎回所有验证节点的收益',
-  reinvest_reward_desc: '委托所有验证节点的收益，让收益再次产生更多收益',
+  withdraw_reward_desc: '赎回收益',
+  reinvest_reward_desc: '赎回并委托收益',
   no_delegations: '当前没有委托的验证节点'
 }
 

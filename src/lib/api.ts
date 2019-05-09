@@ -12,6 +12,7 @@ import msgTypes from './msgTypes'
 let _provider = null
 
 const warnning = (err) => console.warn(err)
+const throwFn = (err) => { throw err }
 
 export async function initRequestDependency() {
   return {
@@ -20,7 +21,7 @@ export async function initRequestDependency() {
   }
 }
 
-function get(url, params = {}) {
+function get(url, params = {}, needThrow = false) {
   return initRequestDependency().then(({ provider }) => {
     const _url = `${provider}/${url}`
     return Axios({ method: 'get', url: _url, params }).then(res => {
@@ -29,7 +30,7 @@ function get(url, params = {}) {
       } else {
         throw new Error(`null response ${url} ${JSON.stringify(params)}`)
       }
-    })
+    }).catch(needThrow ? throwFn : warnning)
   })
 }
 
@@ -48,7 +49,7 @@ function rpc(url, method, params) {
       } else {
         throw new Error(`null response ${url} ${JSON.stringify(params)}`)
       }
-    })
+    }).catch(warnning)
   })
 }
 
@@ -93,29 +94,32 @@ export function getAccount(address) {
 
 export const getDelegations = (address) => {
   const url = `staking/delegators/${address}/delegations`
-  return get(url, {}).then(delegations => (delegations || []).sort(
-    (a, b) => b.shares - a.shares
-  )).catch(warnning)
+  return get(url, {}).then(delegations => {
+    console.log(delegations)
+    return (delegations || []).sort(
+      (a, b) => b.shares - a.shares
+    )
+  })
 }
 
 export const getRewards = (delegatorAddr) => {
   const url = `distribution/delegators/${delegatorAddr}/rewards`
-  return get(url, {}).then(rewards => rewards || []).catch(warnning)
+  return get(url, {}).then(rewards => rewards || [])
 }
 
 export const getUnbondingDelegations = (address) => {
   const url = `staking/delegators/${address}/unbonding_delegations`
-  return get(url, {}).then(unbondingDelegations => unbondingDelegations || []).catch(warnning)
+  return get(url, {}).then(unbondingDelegations => unbondingDelegations || [])
 }
 
 export const getDelegationTx = (delegatorAddr) => {
   const url = `staking/delegators/${delegatorAddr}/delegations`
-  return get(url, {}).catch(warnning)
+  return get(url, {})
 }
 
 export const getStakePool = () => {
   const url = `staking/pool`
-  return get(url, {}).then(pool => pool || {}).catch(warnning)
+  return get(url, {}).then(pool => pool || {})
 }
 
 /**
@@ -137,7 +141,7 @@ export const getStakePool = () => {
  */
 export const getRedelegations = (delegateAddr) => {
   const url = `staking/redelegations?delegator=${delegateAddr}`
-  return get(url, {}).then(redelegations => redelegations || []).catch(warnning)
+  return get(url, {}).then(redelegations => redelegations || [])
 }
 
 export const getMyRewardByValidator = (delegatorAddr, validatorAddr) => {
@@ -146,12 +150,12 @@ export const getMyRewardByValidator = (delegatorAddr, validatorAddr) => {
     rewards = rewards || []
     const balance = getRewardBalance(rewards)
     return balance
-  }).catch(warnning)
+  })
 }
 
 export const getTxByHash = (txHash) => {
   const url = `txs/${txHash}`
-  return get(url, {})
+  return get(url, {}, true)
 }
 
 /**
@@ -202,7 +206,7 @@ export async function getAtomPrice() {
   const host = getNetworkConfig().market
   const currency = getLocale() === 'zh' ? 'CNY' : 'USDT'
   const params = [{ "chainType": "COSMOS", "address": "uatom", currency }]
-  return rpc(host, `market.getPrice`, params).then(prices => prices || {}).catch(warnning)
+  return rpc(host, `market.getPrice`, params).then(prices => prices || {})
 }
 
 export function getTxListByAddress(delegator: string, validator: string) {
@@ -216,6 +220,6 @@ export function getTxListByAddress(delegator: string, validator: string) {
       msgTypes.redelegate,
     ],
   }]
-  return rpc(getNetworkConfig().chainAPI, 'wallet.getMsgListByAddress', params).then(data => data || []).catch(warnning)
+  return rpc(getNetworkConfig().chainAPI, 'wallet.getMsgListByAddress', params).then(data => data || [])
 }
 

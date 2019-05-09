@@ -178,29 +178,35 @@ export const getBalanceFromAccount = (account) => {
 
 export const getDeletationBalance = (delegations) => {
   let balance = 0
-  delegations.forEach(d => {
-    balance += d.shares * 1
-  })
+  if (Array.isArray(delegations)) {
+    delegations.forEach(d => {
+      balance += d.shares * 1
+    })
+  }
   return balance.toFixed(0)
 }
 
 export const getRewardBalance = (rewards) => {
   let balance = 0
-  rewards.forEach(d => {
-    balance += d.amount * 1
-  })
+  if (Array.isArray(rewards)) {
+    rewards.forEach(d => {
+      balance += d.amount * 1
+    })
+  }
   return balance.toFixed(0)
 }
 
 export const getUnbondingBalance = (unbondingDelegations) => {
   let balance = 0
-  unbondingDelegations.forEach(d => {
-    if (Array.isArray(d.entries)) {
-      d.entries.forEach(o => {
-        balance += o.balance * 1
-      })
-    }
-  })
+  if (Array.isArray(unbondingDelegations)) {
+    unbondingDelegations.forEach(d => {
+      if (Array.isArray(d.entries)) {
+        d.entries.forEach(o => {
+          balance += o.balance * 1
+        })
+      }
+    })
+  }
   return balance.toFixed(0)
 }
 

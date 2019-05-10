@@ -57,6 +57,12 @@
                     color: #f94a28;
                 }
             }
+            img {
+                width: 11px;
+                height: 11px;
+                margin-right: 6px;
+                animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ import dayjs from 'dayjs'
 import './index.scss'
 import { fAtom, getAmountFromMsg, t } from 'lib/utils'
 import msgTypes from 'lib/msgTypes'
+import microLoadingSVG from '../../assets/micro-loading.svg'
 
 interface Props {
   txs: any[]
@@ -27,6 +28,8 @@ class CMP extends Component<Props> {
     const msgKey = this.getKeyOfType(tx.msgType)
     const date = dayjs.unix(tx.timestamp * 1).format('YYYY-MM-DD HH:mm:ss')
     const status = (tx.status || '').toLowerCase()
+    const isPending = status === 'pending'
+    const isFailed = status === 'failed'
 
     return <a className="tx-item" key={tx.rowId} href={`https://www.mintscan.io/txs/${tx.txHash}`}>
       <div className="i-left">
@@ -35,7 +38,10 @@ class CMP extends Component<Props> {
       </div>
       <div className={`i-right ${isOut ? "delegate" : ""} ${status}`}>
         {tx.msgType !== msgTypes.withdraw && <i>{`${isOut ? '-' : '+'} ${fAtom(amount)} ATOM`}</i>}
-        {(status === 'pending' || status === 'failed') && <span>{t(`tx_${status}`)}</span>}
+        {(isPending || isFailed) && <span>
+          {isPending && <img src={microLoadingSVG} alt="loading" />}
+          {t(`tx_${status}`)}
+        </span>}
       </div>
     </a>
   }

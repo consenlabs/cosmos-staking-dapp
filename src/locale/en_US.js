@@ -55,8 +55,8 @@ const en_US = {
   redelegate_incompletion: 'You can\'t change the delegate, since you recently changed it. Please wait for the 21 day lock period to end!',
   tx_pending: 'Pending',
   tx_failed: 'Failed',
-  withdraw_reward_desc: 'Withdraw reward $s and pay transactions fee $s',
-  reinvest_reward_desc: 'Withdraw & delegate rewards to the origin validator $s. You may pay transaction fee $s',
+  withdraw_reward_desc: 'Withdraw reward $s',// and pay transactions fee $s',
+  reinvest_reward_desc: 'Withdraw & delegate rewards to the origin validator $s.',// You may pay transaction fee $s',
   no_delegations: 'No Delegations',
   no_rewards: 'No Rewards',
 }

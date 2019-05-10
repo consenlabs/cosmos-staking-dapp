@@ -153,7 +153,7 @@ class CMP extends Component<Props, any> {
         txHash,
         status: 'PENDING',
         msgType: msgs[0].type,
-        msg: msgs[0],
+        value: msgs[0].value,
         fee: txPayload.fee,
         validatorId: validator.operator_address,
         timestamp: (Date.now() / 1000).toFixed(0)

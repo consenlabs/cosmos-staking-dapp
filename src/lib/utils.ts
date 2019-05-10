@@ -224,6 +224,7 @@ export const getLocale = () => {
 }
 
 export const getAmountFromMsg = (msg) => {
+  if (!msg || !msg.value || !msg.value.amount) return '0'
   const amountObj = msg.value.amount
   return amountObj && amountObj.amount
 }

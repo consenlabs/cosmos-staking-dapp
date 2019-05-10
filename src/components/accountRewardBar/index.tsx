@@ -31,6 +31,8 @@ class CMP extends Component<Props> {
 
   componentDidMount() { }
 
+  hideLoadingFn: any = null
+
   hideModal = () => {
     this.setState({ modalVisible: false })
   }
@@ -42,11 +44,12 @@ class CMP extends Component<Props> {
   checkTxStatus = (txHash, callback) => {
     console.log(txHash, callback)
     api.checkTx(txHash, 3000, 10).then(() => {
-      callback()
+      callback && callback()
+      Toast.success('package_successfully')
       pubsub.emit('sendTxSuccess')
     }).catch(e => {
       console.warn(e)
-      callback()
+      callback && callback()
       Toast.error(e.message)
     })
   }
@@ -59,7 +62,7 @@ class CMP extends Component<Props> {
     })
 
     if (!_hasRewardDelegation.length) {
-      Toast.warn(t('no_delegations'))
+      Toast.warn(t('no_rewards'))
       return false
     }
 
@@ -85,8 +88,8 @@ class CMP extends Component<Props> {
     sendTransaction(txPayload).then(txHash => {
       logger().track('submit_withdraw_all', { result: 'successful', ...logOpt })
       console.log(txHash)
-      const hideLoading = Toast.loading(txHash, { heading: t('sent_successfully'), hideAfter: 0 })
-      this.checkTxStatus(txHash, hideLoading)
+      this.hideLoadingFn = Toast.loading(txHash, { heading: t('sent_successfully'), hideAfter: 0, onClick: () => this.hideLoadingFn() })
+      this.checkTxStatus(txHash, this.hideLoadingFn)
       // TODO: check status
     }).catch(e => {
       if (e.errorCode !== 1001) {
@@ -106,7 +109,7 @@ class CMP extends Component<Props> {
     })
 
     if (!_hasRewardDelegation.length) {
-      Toast.warn(t('no_delegations'))
+      Toast.warn(t('no_rewards'))
       return false
     }
 
@@ -137,9 +140,9 @@ class CMP extends Component<Props> {
 
     sendTransaction(txPayload).then(txHash => {
       logger().track('submit_compound_all', { result: 'successful', ...logOpt })
-      const hideLoading = Toast.loading(txHash, { heading: t('sent_successfully'), hideAfter: 0 })
+      const hideLoadingFn = Toast.loading(txHash, { heading: t('sent_successfully'), hideAfter: 0, onClick: () => this.hideLoadingFn() })
       console.log(txHash)
-      this.checkTxStatus(txHash, hideLoading)
+      this.checkTxStatus(txHash, hideLoadingFn)
     }).catch(e => {
       if (e.errorCode !== 1001) {
         logger().track('submit_compound_all', { result: 'failed', message: e.message, ...logOpt })

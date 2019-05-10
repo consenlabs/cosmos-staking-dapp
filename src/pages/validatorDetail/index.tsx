@@ -186,7 +186,7 @@ class Page extends Component<Props, any> {
         <p className="title">
           <span>{t('activity')}</span>
         </p>
-        <a className="box" href={activity.url}>
+        <a className="box" href={activity.url && activity.url.replace(/__locale__/, locale)}>
           <div>
             <p>
               <span>{activity.name[locale]}</span>

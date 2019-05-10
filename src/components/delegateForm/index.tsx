@@ -189,7 +189,8 @@ class CMP extends Component<Props, any> {
     }
 
     const logOpt = { validator: validator.operator_address, moniker: validator.description.moniker }
-    logger().track('submit_delegate', logOpt)
+    const logKey = isRedelegate ? 'submit_redelegate' : 'submit_delegate'
+    logger().track(logKey, logOpt)
 
     let msgs: any = null
 
@@ -243,7 +244,7 @@ class CMP extends Component<Props, any> {
 
     sendTransaction(txPayload).then(txHash => {
       Toast.success(txHash, { heading: t('sent_successfully') })
-      logger().track('submit_delegate', { result: 'successful', ...logOpt })
+      logger().track(logKey, { result: 'successful', ...logOpt })
       console.log(txHash)
       history.goBack()
       pubsub.emit('sendTxSuccess', {
@@ -257,7 +258,7 @@ class CMP extends Component<Props, any> {
       })
     }).catch(e => {
       if (e.errorCode !== 1001) {
-        logger().track('submit_delegate', { result: 'failed', message: e.message, ...logOpt })
+        logger().track(logKey, { result: 'failed', message: e.message, ...logOpt })
         Toast.error(e.message, { heading: t('failed_to_send') })
       }
     })

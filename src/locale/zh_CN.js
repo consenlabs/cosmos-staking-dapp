@@ -10,7 +10,7 @@ const zh_CN = {
   withdraw_reward: '赎回收益',
   reinvest_reward: '复投收益',
   withdraw_all: '全部赎回',
-  redelegate: '重新委托',
+  redelegate: '更换委托',
   my_delegations: '我的委托',
   validators: '验证节点',
   yield: '预计年化收益',
@@ -19,7 +19,7 @@ const zh_CN = {
   commission_rate: '手续费',
   self_bonded_tokens: '验证节点委托代币',
   failed_to_send: '发送失败',
-  sent_successfully: '广播成功',
+  sent_successfully: '交易广播成功',
   input_amount: '输入数量',
   proposal_vote: '提案投票',
   coming_soon: '即将上线',
@@ -54,8 +54,8 @@ const zh_CN = {
   redelegate_incompletion: '最近 21 天内已对当前验证节点更换委托，暂时不能再次更换委托',
   tx_pending: '正在打包',
   tx_failed: '交易失败',
-  withdraw_reward_desc: '赎回收益',
-  reinvest_reward_desc: '赎回并委托收益',
+  withdraw_reward_desc: '赎回所有收益',
+  reinvest_reward_desc: '赎回并委托收益至原验证节点',
   no_delegations: '当前没有委托的验证节点'
 }
 

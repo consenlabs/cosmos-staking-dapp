@@ -20,7 +20,7 @@ export default [
       url: 'https://support.token.im/hc/__locale__/articles/360022583374',
     },
     desc: {
-      zh: 'HashQuark 是专注于PoS、DPoS 以及其他共识机制公链的矿池，拥有专业的技术背景和丰富的经验。HashQuark 由香港金融科技公司 HashKey Group 出资成立。',
+      zh: 'HashQuark 是专注于 PoS、DPoS 以及其他共识机制公链的矿池，拥有专业的技术背景和丰富的经验。HashQuark 由香港金融科技公司 HashKey Group 出资成立。',
       en: 'HashQuark is a mining pool that focuses on PoS, DPoS and other public chains consensus mechanisms. Besides Cosmos, HashQuark is also supporting nodes and masternode of many public chains including IRISnet, Cybex, CyberMiles, V SYSTEMS, VeChain, etc.',
     }
   },

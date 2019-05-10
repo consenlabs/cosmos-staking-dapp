@@ -45,7 +45,7 @@ class CMP extends Component<Props> {
     console.log(txHash, callback)
     api.checkTx(txHash, 3000, 10).then(() => {
       callback && callback()
-      Toast.success('tx_success')
+      Toast.success(t('tx_success'))
       pubsub.emit('sendTxSuccess')
     }).catch(e => {
       console.warn(e)

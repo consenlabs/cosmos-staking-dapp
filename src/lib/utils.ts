@@ -250,7 +250,7 @@ export const t = (key, ...args) => {
   if (args.length) {
     let i = 0
     value = value.replace(/\$s/ig, () => {
-      const o = args[i]
+      const o = args[i] || ''
       i++
       return o
     })

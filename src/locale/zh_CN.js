@@ -56,7 +56,7 @@ const zh_CN = {
   tx_success: '交易成功',
   tx_failed: '交易失败',
   withdraw_reward_desc: '赎回所有收益 $s',
-  reinvest_reward_desc: '赎回并委托收益 $s 至原验证节点',
+  reinvest_reward_desc: '赎回并委托收益 $s 至验证节点',
   no_rewards: '暂时没有收益'
 }
 

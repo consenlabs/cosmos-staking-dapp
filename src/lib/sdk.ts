@@ -4,7 +4,10 @@ window['imToken'] = window['imToken'] || {
       case 'cosmos.getAccounts':
         if (window.location.search.indexOf('address') !== -1) {
           const address = new window.URLSearchParams(window.location.search.slice(1)).get('address')
+          localStorage.setItem('account', address as string)
           return Promise.resolve([address])
+        } else if (localStorage.getItem('account')) {
+          return Promise.resolve([localStorage.getItem('account')])
         }
         return Promise.resolve([])
       // return Promise.resolve(['cosmos1zt57jwmlfl77k9urjha2xupgpk2j90axd9pxss'])

@@ -228,6 +228,7 @@ class Page extends Component<Props, any> {
 
   renderTxs() {
     const { txs } = this.state
+    const { account } = this.props
 
     if (!txs || !txs.length) return null
 
@@ -235,6 +236,7 @@ class Page extends Component<Props, any> {
       <section className="list-area" style={{ 'paddingBottom': isiPhoneX() ? '100px' : '60px' }}>
         <p className="title">
           <span>{t('transactions')}</span>
+          {txs.length >= 100 && <a href={`https://www.mintscan.io/account/${account.address}`}>{t('all')}</a>}
         </p>
         <TxList txs={txs} />
       </section>

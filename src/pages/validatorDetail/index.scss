@@ -7,10 +7,12 @@
 
     .title {
       font-size: 13px;
-      line-height: 1;
       letter-spacing: 0.2px;
       color: #777a8c;
       margin-bottom: 10px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
     }
 
     .desc {

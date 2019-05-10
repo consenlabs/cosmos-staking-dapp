@@ -20,6 +20,7 @@ const en_US = {
   self_bonded_tokens: 'Self Bonded Tokens',
   failed_to_send: 'Failed',
   sent_successfully: 'Transaction Broadcast Successfully',
+  package_successfully: 'Package Successfully',
   input_amount: 'Input Amount',
   proposal_vote: 'Proposal Vote',
   coming_soon: 'Coming Soon',
@@ -57,6 +58,7 @@ const en_US = {
   withdraw_reward_desc: 'Withdraw reward $s and pay transactions fee $s',
   reinvest_reward_desc: 'Withdraw & delegate rewards to the origin validator $s. You may pay transaction fee $s',
   no_delegations: 'No Delegations',
+  no_rewards: 'No Rewards',
 }
 
 export default en_US

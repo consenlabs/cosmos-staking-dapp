@@ -20,6 +20,7 @@ const zh_CN = {
   self_bonded_tokens: '验证节点委托代币',
   failed_to_send: '发送失败',
   sent_successfully: '交易广播成功',
+  package_successfully: '打包成功',
   input_amount: '输入数量',
   proposal_vote: '提案投票',
   coming_soon: '即将上线',
@@ -54,9 +55,9 @@ const zh_CN = {
   redelegate_incompletion: '最近 21 天内已对当前验证节点更换委托，暂时不能再次更换委托',
   tx_pending: '正在打包',
   tx_failed: '交易失败',
-  withdraw_reward_desc: '赎回所有收益 $s，并消耗交易费 $s',
-  reinvest_reward_desc: '赎回并委托收益 $s 至原验证节点，并消耗交易费 $s',
-  no_delegations: '当前没有委托的验证节点'
+  withdraw_reward_desc: '赎回所有收益 $s',
+  reinvest_reward_desc: '赎回并委托收益 $s 至原验证节点',
+  no_rewards: '暂时没有收益'
 }
 
 export default zh_CN

@@ -51,11 +51,11 @@ const en_US = {
   anti_ddos: 'Anti DDOS',
   sentry_node: 'Sentry Node',
   unavailable: 'Unavailable',
-  redelegate_incompletion: 'Last Redelegate to this validator is still in process!', // TODO
+  redelegate_incompletion: 'You can\'t change the delegate, since you recently changed it. Please wait for the 21 day lock period to end!',
   tx_pending: 'Pending',
   tx_failed: 'Failed',
-  withdraw_reward_desc: 'Withdraw rewards',
-  reinvest_reward_desc: 'Withdraw & delegate rewards to origin validators',
+  withdraw_reward_desc: 'Withdraw reward $s and pay transactions fee $s',
+  reinvest_reward_desc: 'Withdraw & delegate rewards to the origin validator $s. You may pay transaction fee $s',
   no_delegations: 'No Delegations',
 }
 

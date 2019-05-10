@@ -45,7 +45,7 @@ class CMP extends Component<Props> {
     console.log(txHash, callback)
     api.checkTx(txHash, 3000, 10).then(() => {
       callback && callback()
-      Toast.success('package_successfully')
+      Toast.success('tx_success')
       pubsub.emit('sendTxSuccess')
     }).catch(e => {
       console.warn(e)
@@ -88,7 +88,7 @@ class CMP extends Component<Props> {
     sendTransaction(txPayload).then(txHash => {
       logger().track('submit_withdraw_all', { result: 'successful', ...logOpt })
       console.log(txHash)
-      this.hideLoadingFn = Toast.loading(txHash, { heading: t('sent_successfully'), hideAfter: 0, onClick: () => this.hideLoadingFn() })
+      this.hideLoadingFn = Toast.loading(txHash, { heading: t('tx_pending'), hideAfter: 0, onClick: () => this.hideLoadingFn() })
       this.checkTxStatus(txHash, this.hideLoadingFn)
       // TODO: check status
     }).catch(e => {
@@ -140,7 +140,7 @@ class CMP extends Component<Props> {
 
     sendTransaction(txPayload).then(txHash => {
       logger().track('submit_compound_all', { result: 'successful', ...logOpt })
-      const hideLoadingFn = Toast.loading(txHash, { heading: t('sent_successfully'), hideAfter: 0, onClick: () => this.hideLoadingFn() })
+      const hideLoadingFn = Toast.loading(txHash, { heading: t('tx_pending'), hideAfter: 0, onClick: () => this.hideLoadingFn() })
       console.log(txHash)
       this.checkTxStatus(txHash, hideLoadingFn)
     }).catch(e => {

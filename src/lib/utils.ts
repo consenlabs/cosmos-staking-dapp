@@ -229,12 +229,32 @@ export const getAmountFromMsg = (msg) => {
   return amountObj && amountObj.amount
 }
 
+/**
+ * zh: {
+ *   delegate: '委托',
+ *   delegate_token_get_rewards: '委托 $s 获取收益 $s 每天',
+ * }
+ * 
+ * t('delegate') ---> '委托'
+ * t('delegate_token_get_rewards', 'Atom', 'Btom') --->  '委托 Atom 获取收益 Btom 每天'
+ * 
+ */
 let trans: any = null
-export const t = (key) => {
+export const t = (key, ...args) => {
   if (!trans) {
     const locale = getLocale()
     trans = (locale === 'zh' ? zhTrans : enTrans)
   }
 
-  return trans[key] || key
+  let value = trans[key] || key
+  if (args.length) {
+    let i = 0
+    value = value.replace(/\$s/ig, () => {
+      const o = args[i]
+      i++
+      return o
+    })
+  }
+
+  return value
 }

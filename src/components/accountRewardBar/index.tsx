@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
-import { t, createWithdrawMsg, createDelegateMsg, createTxPayload, Toast, toBN, fAtom } from '../../lib/utils'
+import { t, createWithdrawMsg, createDelegateMsg, createTxPayload, Toast, toBN, fAtom, isiPhoneX } from '../../lib/utils'
 import { getFeeParamsByMsgs } from '../../config/fee'
 import { sendTransaction } from '../../lib/sdk'
 import * as api from '../../lib/api'
@@ -194,7 +194,7 @@ class CMP extends Component<Props> {
         <Modal isOpen={modalVisible}
           contentLabel="Reward Modal"
           onRequestClose={this.hideModal}
-          styles={{ margin: '10px', bottom: '0', borderRadius: '16px' }}
+          styles={{ margin: '10px', bottom: isiPhoneX() ? '12px' : '0', borderRadius: '16px' }}
           appElement={document.body}>
           {actionType === 0 ? this.renderWidthdrawBox() : this.renderCompoundBox()}
         </Modal>

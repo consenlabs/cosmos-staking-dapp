@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { t } from '../../lib/utils'
+import { t, isiPhoneX } from '../../lib/utils'
 import './index.scss'
 
 interface Props {
@@ -14,7 +14,7 @@ class ActionSheet extends Component<Props, any> {
     const { options, title, close } = this.props
     return (
       <div className="actionsheet" onClick={close}>
-        <div className="wrap" onClick={(e) => e.stopPropagation()}>
+        <div className="wrap" onClick={(e) => e.stopPropagation()} style={{ paddingBottom: isiPhoneX() ? '23px' : '10px' }}>
           <div className="options">
             {title && (
               <div className="item">

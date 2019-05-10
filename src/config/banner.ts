@@ -14,8 +14,8 @@ export default [
         en: 'Stake ATOM, 0% Commission + 5% Bonus ',
       },
       time: {
-        start: '1556035200000',
-        end: '1558627200000',
+        start: 1556035200,
+        end: 1558627200,
       },
       url: 'https://support.token.im/hc/articles/360022583374',
     },
@@ -39,8 +39,8 @@ export default [
         en: 'Stake ATOM, Pay 0% Commission',
       },
       time: {
-        start: '1556035200000',
-        end: '1558627200000',
+        start: 1556035200,
+        end: 1558627200,
       },
       url: 'https://support.token.im/hc/articles/360022583274',
     },

@@ -191,7 +191,7 @@ class Page extends Component<Props, any> {
             <p>
               <span>{activity.name[locale]}</span>
             </p>
-            <span className="date">{dayjs(activity.time.start).format('YYYY-MM-DD')} ~ {dayjs(activity.time.end).format('YYYY-MM-DD')}</span>
+            <span className="date">{dayjs.unix(activity.time.start * 1).format('YYYY-MM-DD')} ~ {dayjs.unix(activity.time.end * 1).format('YYYY-MM-DD')}</span>
           </div>
           <img src={Arrow} />
         </a>

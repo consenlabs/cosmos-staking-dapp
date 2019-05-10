@@ -25,7 +25,7 @@ class CMP extends Component<Props> {
     const isOut = [msgTypes.send, msgTypes.delegate, msgTypes.redelegate].includes(tx.msgType)
     const amount = getAmountFromMsg(tx)
     const msgKey = this.getKeyOfType(tx.msgType)
-    const date = dayjs(tx.timestamp * 1000).format('YYYY-MM-DD HH:mm:ss')
+    const date = dayjs.unix(tx.timestamp * 1).format('YYYY-MM-DD HH:mm:ss')
     const status = (tx.status || '').toLowerCase()
 
     return <a className="tx-item" key={tx.rowId} href={`https://www.mintscan.io/txs/${tx.txHash}`}>

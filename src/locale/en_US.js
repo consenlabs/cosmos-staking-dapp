@@ -55,8 +55,8 @@ const en_US = {
   redelegate_incompletion: 'Last Redelegate to this validator is still in process!', // TODO
   tx_pending: 'Pending',
   tx_failed: 'Failed',
-  withdraw_reward_desc: 'Withdraw rewards',
-  reinvest_reward_desc: 'Withdraw & delegate rewards to origin validators',
+  withdraw_reward_desc: 'Withdraw rewards $s',
+  reinvest_reward_desc: 'Withdraw & delegate rewards $s to origin validators',
   no_rewards: 'No Rewards',
 }
 

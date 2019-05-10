@@ -55,8 +55,8 @@ const zh_CN = {
   redelegate_incompletion: '最近 21 天内已对当前验证节点更换委托，暂时不能再次更换委托',
   tx_pending: '正在打包',
   tx_failed: '交易失败',
-  withdraw_reward_desc: '赎回所有收益 $s，并消耗交易费 $s',
-  reinvest_reward_desc: '赎回并委托收益 $s 至原验证节点，并消耗交易费 $s',
+  withdraw_reward_desc: '赎回所有收益 $s',
+  reinvest_reward_desc: '赎回并委托收益 $s 至原验证节点',
   no_rewards: '暂时没有收益'
 }
 

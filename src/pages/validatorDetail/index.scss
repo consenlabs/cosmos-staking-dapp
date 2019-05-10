@@ -150,10 +150,7 @@
     display: flex;
     justify-content: center;
     padding: 7px 15px;
-    opacity: 0.86;
-    -webkit-backdrop-filter: blur(9.8px);
-    backdrop-filter: blur(9.8px);
-    background-color: #22273a;
+    background-color: rgba(25, 27, 49, 0.85);
     a {
       flex: 1;
       height: 45px;

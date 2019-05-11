@@ -54,21 +54,52 @@ class CMP extends Component<Props> {
     })
   }
 
-  doWithdrawAll = () => {
-    const { delegations, account, validatorRewards } = this.props
-
-    const _hasRewardDelegation = delegations.filter(d => {
+  getRewardDelegations = () => {
+    const { delegations, validatorRewards } = this.props
+    return delegations.filter(d => {
       return Number(validatorRewards[d.validator_address]) > 0
     })
+  }
 
-    if (!_hasRewardDelegation.length) {
-      Toast.warn(t('no_rewards'))
-      return false
-    }
+  createWithdrawAllMsgs = () => {
+
+    const _hasRewardDelegation = this.getRewardDelegations()
 
     const msgs = _hasRewardDelegation.map(d => {
       return createWithdrawMsg(d.delegator_address, d.validator_address)
     })
+
+    return msgs
+  }
+
+  createCompoundMsgs = () => {
+    const { validatorRewards } = this.props
+
+    const _hasRewardDelegation = this.getRewardDelegations()
+
+    const withdrawMsgs = _hasRewardDelegation.map(d => {
+      return createWithdrawMsg(d.delegator_address, d.validator_address)
+    })
+
+    const delegateMsgs = _hasRewardDelegation.map(d => {
+      const reward = validatorRewards[d.validator_address]
+      return createDelegateMsg(d.delegator_address, d.validator_address, reward, getNetworkConfig().denom)
+    })
+
+    const msgs = withdrawMsgs.concat(delegateMsgs)
+
+    return msgs
+  }
+
+  doWithdrawAll = () => {
+    const { account } = this.props
+    const rewardDelegations = this.getRewardDelegations()
+    const msgs = this.createWithdrawAllMsgs()
+
+    if (!rewardDelegations.length) {
+      Toast.warn(t('no_rewards'))
+      return false
+    }
 
     const { feeAmount } = getFeeParamsByMsgs(msgs)
 
@@ -77,7 +108,7 @@ class CMP extends Component<Props> {
       return false
     }
 
-    const logOpt = { delegations: _hasRewardDelegation }
+    const logOpt = { delegations: rewardDelegations }
 
     const txPayload = createTxPayload(
       account.address,
@@ -90,7 +121,6 @@ class CMP extends Component<Props> {
       console.log(txHash)
       this.hideLoadingFn = Toast.loading(txHash, { heading: t('tx_pending'), hideAfter: 0, onClick: () => this.hideLoadingFn() })
       this.checkTxStatus(txHash, this.hideLoadingFn)
-      // TODO: check status
     }).catch(e => {
       if (e.errorCode !== 1001) {
         logger().track('submit_withdraw_all', { result: 'failed', message: e.message, ...logOpt })
@@ -102,27 +132,16 @@ class CMP extends Component<Props> {
   }
 
   doCompound = () => {
-    const { delegations, account, validatorRewards } = this.props
+    const { account } = this.props
 
-    const _hasRewardDelegation = delegations.filter(d => {
-      return Number(validatorRewards[d.validator_address]) > 0
-    })
+    const rewardDelegations = this.getRewardDelegations()
+    const msgs = this.createCompoundMsgs()
 
-    if (!_hasRewardDelegation.length) {
+    if (!rewardDelegations.length) {
       Toast.warn(t('no_rewards'))
       return false
     }
 
-    const withdrawMsgs = _hasRewardDelegation.map(d => {
-      return createWithdrawMsg(d.delegator_address, d.validator_address)
-    })
-
-    const delegateMsgs = _hasRewardDelegation.map(d => {
-      const reward = validatorRewards[d.validator_address]
-      return createDelegateMsg(d.delegator_address, d.validator_address, reward, getNetworkConfig().denom)
-    })
-
-    const msgs = withdrawMsgs.concat(delegateMsgs)
     const { feeAmount } = getFeeParamsByMsgs(msgs)
 
     if (toBN(account.balance || 0).lt(feeAmount)) {
@@ -130,7 +149,7 @@ class CMP extends Component<Props> {
       return false
     }
 
-    const logOpt = { delegations: _hasRewardDelegation }
+    const logOpt = { delegations: rewardDelegations }
 
     const txPayload = createTxPayload(
       account.address,
@@ -156,10 +175,13 @@ class CMP extends Component<Props> {
 
   renderWidthdrawBox = () => {
     const { account } = this.props
+    const msgs = this.createWithdrawAllMsgs()
+    const { feeAmount } = getFeeParamsByMsgs(msgs)
+
     return <div className="reward-modal-inner">
       <img src={withdrawBigIcon} alt="withdraw-all" />
       <span>{t('withdraw_reward')}</span>
-      <div className="desc">{t('withdraw_reward_desc', `${fAtom(account.rewardBalance)} ATOM`)}</div>
+      <div className="desc">{t('withdraw_reward_desc', `${fAtom(account.rewardBalance)} ATOM`, `${fAtom(feeAmount)} ATOM`)}</div>
       <div className="buttons">
         <div className="button cancel-button" onClick={this.hideModal}>{t('cancel')}</div>
         <div className="button confirm-button" onClick={this.doWithdrawAll}>{t('confirm')}</div>
@@ -169,10 +191,13 @@ class CMP extends Component<Props> {
 
   renderCompoundBox = () => {
     const { account } = this.props
+    const msgs = this.createCompoundMsgs()
+    const { feeAmount } = getFeeParamsByMsgs(msgs)
+
     return <div className="reward-modal-inner">
       <img src={compoundBigIcon} alt="compound" />
       <span>{t('reinvest_reward')}</span>
-      <div className="desc">{t('reinvest_reward_desc', `${fAtom(account.rewardBalance)} ATOM`)} </div>
+      <div className="desc">{t('reinvest_reward_desc', `${fAtom(account.rewardBalance)} ATOM`, `${fAtom(feeAmount)} ATOM`)} </div>
       <div className="buttons">
         <div className="button cancel-button" onClick={this.hideModal}>{t('cancel')}</div>
         <div className="button confirm-button" onClick={this.doCompound}>{t('confirm')}</div>

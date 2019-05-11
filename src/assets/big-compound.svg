@@ -2,7 +2,7 @@
     <g fill="none" fill-rule="evenodd" stroke-width="3" transform="translate(0 13)">
         <rect width="60" height="39" x="1.5" y="1.5" fill="#FFF" stroke="#EAECF6" rx="6"/>
         <path fill="#FFF" stroke="#EAECF6" d="M13.5 1.5H6A4.5 4.5 0 0 0 1.5 6v7.5c6.627 0 12-5.373 12-12zM13.5 40.5H6A4.5 4.5 0 0 1 1.5 36v-7.5c6.627 0 12 5.373 12 12zM49.5 1.5H57A4.5 4.5 0 0 1 61.5 6v7.5c-6.627 0-12-5.373-12-12z"/>
-        <g stroke="#098DE6" stroke-linecap="round" stroke-linejoin="round">
+        <g stroke="#C4C9D9" stroke-linecap="round" stroke-linejoin="round">
             <path d="M34.944 15.556c0-2.304-1.551-3.503-3.526-3.503-1.976 0-3.576 1.2-3.576 3.503 0 2.305 1.19 2.784 3.576 4.174 2.381 1.388 3.573 1.868 3.573 4.172 0 2.302-1.598 3.475-3.573 3.475-1.976 0-3.576-1.173-3.576-3.475M31.417 9.982v1.825M31.417 27.624v1.822"/>
         </g>
         <ellipse cx="55" cy="40.5" fill="#FFF" stroke="#EAECF6" rx="15" ry="4.5"/>

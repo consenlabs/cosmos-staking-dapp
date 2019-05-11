@@ -55,10 +55,8 @@ const en_US = {
   tx_pending: 'Transaction Pending',
   tx_success: 'Transaction Successfully',
   tx_failed: 'Failed',
-  // withdraw_reward_desc: 'Withdraw reward $s and pay transactions fee $s',
-  // reinvest_reward_desc: 'Withdraw & delegate rewards to the origin validator $s. You may pay transaction fee $s',
-  withdraw_reward_desc: 'Withdraw reward $s',
-  reinvest_reward_desc: 'Withdraw & delegate rewards to the origin validator $s.',
+  withdraw_reward_desc: 'Withdraw reward $s and pay transactions fee $s',
+  reinvest_reward_desc: 'Withdraw & delegate rewards to the origin validator $s. You may pay transaction fee $s',
   no_rewards: 'No Rewards',
 }
 

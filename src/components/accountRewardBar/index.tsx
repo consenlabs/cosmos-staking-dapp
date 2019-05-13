@@ -96,6 +96,8 @@ class CMP extends Component<Props> {
     const rewardDelegations = this.getRewardDelegations()
     const msgs = this.createWithdrawAllMsgs()
 
+    logger().track('submit_withdraw_all', { action: 'confirm' })
+
     if (!rewardDelegations.length) {
       Toast.warn(t('no_rewards'))
       return false
@@ -117,13 +119,13 @@ class CMP extends Component<Props> {
     )
 
     sendTransaction(txPayload).then(txHash => {
-      logger().track('submit_withdraw_all', { result: 'successful', ...logOpt })
+      logger().track('submit_withdraw_all', { action: 'send', result: 'successful', ...logOpt })
       console.log(txHash)
       this.hideLoadingFn = Toast.loading(txHash, { heading: t('tx_pending'), hideAfter: 0, onClick: () => this.hideLoadingFn() })
       this.checkTxStatus(txHash, this.hideLoadingFn)
     }).catch(e => {
       if (e.errorCode !== 1001) {
-        logger().track('submit_withdraw_all', { result: 'failed', message: e.message, ...logOpt })
+        logger().track('submit_withdraw_all', { action: 'send', result: 'failed', message: e.message, ...logOpt })
         Toast.error(e.message, { heading: t('failed_to_send') })
       }
     })
@@ -136,6 +138,8 @@ class CMP extends Component<Props> {
 
     const rewardDelegations = this.getRewardDelegations()
     const msgs = this.createCompoundMsgs()
+
+    logger().track('submit_compound_all', { action: 'confirm' })
 
     if (!rewardDelegations.length) {
       Toast.warn(t('no_rewards'))
@@ -158,13 +162,13 @@ class CMP extends Component<Props> {
     )
 
     sendTransaction(txPayload).then(txHash => {
-      logger().track('submit_compound_all', { result: 'successful', ...logOpt })
+      logger().track('submit_compound_all', { action: 'send', result: 'successful', ...logOpt })
       const hideLoadingFn = Toast.loading(txHash, { heading: t('tx_pending'), hideAfter: 0, onClick: () => this.hideLoadingFn() })
       console.log(txHash)
       this.checkTxStatus(txHash, hideLoadingFn)
     }).catch(e => {
       if (e.errorCode !== 1001) {
-        logger().track('submit_compound_all', { result: 'failed', message: e.message, ...logOpt })
+        logger().track('submit_compound_all', { action: 'send', result: 'failed', message: e.message, ...logOpt })
         Toast.error(e.message, { heading: t('failed_to_send') })
       }
     })
@@ -177,6 +181,8 @@ class CMP extends Component<Props> {
     const { account } = this.props
     const msgs = this.createWithdrawAllMsgs()
     const { feeAmount } = getFeeParamsByMsgs(msgs)
+
+    logger().track('submit_withdraw_all', { action: 'click' })
 
     return <div className="reward-modal-inner">
       <img src={withdrawBigIcon} alt="withdraw-all" />
@@ -193,6 +199,8 @@ class CMP extends Component<Props> {
     const { account } = this.props
     const msgs = this.createCompoundMsgs()
     const { feeAmount } = getFeeParamsByMsgs(msgs)
+
+    logger().track('submit_compound_all', { action: 'click' })
 
     return <div className="reward-modal-inner">
       <img src={compoundBigIcon} alt="compound" />

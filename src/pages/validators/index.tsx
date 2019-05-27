@@ -6,7 +6,8 @@ import { selectSortby } from '../../lib/redux/selectors'
 import { t } from '../../lib/utils'
 import ValidatorList from '../../components/validatorList'
 import NavBar from '../../components/navBar'
-import Banner from '../../components/banner'
+// import Banner from '../../components/banner'
+import CampaignBanner from '../../components/campaignBanner'
 import WaterMark from '../../components/walletMark'
 import './index.scss'
 import logger from '../../lib/logger'
@@ -40,7 +41,7 @@ class Page extends Component<Props, any> {
         <WaterMark />
         <NavBar index={1} />
         {this.renderSort()}
-        <Banner size="small" />
+        <CampaignBanner size="small" />
         <ValidatorList
           sortBy={sortBy}
         />

@@ -1,0 +1,223 @@
+.hashquark {
+  background-image: linear-gradient(193deg, #1725c7, #0153fb);
+  padding-bottom: 80px;
+  
+  .banner {
+    width: 100%;
+  }
+
+  .desc {
+    font-size: 13px;
+    letter-spacing: 0.6px;
+    color: #777a8c;
+  }
+
+  .flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column nowrap;
+  }
+
+  .flex-row-between {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .content {
+    padding: 0 10px;
+
+    .info-card {
+      background: white;
+      border-radius: 4px;
+      margin-top: 10px;
+      padding: 20px 0;
+
+      .delegated-info {
+        padding: 20px;
+        padding-top: 0;
+        width: calc(100% - 40px);
+
+        .row-item {
+          padding: 16px 0;
+          border-bottom: solid 0.5px #f0f2f8;
+        }
+
+        .row-title {
+          font-size: 13px;
+          font-weight: 500;
+          letter-spacing: 0.6px;
+          color: #777a8c;
+        }
+
+        .row-value {
+          font-size: 13px;
+          font-weight: normal;
+          letter-spacing: normal;
+          color: #191c1e;
+        }
+      }
+
+      .my-delegation {
+        background-color: #fbfdfe;
+        padding-bottom: 16px;
+        border-bottom: solid 0.5px #f0f2f8;
+
+        p {
+          font-size: 13px;
+          color: #777a8c;
+        }
+        .delegated-shares {
+          font-weight: bold;
+          color: #098de6;
+          font-size: 21px;
+        }
+      }
+
+      .delegation-ranking {
+        width: 100%;
+        margin-top: 16px;
+
+        .row-title {
+          margin-bottom: 8px;
+        }
+
+        &>div {
+          border-bottom: solid 0.5px #f0f2f8;
+          padding: 14px 0;
+
+          &:last-child {
+            border-bottom: 0;
+          }
+        }
+
+        .index-block {
+          display: inline-block;
+          width: 20px;
+          height: 20px;
+          border-radius: 4px;
+          background-image: linear-gradient(138deg, #4a6ee2, #098de6);
+          text-align: center;
+          color: white;
+          margin-right: 10px;
+          font-size: 12px;
+          line-height: 20px;
+        }
+
+        .top-address {
+          color: #098de6;
+        }
+      }
+    }
+
+    .divider {
+      padding: 20px 4px 20px 4px;
+    }
+  }
+
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    opacity: 0.9;
+    -webkit-backdrop-filter: blur(9.8px);
+    backdrop-filter: blur(9.8px);
+    background-color: #0f3da7;
+    padding: 0 20px;
+    box-sizing: border-box;
+
+    .end-time {
+      font-size: 10px;
+      line-height: normal;
+      letter-spacing: 0.5px;
+      color: white;
+    }
+
+    button {
+      width: 134px;
+      height: 45px;
+      border-radius: 8px;
+      background-color: #ffffff;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      text-align: center;
+      color: #098de6;
+    }
+  }
+}
+
+.details {
+  background: white;
+  border-radius: 4px;
+  padding: 20px 25px;
+
+  &>div {
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 13px;
+    line-height: 22px;
+    font-weight: normal;
+    letter-spacing: normal;
+    text-align: justify;
+    color: #43454f;
+    margin: 4px 0;
+  }
+
+  h2 {
+    text-align: center;
+    margin: 4px 0;
+    margin-bottom: 20px;
+    font-size: 21px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: 1px;
+    color: #43454f;
+  }
+
+  .block-title {
+    font-size: 13px;
+    line-height: 13px;
+    font-weight: 500;
+    color: #191c1e;
+    padding-left: 12px;
+    border-left: 2px solid #098de6;
+    margin-bottom: 12px;
+  }
+
+  .rule-title {
+    text-align: center;
+    color: #777a8c;
+  }
+
+  .rule-symbol {
+    width: 20px;
+    height: 2px;
+    background-color: #d2d4dd;
+    margin: 10px auto;
+  }
+
+  .reward-list {
+    border-left: 3px solid #d2d4dd;
+    margin: 20px 10px;
+    padding: 0 10px;
+
+    .top-gift {
+      color: #191c1e;
+      margin-left: 10px;
+      font-weight: 500;
+    }
+  }
+}

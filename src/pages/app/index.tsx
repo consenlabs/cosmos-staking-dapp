@@ -15,6 +15,7 @@ import * as sdk from 'lib/sdk'
 import * as utils from 'lib/utils'
 import { t } from '../../lib/utils'
 import { pubsub } from 'lib/event'
+import Campaign from '../campaign'
 
 interface Props {
   validators: any[]
@@ -120,6 +121,7 @@ class App extends Component<Props> {
         <Route path="/validator/:id" component={ValidatorDetail} />
         <Route path="/delegate/:id" component={Delegate} />
         <Route path="/undelegate/:id" component={UnDelegate} />
+        <Route path="/campaign/:id" component={Campaign} />
         <Route path="/vote" component={Vote} />
       </Switch>
     </BrowserRouter>

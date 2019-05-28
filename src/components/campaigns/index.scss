@@ -42,8 +42,7 @@
       padding: 20px 0;
 
       .delegated-info {
-        padding: 20px;
-        padding-top: 0;
+        padding: 0 20px;
         width: calc(100% - 40px);
 
         .row-item {
@@ -114,6 +113,7 @@
 
         .top-address {
           color: #098de6;
+          font-size: 13px;
         }
       }
     }

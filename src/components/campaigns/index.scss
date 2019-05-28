@@ -156,7 +156,7 @@
       flex-flow: row nowrap;
       align-items: center;
       justify-content: center;
-      margin-top: 8px;
+      margin-top: 4px;
       
       &>div, &>span {
         color: white;
@@ -252,7 +252,7 @@
 
   .reward-list {
     border-left: 3px solid #d2d4dd;
-    margin: 20px 10px;
+    margin: 20px 2px;
     padding: 0 10px;
 
     .top-gift {
@@ -260,6 +260,15 @@
       margin-left: 10px;
       font-weight: 500;
     }
+
+    .top-index {
+      color: #777a8c;
+    }
+  }
+
+  .remark {
+    color: #777a8c;
+    margin-bottom: 20px;
   }
 }
 
@@ -293,6 +302,7 @@
     letter-spacing: -0.5px;
     text-align: center;
     color: #43454f;
+    margin-top: 4px;
   }
 
   .confirm-button {

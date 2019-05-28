@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
-import dayjs from 'dayjs'
 import { withRouter, Link } from 'react-router-dom'
 import { selectValidators, selectAccountInfo, selectDelegations, selectValidatorRewards, selectPendingTxs } from '../../lib/redux/selectors'
 import { removePendingTx } from 'lib/redux/actions'
@@ -13,6 +12,8 @@ import logger from '../../lib/logger'
 import linkSVG from '../../assets/link.svg'
 import { getTxListByAddress } from '../../lib/api'
 import bannerConfig from '../../config/banner'
+import campaignConfig from '../../config/campaign'
+import descConfig from '../../config/desc'
 import Arrow from '../../assets/arrow.svg'
 
 interface Props {
@@ -112,9 +113,9 @@ class Page extends Component<Props, any> {
     const { validators, match } = this.props
     const id = match.params.id
     const v = validators.find(v => v.operator_address === id)
-    const banner = bannerConfig.find(v => v.operator_address === id)
+    const vdesc = descConfig.find(v => v.operator_address === id)
     const locale = getLocale()
-    const desc = banner && banner.desc && banner.desc[locale]
+    const desc = vdesc && vdesc.desc && vdesc.desc[locale]
 
     if (!v) return <Loading />
 
@@ -175,10 +176,10 @@ class Page extends Component<Props, any> {
   renderActivity() {
     const { match } = this.props
     const id = match.params.id
-    const v = bannerConfig.find(v => v.operator_address === id)
+    const v = campaignConfig.find(v => v.operator_address === id)
     const locale = getLocale()
 
-    if (!v) return null
+    if (!v || !v.activity) return null
     const activity = v.activity
 
     return (
@@ -191,7 +192,7 @@ class Page extends Component<Props, any> {
             <p>
               <span>{activity.name[locale]}</span>
             </p>
-            <span className="date">{dayjs.unix(activity.time.start * 1).format('YYYY-MM-DD')} ~ {dayjs.unix(activity.time.end * 1).format('YYYY-MM-DD')}</span>
+            <span className="date">{activity.time}</span>
           </div>
           <img src={Arrow} />
         </a>

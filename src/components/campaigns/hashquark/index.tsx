@@ -10,7 +10,7 @@ import Modal from '../../modal'
 import * as api from '../../../lib/api'
 import { pubsub } from 'lib/event'
 
-const hashquark = campaignConfig.hashquark
+const hashquark = campaignConfig[0]
 const locale = getLocale()
 
 interface Props {
@@ -42,7 +42,11 @@ class HashQuark extends Component<Props, any> {
 
   componentDidMount() {
     this.fetchInfo()
-    this.checkPendingTx()
+
+    // wait pending tx added to reducer
+    setTimeout(() => {
+      this.checkPendingTx()
+    }, 3000)
   }
 
   checkPendingTx = () => {
@@ -62,7 +66,7 @@ class HashQuark extends Component<Props, any> {
         this.setState({
           tx: pendingTx,
           modalVisible: true,
-        })
+        }, this.fetchInfo)
       }).catch(e => {
         console.warn(e)
         Toast.error(e.message)
@@ -73,7 +77,9 @@ class HashQuark extends Component<Props, any> {
   fetchInfo = () => {
     const { account } = this.props
     api.getHashquarkRankList(account.address).then((data) => {
-      this.setState({ info: data })
+      if (data) {
+        this.setState({ info: data })
+      }
     })
   }
 
@@ -172,7 +178,10 @@ class HashQuark extends Component<Props, any> {
 
           <p className="title">{`${t('success_delegate')} ${tx.amount} ATOM`}</p>
           <p className="desc">{t('success_delegate_desc')}</p>
-          <button className="confirm-button">{t('confirm')}</button>
+          <button
+            className="confirm-button"
+            onClick={() => this.setState({ tx: null, modalVisible: false })}
+          >{t('confirm')}</button>
         </div>
       </Modal>
     )

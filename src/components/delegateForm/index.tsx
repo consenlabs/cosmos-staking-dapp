@@ -248,11 +248,6 @@ class CMP extends Component<Props, any> {
       logger().track(logKey, { result: 'successful', ...logOpt })
       console.log(txHash)
 
-      if (validator.operator_address === campaignConfig.hashquark.operator_address) {
-        this.props.history.replace('/campaign/hashquark')
-      } else {
-        history.goBack()
-      }
       pubsub.emit('sendTxSuccess', {
         txHash,
         status: 'PENDING',
@@ -263,6 +258,11 @@ class CMP extends Component<Props, any> {
         timestamp: (Date.now() / 1000).toFixed(0),
         amount,
       })
+      if (validator.operator_address === campaignConfig[0].operator_address) {
+        this.props.history.replace('/campaign/hashquark')
+      } else {
+        history.goBack()
+      }
     }).catch(e => {
       if (e.errorCode !== 1001) {
         logger().track(logKey, { result: 'failed', message: e.message, ...logOpt })

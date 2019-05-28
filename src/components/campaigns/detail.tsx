@@ -19,7 +19,7 @@ export default ({ t, campaign }) => {
           <h2>{t('rule1_title')}</h2>
           <p>{t('rule1_desc1')}</p>
           <p>{t('rule1_desc2')}</p>
-          <p>{t('rule1_remark1')}</p>
+          <p className="remark">{t('rule1_remark1')}</p>
         </div>
 
 
@@ -30,15 +30,15 @@ export default ({ t, campaign }) => {
           <p>{t('rule1_desc1')}</p>
           <div className="reward-list">
             <p>
-              <span>TOP 1</span>
+              <span className="top-index">TOP 1</span>
               <span className="top-gift">{t('rule2_top1')}</span>
             </p>
             <p>
-              <span>TOP 2</span>
+              <span className="top-index">TOP 2</span>
               <span className="top-gift">{t('rule2_top2')}</span>
             </p>
             <p>
-              <span>TOP 3</span>
+              <span className="top-index">TOP 3</span>
               <span className="top-gift">{t('rule2_top3')}</span>
             </p>
           </div>

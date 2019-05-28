@@ -12,6 +12,7 @@ import { getFeeAmountByType } from '../../config/fee'
 import msgTypes from '../../lib/msgTypes'
 import logger from '../../lib/logger'
 import modalBackSVG from '../../assets/modal-back.svg'
+import campaignConfig from '../../config/campaign'
 
 const selectLabels = ['available_balance', 'rewards', 'other_delegations']
 
@@ -246,7 +247,12 @@ class CMP extends Component<Props, any> {
       Toast.success(txHash, { heading: t('sent_successfully') })
       logger().track(logKey, { result: 'successful', ...logOpt })
       console.log(txHash)
-      history.goBack()
+
+      if (validator.operator_address === campaignConfig.hashquark.operator_address) {
+        this.props.history.replace('/campaign/hashquark')
+      } else {
+        history.goBack()
+      }
       pubsub.emit('sendTxSuccess', {
         txHash,
         status: 'PENDING',
@@ -254,7 +260,8 @@ class CMP extends Component<Props, any> {
         value: msgs[0].value,
         fee: txPayload.fee,
         validatorId: validator.operator_address,
-        timestamp: (Date.now() / 1000).toFixed(0)
+        timestamp: (Date.now() / 1000).toFixed(0),
+        amount,
       })
     }).catch(e => {
       if (e.errorCode !== 1001) {

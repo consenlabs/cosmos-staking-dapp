@@ -47,7 +47,12 @@ export default {
         state_desc2: '2. 一重礼「 单个用户可获奖励」公式中时间限制均为活动期间，总委托代币为活动期间通过 imToken 质押给 Hashquark ≥10 ATOM 数量的总和；',
         delegate_now: '立即委托',
         end_time: '距活动结束',
-        campaign_over: '活动已结束',
+        campaign_over: '活动截止至 2019-06-11 18:00 已结束，感谢参与！',
+        campaign_over_button: '活动结束',
+        day: '天',
+        success_delegate: '已成功委托',
+        success_delegate_desc: '空投将在活动结束后统一发放，感谢支持~',
+        confirm: '确认',
       },
       en: {
         delegated: '已委托（活动期间）',

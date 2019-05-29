@@ -42,29 +42,19 @@ class HashQuark extends Component<Props, any> {
 
   componentDidMount() {
     this.fetchInfo()
-
-    // wait pending tx added to reducer
-    setTimeout(() => {
-      this.checkPendingTx()
-    }, 3000)
+    this.checkPendingTx()
   }
 
   checkPendingTx = () => {
-    const { pendingTxs } = this.props
-    const txs = [] as any
-    for (let txHash in pendingTxs) {
-      const pendingTx = pendingTxs[txHash]
-      if (pendingTx.validatorId === hashquark.operator_address) {
-        txs.push(pendingTx)
-      }
-    }
-    if (txs.length) {
-      const sorted = txs.sort((a, b) => b.timestamp - a.timestamp)
-      const pendingTx = sorted[0]
-      api.checkTx(pendingTx.txHash, 3000, 10).then(() => {
+    const { pendingTxs, history } = this.props
+    const state = history.location.state
+    if (state && state.txHash) {
+      const tx = pendingTxs[state.txHash]
+      if (!tx) return
+      api.checkTx(tx.txHash, 3000, 10).then(() => {
         pubsub.emit('sendTxSuccess')
         this.setState({
-          tx: pendingTx,
+          tx,
           modalVisible: true,
         }, this.fetchInfo)
       }).catch(e => {
@@ -189,7 +179,7 @@ class HashQuark extends Component<Props, any> {
 
   onDelegate = () => {
     const { history } = this.props
-    history.push(`/delegate/${hashquark.operator_address}`)
+    history.push(`/delegate/${hashquark.operator_address}`, { from: 'campaign' })
   }
 }
 

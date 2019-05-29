@@ -259,7 +259,12 @@ class CMP extends Component<Props, any> {
         amount,
       })
       if (validator.operator_address === campaignConfig[0].operator_address) {
-        this.props.history.replace('/campaign/hashquark')
+        // const state = history.location.state
+        // if (state && state.from === 'campaign') {
+        //   history.goBack()
+        // } else {
+        history.replace('/campaign/hashquark', { txHash })
+        // }
       } else {
         history.goBack()
       }

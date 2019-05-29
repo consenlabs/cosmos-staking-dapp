@@ -180,7 +180,7 @@ class HashQuark extends Component<Props, any> {
         <div className="modal-success">
           <img src={require('../../../assets/campaign/delegate-success.png')} />
 
-          <p className="title">{`${t('success_delegate', getAmountFromMsg(tx))}`}</p>
+          <p className="title">{`${t('success_delegate', fAtom(getAmountFromMsg(tx)))}`}</p>
           <p className="desc">{t('success_delegate_desc')}</p>
           <button
             className="confirm-button"

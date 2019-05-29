@@ -246,7 +246,6 @@ class CMP extends Component<Props, any> {
     )
 
     sendTransaction(txPayload).then(txHash => {
-      Toast.success(txHash, { heading: t('sent_successfully') })
       logger().track(logKey, { result: 'successful', ...logOpt })
       console.log(txHash)
 
@@ -268,6 +267,7 @@ class CMP extends Component<Props, any> {
         history.replace('/campaign/hashquark', { txHash })
         // }
       } else {
+        Toast.success(txHash, { heading: t('sent_successfully') })
         history.goBack()
       }
     }).catch(e => {

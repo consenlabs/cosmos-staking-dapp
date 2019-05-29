@@ -47,6 +47,8 @@ class HashQuark extends Component<Props, any> {
     }
   }
 
+  hideLoadingFn: any = null
+
   componentDidMount() {
     this.fetchInfo()
     this.checkPendingTx()
@@ -58,8 +60,13 @@ class HashQuark extends Component<Props, any> {
     if (state && state.txHash) {
       const tx = pendingTxs[state.txHash]
       if (!tx) return
+
+      this.hideLoadingFn = Toast.loading(tx.txHash, { heading: t('tx_pending'), hideAfter: 0, onClick: () => this.hideLoadingFn() })
+
       api.checkTx(tx.txHash, 3000, 10).then(() => {
+        this.hideLoadingFn && this.hideLoadingFn()
         pubsub.emit('sendTxSuccess')
+        
         this.setState({
           tx,
           modalVisible: true,

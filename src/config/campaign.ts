@@ -21,7 +21,7 @@ export default [
     },
     activity: {
       name: {
-        zh: '请你瓜分 2000 个 ATOM',
+        zh: '邀你瓜分 2000 ATOM',
         en: 'You are invited to win 2000 ATOM',
       },
       time: {
@@ -64,6 +64,7 @@ export default [
         success_delegate: '已成功委托 $s ATOM',
         success_delegate_desc: '空投将在活动结束后统一发放，感谢支持~',
         confirm: '确认',
+        tx_pending: '交易正在打包',
       },
       en: {
         delegated: 'Delegated during the event',
@@ -98,6 +99,7 @@ export default [
         success_delegate: '$s ATOM has been successfully delegated.',
         success_delegate_desc: 'Airdrops will be distributed after the event. Stay tuned!',
         confirm: 'Confirm',
+        tx_pending: 'Transaction Pending',
       },
     },
   }

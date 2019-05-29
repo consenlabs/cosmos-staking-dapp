@@ -10,7 +10,6 @@ interface Props {
 
 function getBanner(size) {
   const locale = getLocale()
-  console.log(size)
   const hashquark = campaignConfig[0]
   return {
     img: hashquark.imgs[locale][size],

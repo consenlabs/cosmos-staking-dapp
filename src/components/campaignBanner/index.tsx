@@ -29,7 +29,7 @@ class CMP extends Component<Props, any> {
   render() {
     const { img, id } = this.state
     if (!id) return null
-    return <Link className="banner" to={`/campaign/${id}`}>
+    return <Link className="banner" to={{ pathname: `/campaign/${id}`, state: { size: this.props.size }}}>
       <div>
         <img src={img} alt="staking" />
       </div>

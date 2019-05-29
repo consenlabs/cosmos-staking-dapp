@@ -9,6 +9,7 @@ import Footer from '../footer'
 import Modal from '../../modal'
 import * as api from '../../../lib/api'
 import { pubsub } from 'lib/event'
+import logger from '../../../lib/logger'
 
 const hashquark = campaignConfig[0]
 const locale = getLocale()
@@ -179,6 +180,14 @@ class HashQuark extends Component<Props, any> {
 
   onDelegate = () => {
     const { history } = this.props
+    const state = history.location.state
+
+    let banner = ''
+    if (state && state.size) {
+      banner = state.size === 'big' ? '1' : '2'  
+    }
+    
+    logger().track('submit_delegate_now', { banner })
     history.push(`/delegate/${hashquark.operator_address}`, { from: 'campaign' })
   }
 }

@@ -189,7 +189,9 @@ class CMP extends Component<Props, any> {
       return Toast.error(t(msg))
     }
 
-    const logOpt = { validator: validator.operator_address, moniker: validator.description.moniker }
+    const state = history.location.state
+    const from = (state && state.from) ? state.from : 'detail'
+    const logOpt = { validator: validator.operator_address, moniker: validator.description.moniker, from }
     const logKey = isRedelegate ? 'submit_redelegate' : 'submit_delegate'
     logger().track(logKey, logOpt)
 

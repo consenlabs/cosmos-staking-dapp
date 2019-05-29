@@ -69,7 +69,7 @@ class App extends Component<Props> {
       let address = accounts[0]
 
       // if page reload, use localstorage cache account, to keep account as it before reload
-      if (isReload) {
+      if (isReload()) {
         let cacheAccount = localStorage.getItem('cache_account')
         if (cacheAccount && accounts.includes(cacheAccount)) {
           address = cacheAccount

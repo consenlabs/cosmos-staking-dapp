@@ -25,7 +25,7 @@ export default ({ t }) => {
           <div className="rule-symbol" />
           <p className="rule-title">{t('rule2')}</p>
           <h2>{t('rule2_title')}</h2>
-          <p>{t('rule1_desc1')}</p>
+          <p>{t('rule2_desc1')}</p>
           <div className="reward-list">
             <p>
               <span className="top-index">TOP 1</span>

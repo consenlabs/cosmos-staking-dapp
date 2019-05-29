@@ -257,8 +257,7 @@ class CMP extends Component<Props, any> {
         value: msgs[0].value,
         fee: txPayload.fee,
         validatorId: validator.operator_address,
-        timestamp: (Date.now() / 1000).toFixed(0),
-        amount,
+        timestamp: (Date.now() / 1000).toFixed(0)
       })
       const campaign = campaignConfig.find(t => t.operator_address === validator.operator_address)
       if (campaign && campaign.open) {

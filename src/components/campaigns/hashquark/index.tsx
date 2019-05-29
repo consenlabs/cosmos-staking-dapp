@@ -3,7 +3,7 @@ import campaignConfig from '../../../config/campaign'
 import '../index.scss'
 import ValidatorCard from '../../validatorCard'
 import Loading from '../../loading'
-import { getLocale, Toast, atom } from '../../../lib/utils'
+import { getLocale, Toast, fAtom, ellipsis, getAmountFromMsg } from '../../../lib/utils'
 import Detail from '../detail'
 import Footer from '../footer'
 import Modal from '../../modal'
@@ -35,10 +35,6 @@ const t = (str, ...args) => {
   }
 
   return value
-}
-
-const formatAddress = (address: string) => {
-  return address.substring(0, 10) + ' ... ' + address.substring(38)
 }
 
 class HashQuark extends Component<Props, any> {
@@ -116,13 +112,13 @@ class HashQuark extends Component<Props, any> {
     return (
       <div className="info-card">
         <div className="flex-center my-delegation">
-          <p className="delegated-shares">{`${atom(info.delegated_shares)} ATOM`}</p>
+          <p className="delegated-shares">{`${fAtom(info.delegated_shares)} ATOM`}</p>
           <p className="delegated-shares-desc">{t('delegated')}</p>
         </div>
         <div className="flex-center delegated-info">
           <div className="flex-row-between row-item">
             <span className="row-title">{t('total_delegated')}</span>
-            <span className="row-value">{`${atom(info.total_delegated)} ATOM`}</span>
+            <span className="row-value">{`${fAtom(info.total_delegated)} ATOM`}</span>
           </div>
           <div className="flex-row-between row-item">
             <span className="row-title">{t('total_delegator')}</span>
@@ -139,10 +135,10 @@ class HashQuark extends Component<Props, any> {
                       className="top-address"
                       href={`https://www.mintscan.io/account/${delegation.address}`}
                     >
-                      {formatAddress(delegation.address)}
+                      {ellipsis(delegation.address)}
                     </a>
                   </div>
-                  <span className="row-value">{`${atom(delegation.delegated)} ATOM`}</span>
+                  <span className="row-value">{`${fAtom(delegation.delegated)} ATOM`}</span>
                 </div>
               )
             })}
@@ -177,7 +173,7 @@ class HashQuark extends Component<Props, any> {
         <div className="modal-success">
           <img src={require('../../../assets/campaign/delegate-success.png')} />
 
-          <p className="title">{`${t('success_delegate', tx.amount)}`}</p>
+          <p className="title">{`${t('success_delegate', getAmountFromMsg(tx))}`}</p>
           <p className="desc">{t('success_delegate_desc')}</p>
           <button
             className="confirm-button"

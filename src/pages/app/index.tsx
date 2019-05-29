@@ -13,7 +13,7 @@ import { updateValidators, updateAccount, updateDelegations, updateRedelegations
 import * as api from 'lib/api'
 import * as sdk from 'lib/sdk'
 import * as utils from 'lib/utils'
-import { t } from '../../lib/utils'
+import { t, isReload } from '../../lib/utils'
 import { pubsub } from 'lib/event'
 import Campaign from '../campaign'
 
@@ -66,9 +66,19 @@ class App extends Component<Props> {
     if (this._updateTimes > 10) return false
 
     sdk.getAccounts().then(accounts => {
-      const address = accounts[0]
+      let address = accounts[0]
+
+      // if page reload, use localstorage cache account, to keep account as it before reload
+      if (isReload) {
+        let cacheAccount = localStorage.getItem('cache_account')
+        if (cacheAccount && accounts.includes(cacheAccount)) {
+          address = cacheAccount
+        }
+      }
 
       if (!address) return false
+
+      localStorage.setItem('cache_account', address)
 
       updateAccount({ address })
 

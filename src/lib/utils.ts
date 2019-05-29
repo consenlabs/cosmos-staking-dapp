@@ -258,3 +258,12 @@ export const t = (key, ...args) => {
 
   return value
 }
+
+
+/**
+ * check current page is load by reload
+ * https://stackoverflow.com/questions/5004978/check-if-page-gets-reloaded-or-refreshed-in-javascript
+ */
+export const isReload = () => {
+  return window.performance && window.performance.navigation && window.performance.navigation.type === 1
+}

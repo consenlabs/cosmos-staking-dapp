@@ -52,6 +52,16 @@ class HashQuark extends Component<Props, any> {
   componentDidMount() {
     this.fetchInfo()
     this.checkPendingTx()
+
+    const { history } = this.props
+    const state = history.location.state
+
+    let banner = ''
+    if (state && state.size) {
+      banner = state.size === 'big' ? '1' : '2'  
+    }
+    
+    logger().track('go_campaign', { banner, campaign: 'activity' })
   }
 
   checkPendingTx = () => {
@@ -193,14 +203,7 @@ class HashQuark extends Component<Props, any> {
 
   onDelegate = () => {
     const { history } = this.props
-    const state = history.location.state
-
-    let banner = ''
-    if (state && state.size) {
-      banner = state.size === 'big' ? '1' : '2'  
-    }
-    
-    logger().track('submit_delegate_now', { banner })
+    logger().track('go_validator_delegate', { moniker: 'hashquark' })
     history.push(`/delegate/${hashquark.operator_address}`, { from: 'campaign' })
   }
 }

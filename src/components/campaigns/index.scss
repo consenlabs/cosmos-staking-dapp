@@ -131,7 +131,7 @@
     height: 60px;
     -webkit-backdrop-filter: blur(9.8px);
     backdrop-filter: blur(9.8px);
-    background-color: #0f3da7;
+    background: rgba($color: #0f3da7, $alpha: 0.9);
     padding: 0 16px;
     box-sizing: border-box;
     color: white;

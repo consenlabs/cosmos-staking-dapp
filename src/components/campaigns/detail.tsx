@@ -2,12 +2,12 @@ import React from 'react'
 import './index.scss'
 
 
-export default ({ t, campaign }) => {
+export default ({ t }) => {
   return (
     <div className="details">
       <div>
         <p className="block-title">{t('campaign_time')}</p>
-        <p>{campaign.time}</p>
+        <p>{t('time')}</p>
       </div>
 
       <div>
@@ -19,11 +19,9 @@ export default ({ t, campaign }) => {
           <h2>{t('rule1_title')}</h2>
           <p>{t('rule1_desc1')}</p>
           <p>{t('rule1_desc2')}</p>
-          <p className="remark">{t('rule1_remark1')}</p>
         </div>
 
-
-        <div>
+        <div style={{ marginTop: 30 }}>
           <div className="rule-symbol" />
           <p className="rule-title">{t('rule2')}</p>
           <h2>{t('rule2_title')}</h2>

@@ -192,7 +192,7 @@ class Page extends Component<Props, any> {
             <p>
               <span>{activity.name[locale]}</span>
             </p>
-            <span className="date">{activity.time}</span>
+            <span className="date">{activity.time[locale]}</span>
           </div>
           <img src={Arrow} />
         </a>

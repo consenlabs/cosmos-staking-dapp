@@ -23,8 +23,18 @@ interface Props {
   account: any
 }
 
-const t = (str) => {
-  return hashquark.locales[locale][str] || str
+const t = (str, ...args) => {
+  let value = hashquark.locales[locale][str] || str
+  if (args.length) {
+    let i = 0
+    value = value.replace(/\$s/ig, () => {
+      const o = args[i] || ''
+      i++
+      return o
+    })
+  }
+
+  return value
 }
 
 const formatAddress = (address: string) => {
@@ -89,7 +99,7 @@ class HashQuark extends Component<Props, any> {
           <ValidatorCard validator={validator} pool={pool} isHideBadge={true} />
           {this.renderInfoCard()}
           {this.renderDivider()}
-          <Detail t={t} campaign={hashquark} />
+          <Detail t={t} />
           <Footer
             t={t}
             time={info.end_time}
@@ -167,7 +177,7 @@ class HashQuark extends Component<Props, any> {
         <div className="modal-success">
           <img src={require('../../../assets/campaign/delegate-success.png')} />
 
-          <p className="title">{`${t('success_delegate')} ${tx.amount} ATOM`}</p>
+          <p className="title">{`${t('success_delegate', tx.amount)}`}</p>
           <p className="desc">{t('success_delegate_desc')}</p>
           <button
             className="confirm-button"

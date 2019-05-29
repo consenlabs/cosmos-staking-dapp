@@ -39,15 +39,15 @@ class App extends Component<Props> {
   }
 
   _autoRefresh: any = null
-  _updateTimes: number = 0
+  MAX_REFRESH_INTERVAL: number = 30 * 1000
+  _refreshInterval: number = 10 * 1000
+  polling: any = null
 
   componentWillMount() {
     const { addPendingTx } = this.props
     this.updateAsyncData()
     pubsub.on('sendTxSuccess', (tx) => {
-      this._autoRefresh && clearInterval(this._autoRefresh)
-      this._updateTimes = 0
-      this._autoRefresh = setInterval(this.updateAsyncData, 1000 * 10)
+      this._refreshInterval = 5 * 1000
       if (tx) {
         addPendingTx(tx)
       } else {
@@ -63,7 +63,7 @@ class App extends Component<Props> {
   updateAsyncData = () => {
     const { updateAccount, updateDelegations, updateRedelegations, updateValidators, updateValidatorRewards, updateAtomPrice } = this.props
 
-    if (this._updateTimes > 10) return false
+    if (this.polling) clearTimeout(this.polling)
 
     sdk.getAccounts().then(accounts => {
       let address = accounts[0]
@@ -120,7 +120,9 @@ class App extends Component<Props> {
     api.getValidators().then(updateValidators).catch(err => console.warn(err))
     api.getAtomPrice().then(updateAtomPrice)
 
-    this._updateTimes++
+    this._refreshInterval = Math.min(Math.round(this._refreshInterval * 1.2), this.MAX_REFRESH_INTERVAL)
+
+    this.polling = setTimeout(this.updateAsyncData, this._refreshInterval)
   }
 
   render() {

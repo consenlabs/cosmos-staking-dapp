@@ -16,6 +16,7 @@ import * as utils from 'lib/utils'
 import { t, isReload } from '../../lib/utils'
 import { pubsub } from 'lib/event'
 import Campaign from '../campaign'
+import SupportModal from '../../components/supportModal'
 
 interface Props {
   validators: any[]
@@ -136,6 +137,7 @@ class App extends Component<Props> {
         <Route path="/campaign/:id" component={Campaign} />
         <Route path="/vote" component={Vote} />
       </Switch>
+      <SupportModal />
     </BrowserRouter>
   }
 }

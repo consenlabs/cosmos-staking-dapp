@@ -42,7 +42,7 @@ class HashQuark extends Component<Props, any> {
     super(props)
     this.state = {
       info: null,
-      modalVisible: true,
+      modalVisible: false,
       tx: null,
     }
   }
@@ -83,7 +83,8 @@ class HashQuark extends Component<Props, any> {
         }, this.fetchInfo)
       }).catch(e => {
         console.warn(e)
-        Toast.error(e.message)
+        this.hideLoadingFn && this.hideLoadingFn()
+        Toast.error(e.message, { hideAfter: 5 })
       })
     }
   }

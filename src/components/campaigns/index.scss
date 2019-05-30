@@ -283,7 +283,8 @@
 
   img {
     width: 100%;
-    box-shadow: #f5f3f3 1px 1px 1px;
+    border-radius: 8px;
+    border: solid 0.5px #eaecf6;
   }
 
   .title {
@@ -292,7 +293,7 @@
     line-height: 1.41;
     letter-spacing: normal;
     color: #191c1e;
-    margin-top: 12px;
+    margin-top: 17px;
   }
 
   .desc {

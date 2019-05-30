@@ -33,7 +33,7 @@ export default [
     locales: {
       zh: {
         delegated: '已委托（活动期间）',
-        total_delegated: '委托总量',
+        total_delegated: '总委托代币',
         total_delegator: '委托者',
         top_delegations: '委托排名',
         campaign_details: '活动详情',
@@ -83,7 +83,7 @@ export default [
         rule2_title: 'The Key to imKey',
         rule1_desc1: 'User that delegate ATOM to HashQuark during the event receive your share of 1200 ATOM. The more you delegate, the higher your reward.',
         rule1_desc2: 'Your reward = (your staked tokens / total staked tokens) x 1200 ATOM.',
-        rule2_desc1: 'The top 3 stakers during the event, reveice another bonus + the imKey bluetooth hardware wallet (worth $150):',
+        rule2_desc1: 'The top 3 delegators during the event, reveice another bonus + the imKey bluetooth hardware wallet (worth $150):',
         rule2_top1: '400 ATOM + limited imKey',
         rule2_top2: '300 ATOM + limited imKey',
         rule2_top3: '100 ATOM + limited imKey',

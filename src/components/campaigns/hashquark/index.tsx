@@ -69,6 +69,7 @@ class HashQuark extends Component<Props, any> {
     const { pendingTxs, history } = this.props
     const state = history.location.state
     if (state && state.txHash) {
+      history.replace({ ...history.location, state: {} })
       const tx = pendingTxs[state.txHash]
       if (!tx) return
 

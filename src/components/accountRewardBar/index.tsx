@@ -2,15 +2,17 @@ import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { t, createWithdrawMsg, createDelegateMsg, createTxPayload, Toast, toBN, fAtom, isiPhoneX } from '../../lib/utils'
 import { getFeeParamsByMsgs } from '../../config/fee'
-import { sendTransaction } from '../../lib/sdk'
+import { sendTransaction, routeTo } from '../../lib/sdk'
 import * as api from '../../lib/api'
-import { selectAccountInfo, selectDelegations, selectValidatorRewards } from '../../lib/redux/selectors'
+import { selectAccountInfo, selectDelegations, selectValidatorRewards, selectExchangeToken } from '../../lib/redux/selectors'
 import './index.scss'
 import Modal from '../../components/modal'
 import withdrawIcon from '../../assets/withdraw.svg'
 import withdrawBigIcon from '../../assets/big-withdraw.svg'
 import compoundIcon from '../../assets/compound.svg'
 import compoundBigIcon from '../../assets/big-compound.svg'
+import buyAtomIcon from '../../assets/buy-atom.svg'
+import buyAtomBigIcon from '../../assets/big-buy-atom.svg'
 
 import getNetworkConfig from '../../config/network'
 import logger from '../../lib/logger'
@@ -20,6 +22,7 @@ interface Props {
   account: any
   validatorRewards: any
   delegations: any
+  exchangeToken: any
 }
 
 class CMP extends Component<Props> {
@@ -174,7 +177,23 @@ class CMP extends Component<Props> {
     })
 
     this.hideModal()
+  }
 
+  doExchange = () => {
+    const { exchangeToken, account } = this.props
+    if (exchangeToken && exchangeToken.makerToken && exchangeToken.takerToken) {
+      routeTo({
+        screen: 'Tokenlon',
+        passProps: {
+          ...exchangeToken,
+          xChainReceiver: account.address,
+        }
+      })
+    } else {
+      Toast.error(t('cant_exchange_now'))
+    }
+
+    this.hideModal()
   }
 
   renderWidthdrawBox = () => {
@@ -213,18 +232,39 @@ class CMP extends Component<Props> {
     </div>
   }
 
+  renderExchangeAtom = () => {
+    const { account } = this.props
+
+    logger().track('submit_exchange_atom', { action: 'click' })
+
+    return <div className="reward-modal-inner">
+      <img src={buyAtomBigIcon} alt="exchange" />
+      <span>{t('exchange_atom')}</span>
+      <div className="desc">{t('exchange_atom_desc')} </div>
+      <div className="ex-address">{account.address} </div>
+      <div className="buttons">
+        <div className="button cancel-button" onClick={this.hideModal}>{t('cancel')}</div>
+        <div className="button confirm-button" onClick={this.doExchange}>{t('confirm')}</div>
+      </div>
+    </div>
+  }
+
   render() {
     const { modalVisible, actionType } = this.state
 
     return (
       <div className="reward-toolbar">
+        <div onClick={() => { this.showModal(2) }}>
+          <img src={buyAtomIcon} alt="exchange_atom" />
+          <p>{t('exchange_atom')}</p>
+        </div>
         <div onClick={() => { this.showModal(0) }}>
           <img src={withdrawIcon} alt="withdraw_reward" />
-          <span>{t('withdraw_reward')}</span>
+          <p>{t('withdraw_reward')}</p>
         </div>
         <div onClick={() => { this.showModal(1) }}>
           <img src={compoundIcon} alt="reinvest_reward" />
-          <span>{t('reinvest_reward')}</span>
+          <p>{t('reinvest_reward')}</p>
         </div>
 
         <Modal isOpen={modalVisible}
@@ -232,7 +272,9 @@ class CMP extends Component<Props> {
           onRequestClose={this.hideModal}
           styles={{ margin: '10px', bottom: isiPhoneX() ? '12px' : '0', borderRadius: '16px' }}
           appElement={document.body}>
-          {actionType === 0 ? this.renderWidthdrawBox() : this.renderCompoundBox()}
+          {actionType === 0 && this.renderWidthdrawBox()}
+          {actionType === 1 && this.renderCompoundBox()}
+          {actionType === 2 && this.renderExchangeAtom()}
         </Modal>
       </div>
     )
@@ -244,6 +286,7 @@ const mapStateToProps = state => {
     account: selectAccountInfo(state),
     delegations: selectDelegations(state),
     validatorRewards: selectValidatorRewards(state),
+    exchangeToken: selectExchangeToken(state),
   }
 }
 

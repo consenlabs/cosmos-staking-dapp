@@ -4,24 +4,29 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  height: 55px;
-  line-height: 55px;
+  height: 60px;
+  // line-height: 60px;
   border-top: solid 0.5px #f0f2f8;
   background-color: #fbfdfe;
   div {
     width: 50%;
     text-align: center;
   }
-  span {
-    font-size: 15px;
+  p {
+    font-size: 10px;
     letter-spacing: normal;
     text-align: center;
     color: #43454f;
+    margin: 0;
+    margin-top: 4px;
+    line-height: 15px;
   }
   img {
     vertical-align: middle;
-    margin-right: 17px;
-    margin-top: -4px;
+    // margin-right: 17px;
+    // margin-top: -4px;
+    width: 24px;
+    height: 24px;
   }
   &::after {
     content: '';
@@ -62,6 +67,12 @@
     letter-spacing: 0.3px;
     text-align: center;
     color: #43454f;
+  }
+  .ex-address {
+    font-size: 12px;
+    line-height: 18px;
+    color: #191c1e;
+    font-weight: 500;
   }
   .buttons {
     margin-top: 30px;

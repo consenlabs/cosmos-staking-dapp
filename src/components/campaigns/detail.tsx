@@ -16,15 +16,15 @@ export default ({ t }) => {
         <div>
           <div className="rule-symbol" />
           <p className="rule-title">{t('rule1')}</p>
-          <h2>{t('rule1_title')}</h2>
+          <p className="reward-title">{t('rule1_title')}</p>
           <p>{t('rule1_desc1')}</p>
           <p>{t('rule1_desc2')}</p>
         </div>
 
-        <div style={{ marginTop: 30 }}>
+        <div style={{ marginTop: 20 }}>
           <div className="rule-symbol" />
           <p className="rule-title">{t('rule2')}</p>
-          <h2>{t('rule2_title')}</h2>
+          <p className="reward-title">{t('rule2_title')}</p>
           <p>{t('rule2_desc1')}</p>
           <div className="reward-list">
             <p>

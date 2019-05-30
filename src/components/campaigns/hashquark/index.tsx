@@ -102,8 +102,6 @@ class HashQuark extends Component<Props, any> {
     const { info } = this.state
     const { validators, pool } = this.props
 
-    if (!info) return <Loading />
-
     const validator = validators.find(t => t.operator_address === hashquark.operator_address)
 
     return (
@@ -114,11 +112,13 @@ class HashQuark extends Component<Props, any> {
           {this.renderInfoCard()}
           {this.renderDivider()}
           <Detail t={t} />
-          <Footer
-            t={t}
-            time={info.end_time}
-            onDelegate={this.onDelegate}
-          />
+          {info && (
+            <Footer
+              t={t}
+              time={info.end_time}
+              onDelegate={this.onDelegate}
+            />
+          )}
           {this.renderModal()}
         </div>
       </div>
@@ -127,6 +127,16 @@ class HashQuark extends Component<Props, any> {
 
   renderInfoCard = () => {
     const { info } = this.state
+
+    if (!info) {
+      return (
+        <div className="info-card">
+          <Loading />
+          <p className="loading-title">{t('data_loading')}</p>
+        </div>
+      )
+    }
+
     return (
       <div className="info-card">
         <div className="flex-center my-delegation">

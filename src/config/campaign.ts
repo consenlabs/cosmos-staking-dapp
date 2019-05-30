@@ -65,6 +65,7 @@ export default [
         success_delegate_desc: '空投将在活动结束后统一发放，感谢支持~',
         confirm: '确认',
         tx_pending: '交易正在打包',
+        data_loading: '数据加载中',
       },
       en: {
         delegated: 'Delegated during the event',
@@ -100,6 +101,7 @@ export default [
         success_delegate_desc: 'Airdrops will be distributed after the event. Stay tuned!',
         confirm: 'Confirm',
         tx_pending: 'Transaction Pending',
+        data_loading: 'Loading ...',
       },
     },
   }

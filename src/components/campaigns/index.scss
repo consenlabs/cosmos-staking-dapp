@@ -40,6 +40,26 @@
       border-radius: 4px;
       margin-top: 10px;
       padding: 20px 0;
+      min-height: 380px;
+      box-sizing: border-box;
+
+      .loading-wrap {
+        min-height: 100px;
+        margin-top: 100px;
+        .lds-ring div {
+          border: 3px solid #32a0ea;
+          border-color: #32a0ea transparent transparent transparent;
+        }
+      }
+
+      .loading-title {
+        font-size: 13px;
+        font-weight: normal;
+        line-height: 1.69;
+        text-align: center;
+        color: #777a8c;
+        margin-top: 20px;
+      }
 
       .delegated-info {
         padding: 0 20px;
@@ -216,21 +236,19 @@
     margin: 4px 0;
   }
 
-  h2 {
+  .reward-title {
     text-align: center;
-    margin: 4px 0;
-    margin-bottom: 20px;
-    font-size: 21px;
+    margin: 0;
+    margin-bottom: 15px;
+    font-size: 15px;
     font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
     letter-spacing: 1px;
     color: #43454f;
   }
 
   .block-title {
-    font-size: 13px;
-    line-height: 13px;
+    font-size: 15px;
+    line-height: 15px;
     font-weight: 500;
     color: #191c1e;
     padding-left: 12px;
@@ -241,6 +259,7 @@
   .rule-title {
     text-align: center;
     color: #777a8c;
+    font-size: 13px;
   }
 
   .rule-symbol {

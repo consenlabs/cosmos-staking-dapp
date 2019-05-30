@@ -41,6 +41,10 @@ class CMP extends Component<Props> {
   }
 
   showModal = (actionType) => {
+    const actions = ['submit_withdraw_all', 'submit_compound_all', 'submit_exchange_atom']
+    
+    logger().track(actions[actionType], { action: 'click' })
+
     this.setState({ actionType, modalVisible: true })
   }
 
@@ -202,8 +206,6 @@ class CMP extends Component<Props> {
     const msgs = this.createWithdrawAllMsgs()
     const { feeAmount } = getFeeParamsByMsgs(msgs)
 
-    logger().track('submit_withdraw_all', { action: 'click' })
-
     return <div className="reward-modal-inner">
       <img src={withdrawBigIcon} alt="withdraw-all" />
       <span>{t('withdraw_reward')}</span>
@@ -220,8 +222,6 @@ class CMP extends Component<Props> {
     const msgs = this.createCompoundMsgs()
     const { feeAmount } = getFeeParamsByMsgs(msgs)
 
-    logger().track('submit_compound_all', { action: 'click' })
-
     return <div className="reward-modal-inner">
       <img src={compoundBigIcon} alt="compound" />
       <span>{t('reinvest_reward')}</span>
@@ -235,8 +235,6 @@ class CMP extends Component<Props> {
 
   renderExchangeAtom = () => {
     const { account } = this.props
-
-    logger().track('submit_exchange_atom', { action: 'click' })
 
     return <div className="reward-modal-inner">
       <img src={buyAtomBigIcon} alt="exchange" />

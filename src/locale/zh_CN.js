@@ -66,6 +66,8 @@ const zh_CN = {
   exchange_atom: '兑换 ATOM',
   exchange_atom_desc: '请确认兑换 ATOM 收款地址',
   cant_exchange_now: '暂时无法购买',
+  quick_exchange_atom: '一键兑换 ATOM',
+  quick_exchange_atom_desc: '限时免手续费',
 }
 
 export default zh_CN

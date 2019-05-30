@@ -182,6 +182,7 @@ class CMP extends Component<Props> {
   doExchange = () => {
     const { exchangeToken, account } = this.props
     if (exchangeToken && exchangeToken.makerToken && exchangeToken.takerToken) {
+      logger().track('go_tokenlon_exchange', { page: 'home' })
       routeTo({
         screen: 'Tokenlon',
         passProps: {

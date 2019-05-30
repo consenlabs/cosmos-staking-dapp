@@ -66,6 +66,8 @@ const en_US = {
   exchange_atom: 'Exchange ATOM',
   exchange_atom_desc: 'Please confirm your wallet address',
   cant_exchange_now: 'Tokenlon is not available now',
+  quick_exchange_atom: 'Exchange ATOM immediately',
+  quick_exchange_atom_desc: 'Free fee time limited',
 }
 
 export default en_US

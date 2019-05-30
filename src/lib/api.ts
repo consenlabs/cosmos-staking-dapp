@@ -229,3 +229,7 @@ export function getHashquarkRankList(address: string) {
   }]
   return rpc(getNetworkConfig().campaign, 'campaign.hashquarkRankList', params).then(data => data)
 }
+
+export function getTradeTokenList() {
+  return rpc(getNetworkConfig().exchange, 'tokenlon.getTradeTokenList', {}).then(data => data)
+}

@@ -9,7 +9,7 @@ import Delegate from '../delegate'
 import UnDelegate from '../undelegate'
 import Vote from '../vote'
 import './index.scss'
-import { updateValidators, updateAccount, updateDelegations, updateRedelegations, updateValidatorRewards, updateAtomPrice, addPendingTx } from 'lib/redux/actions'
+import { updateValidators, updateAccount, updateDelegations, updateRedelegations, updateValidatorRewards, updateAtomPrice, addPendingTx, updateExchangeToken } from 'lib/redux/actions'
 import * as api from 'lib/api'
 import * as sdk from 'lib/sdk'
 import * as utils from 'lib/utils'
@@ -27,6 +27,7 @@ interface Props {
   updateValidatorRewards: (value: any) => any
   updateAtomPrice: (value: any) => any
   addPendingTx: (value: any) => any
+  updateExchangeToken: (value: any) => any
 }
 
 class App extends Component<Props> {
@@ -47,6 +48,7 @@ class App extends Component<Props> {
   componentWillMount() {
     const { addPendingTx } = this.props
     this.updateAsyncData()
+    this.fetchTradeToken()
     pubsub.on('sendTxSuccess', (tx) => {
       this._refreshInterval = 5 * 1000
       if (tx) {
@@ -59,6 +61,21 @@ class App extends Component<Props> {
 
   componentWillUnmount() {
     pubsub.off('sendTxSuccess')
+  }
+
+  fetchTradeToken = () => {
+    const { updateExchangeToken } = this.props
+    api.getTradeTokenList().then((data) => {
+      const tokenlist = data || []
+      const eth = tokenlist.find(t => t.symbol === 'ETH')
+      const atom = tokenlist.find(t => t.symbol === 'ATOM')
+      if (eth && atom && (eth.opposites || []).includes('ATOM')) {
+        updateExchangeToken({
+          makerToken: eth,
+          takeToken: atom,
+        })
+      }
+    }).catch(err => console.warn(err))
   }
 
   updateAsyncData = () => {
@@ -156,6 +173,7 @@ const mapDispatchToProps = {
   updateValidatorRewards,
   updateAtomPrice,
   addPendingTx,
+  updateExchangeToken,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

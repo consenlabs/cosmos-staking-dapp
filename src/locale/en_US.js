@@ -63,6 +63,11 @@ const en_US = {
   update_app_desc: 'Current imToken doesn\'t work with this dapp. Please visit https://token.im via system browser and download the latest version',
   no_wallet_title: 'No COSMOS wallets found',
   no_wallet_desc: 'Please create COSMOS wallet in wallets manage with V2.4.0 or above version',
+  exchange_atom: 'Exchange ATOM',
+  exchange_atom_desc: 'Please confirm your wallet address',
+  cant_exchange_now: 'Tokenlon is not available now',
+  quick_exchange_atom: 'Exchange ATOM immediately',
+  quick_exchange_atom_desc: 'Free fee time limited',
 }
 
 export default en_US

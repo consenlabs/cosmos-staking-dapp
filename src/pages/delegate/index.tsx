@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { selectValidators, selectAccountInfo, selectValidatorRewards, selectDelegations, selectRedelegations } from '../../lib/redux/selectors'
+import { selectValidators, selectAccountInfo, selectValidatorRewards, selectDelegations, selectRedelegations, selectExchangeToken } from '../../lib/redux/selectors'
 import { ellipsis, } from '../../lib/utils'
 import DelegateForm from '../../components/delegateForm'
 import ValidatorLogo from '../../components/validatorLogo'
@@ -16,6 +16,7 @@ interface Props {
   account: any
   match: any
   history: any
+  exchangeToken: any
 }
 
 class Page extends Component<Props> {
@@ -25,7 +26,7 @@ class Page extends Component<Props> {
   }
 
   render() {
-    const { validators, validatorRewards, account, delegations, redelegations, match, history } = this.props
+    const { validators, validatorRewards, account, delegations, redelegations, match, history, exchangeToken } = this.props
     const id = match.params.id
     const v = validators.find(v => v.operator_address === id)
 
@@ -54,6 +55,7 @@ class Page extends Component<Props> {
           validators={validators}
           delegations={delegations}
           redelegations={redelegations}
+          exchangeToken={exchangeToken}
         />
       </div>
     )
@@ -67,6 +69,7 @@ const mapStateToProps = state => {
     account: selectAccountInfo(state),
     delegations: selectDelegations(state),
     redelegations: selectRedelegations(state),
+    exchangeToken: selectExchangeToken(state),
   }
 }
 

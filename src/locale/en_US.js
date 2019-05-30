@@ -58,6 +58,11 @@ const en_US = {
   withdraw_reward_desc: 'Withdraw reward $s and pay transactions fee $s',
   reinvest_reward_desc: 'Withdraw & delegate rewards to the origin validator $s. You may pay transaction fee $s',
   no_rewards: 'No Rewards',
+  understood: 'Understood',
+  update_app_title: 'Update imToken to latest version',
+  update_app_desc: 'Current imToken doesn\'t work with this dapp. Please visit https://token.im via system browser and download the latest version',
+  no_wallet_title: 'No COSMOS wallets found',
+  no_wallet_desc: 'Please create COSMOS wallet in wallets manage with V2.4.0 or above version',
 }
 
 export default en_US

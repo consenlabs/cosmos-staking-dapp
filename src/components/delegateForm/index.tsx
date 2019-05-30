@@ -329,7 +329,7 @@ class CMP extends Component<Props, any> {
         timestamp: (Date.now() / 1000).toFixed(0)
       })
       const campaign = campaignConfig.find(t => t.operator_address === validator.operator_address)
-      if (campaign && campaign.open) {
+      if (campaign && (campaign.duration.end * 1000) > Date.now()) {
         // const state = history.location.state
         // if (state && state.from === 'campaign') {
         //   history.goBack()

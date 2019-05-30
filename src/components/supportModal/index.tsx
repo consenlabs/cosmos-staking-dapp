@@ -1,23 +1,9 @@
 import React, { Component } from 'react'
-import { t, isiPhoneX } from '../../lib/utils'
+import { t, isiPhoneX, compareSemver } from '../../lib/utils'
 import Modal from '../modal'
 import * as sdk from 'lib/sdk'
 import noWalletIcon from '../../assets/no-wallet.svg'
 import updateAppIcon from '../../assets/update-app.svg'
-
-function compareSemver(a, b) {
-  const pa = a.split('.')
-  const pb = b.split('.')
-  for (let i = 0; i < 3; i++) {
-    const na = Number(pa[i])
-    const nb = Number(pb[i])
-    if (na > nb) return 1
-    if (nb > na) return -1
-    if (!isNaN(na) && isNaN(nb)) return 1
-    if (isNaN(na) && !isNaN(nb)) return -1
-  }
-  return 0
-}
 
 interface Props {
   
@@ -82,13 +68,13 @@ class SupportModal extends Component<Props, State> {
     return (
       <Modal
         isOpen={true}
-        contentLabel="Reward Modal"
+        contentLabel="imToken version Modal"
         onRequestClose={() => {}}
         styles={{ margin: '10px', bottom: isiPhoneX() ? '12px' : '0', borderRadius: '16px' }}
         appElement={document.body}
       >
         <div className="reward-modal-inner">
-          <img src={icon} alt="withdraw-all" />
+          <img src={icon} alt={title} />
           <span>{title}</span>
           <div className="desc">{desc}</div>
           <div className="buttons">

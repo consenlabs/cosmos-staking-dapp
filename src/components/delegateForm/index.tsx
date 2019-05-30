@@ -15,6 +15,7 @@ import modalBackSVG from '../../assets/modal-back.svg'
 import Arrow from '../../assets/arrow.svg'
 import campaignConfig from '../../config/campaign'
 import buyAtomBigIcon from '../../assets/big-buy-atom.svg'
+import LOGO from '../../assets/cosmos.svg'
 
 const selectLabels = ['available_balance', 'rewards', 'other_delegations']
 
@@ -185,6 +186,16 @@ class CMP extends Component<Props, any> {
     </div>
   }
 
+  renderDivider = () => {
+    return (
+      <div className="divider">
+        <div className="line"></div>
+        <img src={LOGO} alt="" />
+        <div className="line"></div>
+      </div>
+    )
+  }
+
   render() {
     const { amount, sourceObject } = this.state
     const disabled = !amount
@@ -210,6 +221,7 @@ class CMP extends Component<Props, any> {
         <button disabled={disabled} className="form-button" onClick={this.onSubmit}>
           <span>{t('delegate')}</span>
         </button>
+        {this.renderDivider()}
         <div className="box" onClick={this.showExchangeModal}>
           <div>
             <p>

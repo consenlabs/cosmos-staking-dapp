@@ -2,12 +2,12 @@ import React from 'react'
 import './index.scss'
 
 
-export default ({ t }) => {
+export default ({ t, time }) => {
   return (
     <div className="details">
       <div>
         <p className="block-title">{t('campaign_time')}</p>
-        <p>{t('time')}</p>
+        <p>{time}</p>
       </div>
 
       <div>

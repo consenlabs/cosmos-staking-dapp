@@ -15,6 +15,7 @@ import bannerConfig from '../../config/banner'
 import campaignConfig from '../../config/campaign'
 import descConfig from '../../config/desc'
 import Arrow from '../../assets/arrow.svg'
+import dayjs from 'dayjs'
 
 interface Props {
   validators: any
@@ -179,8 +180,11 @@ class Page extends Component<Props, any> {
     const v = campaignConfig.find(v => v.operator_address === id)
     const locale = getLocale()
 
-    if (!v || !v.activity) return null
+    if (!v) return null
     const activity = v.activity
+
+    const start = dayjs.unix(v.duration.start * 1).format('YYYY/MM/DD HH:mm')
+    const end = dayjs.unix(v.duration.end * 1).format('YYYY/MM/DD HH:mm')
 
     return (
       <section>
@@ -192,7 +196,7 @@ class Page extends Component<Props, any> {
             <p>
               <span>{activity.name[locale]}</span>
             </p>
-            <span className="date">{activity.time[locale]}</span>
+            <span className="date">{`${start} - ${end}`}</span>
           </div>
           <img src={Arrow} />
         </a>

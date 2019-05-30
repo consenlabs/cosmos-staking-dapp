@@ -5,6 +5,10 @@ export default [
     open: true,
     operator_address: 'cosmosvaloper1cgh5ksjwy2sd407lyre4l3uj2fdrqhpkzp06e6',
     time: '2019.05.31 11:00 - 2019.06.13 18:00',
+    duration: {
+      start: 1559271600,
+      end: 1560506400,
+    },
     imgs: {
       zh: {
         big: require('../assets/campaign/hashquark-zh-big.png'),
@@ -23,10 +27,6 @@ export default [
       name: {
         zh: '邀你瓜分 2000 ATOM',
         en: 'You are invited to win 2000 ATOM',
-      },
-      time: {
-        zh: '2019.05.31 11:00 ~ 2019.06.14 18:00',
-        en: '2019-05-31 03:00am UTC ~ 2019-06-14 10:00am UTC',
       },
       url: '/cosmos/campaign/hashquark',
     },
@@ -52,8 +52,8 @@ export default [
         rule2_top1: '400 ATOM + 价值 999 元限量版 imKey',
         rule2_top2: '300 ATOM + 价值 999 元限量版 imKey',
         rule2_top3: '100 ATOM + 价值 999 元限量版 imKey',
-        reward_desc1: '本次活动奖励将在活动结束后统一进行发放，请耐心等待；',
-        reward_desc2: '截止至活动结束，向 HashQuark 委托 ATOM 数量 TOP 3 的用户将于活动结束后收到含有 imKey 兑换码及兑换方式的消息通知；',
+        reward_desc1: '1. 本次活动奖励将在活动结束后统一进行发放，请耐心等待；',
+        reward_desc2: '2. 截止至活动结束，向 HashQuark 委托 ATOM 数量 TOP 3 的用户将于活动结束后收到含有 imKey 兑换码及兑换方式的消息通知；',
         state_desc1: '1. 活动期间任意时间可委托，次数不限，活动结束（6.14 18:00）前赎回或改票视为无效；',
         state_desc2: '2. 一重礼「单人奖励」公式中，总委托代币为活动期间通过 imToken 委托给 HashQuark ATOM 数量的总和；',
         delegate_now: '立即委托',
@@ -62,7 +62,7 @@ export default [
         campaign_over_button: '活动结束',
         day: '天',
         success_delegate: '已成功委托 $s ATOM',
-        success_delegate_desc: '空投将在活动结束后统一发放，感谢支持~',
+        success_delegate_desc: '空投将在活动结束后发放，感谢支持~',
         confirm: '确认',
         tx_pending: '交易正在打包',
         data_loading: '数据加载中',
@@ -88,8 +88,8 @@ export default [
         rule2_top1: '400 ATOM + limited imKey',
         rule2_top2: '300 ATOM + limited imKey',
         rule2_top3: '100 ATOM + limited imKey',
-        reward_desc1: 'Rewards for this event will be distributed shortly after the end of the activity. Stay tuned!',
-        reward_desc2: 'At the end of the event, the user whos staked ATOM is one of the TOP 3, will receive a message notification containing an imKey purchase code and purchase method;',
+        reward_desc1: '1. Rewards for this event will be distributed shortly after the end of the activity. Stay tuned!',
+        reward_desc2: '2. At the end of the event, the user whos staked ATOM is one of the TOP 3, will receive a message notification containing an imKey purchase code and purchase method;',
         state_desc1: '1. Staking (and adding more Stake) can be made at any time during the activity, with no limit to the number of times. Withdrawel or change of tickets before the end of the activity (14th June, 11:00am UTC) shall be deemed invalid;',
         state_desc2: '2. The ATOMs a single user will be rewarded with are calculated by the amount staked by the user devided by the total amount staked by all users to Hashquark through imToken during the activity period;',
         delegate_now: 'Delegate now',

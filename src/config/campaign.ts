@@ -4,9 +4,8 @@ export default [
     name: 'HashQuark',
     open: true,
     operator_address: 'cosmosvaloper1cgh5ksjwy2sd407lyre4l3uj2fdrqhpkzp06e6',
-    time: '2019.05.31 11:00 - 2019.06.13 18:00',
     duration: {
-      start: 1559271600,
+      start: 1559289600,
       end: 1560506400,
     },
     imgs: {
@@ -28,7 +27,7 @@ export default [
         zh: '邀你瓜分 2000 ATOM',
         en: 'You are invited to win 2000 ATOM',
       },
-      url: '/cosmos/campaign/hashquark',
+      url: '/campaign/hashquark',
     },
     locales: {
       zh: {
@@ -41,7 +40,6 @@ export default [
         campaign_rule: '活动规则',
         campaign_reward: '奖励派发',
         campaign_state: '活动说明',
-        time: '2019.05.31 11:00 ~ 2019.06.14 18:00',
         rule1: '一重礼',
         rule2: '二重礼',
         rule1_title: '质押赢空投',
@@ -77,7 +75,6 @@ export default [
         campaign_rule: 'Event Rules',
         campaign_reward: 'Award Details',
         campaign_state: 'Event Description',
-        time: '2019-05-31 03:00am UTC ~ 2019-06-14 10:00am UTC',
         rule1: 'Bonus 1',
         rule2: 'Bonus 2',
         rule1_title: 'A Good Time for a Stake!',
@@ -94,7 +91,7 @@ export default [
         state_desc2: '2. The ATOMs a single user will be rewarded with are calculated by the amount staked by the user devided by the total amount staked by all users to Hashquark through imToken during the activity period;',
         delegate_now: 'Delegate now',
         end_time: 'Time until event ends',
-        campaign_over: 'The event ended at 14th June, 11:00am UTC. Thank you for your participation.',
+        campaign_over: 'The event ended at 14th June, 10:00am UTC. Thank you for your participation.',
         campaign_over_button: 'Event ended.',
         day: 'day',
         success_delegate: '$s ATOM has been successfully delegated.',

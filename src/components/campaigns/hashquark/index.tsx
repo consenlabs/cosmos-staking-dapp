@@ -141,10 +141,12 @@ class HashQuark extends Component<Props, any> {
       )
     }
 
+    const my_delegated = info.delegated_shares < 0 ? 0 : info.delegated_shares
+
     return (
       <div className="info-card">
         <div className="flex-center my-delegation">
-          <p className="delegated-shares">{`${fAtom(info.delegated_shares)} ATOM`}</p>
+          <p className="delegated-shares">{`${fAtom(my_delegated)} ATOM`}</p>
           <p className="delegated-shares-desc">{t('delegated')}</p>
         </div>
         <div className="flex-center delegated-info">

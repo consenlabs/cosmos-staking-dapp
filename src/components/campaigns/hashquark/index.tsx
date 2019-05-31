@@ -3,7 +3,7 @@ import campaignConfig from '../../../config/campaign'
 import '../index.scss'
 import ValidatorCard from '../../validatorCard'
 import Loading from '../../loading'
-import { getLocale, Toast, fAtom, ellipsis, getAmountFromMsg } from '../../../lib/utils'
+import { getLocale, Toast, fAtom, ellipsis, getAmountFromMsg, isiPhoneX } from '../../../lib/utils'
 import Detail from '../detail'
 import Footer from '../footer'
 import Modal from '../../modal'
@@ -108,7 +108,7 @@ class HashQuark extends Component<Props, any> {
     const end = dayjs.unix(hashquark.duration.end * 1).format('YYYY/MM/DD HH:mm')
 
     return (
-      <div className="hashquark">
+      <div className="hashquark" style={{ paddingBottom: isiPhoneX() ? 100 : 80 }}>
         <img src={hashquark.banner[locale]} alt="hashquark banner" className="banner" />
         <div className="content">
           <ValidatorCard validator={validator} pool={pool} isHideBadge={true} />

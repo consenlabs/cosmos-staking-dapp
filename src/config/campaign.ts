@@ -31,7 +31,7 @@ export default [
     },
     locales: {
       zh: {
-        delegated: '已委托（活动期间）',
+        delegated: '我的委托（活动期间）',
         total_delegated: '总委托代币',
         total_delegator: '委托者',
         top_delegations: '委托排名',
@@ -66,7 +66,7 @@ export default [
         data_loading: '数据加载中',
       },
       en: {
-        delegated: 'Delegated during the event',
+        delegated: 'My Delegated during the event',
         total_delegated: 'Total Delegated',
         total_delegator: 'Delegators',
         top_delegations: 'Ranking',

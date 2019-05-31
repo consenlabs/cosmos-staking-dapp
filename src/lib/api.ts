@@ -163,9 +163,13 @@ export const getTxByHash = (txHash) => {
  */
 
 function checkTxRawLog(raw_log) {
-  const rawlog = JSON.parse(raw_log)
-  if (Array.isArray(rawlog)) {
-    return rawlog.every(r => r.success === true)
+  try {
+    const rawlog = JSON.parse(raw_log)
+    if (Array.isArray(rawlog)) {
+      return rawlog.every(r => r.success === true)
+    } 
+  } catch (error) {
+    // if raw_log is not parsed successfully, take it as failed
   }
   return false
 }

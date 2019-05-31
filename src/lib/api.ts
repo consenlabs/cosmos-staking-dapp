@@ -168,7 +168,7 @@ export function checkTx(txHash, timer, repeatCount = 10) {
   const check = (resolve, reject) => {
     return getTxByHash(txHash).then(tx => {
       if (tx && tx.height) {
-        window.alert(JSON.stringify(tx))
+        // window.alert(JSON.stringify(tx))
         resolve(tx)
       }
     }).catch(e => {

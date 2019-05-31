@@ -142,7 +142,7 @@ class HashQuark extends Component<Props, any> {
     }
 
     const my_delegated = info.delegated_shares < 0 ? 0 : info.delegated_shares
-    
+
     return (
       <div className="info-card">
         <div className="flex-center my-delegation">

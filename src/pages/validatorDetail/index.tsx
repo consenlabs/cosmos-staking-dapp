@@ -24,6 +24,7 @@ interface Props {
   pendingTxs: any
   account: any
   match: any
+  history: any
   removePendingTx: (value: any) => any
 }
 
@@ -175,7 +176,7 @@ class Page extends Component<Props, any> {
   }
 
   renderActivity() {
-    const { match } = this.props
+    const { match, history } = this.props
     const id = match.params.id
     const v = campaignConfig.find(v => v.operator_address === id)
     const locale = getLocale()
@@ -191,7 +192,15 @@ class Page extends Component<Props, any> {
         <p className="title">
           <span>{t('activity')}</span>
         </p>
-        <a className="box" href={activity.url && activity.url.replace(/__locale__/, locale)}>
+        <div className="box" onClick={() => {
+          if (activity.url) {
+            if (activity.url.startsWith('http')) {
+              window.location.href = activity.url.replace(/__locale__/, locale)
+            } else {
+              history.push(activity.url)
+            }
+          }
+        }}>
           <div>
             <p>
               <span>{activity.name[locale]}</span>
@@ -199,7 +208,7 @@ class Page extends Component<Props, any> {
             <span className="date">{`${start} - ${end}`}</span>
           </div>
           <img src={Arrow} />
-        </a>
+        </div>
       </section>
     )
   }

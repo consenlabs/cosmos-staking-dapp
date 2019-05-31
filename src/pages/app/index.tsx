@@ -72,7 +72,7 @@ class App extends Component<Props> {
       if (eth && atom && (eth.opposites || []).includes('ATOM')) {
         updateExchangeToken({
           makerToken: eth,
-          takeToken: atom,
+          takerToken: atom,
         })
       }
     }).catch(err => console.warn(err))

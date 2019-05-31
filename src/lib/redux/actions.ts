@@ -90,7 +90,7 @@ export const removePendingTx = (txHash: string) => {
   }
 }
 
-export const updateExchangeToken = ({ makerToken, takerToken}) => {
+export const updateExchangeToken = ({ makerToken, takerToken }) => {
   return {
     type: types.UPDATE_EXCHANGE_TOKEN,
     payload: {

@@ -94,8 +94,7 @@ export default function device(state = initialState, action) {
         delete draft.pendingTxs[action.payload.txHash]
         return
       case types.UPDATE_EXCHANGE_TOKEN:
-        draft.exchangeToken.makerToken = action.payload.makerToken
-        draft.exchangeToken.takerToken = action.payload.takerToken
+        draft.exchangeToken = action.payload
       default:
         return draft
     }

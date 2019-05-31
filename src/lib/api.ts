@@ -1,6 +1,6 @@
 import Axios from "axios"
 import { getProvider } from './sdk'
-import { getRewardBalance, getLocale } from './utils'
+import { getRewardBalance, getLocale, t } from './utils'
 import getNetworkConfig from '../config/network'
 import msgTypes from './msgTypes'
 
@@ -159,6 +159,18 @@ export const getTxByHash = (txHash) => {
 }
 
 /**
+ * check tx if failed
+ */
+
+function checkTxRawLog(raw_log) {
+  const rawlog = JSON.parse(raw_log)
+  if (Array.isArray(rawlog)) {
+    return rawlog.every(r => r.success === true)
+  }
+  return false
+}
+
+/**
  * polling check tx
  */
 export function checkTx(txHash, timer, repeatCount = 10) {
@@ -168,8 +180,11 @@ export function checkTx(txHash, timer, repeatCount = 10) {
   const check = (resolve, reject) => {
     return getTxByHash(txHash).then(tx => {
       if (tx && tx.height) {
-        // window.alert(JSON.stringify(tx))
-        resolve(tx)
+        if (checkTxRawLog(tx.raw_log)) {
+          resolve(tx)
+        } else {
+          reject({ message: t('failed_to_send') })
+        }
       }
     }).catch(e => {
       if (count > repeatCount) {

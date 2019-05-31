@@ -183,7 +183,7 @@ export function checkTx(txHash, timer, repeatCount = 10) {
         if (checkTxRawLog(tx.raw_log)) {
           resolve(tx)
         } else {
-          reject({ message: t('failed_to_send') })
+          reject({ message: t('tx_failed') })
         }
       }
     }).catch(e => {

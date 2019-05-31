@@ -49,7 +49,7 @@ function rpc(url, method, params) {
       } else {
         throw new Error(`null response ${url} ${JSON.stringify(params)}`)
       }
-    }).catch(warnning)
+    }).catch(throwFn)
   })
 }
 
@@ -168,6 +168,7 @@ export function checkTx(txHash, timer, repeatCount = 10) {
   const check = (resolve, reject) => {
     return getTxByHash(txHash).then(tx => {
       if (tx && tx.height) {
+        window.alert(JSON.stringify(tx))
         resolve(tx)
       }
     }).catch(e => {
@@ -199,14 +200,14 @@ export async function getValidators() {
   }).then(validators => validators.sort(sortValidators).map(
     (v, index) => {
       return { ...v, sortIndex: index }
-    }))
+    })).catch(warnning)
 }
 
 export async function getAtomPrice() {
   const host = getNetworkConfig().market
   const currency = getLocale() === 'zh' ? 'CNY' : 'USDT'
   const params = [{ "chainType": "COSMOS", "address": "uatom", currency }]
-  return rpc(host, `market.getPrice`, params).then(prices => prices || {})
+  return rpc(host, `market.getPrice`, params).then(prices => prices || {}).catch(warnning)
 }
 
 export function getTxListByAddress(delegator: string, validator: string) {
@@ -220,16 +221,16 @@ export function getTxListByAddress(delegator: string, validator: string) {
       msgTypes.redelegate,
     ],
   }]
-  return rpc(getNetworkConfig().chainAPI, 'wallet.getMsgListByAddress', params).then(data => data || [])
+  return rpc(getNetworkConfig().chainAPI, 'wallet.getMsgListByAddress', params).then(data => data || []).catch(warnning)
 }
 
 export function getHashquarkRankList(address: string) {
   const params = [{
     address,
   }]
-  return rpc(getNetworkConfig().campaign, 'campaign.hashquarkRankList', params).then(data => data)
+  return rpc(getNetworkConfig().campaign, 'campaign.hashquarkRankList', params).then(data => data).catch(warnning)
 }
 
 export function getTradeTokenList() {
-  return rpc(getNetworkConfig().exchange, 'tokenlon.getTradeTokenList', {}).then(data => data)
+  return rpc(getNetworkConfig().exchange, 'tokenlon.getTradeTokenList', {}).then(data => data).catch(warnning)
 }

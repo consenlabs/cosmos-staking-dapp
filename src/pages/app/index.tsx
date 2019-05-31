@@ -135,7 +135,7 @@ class App extends Component<Props> {
       })
     })
 
-    api.getValidators().then(updateValidators).catch(err => console.warn(err))
+    api.getValidators().then(updateValidators)
     api.getAtomPrice().then(updateAtomPrice)
 
     this._refreshInterval = Math.min(Math.round(this._refreshInterval * 1.2), this.MAX_REFRESH_INTERVAL)

@@ -1,6 +1,6 @@
 import Axios from "axios"
 import { getProvider } from './sdk'
-import { getRewardBalance, getLocale } from './utils'
+import { getRewardBalance, getLocale, t } from './utils'
 import getNetworkConfig from '../config/network'
 import msgTypes from './msgTypes'
 
@@ -49,7 +49,7 @@ function rpc(url, method, params) {
       } else {
         throw new Error(`null response ${url} ${JSON.stringify(params)}`)
       }
-    }).catch(warnning)
+    }).catch(throwFn)
   })
 }
 
@@ -159,6 +159,22 @@ export const getTxByHash = (txHash) => {
 }
 
 /**
+ * check tx if failed
+ */
+
+function checkTxRawLog(raw_log) {
+  try {
+    const rawlog = JSON.parse(raw_log)
+    if (Array.isArray(rawlog)) {
+      return rawlog.every(r => r.success === true)
+    } 
+  } catch (error) {
+    // if raw_log is not parsed successfully, take it as failed
+  }
+  return false
+}
+
+/**
  * polling check tx
  */
 export function checkTx(txHash, timer, repeatCount = 10) {
@@ -168,7 +184,11 @@ export function checkTx(txHash, timer, repeatCount = 10) {
   const check = (resolve, reject) => {
     return getTxByHash(txHash).then(tx => {
       if (tx && tx.height) {
-        resolve(tx)
+        if (checkTxRawLog(tx.raw_log)) {
+          resolve(tx)
+        } else {
+          reject({ message: t('tx_failed') })
+        }
       }
     }).catch(e => {
       if (count > repeatCount) {
@@ -199,14 +219,14 @@ export async function getValidators() {
   }).then(validators => validators.sort(sortValidators).map(
     (v, index) => {
       return { ...v, sortIndex: index }
-    }))
+    })).catch(warnning)
 }
 
 export async function getAtomPrice() {
   const host = getNetworkConfig().market
   const currency = getLocale() === 'zh' ? 'CNY' : 'USDT'
   const params = [{ "chainType": "COSMOS", "address": "uatom", currency }]
-  return rpc(host, `market.getPrice`, params).then(prices => prices || {})
+  return rpc(host, `market.getPrice`, params).then(prices => prices || {}).catch(warnning)
 }
 
 export function getTxListByAddress(delegator: string, validator: string) {
@@ -220,16 +240,16 @@ export function getTxListByAddress(delegator: string, validator: string) {
       msgTypes.redelegate,
     ],
   }]
-  return rpc(getNetworkConfig().chainAPI, 'wallet.getMsgListByAddress', params).then(data => data || [])
+  return rpc(getNetworkConfig().chainAPI, 'wallet.getMsgListByAddress', params).then(data => data || []).catch(warnning)
 }
 
 export function getHashquarkRankList(address: string) {
   const params = [{
     address,
   }]
-  return rpc(getNetworkConfig().campaign, 'campaign.hashquarkRankList', params).then(data => data)
+  return rpc(getNetworkConfig().campaign, 'campaign.hashquarkRankList', params).then(data => data).catch(warnning)
 }
 
 export function getTradeTokenList() {
-  return rpc(getNetworkConfig().exchange, 'tokenlon.getTradeTokenList', {}).then(data => data)
+  return rpc(getNetworkConfig().exchange, 'tokenlon.getTradeTokenList', {}).then(data => data).catch(warnning)
 }

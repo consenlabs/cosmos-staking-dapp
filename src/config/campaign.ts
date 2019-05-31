@@ -31,7 +31,7 @@ export default [
     },
     locales: {
       zh: {
-        delegated: '已委托（活动期间）',
+        delegated: '我的委托（活动期间）',
         total_delegated: '总委托代币',
         total_delegator: '委托者',
         top_delegations: '委托排名',
@@ -52,7 +52,7 @@ export default [
         rule2_top3: '100 ATOM + 价值 999 元限量版 imKey',
         reward_desc1: '1. 本次活动奖励将在活动结束后统一进行发放，请耐心等待；',
         reward_desc2: '2. 截止至活动结束，向 HashQuark 委托 ATOM 数量 TOP 3 的用户将于活动结束后收到含有 imKey 兑换码及兑换方式的消息通知；',
-        state_desc1: '1. 活动期间任意时间可委托，次数不限，活动结束（6.14 18:00）前赎回或改票视为无效；',
+        state_desc1: '1. 活动期间任意时间可委托，次数不限，活动结束（$s）前赎回或改票视为无效；',
         state_desc2: '2. 一重礼「单人奖励」公式中，总委托代币为活动期间通过 imToken 委托给 HashQuark ATOM 数量的总和；',
         delegate_now: '立即委托',
         end_time: '距活动结束',
@@ -66,7 +66,7 @@ export default [
         data_loading: '数据加载中',
       },
       en: {
-        delegated: 'Delegated during the event',
+        delegated: 'My Delegated during the event',
         total_delegated: 'Total Delegated',
         total_delegator: 'Delegators',
         top_delegations: 'Ranking',
@@ -87,7 +87,7 @@ export default [
         rule2_top3: '100 ATOM + limited imKey',
         reward_desc1: '1. Rewards for this event will be distributed shortly after the end of the activity. Stay tuned!',
         reward_desc2: '2. At the end of the event, the user who staked ATOM as one of the TOP 3, will receive a message notification containing an imKey winner code and cash in method;',
-        state_desc1: '1. Staking (and adding more Stake) can be made at any time during the activity, with no limit to the number of times. Withdrawal or change of delegation before the end of the activity (14th June, 11:00am UTC) shall be deemed invalid;',
+        state_desc1: '1. Staking (and adding more Stake) can be made at any time during the activity, with no limit to the number of times. Withdrawal or change of delegation before the end of the activity ($s) shall be deemed invalid;',
         state_desc2: '2. The ATOMs a single user will be rewarded with are calculated by the amount staked by the user devided by the total amount staked by all users to Hashquark through imToken during the activity period;',
         delegate_now: 'Delegate now',
         end_time: 'Time until event ends',

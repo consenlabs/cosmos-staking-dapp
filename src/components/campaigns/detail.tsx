@@ -2,7 +2,7 @@ import React from 'react'
 import './index.scss'
 
 
-export default ({ t, time }) => {
+export default ({ t, time, endtime }) => {
   return (
     <div className="details">
       <div>
@@ -51,7 +51,7 @@ export default ({ t, time }) => {
 
       <div>
         <p className="block-title">{t('campaign_state')}</p>
-        <p>{t('state_desc1')}</p>
+        <p>{t('state_desc1', endtime)}</p>
         <p>{t('state_desc2')}</p>
       </div>
     </div>

@@ -9,7 +9,7 @@
   border-top: solid 0.5px #f0f2f8;
   background-color: #fbfdfe;
   div {
-    width: 50%;
+    width: 33%;
     text-align: center;
   }
   p {
@@ -28,16 +28,25 @@
     width: 24px;
     height: 24px;
   }
-  &::after {
+  &::before {
     content: '';
     display: block;
     position: absolute;
-    left: 50%;
+    left: 33%;
     width: 1px;
     margin-left: -1px;
     height: 20px;
     border-right:solid 0.5px #eaecf6;
-    // background-color: #eaecf6;
+  }
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    right: 33%;
+    width: 1px;
+    margin-left: -1px;
+    height: 20px;
+    border-right:solid 0.5px #eaecf6;
   }
 }
 

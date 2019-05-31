@@ -15,6 +15,44 @@ const initialState = {
   price: {},
   sortBy: 'delegators',
   pendingTxs: {},
+  exchangeToken: {
+    makerToken: {
+      "symbol": "ETH",
+      "logo": "https://aws-v2-cdn.token.im/app-mainnet-production/tokens/icons/eth%403x-2.png",
+      "contractAddress": "0x0000000000000000000000000000000000000000",
+      "decimal": 18,
+      "precision": 4,
+      "minTradeAmount": 0.01,
+      "maxTradeAmount": 30,
+      "opposites": [
+          "ATOM",
+          "ELF",
+          "EOS",
+          "KNC",
+          "MANA",
+          "PAX",
+          "SNT",
+          "TUSD",
+          "USDC",
+          "USDT",
+          "ZRX"
+      ],
+      "xChainType": null,
+      "xChainAddress": null
+    },
+    takerToken: {
+      "symbol": "ATOM",
+      "logo": "https://aws-v2-cdn.token.im/app-mainnet-production/tokens/icons/ATOM.png",
+      "contractAddress": "0xc5637328da2e0a3400274a4088cea2e25fb91446",
+      "decimal": 6,
+      "precision": 4,
+      "minTradeAmount": 0.001,
+      "maxTradeAmount": 1,
+      "opposites": [],
+      "xChainType": "COSMOS",
+      "xChainAddress": "uatom"
+    }
+  },
 }
 
 export default function device(state = initialState, action) {
@@ -55,6 +93,8 @@ export default function device(state = initialState, action) {
       case types.REMOVE_PENDING_TX:
         delete draft.pendingTxs[action.payload.txHash]
         return
+      case types.UPDATE_EXCHANGE_TOKEN:
+        draft.exchangeToken = action.payload
       default:
         return draft
     }

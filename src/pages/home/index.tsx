@@ -5,7 +5,8 @@ import './index.scss'
 import NavBar from '../../components/navBar'
 import AccountCard from '../../components/accountCard'
 import DelegationList from '../../components/delegationList'
-import Banner from '../../components/banner'
+// import Banner from '../../components/banner'
+import CampaignBanner from '../../components/campaignBanner'
 import WaterMark from '../../components/walletMark'
 import logger from '../../lib/logger'
 import LOGO from '../../assets/cosmos.svg'
@@ -33,7 +34,7 @@ class Page extends Component<Props, any> {
         <AccountCard />
         <DelegationList />
         {this.renderDivider()}
-        <Banner size="big" />
+        <CampaignBanner size="big" />
         {this.renderBlocks()}
       </div>
     )
@@ -41,7 +42,7 @@ class Page extends Component<Props, any> {
 
   renderDivider = () => {
     return (
-      <div className="divier">
+      <div className="divider">
         <div className="line"></div>
         <img src={LOGO} alt="" />
         <div className="line"></div>

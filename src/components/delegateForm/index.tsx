@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './index.scss'
 import { uatom, fAtom, createTxPayload, createDelegateMsg, createWithdrawMsg, createRedelegateMsg, Toast, isiPhoneX } from 'lib/utils'
-import { sendTransaction } from 'lib/sdk'
+import { sendTransaction, routeTo } from 'lib/sdk'
 import { validDelegate } from 'lib/validator'
 import { t } from 'lib/utils'
 import Modal from '../../components/modal'
@@ -12,6 +12,10 @@ import { getFeeAmountByType } from '../../config/fee'
 import msgTypes from '../../lib/msgTypes'
 import logger from '../../lib/logger'
 import modalBackSVG from '../../assets/modal-back.svg'
+import Arrow from '../../assets/arrow.svg'
+import campaignConfig from '../../config/campaign'
+import buyAtomBigIcon from '../../assets/big-buy-atom.svg'
+import LOGO from '../../assets/cosmos.svg'
 
 const selectLabels = ['available_balance', 'rewards', 'other_delegations']
 
@@ -23,6 +27,7 @@ interface Props {
   delegations: any
   redelegations: any
   history: any
+  exchangeToken: any
 }
 
 class CMP extends Component<Props, any> {
@@ -37,9 +42,13 @@ class CMP extends Component<Props, any> {
       sourceObject: {
         key: selectLabels[0],
         value: props.account.balance,
-      }
+      },
+      exchangeModalVisible: false,
     }
   }
+
+  hideExchangeModal = () => this.setState({ exchangeModalVisible: false })
+  showExchangeModal = () => this.setState({ exchangeModalVisible: true })
 
   renderSelectorModal = () => {
     const { modalVisible, selectingDelegation } = this.state
@@ -52,6 +61,47 @@ class CMP extends Component<Props, any> {
     >
       {!selectingDelegation ? this.renderTypeSelector() : this.renderDelegations()}
     </Modal>
+  }
+
+  renderExchangeModal = () => {
+    const { account } = this.props
+    const { exchangeModalVisible } = this.state
+    return (
+      <Modal isOpen={exchangeModalVisible}
+        contentLabel="Reward Modal"
+        onRequestClose={this.hideExchangeModal}
+        styles={{ margin: '10px', bottom: isiPhoneX() ? '12px' : '0', borderRadius: '16px' }}
+        appElement={document.body}>
+          <div className="reward-modal-inner">
+          <img src={buyAtomBigIcon} alt="exchange" />
+          <span>{t('exchange_atom')}</span>
+          <div className="desc">{t('exchange_atom_desc')} </div>
+          <div className="ex-address">{account.address} </div>
+          <div className="buttons">
+            <div className="button cancel-button" onClick={this.hideExchangeModal}>{t('cancel')}</div>
+            <div className="button confirm-button" onClick={this.doExchange}>{t('confirm')}</div>
+          </div>
+        </div>
+      </Modal>
+    )
+  }
+
+  doExchange = () => {
+    const { exchangeToken, account, validator } = this.props
+    if (exchangeToken && exchangeToken.makerToken && exchangeToken.takerToken) {
+      logger().track('go_tokenlon_exchange', { page: 'delegate', moniker: validator.description.moniker })
+      routeTo({
+        screen: 'Tokenlon',
+        passProps: {
+          ...exchangeToken,
+          xChainReceiver: account.address,
+        }
+      })
+    } else {
+      Toast.error(t('cant_exchange_now'))
+    }
+
+    this.hideExchangeModal()
   }
 
   backModal = () => {
@@ -136,6 +186,16 @@ class CMP extends Component<Props, any> {
     </div>
   }
 
+  renderDivider = () => {
+    return (
+      <div className="divider">
+        <div className="line"></div>
+        <img src={LOGO} alt="" />
+        <div className="line"></div>
+      </div>
+    )
+  }
+
   render() {
     const { amount, sourceObject } = this.state
     const disabled = !amount
@@ -161,7 +221,18 @@ class CMP extends Component<Props, any> {
         <button disabled={disabled} className="form-button" onClick={this.onSubmit}>
           <span>{t('delegate')}</span>
         </button>
+        {this.renderDivider()}
+        <div className="box" onClick={this.showExchangeModal}>
+          <div>
+            <p>
+              <span>{t('quick_exchange_atom')}</span>
+            </p>
+            <span className="date">{t('quick_exchange_atom_desc')}</span>
+          </div>
+          <img src={Arrow} />
+        </div>
         {this.renderSelectorModal()}
+        {this.renderExchangeModal()}
       </div>
     )
   }
@@ -188,7 +259,9 @@ class CMP extends Component<Props, any> {
       return Toast.error(t(msg))
     }
 
-    const logOpt = { validator: validator.operator_address, moniker: validator.description.moniker }
+    const state = history.location.state
+    const from = (state && state.from) ? state.from : 'detail'
+    const logOpt = { validator: validator.operator_address, moniker: validator.description.moniker, from }
     const logKey = isRedelegate ? 'submit_redelegate' : 'submit_delegate'
     logger().track(logKey, logOpt)
 
@@ -243,10 +316,9 @@ class CMP extends Component<Props, any> {
     )
 
     sendTransaction(txPayload).then(txHash => {
-      Toast.success(txHash, { heading: t('sent_successfully') })
       logger().track(logKey, { result: 'successful', ...logOpt })
       console.log(txHash)
-      history.goBack()
+
       pubsub.emit('sendTxSuccess', {
         txHash,
         status: 'PENDING',
@@ -256,6 +328,18 @@ class CMP extends Component<Props, any> {
         validatorId: validator.operator_address,
         timestamp: (Date.now() / 1000).toFixed(0)
       })
+      const campaign = campaignConfig.find(t => t.operator_address === validator.operator_address)
+      if (campaign && (campaign.duration.end * 1000) > Date.now()) {
+        // const state = history.location.state
+        // if (state && state.from === 'campaign') {
+        //   history.goBack()
+        // } else {
+        history.replace('/campaign/hashquark', { txHash })
+        // }
+      } else {
+        Toast.success(txHash, { heading: t('sent_successfully') })
+        history.goBack()
+      }
     }).catch(e => {
       if (e.errorCode !== 1001) {
         logger().track(logKey, { result: 'failed', message: e.message, ...logOpt })

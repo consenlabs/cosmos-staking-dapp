@@ -223,3 +223,13 @@ export function getTxListByAddress(delegator: string, validator: string) {
   return rpc(getNetworkConfig().chainAPI, 'wallet.getMsgListByAddress', params).then(data => data || [])
 }
 
+export function getHashquarkRankList(address: string) {
+  const params = [{
+    address,
+  }]
+  return rpc(getNetworkConfig().campaign, 'campaign.hashquarkRankList', params).then(data => data)
+}
+
+export function getTradeTokenList() {
+  return rpc(getNetworkConfig().exchange, 'tokenlon.getTradeTokenList', {}).then(data => data)
+}

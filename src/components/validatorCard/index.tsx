@@ -8,6 +8,7 @@ import { fAtom, fPercent, t } from 'lib/utils'
 interface Props {
   validator: any
   pool: any
+  isHideBadge?: boolean
 }
 
 class CMP extends Component<Props> {
@@ -16,13 +17,13 @@ class CMP extends Component<Props> {
 
   render() {
 
-    const { validator } = this.props
+    const { validator, isHideBadge } = this.props
     const v = validator
     // const totalPoolBondedTokens = pool.bonded_tokens
     // const percent = atom(v.tokens) / atom(totalPoolBondedTokens)
 
     return <Link className="validator" to={`/validator/${v.operator_address}`}>
-      <div className="validator-rank-badge">{v.sortIndex + 1}</div>
+      {!isHideBadge && <div className="validator-rank-badge">{v.sortIndex + 1}</div>}
       <ValidatorLogo url={v.description.logo} />
       <div className="v-left">
         <strong>{v.description.moniker}</strong>

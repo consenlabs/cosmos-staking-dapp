@@ -57,7 +57,17 @@ const zh_CN = {
   tx_failed: '交易失败',
   withdraw_reward_desc: '赎回所有收益 $s, 并支付交易费 $s',
   reinvest_reward_desc: '赎回并委托收益 $s 至验证节点，并支付交易费 $s',
-  no_rewards: '暂时没有收益'
+  no_rewards: '暂时没有收益',
+  understood: '知道了',
+  update_app_title: '升级至 imToken 最新版本',
+  update_app_desc: '由于当前 imToken 版本过低，无法使用该应用。请使用系统浏览器访问 https://token.im 升级 imToken。',
+  no_wallet_title: '未发现 COSMOS 钱包',
+  no_wallet_desc: '请使用 V2.4.0 及以上版本在钱包管理中创建 COSMOS 钱包',
+  exchange_atom: '兑换 ATOM',
+  exchange_atom_desc: '请确认兑换 ATOM 收款地址',
+  cant_exchange_now: '暂时无法购买',
+  quick_exchange_atom: '一键兑换 ATOM',
+  quick_exchange_atom_desc: '限时免手续费',
 }
 
 export default zh_CN

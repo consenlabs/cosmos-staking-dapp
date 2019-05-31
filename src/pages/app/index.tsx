@@ -9,12 +9,14 @@ import Delegate from '../delegate'
 import UnDelegate from '../undelegate'
 import Vote from '../vote'
 import './index.scss'
-import { updateValidators, updateAccount, updateDelegations, updateRedelegations, updateValidatorRewards, updateAtomPrice, addPendingTx } from 'lib/redux/actions'
+import { updateValidators, updateAccount, updateDelegations, updateRedelegations, updateValidatorRewards, updateAtomPrice, addPendingTx, updateExchangeToken } from 'lib/redux/actions'
 import * as api from 'lib/api'
 import * as sdk from 'lib/sdk'
 import * as utils from 'lib/utils'
-import { t } from '../../lib/utils'
+import { t, isReload } from '../../lib/utils'
 import { pubsub } from 'lib/event'
+import Campaign from '../campaign'
+import SupportModal from '../../components/supportModal'
 
 interface Props {
   validators: any[]
@@ -25,6 +27,7 @@ interface Props {
   updateValidatorRewards: (value: any) => any
   updateAtomPrice: (value: any) => any
   addPendingTx: (value: any) => any
+  updateExchangeToken: (value: any) => any
 }
 
 class App extends Component<Props> {
@@ -38,15 +41,16 @@ class App extends Component<Props> {
   }
 
   _autoRefresh: any = null
-  _updateTimes: number = 0
+  MAX_REFRESH_INTERVAL: number = 30 * 1000
+  _refreshInterval: number = 10 * 1000
+  polling: any = null
 
   componentWillMount() {
     const { addPendingTx } = this.props
     this.updateAsyncData()
+    this.fetchTradeToken()
     pubsub.on('sendTxSuccess', (tx) => {
-      this._autoRefresh && clearInterval(this._autoRefresh)
-      this._updateTimes = 0
-      this._autoRefresh = setInterval(this.updateAsyncData, 1000 * 10)
+      this._refreshInterval = 5 * 1000
       if (tx) {
         addPendingTx(tx)
       } else {
@@ -59,15 +63,40 @@ class App extends Component<Props> {
     pubsub.off('sendTxSuccess')
   }
 
+  fetchTradeToken = () => {
+    const { updateExchangeToken } = this.props
+    api.getTradeTokenList().then((data) => {
+      const tokenlist = data || []
+      const eth = tokenlist.find(t => t.symbol === 'ETH')
+      const atom = tokenlist.find(t => t.symbol === 'ATOM')
+      if (eth && atom && (eth.opposites || []).includes('ATOM')) {
+        updateExchangeToken({
+          makerToken: eth,
+          takerToken: atom,
+        })
+      }
+    }).catch(err => console.warn(err))
+  }
+
   updateAsyncData = () => {
     const { updateAccount, updateDelegations, updateRedelegations, updateValidators, updateValidatorRewards, updateAtomPrice } = this.props
 
-    if (this._updateTimes > 10) return false
+    if (this.polling) clearTimeout(this.polling)
 
     sdk.getAccounts().then(accounts => {
-      const address = accounts[0]
+      let address = accounts[0]
+
+      // if page reload, use localstorage cache account, to keep account as it before reload
+      if (isReload()) {
+        let cacheAccount = localStorage.getItem('cache_account')
+        if (cacheAccount && accounts.includes(cacheAccount)) {
+          address = cacheAccount
+        }
+      }
 
       if (!address) return false
+
+      localStorage.setItem('cache_account', address)
 
       updateAccount({ address })
 
@@ -109,7 +138,9 @@ class App extends Component<Props> {
     api.getValidators().then(updateValidators).catch(err => console.warn(err))
     api.getAtomPrice().then(updateAtomPrice)
 
-    this._updateTimes++
+    this._refreshInterval = Math.min(Math.round(this._refreshInterval * 1.2), this.MAX_REFRESH_INTERVAL)
+
+    this.polling = setTimeout(this.updateAsyncData, this._refreshInterval)
   }
 
   render() {
@@ -120,8 +151,10 @@ class App extends Component<Props> {
         <Route path="/validator/:id" component={ValidatorDetail} />
         <Route path="/delegate/:id" component={Delegate} />
         <Route path="/undelegate/:id" component={UnDelegate} />
+        <Route path="/campaign/:id" component={Campaign} />
         <Route path="/vote" component={Vote} />
       </Switch>
+      <SupportModal />
     </BrowserRouter>
   }
 }
@@ -140,6 +173,7 @@ const mapDispatchToProps = {
   updateValidatorRewards,
   updateAtomPrice,
   addPendingTx,
+  updateExchangeToken,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

@@ -106,6 +106,7 @@ class HashQuark extends Component<Props, any> {
     const validator = validators.find(t => t.operator_address === hashquark.operator_address)
     const start = dayjs.unix(hashquark.duration.start * 1).format('YYYY/MM/DD HH:mm')
     const end = dayjs.unix(hashquark.duration.end * 1).format('YYYY/MM/DD HH:mm')
+    const endtime = dayjs.unix(hashquark.duration.end * 1).format('MM.DD HH:mm')
 
     return (
       <div className="hashquark" style={{ paddingBottom: isiPhoneX() ? 100 : 80 }}>
@@ -117,6 +118,7 @@ class HashQuark extends Component<Props, any> {
           <Detail
             t={t}
             time={`${start} - ${end}`}
+            endtime={endtime}
           />
           <Footer
             t={t}

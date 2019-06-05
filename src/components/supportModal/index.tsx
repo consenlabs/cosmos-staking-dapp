@@ -6,7 +6,7 @@ import noWalletIcon from '../../assets/no-wallet.svg'
 import updateAppIcon from '../../assets/update-app.svg'
 
 interface Props {
-  
+
 }
 
 interface State {
@@ -30,7 +30,7 @@ class SupportModal extends Component<Props, State> {
   componentDidMount() {
     this.checkSupport()
   }
-  
+
   checkSupport = () => {
     // not open in imToken
     if (!window['imToken']['callAPI']) return
@@ -55,21 +55,21 @@ class SupportModal extends Component<Props, State> {
           title: t('no_wallet_title'),
           desc: t('no_wallet_desc'),
           icon: noWalletIcon,
-        });  
+        });
       }
-    })
+    }).catch(console.warn)
   }
-  
+
   render() {
     const { title, desc, icon, modalVisible } = this.state
-    
+
     if (!modalVisible) return null
 
     return (
       <Modal
         isOpen={true}
         contentLabel="imToken version Modal"
-        onRequestClose={() => {}}
+        onRequestClose={() => { }}
         styles={{ margin: '10px', bottom: isiPhoneX() ? '12px' : '0', borderRadius: '16px' }}
         appElement={document.body}
       >

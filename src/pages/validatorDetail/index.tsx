@@ -89,7 +89,7 @@ class Page extends Component<Props, any> {
         validatorTxsCache[id] = txs
         this.setState({ txs: this.mergeWithPendingTx(txs) })
       }
-    })
+    }).catch(console.warn)
   }
 
   mergeWithPendingTx = (txs) => {

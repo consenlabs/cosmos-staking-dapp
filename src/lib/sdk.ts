@@ -35,7 +35,7 @@ const imToken = window['imToken']
 
 export function getAccounts() {
   // return Promise.resolve(['cosmos1zt57jwmlfl77k9urjha2xupgpk2j90axd9pxss'])
-  return imToken.callPromisifyAPI('cosmos.getAccounts').catch(err => console.warn(err))
+  return imToken.callPromisifyAPI('cosmos.getAccounts')
 }
 
 export function getProvider() {

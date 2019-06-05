@@ -196,19 +196,19 @@ class CMP extends Component<Props, any> {
     )
   }
 
-  renderComment = () => {
+  renderNotes = () => {
     const { sourceType } = this.state
     switch (sourceType) {
       case 2:
         return (
-          <div className="delegation-comment">
+          <div className="delegation-notes">
             <p className="item-title">{t('state')}</p>
             <p className="item-desc">{t('redelegate_state')}</p>
           </div>
         )
       default:
         return (
-          <div className="delegation-comment">
+          <div className="delegation-notes">
             <p className="item-title">{t('delegations')}</p>
             <p className="item-desc">{t('delegations_state')}</p>
             <p className="item-title">{t('rewards')}</p>
@@ -248,7 +248,7 @@ class CMP extends Component<Props, any> {
         <button disabled={disabled} className="form-button" onClick={this.onSubmit}>
           <span>{t('delegate')}</span>
         </button>
-        {this.renderComment()}
+        {this.renderNotes()}
         {this.renderDivider()}
         <div className="box" onClick={this.showExchangeModal}>
           <div>

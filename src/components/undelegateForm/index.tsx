@@ -237,15 +237,15 @@ class CMP extends Component<Props, any> {
         <button disabled={disabled} className="form-button" onClick={this.onSubmit}>
           <span>{t(isWithdraw ? 'withdraw_all' : 'withdraw')}</span>
         </button>
-        {this.renderComment()}
+        {this.renderNotes()}
         {this.renderSelectorModal()}
       </div>
     )
   }
 
-  renderComment = () => {
+  renderNotes = () => {
     return (
-      <div className="delegation-comment">
+      <div className="delegation-notes">
         <p className="item-title">{t('state')}</p>
         <p className="item-desc">{t('undelegate_state')}</p>
       </div>

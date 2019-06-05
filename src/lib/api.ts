@@ -11,9 +11,6 @@ import msgTypes from './msgTypes'
 // let _headers = null
 let _provider = null
 
-const warnning = (err) => console.warn(err)
-const throwFn = (err) => { throw err }
-
 export async function initRequestDependency() {
   return {
     // headers: _headers || await getHeaders(),
@@ -21,7 +18,7 @@ export async function initRequestDependency() {
   }
 }
 
-function get(url, params = {}, needThrow = false) {
+function get(url, params = {}) {
   return initRequestDependency().then(({ provider }) => {
     const _url = `${provider}/${url}`
     return Axios({ method: 'get', url: _url, params }).then(res => {
@@ -30,7 +27,7 @@ function get(url, params = {}, needThrow = false) {
       } else {
         throw new Error(`null response ${url} ${JSON.stringify(params)}`)
       }
-    }).catch(needThrow ? throwFn : warnning)
+    })
   })
 }
 
@@ -49,7 +46,7 @@ function rpc(url, method, params) {
       } else {
         throw new Error(`null response ${url} ${JSON.stringify(params)}`)
       }
-    }).catch(throwFn)
+    })
   })
 }
 
@@ -88,7 +85,7 @@ export function getAccount(address) {
       return emptyAccount
     }
     // throw err
-    console.warn(err)
+    throw err
   })
 }
 
@@ -155,7 +152,7 @@ export const getMyRewardByValidator = (delegatorAddr, validatorAddr) => {
 
 export const getTxByHash = (txHash) => {
   const url = `txs/${txHash}`
-  return get(url, {}, true)
+  return get(url, {})
 }
 
 /**
@@ -167,7 +164,7 @@ function checkTxRawLog(raw_log) {
     const rawlog = JSON.parse(raw_log)
     if (Array.isArray(rawlog)) {
       return rawlog.every(r => r.success === true)
-    } 
+    }
   } catch (error) {
     // if raw_log is not parsed successfully, take it as failed
   }

@@ -68,6 +68,14 @@ const en_US = {
   cant_exchange_now: 'Tokenlon is not available now',
   quick_exchange_atom: 'Exchange ATOM immediately',
   quick_exchange_atom_desc: 'Free fee time limited',
+  risk: 'Risk',
+  delegations_state: 'Delegated ATOM can be un-delegated (i.e redeemed) at any time. But, it takes 21 days to be unlocked for further usage such as sending.',
+  rewards_state: 'Delegation rewards come from validation bonuses and transaction fees.',
+  risk_state: 'If the validator misbehaves, such as double signing or frequently being offline, it may lose some of your delegated tokens. In order to avoid risks, please carefully select qualified validators. More details here.',
+  state: 'Note',
+  undelegate_state: 'Un-delegation (i.e. withdrawal) takes immediate effect, but un-delegated ATOM is locked, i.e. unavailable for any action - such as delegation or sending - for 21 days. You won\'t gain any rewards on this ATOM during this period.',
+  redelegate_state: 'The re-delegation will take effect immediately, i.e. your re-delegated ATOM will earn rewards. But, it will be locked for 21 days, meaning you won\'t be able to re-delegation again for 21 days.',
+  more_details: 'More details here.'
 }
 
 export default en_US

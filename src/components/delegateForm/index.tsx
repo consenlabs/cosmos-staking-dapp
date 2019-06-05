@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './index.scss'
-import { uatom, fAtom, createTxPayload, createDelegateMsg, createWithdrawMsg, createRedelegateMsg, Toast, isiPhoneX } from 'lib/utils'
+import { uatom, fAtom, createTxPayload, createDelegateMsg, createWithdrawMsg, createRedelegateMsg, Toast, isiPhoneX, getLocale } from 'lib/utils'
 import { sendTransaction, routeTo } from 'lib/sdk'
 import { validDelegate } from 'lib/validator'
 import { t } from 'lib/utils'
@@ -196,6 +196,33 @@ class CMP extends Component<Props, any> {
     )
   }
 
+  renderNotes = () => {
+    const { sourceType } = this.state
+    switch (sourceType) {
+      case 2:
+        return (
+          <div className="delegation-notes">
+            <p className="item-title">{t('state')}</p>
+            <p className="item-desc">{t('redelegate_state')}</p>
+          </div>
+        )
+      default:
+        return (
+          <div className="delegation-notes">
+            <p className="item-title">{t('delegations')}</p>
+            <p className="item-desc">{t('delegations_state')}</p>
+            <p className="item-title">{t('rewards')}</p>
+            <p className="item-desc">{t('rewards_state')}</p>
+            <p className="item-title">{t('risk')}</p>
+            <p className="item-desc">
+              {t('risk_state')}
+              <a href={`https://support.token.im/hc/${getLocale()}/sections/360004052613`}>{t('more_details')}</a>
+            </p>
+          </div>
+        )
+    }
+  }
+
   render() {
     const { amount, sourceObject } = this.state
     const disabled = !amount
@@ -221,6 +248,7 @@ class CMP extends Component<Props, any> {
         <button disabled={disabled} className="form-button" onClick={this.onSubmit}>
           <span>{t('delegate')}</span>
         </button>
+        {this.renderNotes()}
         {this.renderDivider()}
         <div className="box" onClick={this.showExchangeModal}>
           <div>

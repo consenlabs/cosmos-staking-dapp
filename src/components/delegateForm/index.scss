@@ -1,9 +1,8 @@
 .form-inner {
-  display: flex;
-  flex: 1;
   padding: 0px 20px 10px 20px;
-  flex-direction: column;
-  justify-content: flex-start;
+  button, input {
+    width: 100%;
+  }
   .form-header {
     display: flex;
     justify-content: space-between;
@@ -96,6 +95,55 @@
 
   .divider {
     padding: 20px 4px 20px 4px;
+  }
+
+  .delegation-notes {
+    padding: 15px 5px 0;
+    p {
+      margin: 0;
+    }
+    .item-title {
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 0.2px;
+      color: #777a8c;
+      padding-left: 12px;
+      position: relative;
+
+      &:before {
+        width: 2px;
+        height: 12px;
+        background: #098de6;
+        display: block;
+        left: 0;
+        top: 2px;
+        content: "";
+        color: white;
+        position: absolute;
+      }
+    }
+
+    .item-desc {
+      font-size: 13px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1.54;
+      letter-spacing: 0.2px;
+      color: #d2d4dd;
+      padding-left: 12px;
+      margin-bottom: 10px;
+      margin-top: 5px;
+
+      a {
+        color: #098de6;
+        margin-left: 4px;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
   }
 
   .box {

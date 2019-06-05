@@ -165,7 +165,7 @@ class Page extends Component<Props, any> {
 
         <div className="toolbar" style={{ paddingBottom: isiPhoneX() ? 40 : 0 }}>
           <Link to={`/undelegate/${v.operator_address}`}>
-            <span>{t('withdraw')}</span>
+            <span>{t('undelegate')}</span>
           </Link>
           <Link to={`/delegate/${v.operator_address}`}>
             <span>{t('delegate')}</span>

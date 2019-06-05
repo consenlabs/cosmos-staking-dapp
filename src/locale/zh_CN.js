@@ -68,6 +68,13 @@ const zh_CN = {
   cant_exchange_now: '暂时无法购买',
   quick_exchange_atom: '一键兑换 ATOM',
   quick_exchange_atom_desc: '限时免手续费',
+  risk: '风险',
+  delegations_state: '委托 ATOM 给验证节点可以随时赎回，但赎回委托需要等待 21 天',
+  rewards_state: '委托收益来自出块奖励和交易手续费。',
+  risk_state: '如果验证节点行为不端将可能会被罚没部分委托代币，比如验证节点双重签名、经常性离线。为了规避风险，请认真选择合格的验证节点。',
+  state: '说明',
+  undelegate_state: '赎回委托需等待 21 天，同时赎回期间的委托不会产生收益。',
+  redelegate_state: '更换委托立即生效，但再次更换委托将需要等待 21 天',
 }
 
 export default zh_CN

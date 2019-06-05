@@ -59,9 +59,9 @@ class HashQuark extends Component<Props, any> {
 
     let banner = ''
     if (state && state.size) {
-      banner = state.size === 'big' ? '1' : '2'  
+      banner = state.size === 'big' ? '1' : '2'
     }
-    
+
     logger().track('go_campaign', { banner, campaign: 'activity' })
   }
 
@@ -78,7 +78,7 @@ class HashQuark extends Component<Props, any> {
       api.checkTx(tx.txHash, 3000, 10).then(() => {
         this.hideLoadingFn && this.hideLoadingFn()
         pubsub.emit('sendTxSuccess')
-        
+
         this.setState({
           tx,
           modalVisible: true,
@@ -97,7 +97,7 @@ class HashQuark extends Component<Props, any> {
       if (data) {
         this.setState({ info: data })
       }
-    })
+    }).catch(console.warn)
   }
 
   render() {

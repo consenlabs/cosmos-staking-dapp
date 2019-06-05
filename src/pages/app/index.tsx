@@ -75,7 +75,7 @@ class App extends Component<Props> {
           takerToken: atom,
         })
       }
-    }).catch(err => console.warn(err))
+    }).catch(console.warn)
   }
 
   updateAsyncData = () => {
@@ -102,16 +102,16 @@ class App extends Component<Props> {
 
       api.getRewards(address).then(utils.getRewardBalance).then(b => {
         updateAccount({ rewardBalance: b })
-      })
+      }).catch(console.warn)
 
       api.getUnbondingDelegations(address).then(utils.getUnbondingBalance).then(b => {
         updateAccount({ refundingBalance: b })
-      })
+      }).catch(console.warn)
 
       api.getAccount(address).then(accountInfo => {
         const balance = utils.getBalanceFromAccount(accountInfo)
         updateAccount({ ...accountInfo, balance })
-      })
+      }).catch(console.warn)
 
       api.getDelegations(address).then(delegations => {
         const delegateBalance = utils.getDeletationBalance(delegations)
@@ -122,21 +122,21 @@ class App extends Component<Props> {
         const promises = delegations.map(d => {
           return api.getMyRewardByValidator(address, d.validator_address).then(balance => {
             validatorRewards[d.validator_address] = balance
-          })
+          }).catch(console.warn)
         })
 
         Promise.all(promises).then(() => {
           updateValidatorRewards(validatorRewards)
         })
-      })
+      }).catch(console.warn)
 
       api.getRedelegations(address).then(redelegations => {
         updateRedelegations(redelegations)
-      })
-    })
+      }).catch(console.warn)
+    }).catch(console.warn)
 
-    api.getValidators().then(updateValidators)
-    api.getAtomPrice().then(updateAtomPrice)
+    api.getValidators().then(updateValidators).catch(console.warn)
+    api.getAtomPrice().then(updateAtomPrice).catch(console.warn)
 
     this._refreshInterval = Math.min(Math.round(this._refreshInterval * 1.2), this.MAX_REFRESH_INTERVAL)
 

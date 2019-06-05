@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './index.scss'
-import { uatom, fAtom, createTxPayload, createDelegateMsg, createWithdrawMsg, createRedelegateMsg, Toast, isiPhoneX } from 'lib/utils'
+import { uatom, fAtom, createTxPayload, createDelegateMsg, createWithdrawMsg, createRedelegateMsg, Toast, isiPhoneX, getLocale } from 'lib/utils'
 import { sendTransaction, routeTo } from 'lib/sdk'
 import { validDelegate } from 'lib/validator'
 import { t } from 'lib/utils'
@@ -214,7 +214,10 @@ class CMP extends Component<Props, any> {
             <p className="item-title">{t('rewards')}</p>
             <p className="item-desc">{t('rewards_state')}</p>
             <p className="item-title">{t('risk')}</p>
-            <p className="item-desc">{t('risk_state')}</p>
+            <p className="item-desc">
+              {t('risk_state')}
+              <a href={`https://support.token.im/hc/${getLocale()}/sections/360004052613`}>{t('more_details')}</a>
+            </p>
           </div>
         )
     }

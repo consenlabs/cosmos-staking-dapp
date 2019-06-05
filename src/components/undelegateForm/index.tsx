@@ -235,7 +235,7 @@ class CMP extends Component<Props, any> {
           </div>
         </div>
         <button disabled={disabled} className="form-button" onClick={this.onSubmit}>
-          <span>{t(isWithdraw ? 'withdraw_all' : 'undelegate')}</span>
+          <span>{t(isWithdraw ? 'withdraw_all' : 'withdraw')}</span>
         </button>
         {this.renderComment()}
         {this.renderSelectorModal()}

@@ -65,7 +65,9 @@ export default function device(state = initialState, action) {
         }
         return
       case types.UPDATE_VALIDATORS:
-        draft.validators = action.payload.validators
+        if (Array.isArray(action.payload.validators) && action.payload.validators.length) {
+          draft.validators = action.payload.validators
+        }
         return
       case types.UPDATE_DELEGATIONS:
         draft.delegations = action.payload.delegations

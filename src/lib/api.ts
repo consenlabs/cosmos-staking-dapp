@@ -219,14 +219,14 @@ export async function getValidators() {
   }).then(validators => validators.sort(sortValidators).map(
     (v, index) => {
       return { ...v, sortIndex: index }
-    })).catch(warnning)
+    })).catch(throwFn)
 }
 
 export async function getAtomPrice() {
   const host = getNetworkConfig().market
   const currency = getLocale() === 'zh' ? 'CNY' : 'USDT'
   const params = [{ "chainType": "COSMOS", "address": "uatom", currency }]
-  return rpc(host, `market.getPrice`, params).then(prices => prices || {}).catch(warnning)
+  return rpc(host, `market.getPrice`, params).then(prices => prices || {}).catch(throwFn)
 }
 
 export function getTxListByAddress(delegator: string, validator: string) {
@@ -240,16 +240,16 @@ export function getTxListByAddress(delegator: string, validator: string) {
       msgTypes.redelegate,
     ],
   }]
-  return rpc(getNetworkConfig().chainAPI, 'wallet.getMsgListByAddress', params).then(data => data || []).catch(warnning)
+  return rpc(getNetworkConfig().chainAPI, 'wallet.getMsgListByAddress', params).then(data => data || []).catch(throwFn)
 }
 
 export function getHashquarkRankList(address: string) {
   const params = [{
     address,
   }]
-  return rpc(getNetworkConfig().campaign, 'campaign.hashquarkRankList', params).then(data => data).catch(warnning)
+  return rpc(getNetworkConfig().campaign, 'campaign.hashquarkRankList', params).then(data => data).catch(throwFn)
 }
 
 export function getTradeTokenList() {
-  return rpc(getNetworkConfig().exchange, 'tokenlon.getTradeTokenList', {}).then(data => data).catch(warnning)
+  return rpc(getNetworkConfig().exchange, 'tokenlon.getTradeTokenList', {}).then(data => data).catch(throwFn)
 }

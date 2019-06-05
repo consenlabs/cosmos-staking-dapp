@@ -4,7 +4,7 @@ const networkConfig = {
     chainAPI: 'https://api.dev.tokenlon.im/v1/cosmos',
     market: 'https://dexapi.dev.tokenlon.im/rpc',
     campaign: 'https://biz.dev.tokenlon.im/rpc',
-    exchange: 'https://exchange.dev.tokenlon.im/rpc',
+    exchange: 'https://exchange-agent-staking.dev.tokenlon.im/rpc',
   },
   prod: {
     denom: 'uatom',

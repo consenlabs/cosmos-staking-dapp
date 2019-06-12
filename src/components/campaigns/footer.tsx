@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import dayjs from 'dayjs'
 import { isiPhoneX } from '../../lib/utils'
 import './index.scss'
 
@@ -21,7 +22,7 @@ class Footer extends Component<Props, any> {
     const day = Math.floor(seconds / (1000 * 60 * 60 * 24))
     const hour = Math.floor((seconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
     const minute = Math.floor((seconds % (1000 * 60 * 60)) / (1000 * 60))
-    const second = Math.floor((seconds % (1000 * 60))/ (1000))
+    const second = Math.floor((seconds % (1000 * 60)) / (1000))
     return {
       day,
       hour,
@@ -41,42 +42,45 @@ class Footer extends Component<Props, any> {
     if (this.tick) {
       clearInterval(this.tick)
     }
-  }  
+  }
 
   render() {
     const { day, hour, minute, second, isOver } = this.state
-    const { t } = this.props
+    const { t, time } = this.props
 
     const iPhoneX = isiPhoneX()
     const style = {
       height: iPhoneX ? 80 : 60,
       paddingBottom: iPhoneX ? 20 : 0,
     }
+
+    const end = dayjs.unix(time).format('YYYY-MM-DD HH:mm')
+
     return (
       <footer className="footer flex-row-between" style={style}>
         {isOver ? (
           <div className="campaign-timing">
-            <span>{t('campaign_over')}</span>
+            <span>{t('campaign_over', end)}</span>
           </div>
         ) : (
-          <div>
-            <p className="end-time">{t('end_time')}</p>
-            <div className="clock">
-              <div>{day}</div>
-              <span>{t('day')}</span>
-              <div>{hour}</div>
-              <span>:</span>
-              <div>{minute}</div>
-              <span>:</span>
-              <div>{second}</div>
+            <div>
+              <p className="end-time">{t('end_time')}</p>
+              <div className="clock">
+                <div>{day}</div>
+                <span>{t('day')}</span>
+                <div>{hour}</div>
+                <span>:</span>
+                <div>{minute}</div>
+                <span>:</span>
+                <div>{second}</div>
+              </div>
             </div>
-          </div>
-        )}
+          )}
         <button
           disabled={isOver}
           onClick={this.delegateNow}
           style={isOver ? { color: '#d2d4dd' } : {}}
-        >{isOver ?t('campaign_over_button') : t('delegate_now')}</button>
+        >{isOver ? t('campaign_over_button') : t('delegate_now')}</button>
       </footer>
     )
   }

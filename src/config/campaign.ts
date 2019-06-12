@@ -6,7 +6,7 @@ export default [
     operator_address: 'cosmosvaloper1cgh5ksjwy2sd407lyre4l3uj2fdrqhpkzp06e6',
     duration: {
       start: 1559289600,
-      end: 1560506400,
+      end: 1560160800,
     },
     imgs: {
       zh: {
@@ -56,7 +56,7 @@ export default [
         state_desc2: '2. 一重礼「单人奖励」公式中，总委托代币为活动期间通过 imToken 委托给 HashQuark ATOM 数量的总和；',
         delegate_now: '立即委托',
         end_time: '距活动结束',
-        campaign_over: '活动截止至 2019-06-14 18:00 已结束，感谢参与！',
+        campaign_over: '活动截止至 $s 已结束，感谢参与！',
         campaign_over_button: '活动结束',
         day: '天',
         success_delegate: '已成功委托 $s ATOM',
@@ -91,8 +91,8 @@ export default [
         state_desc2: '2. The ATOMs a single user will be rewarded with are calculated by the amount staked by the user devided by the total amount staked by all users to Hashquark through imToken during the activity period;',
         delegate_now: 'Delegate now',
         end_time: 'Time until event ends',
-        campaign_over: 'The event ended at 14th June, 10:00am UTC. Thank you for your participation.',
-        campaign_over_button: 'Event ended.',
+        campaign_over: 'The event ended at $s. Thank you for your participation.',
+        campaign_over_button: 'Event ended',
         day: 'day',
         success_delegate: '$s ATOM has been successfully delegated.',
         success_delegate_desc: 'Airdrops will be distributed after the event. Stay tuned!',

@@ -6,7 +6,7 @@ export default [
     operator_address: 'cosmosvaloper1cgh5ksjwy2sd407lyre4l3uj2fdrqhpkzp06e6',
     duration: {
       start: 1559289600,
-      end: 1560160800,
+      end: 1560506400,
     },
     imgs: {
       zh: {

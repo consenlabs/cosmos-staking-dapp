@@ -92,7 +92,7 @@ export default [
         state_desc2: '2. The ATOMs a single user will be rewarded with are calculated by the amount staked by the user devided by the total amount staked by all users to Hashquark through imToken during the activity period;',
         delegate_now: 'Delegate now',
         end_time: 'Time until event ends',
-        campaign_over: 'The event has ended.',
+        campaign_over: 'The event has ended!',
         campaign_over_button: 'View validators',
         day: 'day',
         success_delegate: '$s ATOM has been successfully delegated.',

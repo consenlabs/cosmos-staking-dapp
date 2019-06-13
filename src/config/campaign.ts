@@ -64,7 +64,6 @@ export default [
         confirm: '确认',
         tx_pending: '交易正在打包',
         data_loading: '数据加载中',
-        view_validator: '查看验证节点',
       },
       en: {
         delegated: 'My Delegated during the event',
@@ -93,14 +92,13 @@ export default [
         delegate_now: 'Delegate now',
         end_time: 'Time until event ends',
         campaign_over: 'The event has ended!',
-        campaign_over_button: 'View validators',
+        campaign_over_button: 'View validator',
         day: 'day',
         success_delegate: '$s ATOM has been successfully delegated.',
         success_delegate_desc: 'Airdrops will be distributed after the event. Stay tuned!',
         confirm: 'Confirm',
         tx_pending: 'Transaction Pending',
         data_loading: 'Loading ...',
-        view_validator: 'View validators',
       },
     },
   }

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import dayjs from 'dayjs'
 import { isiPhoneX } from '../../lib/utils'
 import './index.scss'
 
@@ -46,7 +45,7 @@ class Footer extends Component<Props, any> {
 
   render() {
     const { day, hour, minute, second, isOver } = this.state
-    const { t, time } = this.props
+    const { t } = this.props
 
     const iPhoneX = isiPhoneX()
     const style = {
@@ -54,13 +53,11 @@ class Footer extends Component<Props, any> {
       paddingBottom: iPhoneX ? 20 : 0,
     }
 
-    const end = dayjs.unix(time).format('YYYY-MM-DD HH:mm')
-
     return (
       <footer className="footer flex-row-between" style={style}>
         {isOver ? (
           <div className="campaign-timing">
-            <span>{t('campaign_over', end)}</span>
+            <span>{t('campaign_over')}</span>
           </div>
         ) : (
             <div>
@@ -77,9 +74,7 @@ class Footer extends Component<Props, any> {
             </div>
           )}
         <button
-          disabled={isOver}
           onClick={this.delegateNow}
-          style={isOver ? { color: '#d2d4dd' } : {}}
         >{isOver ? t('campaign_over_button') : t('delegate_now')}</button>
       </footer>
     )
@@ -87,9 +82,7 @@ class Footer extends Component<Props, any> {
 
   delegateNow = () => {
     const { isOver } = this.state
-    if (isOver) return
-
-    this.props.onDelegate()
+    this.props.onDelegate(isOver)
   }
 }
 

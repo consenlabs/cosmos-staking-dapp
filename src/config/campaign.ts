@@ -6,7 +6,7 @@ export default [
     operator_address: 'cosmosvaloper1cgh5ksjwy2sd407lyre4l3uj2fdrqhpkzp06e6',
     duration: {
       start: 1559289600,
-      end: 1560160800,
+      end: 1560506400,
     },
     imgs: {
       zh: {
@@ -91,7 +91,7 @@ export default [
         state_desc2: '2. The ATOMs a single user will be rewarded with are calculated by the amount staked by the user devided by the total amount staked by all users to Hashquark through imToken during the activity period;',
         delegate_now: 'Delegate now',
         end_time: 'Time until event ends',
-        campaign_over: 'The event ended at $s. Thank you for your participation.',
+        campaign_over: 'The event ended at $s.',
         campaign_over_button: 'Event ended',
         day: 'day',
         success_delegate: '$s ATOM has been successfully delegated.',

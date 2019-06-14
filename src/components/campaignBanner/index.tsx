@@ -14,7 +14,8 @@ function getBanner(size) {
     const current = Date.now()
     return current > (t.duration.start * 1000) && current < (t.duration.end * 1000)
   })
-  campaign = campaign || campaignConfig[campaignConfig.length - 1]
+  // show previous event for now
+  campaign = campaign || campaignConfig[1]
   return {
     img: campaign.imgs[locale][size],
     url: campaign.activity.campaignUrl,

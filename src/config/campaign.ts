@@ -22,8 +22,8 @@ export default [
         zh: 'HyperBlocks - 限时免手续费',
         en: 'HyperBlocks - Stake for Free',
       },
-      url: '/validator/cosmosvaloper1ul2me6vukg2vac2p6ltxmqlaa7jywdgt8q76ag',
-      link: false,
+      url: 'https://support.token.im/hc/__locale__/articles/360024814933',
+      campaignUrl: '/validator/cosmosvaloper1ul2me6vukg2vac2p6ltxmqlaa7jywdgt8q76ag',
     },
   },
   {
@@ -55,7 +55,7 @@ export default [
         en: 'You are invited to win 2000 ATOM',
       },
       url: '/campaign/hashquark',
-      link: true,
+      campaignUrl: '/campaign/hashquark'
     },
     locales: {
       zh: {

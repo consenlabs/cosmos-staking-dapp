@@ -17,7 +17,7 @@ function getBanner(size) {
   campaign = campaign || campaignConfig[campaignConfig.length - 1]
   return {
     img: campaign.imgs[locale][size],
-    url: campaign.activity.url,
+    url: campaign.activity.campaignUrl,
   }
 }
 

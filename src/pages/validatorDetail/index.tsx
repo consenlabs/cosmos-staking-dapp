@@ -188,6 +188,8 @@ class Page extends Component<Props, any> {
     const end = dayjs.unix(v.duration.end * 1).format('YYYY/MM/DD HH:mm')
     const isOver = Date.now() > v.duration.end * 1000
 
+    // box hide after 26 hours until campaign over
+    // 6.15 20:00
     if (isOver && Date.now() > (v.duration.end + 60 * 60 * 26) * 1000) {
       return null
     }
@@ -198,7 +200,7 @@ class Page extends Component<Props, any> {
           <span>{t('activity')}</span>
         </p>
         <div className="box" onClick={() => {
-          if (activity.url && activity.link) {
+          if (activity.url) {
             if (activity.url.startsWith('http')) {
               window.location.href = activity.url.replace(/__locale__/, locale)
             } else {

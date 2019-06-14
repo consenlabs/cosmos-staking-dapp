@@ -190,7 +190,7 @@ class Page extends Component<Props, any> {
 
     // box hide after 26 hours until campaign over
     // 6.15 20:00
-    if (isOver && Date.now() > (v.duration.end + 60 * 60 * 26) * 1000) {
+    if (isOver && Date.now() > (v.duration.end + 60 * 60 * 24 * 30) * 1000) {
       return null
     }
 

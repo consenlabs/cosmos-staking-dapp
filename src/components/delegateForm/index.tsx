@@ -13,7 +13,6 @@ import msgTypes from '../../lib/msgTypes'
 import logger from '../../lib/logger'
 import modalBackSVG from '../../assets/modal-back.svg'
 import Arrow from '../../assets/arrow.svg'
-import campaignConfig from '../../config/campaign'
 import buyAtomBigIcon from '../../assets/big-buy-atom.svg'
 import LOGO from '../../assets/cosmos.svg'
 
@@ -72,7 +71,7 @@ class CMP extends Component<Props, any> {
         onRequestClose={this.hideExchangeModal}
         styles={{ margin: '10px', bottom: isiPhoneX() ? '12px' : '0', borderRadius: '16px' }}
         appElement={document.body}>
-          <div className="reward-modal-inner">
+        <div className="reward-modal-inner">
           <img src={buyAtomBigIcon} alt="exchange" />
           <span>{t('exchange_atom')}</span>
           <div className="desc">{t('exchange_atom_desc')} </div>
@@ -356,18 +355,8 @@ class CMP extends Component<Props, any> {
         validatorId: validator.operator_address,
         timestamp: (Date.now() / 1000).toFixed(0)
       })
-      const campaign = campaignConfig.find(t => t.operator_address === validator.operator_address)
-      if (campaign && (campaign.duration.end * 1000) > Date.now()) {
-        // const state = history.location.state
-        // if (state && state.from === 'campaign') {
-        //   history.goBack()
-        // } else {
-        history.replace('/campaign/hashquark', { txHash })
-        // }
-      } else {
-        Toast.success(txHash, { heading: t('sent_successfully') })
-        history.goBack()
-      }
+      Toast.success(txHash, { heading: t('sent_successfully') })
+      history.goBack()
     }).catch(e => {
       if (e.errorCode !== 1001) {
         logger().track(logKey, { result: 'failed', message: e.message, ...logOpt })

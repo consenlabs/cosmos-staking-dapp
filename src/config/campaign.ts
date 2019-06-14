@@ -1,5 +1,32 @@
 export default [
   {
+    id: 'hyperblocks',
+    name: 'HyperBlocks',
+    operator_address: 'cosmosvaloper1ul2me6vukg2vac2p6ltxmqlaa7jywdgt8q76ag',
+    duration: {
+      start: 1560513600,
+      end: 1561996799,
+    },
+    imgs: {
+      zh: {
+        big: require('../assets/campaign/hyperblocks-zh-big.png'),
+        small: require('../assets/campaign/hyperblocks-zh-small.png')
+      },
+      en: {
+        big: require('../assets/campaign/hyperblocks-en-big.png'),
+        small: require('../assets/campaign/hyperblocks-en-small.png')
+      },
+    },
+    activity: {
+      name: {
+        zh: 'HyperBlocks - 限时免手续费',
+        en: 'HyperBlocks - Stake for Free',
+      },
+      url: 'https://support.token.im/hc/__locale__/articles/360024814933',
+      campaignUrl: '/validator/cosmosvaloper1ul2me6vukg2vac2p6ltxmqlaa7jywdgt8q76ag',
+    },
+  },
+  {
     id: 'hashquark',
     name: 'HashQuark',
     open: true,
@@ -28,6 +55,7 @@ export default [
         en: 'You are invited to win 2000 ATOM',
       },
       url: '/campaign/hashquark',
+      campaignUrl: '/campaign/hashquark'
     },
     locales: {
       zh: {
@@ -56,8 +84,8 @@ export default [
         state_desc2: '2. 一重礼「单人奖励」公式中，总委托代币为活动期间通过 imToken 委托给 HashQuark ATOM 数量的总和；',
         delegate_now: '立即委托',
         end_time: '距活动结束',
-        campaign_over: '活动截止至 2019-06-14 18:00 已结束，感谢参与！',
-        campaign_over_button: '活动结束',
+        campaign_over: '活动已结束，感谢参与!',
+        campaign_over_button: '查看验证节点',
         day: '天',
         success_delegate: '已成功委托 $s ATOM',
         success_delegate_desc: '空投将在活动结束后发放，感谢支持~',
@@ -91,8 +119,8 @@ export default [
         state_desc2: '2. The ATOMs a single user will be rewarded with are calculated by the amount staked by the user devided by the total amount staked by all users to Hashquark through imToken during the activity period;',
         delegate_now: 'Delegate now',
         end_time: 'Time until event ends',
-        campaign_over: 'The event ended at 14th June, 10:00am UTC. Thank you for your participation.',
-        campaign_over_button: 'Event ended.',
+        campaign_over: 'The event has ended!',
+        campaign_over_button: 'View validator',
         day: 'day',
         success_delegate: '$s ATOM has been successfully delegated.',
         success_delegate_desc: 'Airdrops will be distributed after the event. Stay tuned!',

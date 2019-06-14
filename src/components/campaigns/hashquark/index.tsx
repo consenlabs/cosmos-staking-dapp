@@ -12,7 +12,7 @@ import { pubsub } from 'lib/event'
 import logger from '../../../lib/logger'
 import dayjs from 'dayjs'
 
-const hashquark = campaignConfig[0]
+const hashquark = campaignConfig.find(t => t.id === 'hashquark') as any
 const locale = getLocale()
 
 interface Props {
@@ -220,10 +220,14 @@ class HashQuark extends Component<Props, any> {
     )
   }
 
-  onDelegate = () => {
+  onDelegate = (isOver) => {
     const { history } = this.props
     logger().track('go_validator_delegate', { moniker: 'hashquark' })
-    history.push(`/delegate/${hashquark.operator_address}`, { from: 'campaign' })
+    if (isOver) {
+      history.push(`/validator/${hashquark.operator_address}`, { from: 'campaign' })
+    } else {
+      history.push(`/delegate/${hashquark.operator_address}`, { from: 'campaign' })
+    }
   }
 }
 

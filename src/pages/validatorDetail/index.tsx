@@ -186,6 +186,13 @@ class Page extends Component<Props, any> {
 
     const start = dayjs.unix(v.duration.start * 1).format('YYYY/MM/DD HH:mm')
     const end = dayjs.unix(v.duration.end * 1).format('YYYY/MM/DD HH:mm')
+    const isOver = Date.now() > v.duration.end * 1000
+
+    // box hide after 26 hours until campaign over
+    // 6.15 20:00
+    if (isOver && Date.now() > (v.duration.end + 60 * 60 * 26) * 1000) {
+      return null
+    }
 
     return (
       <section>
@@ -205,7 +212,7 @@ class Page extends Component<Props, any> {
             <p>
               <span>{activity.name[locale]}</span>
             </p>
-            <span className="date">{`${start} - ${end}`}</span>
+            <span className="date">{isOver ? `(${t('campaign_over')})` : `${start} - ${end}`}</span>
           </div>
           <img src={Arrow} />
         </div>

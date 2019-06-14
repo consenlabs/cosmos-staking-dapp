@@ -1,5 +1,12 @@
 export default [
   {
+    operator_address: 'cosmosvaloper1ul2me6vukg2vac2p6ltxmqlaa7jywdgt8q76ag',
+    desc: {
+      zh: 'Hyperblocks 是全世界最安全且专业的 PoS 服务商之一，快使用你的 ATOMs 投票给我们来获得惊喜奖励吧！',
+      en: 'Delegate your ATOMs to earn great rewards. Secure and one of the first in the world - Hyperblocks Professional Proof-of-Stake Service!',
+    }
+  },
+  {
     operator_address: 'cosmosvaloper1cgh5ksjwy2sd407lyre4l3uj2fdrqhpkzp06e6',
     desc: {
       zh: 'HashQuark 是专注于 PoS、DPoS 以及其他共识机制公链的矿池，拥有专业的技术背景和丰富的经验。HashQuark 由香港金融科技公司 HashKey Group 出资成立。',

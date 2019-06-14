@@ -188,7 +188,7 @@ class Page extends Component<Props, any> {
     const end = dayjs.unix(v.duration.end * 1).format('YYYY/MM/DD HH:mm')
     const isOver = Date.now() > v.duration.end * 1000
 
-    if (isOver && Date.now() > (v.duration.end + 60 * 60 * 2) * 1000) {
+    if (isOver && Date.now() > (v.duration.end + 60 * 60 * 26) * 1000) {
       return null
     }
 

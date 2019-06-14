@@ -4,7 +4,7 @@ export default [
     name: 'HyperBlocks',
     operator_address: 'cosmosvaloper1ul2me6vukg2vac2p6ltxmqlaa7jywdgt8q76ag',
     duration: {
-      start: 1560513600,
+      start: 1561996799, // 1560513600
       end: 1561996799,
     },
     imgs: {

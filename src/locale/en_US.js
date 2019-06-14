@@ -75,7 +75,8 @@ const en_US = {
   state: 'Note',
   undelegate_state: 'Un-delegation (i.e. withdrawal) takes immediate effect, but un-delegated ATOM is locked, i.e. unavailable for any action - such as delegation or sending - for 21 days. You won\'t gain any rewards on this ATOM during this period.',
   redelegate_state: 'The re-delegation will take effect immediately, i.e. your re-delegated ATOM will earn rewards. But, it will be locked for 21 days, meaning you won\'t be able to re-delegation again for 21 days.',
-  more_details: 'More details here.'
+  more_details: 'More details here.',
+  campaign_over: 'The event has ended',
 }
 
 export default en_US

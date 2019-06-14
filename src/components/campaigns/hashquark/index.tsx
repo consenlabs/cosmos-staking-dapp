@@ -12,7 +12,7 @@ import { pubsub } from 'lib/event'
 import logger from '../../../lib/logger'
 import dayjs from 'dayjs'
 
-const hashquark = campaignConfig[0]
+const hashquark = campaignConfig.find(t => t.id === 'hashquark') as any
 const locale = getLocale()
 
 interface Props {

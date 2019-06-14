@@ -75,7 +75,8 @@ const zh_CN = {
   state: '说明',
   undelegate_state: '赎回委托需等待 21 天，同时赎回期间的委托不会产生收益。',
   redelegate_state: '更换委托立即生效，但再次更换委托将需要等待 21 天',
-  more_details: '更多详情'
+  more_details: '更多详情',
+  campaign_over: '活动已结束',
 }
 
 export default zh_CN

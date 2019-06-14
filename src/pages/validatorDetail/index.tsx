@@ -186,6 +186,11 @@ class Page extends Component<Props, any> {
 
     const start = dayjs.unix(v.duration.start * 1).format('YYYY/MM/DD HH:mm')
     const end = dayjs.unix(v.duration.end * 1).format('YYYY/MM/DD HH:mm')
+    const isOver = Date.now() > v.duration.end * 1000
+
+    if (isOver && Date.now() > (v.duration.end + 60 * 60 * 2) * 1000) {
+      return null
+    }
 
     return (
       <section>
@@ -193,7 +198,7 @@ class Page extends Component<Props, any> {
           <span>{t('activity')}</span>
         </p>
         <div className="box" onClick={() => {
-          if (activity.url) {
+          if (activity.url && activity.link) {
             if (activity.url.startsWith('http')) {
               window.location.href = activity.url.replace(/__locale__/, locale)
             } else {
@@ -205,7 +210,7 @@ class Page extends Component<Props, any> {
             <p>
               <span>{activity.name[locale]}</span>
             </p>
-            <span className="date">{`${start} - ${end}`}</span>
+            <span className="date">{isOver ? `(${t('campaign_over')})` : `${start} - ${end}`}</span>
           </div>
           <img src={Arrow} />
         </div>

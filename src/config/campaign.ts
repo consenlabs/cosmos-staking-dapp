@@ -1,5 +1,32 @@
 export default [
   {
+    id: 'hyperblocks',
+    name: 'HyperBlocks',
+    operator_address: 'cosmosvaloper1ul2me6vukg2vac2p6ltxmqlaa7jywdgt8q76ag',
+    duration: {
+      start: 1560513600,
+      end: 1561687200,
+    },
+    imgs: {
+      zh: {
+        big: require('../assets/campaign/hyperblocks-zh-big.png'),
+        small: require('../assets/campaign/hyperblocks-zh-small.png')
+      },
+      en: {
+        big: require('../assets/campaign/hyperblocks-en-big.png'),
+        small: require('../assets/campaign/hyperblocks-en-small.png')
+      },
+    },
+    activity: {
+      name: {
+        zh: 'HyperBlocks - 限时免手续费',
+        en: 'HyperBlocks - Stake for Free',
+      },
+      url: '/validator/cosmosvaloper1ul2me6vukg2vac2p6ltxmqlaa7jywdgt8q76ag',
+      link: false,
+    },
+  },
+  {
     id: 'hashquark',
     name: 'HashQuark',
     open: true,
@@ -28,6 +55,7 @@ export default [
         en: 'You are invited to win 2000 ATOM',
       },
       url: '/campaign/hashquark',
+      link: true,
     },
     locales: {
       zh: {

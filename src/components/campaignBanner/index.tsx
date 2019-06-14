@@ -10,10 +10,14 @@ interface Props {
 
 function getBanner(size) {
   const locale = getLocale()
-  const hashquark = campaignConfig[0]
+  let campaign = campaignConfig.find((t) => {
+    const current = Date.now()
+    return current > (t.duration.start * 1000) && current < (t.duration.end * 1000)
+  })
+  campaign = campaign || campaignConfig[campaignConfig.length - 1]
   return {
-    img: hashquark.imgs[locale][size],
-    id: hashquark.id,
+    img: campaign.imgs[locale][size],
+    url: campaign.activity.url,
   }
 }
 
@@ -27,9 +31,9 @@ class CMP extends Component<Props, any> {
   }
 
   render() {
-    const { img, id } = this.state
-    if (!id) return null
-    return <Link className="banner" to={{ pathname: `/campaign/${id}`, state: { size: this.props.size }}}>
+    const { img, url } = this.state
+    if (!url) return null
+    return <Link className="banner" to={{ pathname: url, state: { size: this.props.size } }}>
       <div>
         <img src={img} alt="staking" />
       </div>

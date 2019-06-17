@@ -2,8 +2,8 @@ export default [
   {
     operator_address: 'cosmosvaloper1ul2me6vukg2vac2p6ltxmqlaa7jywdgt8q76ag',
     desc: {
-      zh: 'Hyperblocks 是全世界最安全且专业的 PoS 服务商之一，快使用你的 ATOMs 投票给我们来获得惊喜奖励吧！',
-      en: 'Delegate your ATOMs to earn great rewards. Secure and one of the first in the world - Hyperblocks Professional Proof-of-Stake Service!',
+      zh: 'HyperBlocks 从 2013 年开始注重区块链生态的建设，并且成为了亚洲最大的挖矿设施之一。HyperBlocks 一直专注区块链生态，并着力推动区块链技术的发展。它是最早支持 Cosmos，Tezos，TomoChain 的公司之一，可以说，HyperBlocks 是全球首批专注于 Proof of Stake 协议的公司。目前，HyperBlocks 成为 Wax，Fantom 以及 Aelf 等项目的最大节点。',
+      en: 'HyperBlocks is in the blockchain ecosystem since 2013 and ran one of the biggest mining facilities in Asia. They are among the first companies in the world fully focused on Proof of Stake protocols and try everyday to do their best to help the ecosystem grow and advance blockchain technologies. HyperBlocks is one of the first companies in the world supporting Cosmos, Tezos, TomoChain and will run the biggest nodes for Wax, Fantom, Aelf and many other blockchains.',
     }
   },
   {

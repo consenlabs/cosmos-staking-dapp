@@ -187,6 +187,9 @@ class Page extends Component<Props, any> {
     const start = dayjs.unix(v.duration.start * 1).format('YYYY/MM/DD HH:mm')
     const end = dayjs.unix(v.duration.end * 1).format('YYYY/MM/DD HH:mm')
     const isOver = Date.now() > v.duration.end * 1000
+    const isStarted = Date.now() > v.duration.start * 1000
+
+    if (!isStarted) return null
 
     return (
       <section>

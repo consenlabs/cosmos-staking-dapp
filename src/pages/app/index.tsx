@@ -110,7 +110,7 @@ class App extends Component<Props> {
 
       api.getAccount(address).then(accountInfo => {
         const balance = utils.getBalanceFromAccount(accountInfo)
-        updateAccount({ ...accountInfo, balance })
+        updateAccount({ ...accountInfo, balance, address })
       }).catch(console.warn)
 
       api.getDelegations(address).then(delegations => {

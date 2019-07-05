@@ -153,25 +153,56 @@
     justify-content: center;
     padding: 7px 15px;
     background-color: rgba(25, 27, 49, 0.85);
-    a {
+    .btn {
       flex: 1;
-      height: 45px;
+      height: 46px;
+      line-height: 46px;
       border-radius: 8px;
-      &:first-child {
-        margin-right: 15px;
-        background-color: #01c6d0;
-      }
-      &:last-child {
-        background-color: #098de6;
-      }
+      margin-right: 15px;
+      background-color: #098de6;
       font-family: 'PingFang SC';
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 500;
-      line-height: 45px;
       letter-spacing: 0.3px;
       text-align: center;
       color: #ffffff;
       text-decoration: none;
+    }
+
+    .toolbar-row {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      background: #FAFBFC;
+      // border-top: 0.5px solid #D2D4DD;
+
+      a {
+        flex: 1;
+        height: 54px;
+        line-height: 54px;
+        box-sizing: border-box;
+        background: #FAFBFC;
+        font-size: 13px;
+        text-align: center;
+        color: #43454F;
+
+        img {
+          vertical-align: middle;
+        }
+
+        span {
+          vertical-align: middle;
+          padding-left: 6px;
+        }
+      }
+
+      .vertical-line {
+        height: 18px;
+        width: 1px;
+        background-color: #D2D4DD;
+      }
+
     }
   }
 

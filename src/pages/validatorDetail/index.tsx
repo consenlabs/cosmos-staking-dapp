@@ -15,6 +15,9 @@ import bannerConfig from '../../config/banner'
 import campaignConfig from '../../config/campaign'
 import descConfig from '../../config/desc'
 import Arrow from '../../assets/arrow.svg'
+import DELETATE from '../../assets/delegate.svg'
+import REDELEGATE from '../../assets/redelegate.svg'
+import WITHDRAW from '../../assets/withdraw.svg'
 import dayjs from 'dayjs'
 
 interface Props {
@@ -163,14 +166,7 @@ class Page extends Component<Props, any> {
 
         {this.renderTxs()}
 
-        <div className="toolbar" style={{ paddingBottom: isiPhoneX() ? 40 : 0 }}>
-          <Link to={`/undelegate/${v.operator_address}`}>
-            <span>{t('withdraw')}</span>
-          </Link>
-          <Link to={`/delegate/${v.operator_address}`}>
-            <span>{t('delegate')}</span>
-          </Link>
-        </div>
+        {this.renderToolbar()}
       </div>
     )
   }
@@ -260,6 +256,44 @@ class Page extends Component<Props, any> {
       </section>
     )
 
+  }
+
+  renderToolbar() {
+    const { match, validators, delegations } = this.props
+    const id = match.params.id
+    const d = delegations.find(d => d.validator_address === id)
+
+    if (!d) {
+      const v = validators.find(v => v.operator_address === id)
+      return (
+        <div className="toolbar" style={{ paddingBottom: isiPhoneX() ? 40 : 0 }}>
+          <Link to={`/delegate/${v.operator_address}`} className="btn">
+            <span>{t('delegate')}</span>
+          </Link>
+        </div>
+      )
+    }
+
+    return (
+      <div className="toolbar" style={{ padding: 0 }}>
+        <div className="toolbar-row" style={{ paddingBottom: isiPhoneX() ? 40 : 0 }}>
+          <Link to={`/delegate/${d.validator_address}`}>
+            <img src={DELETATE} alt="delegate" />
+            <span>{t('delegate')}</span>
+          </Link>
+          <div className="vertical-line"></div>
+          <Link to={`/undelegate/${d.validator_address}`}>
+            <img src={REDELEGATE} alt="redelegate" />
+            <span>{t('redelegate')}</span>
+          </Link>
+          <div className="vertical-line"></div>
+          <Link to={`/undelegate/${d.validator_address}`}>
+            <img src={WITHDRAW} alt="delegate" />
+            <span>{t('withdraw')}</span>
+          </Link>
+        </div>
+      </div>
+    )
   }
 }
 

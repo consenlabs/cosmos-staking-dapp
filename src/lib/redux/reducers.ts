@@ -53,6 +53,7 @@ const initialState = {
       "xChainAddress": "uatom"
     }
   },
+  unbondingDelegations: [],
 }
 
 export default function device(state = initialState, action) {
@@ -97,6 +98,8 @@ export default function device(state = initialState, action) {
         return
       case types.UPDATE_EXCHANGE_TOKEN:
         draft.exchangeToken = action.payload
+      case types.UPDATE_UNBONDING_DELEGATIONS:
+        draft.unbondingDelegations = action.payload
       default:
         return draft
     }

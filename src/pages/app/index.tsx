@@ -9,7 +9,7 @@ import Delegate from '../delegate'
 import UnDelegate from '../undelegate'
 import Vote from '../vote'
 import './index.scss'
-import { updateValidators, updateAccount, updateDelegations, updateRedelegations, updateValidatorRewards, updateAtomPrice, addPendingTx, updateExchangeToken } from 'lib/redux/actions'
+import { updateValidators, updateAccount, updateDelegations, updateRedelegations, updateValidatorRewards, updateAtomPrice, addPendingTx, updateExchangeToken, updateUnbondingDelegations } from 'lib/redux/actions'
 import * as api from 'lib/api'
 import * as sdk from 'lib/sdk'
 import * as utils from 'lib/utils'
@@ -28,6 +28,7 @@ interface Props {
   updateAtomPrice: (value: any) => any
   addPendingTx: (value: any) => any
   updateExchangeToken: (value: any) => any
+  updateUnbondingDelegations: (value: any) => any
 }
 
 class App extends Component<Props> {
@@ -79,7 +80,7 @@ class App extends Component<Props> {
   }
 
   updateAsyncData = () => {
-    const { updateAccount, updateDelegations, updateRedelegations, updateValidators, updateValidatorRewards, updateAtomPrice } = this.props
+    const { updateAccount, updateDelegations, updateRedelegations, updateValidators, updateValidatorRewards, updateAtomPrice, updateUnbondingDelegations } = this.props
 
     if (this.polling) clearTimeout(this.polling)
 
@@ -104,7 +105,10 @@ class App extends Component<Props> {
         updateAccount({ rewardBalance: b })
       }).catch(console.warn)
 
-      api.getUnbondingDelegations(address).then(utils.getUnbondingBalance).then(b => {
+      api.getUnbondingDelegations(address).then(data => {
+        updateUnbondingDelegations(data)
+        return data
+      }).then(utils.getUnbondingBalance).then(b => {
         updateAccount({ refundingBalance: b })
       }).catch(console.warn)
 
@@ -174,6 +178,7 @@ const mapDispatchToProps = {
   updateAtomPrice,
   addPendingTx,
   updateExchangeToken,
+  updateUnbondingDelegations,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

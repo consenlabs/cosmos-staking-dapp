@@ -4,15 +4,30 @@ import { withRouter } from 'react-router-dom'
 import { selectValidators, selectPool } from '../../lib/redux/selectors'
 import ValidatorCard from '../../components/validatorCard'
 import Loading from '../../components/loading'
+import { t } from '../../lib/utils'
+import SORT from '../../assets/sort.svg'
+import SEARCH from '../../assets/search.svg'
+import ActionSheet from '../../components/actionsheet'
+import { updateSortby } from '../../lib/redux/actions'
+import { selectSortby } from '../../lib/redux/selectors'
 import './index.scss'
 
 interface Props {
   validators: any[]
   pool: any
   sortBy: string
+  updateSortby: any
 }
 
-class Page extends Component<Props> {
+class Page extends Component<Props, any> {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      keyword: '',
+      actionsheetVisible: false,
+    }
+  }
 
   componentDidMount() {
 
@@ -20,7 +35,58 @@ class Page extends Component<Props> {
 
 
   render() {
+    const { actionsheetVisible } = this.state
+    return (
+      <div className="validators-wrap">
+        {this.renderBar()}
+        {this.renderList()}
+        {actionsheetVisible && (
+          <ActionSheet
+            options={['delegators', 'bonded_tokens', 'yield'].map(o => ({ locale: t(o), key: o }))}
+            title={t('sort')}
+            close={() => this.setState({ actionsheetVisible: false })}
+            onSelect={(option) => this.props.updateSortby(option)}
+          />
+        )}
+      </div>
+    )
+  }
+
+  renderBar() {
+    return (
+      <div className="search-bar">
+        {this.renderSearch()}
+        {this.renderSort()}
+      </div>
+    )
+  }
+
+  renderSearch() {
+    const { keyword } = this.state
+    return (
+      <div className="search-wrap">
+        <img className="search-icon" src={SEARCH} alt="search" />
+        <input
+          type="text"
+          placeholder={t('search_validator')}
+          value={keyword}
+          onChange={this.onChange}
+        />
+      </div>
+    )
+  }
+
+  renderSort = () => {
+    return (
+      <div className="sort-bar" onClick={() => this.setState({ actionsheetVisible: true })}>
+        <img src={SORT} alt="sort" />
+      </div>
+    )
+  }
+
+  renderList() {
     const { validators, pool, sortBy } = this.props
+    const { keyword } = this.state
 
     if (!validators || !validators.length) return <Loading />
 
@@ -38,7 +104,7 @@ class Page extends Component<Props> {
       delegators: 'delegators',
     }[sortBy]
 
-    const sortedList = bondedValidators.sort((a, b) => {
+    let sortedList = bondedValidators.sort((a, b) => {
 
       // if annualized_returns is same, sort by delegators
       if (sortBy === 'yield' && a[sortKey] === b[sortKey]) {
@@ -47,24 +113,40 @@ class Page extends Component<Props> {
       return b[sortKey] - a[sortKey] > 0 ? 1 : -1
     })
 
+    // filter search validator
+    if (keyword) {
+      sortedList = sortedList.filter(v => {
+        return (new RegExp(keyword, 'ig')).test(v.description.moniker)
+      })
+    }
+
     return (
       <div className="validator-list">
         {
-          sortedList.map(v => {
-            return <ValidatorCard validator={v} key={v.operator_address} pool={pool} />
+          sortedList.map((v, i) => {
+            return <ValidatorCard validator={v} key={v.operator_address} pool={pool} index={i} />
           })
         }
       </div>
     )
+  }
+
+  onChange = (event) => {
+    this.setState({ keyword: event.target.value })
   }
 }
 
 const mapStateToProps = state => {
   return {
     validators: selectValidators(state),
-    pool: selectPool(state)
+    pool: selectPool(state),
+    sortBy: selectSortby(state),
   }
 }
 
+const mapDispatchToProps = {
+  updateSortby,
+}
 
-export default withRouter(connect(mapStateToProps)(Page))
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Page))

@@ -1,3 +1,40 @@
 .validators {
     padding: 0 10px;
 }
+
+.search-bar {
+    display: flex;
+    flex-direction: row;
+    background: #FAFBFC;
+    border-radius: 4px 4px 0px 0px;
+    padding: 6px 9px;
+}
+
+.search-wrap {
+    position: relative;
+    display: flex;
+    flex: 1;
+
+    input {
+        flex: 1;
+        box-sizing: border-box;
+        height: 32px;
+        background: #FFFFFF;
+        border: 0.5px solid #D2D4DD;
+        border-radius: 4px;
+        padding-left: 26px;
+        outline: none;
+        box-shadow: none;
+        -webkit-appearance: none;
+    }
+
+    .search-icon {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    }
+}
+
+.sort-bar {
+    padding: 0 5px 0 12px;
+}

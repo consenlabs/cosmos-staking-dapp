@@ -5,12 +5,13 @@
   justify-content: flex-start;
   height: 41px;
   padding: 15px;
-  margin-top: 10px;
-  border-radius: 4px;
-  box-shadow: 0 2px 8px 0 #00000019;
+  border: 0.5px solid #EAECF6;
   background-color: #ffffff;
   text-decoration: none;
   position: relative;
+  &.odd-row {
+      background: #FAFBFC;
+  }
   .v-left {
       flex: 1;
       height: 42px;

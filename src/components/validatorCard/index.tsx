@@ -9,6 +9,7 @@ interface Props {
   validator: any
   pool: any
   isHideBadge?: boolean
+  index: number
 }
 
 class CMP extends Component<Props> {
@@ -17,12 +18,12 @@ class CMP extends Component<Props> {
 
   render() {
 
-    const { validator, isHideBadge } = this.props
+    const { validator, isHideBadge, index } = this.props
     const v = validator
     // const totalPoolBondedTokens = pool.bonded_tokens
     // const percent = atom(v.tokens) / atom(totalPoolBondedTokens)
 
-    return <Link className="validator" to={`/validator/${v.operator_address}`}>
+    return <Link className={`validator ${index % 2 === 0 ? 'even-row' : 'odd-row'}`} to={`/validator/${v.operator_address}`}>
       {!isHideBadge && <div className="validator-rank-badge">{v.sortIndex + 1}</div>}
       <ValidatorLogo url={v.description.logo} />
       <div className="v-left">

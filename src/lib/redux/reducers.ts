@@ -98,8 +98,10 @@ export default function device(state = initialState, action) {
         return
       case types.UPDATE_EXCHANGE_TOKEN:
         draft.exchangeToken = action.payload
+        return
       case types.UPDATE_UNBONDING_DELEGATIONS:
         draft.unbondingDelegations = action.payload
+        return
       default:
         return draft
     }

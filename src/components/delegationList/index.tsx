@@ -19,7 +19,7 @@ class CMP extends Component<Props> {
   componentDidMount() {
   }
 
-  renderItem(d, v, index) {
+  renderItem = (d, v, index) => {
     if (!v) return null
 
     const { validatorRewards, unbondingDelegations } = this.props

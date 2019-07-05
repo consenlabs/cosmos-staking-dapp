@@ -8,11 +8,8 @@ import { selectAccountInfo, selectDelegations, selectValidatorRewards, selectExc
 import './index.scss'
 import Modal from '../../components/modal'
 import withdrawIcon from '../../assets/withdraw.svg'
-import withdrawBigIcon from '../../assets/big-withdraw.svg'
 import compoundIcon from '../../assets/compound.svg'
-import compoundBigIcon from '../../assets/big-compound.svg'
 import buyAtomIcon from '../../assets/buy-atom.svg'
-import buyAtomBigIcon from '../../assets/big-buy-atom.svg'
 
 import getNetworkConfig from '../../config/network'
 import logger from '../../lib/logger'
@@ -42,7 +39,7 @@ class CMP extends Component<Props> {
 
   showModal = (actionType) => {
     const actions = ['submit_withdraw_all', 'submit_compound_all', 'submit_exchange_atom']
-    
+
     logger().track(actions[actionType], { action: 'click' })
 
     this.setState({ actionType, modalVisible: true })
@@ -207,7 +204,7 @@ class CMP extends Component<Props> {
     const { feeAmount } = getFeeParamsByMsgs(msgs)
 
     return <div className="reward-modal-inner">
-      <img src={withdrawBigIcon} alt="withdraw-all" />
+      <img src={withdrawIcon} alt="withdraw-all" />
       <span>{t('withdraw_reward')}</span>
       <div className="desc">{t('withdraw_reward_desc', `${fAtom(account.rewardBalance)} ATOM`, `${fAtom(feeAmount)} ATOM`)}</div>
       <div className="buttons">
@@ -223,7 +220,7 @@ class CMP extends Component<Props> {
     const { feeAmount } = getFeeParamsByMsgs(msgs)
 
     return <div className="reward-modal-inner">
-      <img src={compoundBigIcon} alt="compound" />
+      <img src={compoundIcon} alt="compound" />
       <span>{t('reinvest_reward')}</span>
       <div className="desc">{t('reinvest_reward_desc', `${fAtom(account.rewardBalance)} ATOM`, `${fAtom(feeAmount)} ATOM`)} </div>
       <div className="buttons">
@@ -237,7 +234,7 @@ class CMP extends Component<Props> {
     const { account } = this.props
 
     return <div className="reward-modal-inner">
-      <img src={buyAtomBigIcon} alt="exchange" />
+      <img src={buyAtomIcon} alt="exchange" />
       <span>{t('exchange_atom')}</span>
       <div className="desc">{t('exchange_atom_desc')} </div>
       <div className="ex-address">{account.address} </div>

@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { withRouter, Link } from 'react-router-dom'
-import { selectValidators, selectAccountInfo, selectDelegations, selectValidatorRewards, selectPendingTxs } from '../../lib/redux/selectors'
+import { selectValidators, selectAccountInfo, selectDelegations, selectValidatorRewards, selectPendingTxs, selectUnbondingDelegations } from '../../lib/redux/selectors'
 import { removePendingTx } from 'lib/redux/actions'
-import { ellipsis, fAtom, fPercent, isiPhoneX, t, getLocale } from '../../lib/utils'
+import { ellipsis, fAtom, fPercent, isiPhoneX, t, getLocale, getUnbondingBalance, getDailyReward } from '../../lib/utils'
 import ValidatorLogo from '../../components/validatorLogo'
 import Loading from '../../components/loading'
 import TxList from '../../components/txList'
+import UnbondingList from '../../components/unbondingList'
 import './index.scss'
 import logger from '../../lib/logger'
 import linkSVG from '../../assets/link.svg'
@@ -28,6 +29,7 @@ interface Props {
   account: any
   match: any
   history: any
+  unbondingDelegations: any[]
   removePendingTx: (value: any) => any
 }
 
@@ -164,7 +166,7 @@ class Page extends Component<Props, any> {
 
         </section>
 
-        {this.renderTxs()}
+        {this.renderModalCard()}
 
         {this.renderToolbar()}
       </div>
@@ -240,6 +242,79 @@ class Page extends Component<Props, any> {
     )
   }
 
+  renderModalCard() {
+    return (
+      <div className="modal-card">
+        <div className="flag"><div /></div>
+        {this.renderDelegation()}
+        {this.renderUnbondingList()}
+        {this.renderTxs()}
+      </div>
+    )
+  }
+
+  renderDelegation() {
+    const { validators, match, validatorRewards, delegations, unbondingDelegations } = this.props
+    const id = match.params.id
+    const reward = validatorRewards[id] || 0
+    const unDels = unbondingDelegations.filter(un => un.validator_address === id)
+    const unbonding = getUnbondingBalance(unDels) || 0
+    const d = delegations.find(d => d.validator_address === id)
+    const v = validators.find(v => v.operator_address === id)
+
+    if (!v || !d) return null
+
+    return (
+      <div className="delegation">
+        <p className="title">{t('delegation_status')}</p>
+        <div className="bottom">
+          <div>
+            <div>
+              <span>{t('delegations')}</span>
+              <i>{fAtom(d.shares)}</i>
+            </div>
+
+            <div>
+              <span>{t('undelegating')}</span>
+              <i>{fAtom(unbonding)}</i>
+            </div>
+          </div>
+          <div className="split-line"></div>
+          <div>
+            <div>
+              <span>{t('rewards')}</span>
+              <i>{fAtom(reward)}</i>
+            </div>
+
+            <div>
+              <span>{t('rewards_per_day')}</span>
+              <i>{d.shares && v.annualized_returns ? `+${getDailyReward(d.shares, v.annualized_returns)}` : '~'}</i>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  renderUnbondingList() {
+    const { match, account, unbondingDelegations } = this.props
+    const id = match.params.id
+    const unBonding = unbondingDelegations.find(un => un.validator_address === id)
+
+    if (!unBonding || !unBonding.entries) return null
+
+    const entries = unBonding.entries
+    return (
+      <div className="unbonding-list">
+        <p className="title">
+          <span>{t('undelegating')}</span>
+          {entries.length >= 5 && <a href={`https://www.mintscan.io/account/${account.address}`}>{t('all')}</a>}
+        </p>
+        <UnbondingList entries={entries} />
+      </div>
+    )
+  }
+
   renderTxs() {
     const { txs } = this.state
     const { account } = this.props
@@ -250,7 +325,7 @@ class Page extends Component<Props, any> {
       <section className="list-area" style={{ 'paddingBottom': isiPhoneX() ? '100px' : '60px' }}>
         <p className="title">
           <span>{t('transactions')}</span>
-          {txs.length >= 100 && <a href={`https://www.mintscan.io/account/${account.address}`}>{t('all')}</a>}
+          {txs.length >= 5 && <a href={`https://www.mintscan.io/account/${account.address}`}>{t('all')}</a>}
         </p>
         <TxList txs={txs} />
       </section>
@@ -304,6 +379,7 @@ const mapStateToProps = state => {
     account: selectAccountInfo(state),
     validatorRewards: selectValidatorRewards(state),
     pendingTxs: selectPendingTxs(state),
+    unbondingDelegations: selectUnbondingDelegations(state),
   }
 }
 

@@ -78,6 +78,8 @@ const zh_CN = {
   more_details: '更多详情',
   campaign_over: '活动已结束',
   search_validator: '搜索验证节点',
+  delegation_status: '委托状态',
+  completion: '到账',
 }
 
 export default zh_CN

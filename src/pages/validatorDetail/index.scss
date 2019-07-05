@@ -262,3 +262,63 @@
     }
   }
 }
+
+.modal-card {
+  background-color: #fff;
+  padding: 6px 20px;
+  border-radius: 4px 4px 0px 0px;
+
+  .flag {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-bottom: 18px;
+    > div {
+      width: 54px;
+      height: 4px;
+      background: #EAECF6;
+      border-radius: 2px;
+    }
+  }
+
+  .split-line {
+    height: 0px;
+    margin: 12px 0;
+    border-bottom: 0.5px solid #D2D4DD;
+  }
+
+  .delegation {
+    border-bottom: 0.5px solid #D2D4DD;
+    .title {
+      font-family: PingFangSC;
+      font-size: 13px;
+      line-height: 22px;
+      color: #777A8C;
+      margin: 0;
+    }
+
+    .bottom {
+      padding: 15px 0px;
+      > div  {
+        display: flex;
+        > div:first-child {
+          width: 204px;
+        }
+      }
+      span {
+        display: block;
+        font-family: 'PingFang SC';
+        font-size: 11px;
+        letter-spacing: normal;
+        color: #98a2a9;
+      }
+      i {
+        margin-top: 5px;
+        font-size: 13px;
+        font-style: normal;
+        letter-spacing: normal;
+        color: #43454f;
+      }
+    }
+  }
+}

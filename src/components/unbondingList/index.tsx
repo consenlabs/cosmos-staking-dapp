@@ -11,7 +11,7 @@ class UnbondingList extends Component<Props> {
 
   renderItem(entry) {
 
-    const date = dayjs.unix(new Date(entry.completion_time).getTime()).format('YYYY-MM-DD HH:mm:ss')
+    const date = dayjs(entry.completion_time).format('YYYY-MM-DD HH:mm:ss')
 
     return <div className="entry-item">
       <div className="i-left">

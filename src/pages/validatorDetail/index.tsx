@@ -19,6 +19,7 @@ import Arrow from '../../assets/arrow.svg'
 import DELETATE from '../../assets/delegate.svg'
 import REDELEGATE from '../../assets/redelegate.svg'
 import WITHDRAW from '../../assets/withdraw.svg'
+import ARROW_BLUE from '../../assets/arrow-blue.svg'
 import dayjs from 'dayjs'
 
 interface Props {
@@ -265,7 +266,7 @@ class Page extends Component<Props, any> {
     if (!v || !d) return null
 
     return (
-      <div className="delegation">
+      <div className="delegation list-section">
         <p className="title">{t('delegation_status')}</p>
         <div className="bottom">
           <div>
@@ -304,13 +305,15 @@ class Page extends Component<Props, any> {
     if (!unBonding || !unBonding.entries) return null
 
     const entries = unBonding.entries
+    const MAX_LENGTH = 5
+
     return (
-      <div className="unbonding-list">
+      <div className="list-section">
         <p className="title">
           <span>{t('undelegating')}</span>
-          {entries.length >= 5 && <a href={`https://www.mintscan.io/account/${account.address}`}>{t('all')}</a>}
+          {entries.length >= MAX_LENGTH && <a href={`https://www.mintscan.io/account/${account.address}`}>{t('all')} <img src={ARROW_BLUE} alt="arrow" /></a>}
         </p>
-        <UnbondingList entries={entries} />
+        <UnbondingList entries={entries.slice(0, MAX_LENGTH)} />
       </div>
     )
   }
@@ -320,15 +323,16 @@ class Page extends Component<Props, any> {
     const { account } = this.props
 
     if (!txs || !txs.length) return null
+    const MAX_LENGTH = 5
 
     return (
-      <section className="list-area" style={{ 'paddingBottom': isiPhoneX() ? '100px' : '60px' }}>
+      <div className="list-section" style={{ 'paddingBottom': isiPhoneX() ? '100px' : '60px' }}>
         <p className="title">
           <span>{t('transactions')}</span>
-          {txs.length >= 5 && <a href={`https://www.mintscan.io/account/${account.address}`}>{t('all')}</a>}
+          {txs.length >= MAX_LENGTH && <a href={`https://www.mintscan.io/account/${account.address}`}>{t('all')} <img src={ARROW_BLUE} alt="arrow" /></a>}
         </p>
-        <TxList txs={txs} />
-      </section>
+        <TxList txs={txs.slice(0, MAX_LENGTH)} />
+      </div>
     )
 
   }

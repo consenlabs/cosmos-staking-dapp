@@ -11,7 +11,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      padding-left: 6px;
+      padding-left: 20px;
       font-family: 'PingFang SC';
       font-size: 15px;
       color: #fff;
@@ -20,6 +20,7 @@
         font-size: 12px;
         color: #949EA6;
         opacity: 0.8;
+        padding-left: 6px;
       }
     }
     i {

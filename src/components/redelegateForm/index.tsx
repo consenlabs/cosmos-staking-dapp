@@ -11,8 +11,6 @@ import { getFeeAmountByType } from '../../config/fee'
 import msgTypes from '../../lib/msgTypes'
 import logger from '../../lib/logger'
 
-const selectLabels = ['available_balance']
-
 interface Props {
   reward: any
   account: any
@@ -37,7 +35,6 @@ class CMP extends Component<Props, any> {
       selectingDelegation: false,
       sourceType: 0,
       sourceObject: {
-        key: selectLabels[0],
         value: d.shares,
       },
     }

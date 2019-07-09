@@ -244,6 +244,15 @@ class Page extends Component<Props, any> {
   }
 
   renderModalCard() {
+    const { txs } = this.state
+    const { validators, match, delegations, unbondingDelegations } = this.props
+    const id = match.params.id
+    const d = delegations.find(d => d.validator_address === id)
+    const v = validators.find(v => v.operator_address === id)
+    const unBonding = unbondingDelegations.find(un => un.validator_address === id)
+
+    if ((!txs || !txs.length) && (!v || !d) && (!unBonding || !unBonding.entries)) return null
+
     return (
       <div className="modal-card">
         <div className="flag"><div /></div>

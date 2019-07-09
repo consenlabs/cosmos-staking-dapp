@@ -54,6 +54,7 @@ const initialState = {
     }
   },
   unbondingDelegations: [],
+  selectedValidtor: null,
 }
 
 export default function device(state = initialState, action) {
@@ -101,6 +102,9 @@ export default function device(state = initialState, action) {
         return
       case types.UPDATE_UNBONDING_DELEGATIONS:
         draft.unbondingDelegations = action.payload
+        return
+      case types.UPDATE_SELECTED_VALIDATOR:
+        draft.selectedValidtor = action.payload
         return
       default:
         return draft

@@ -1,0 +1,43 @@
+.select-validator {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 50px;
+    border-radius: 4px;
+    background: #191B31;
+    border: solid 0.5px #ffffff2c;
+    margin-top: 10px;
+    span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding-left: 6px;
+      font-family: 'PingFang SC';
+      font-size: 15px;
+      color: #fff;
+
+      > span {
+        font-size: 12px;
+        color: #949EA6;
+        opacity: 0.8;
+      }
+    }
+    i {
+      margin-left: auto;
+      font-family: 'PingFang SC';
+      font-size: 13px;
+      font-style: normal;
+      line-height: 1.54;
+      letter-spacing: 0.2px;
+      color: #fff;
+    }
+    b {
+        width: 7px;
+        height: 7px;
+        margin: -3px 15px 0 12px;
+        transform: rotate(-135deg);
+        border: solid 1px #c2c8cc;
+        border-top: none;
+        border-right: none;
+    }
+  }

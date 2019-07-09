@@ -10,8 +10,12 @@
   text-decoration: none;
   position: relative;
   &.odd-row {
-      background: #FAFBFC;
+      background-color: #FAFBFC;
   }
+  &.selected {
+      background-color: rgba(236, 244, 253, 0.9);
+  }
+
   .v-left {
       flex: 1;
       height: 42px;

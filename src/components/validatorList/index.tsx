@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { withRouter } from 'react-router-dom'
-import { selectValidators, selectPool } from '../../lib/redux/selectors'
+import { selectValidators, selectPool, selectDelegations } from '../../lib/redux/selectors'
 import ValidatorCard from '../../components/validatorCard'
 import Loading from '../../components/loading'
-import { t } from '../../lib/utils'
+import { t, isiPhoneX } from '../../lib/utils'
 import SORT from '../../assets/sort.svg'
 import SEARCH from '../../assets/search.svg'
 import ActionSheet from '../../components/actionsheet'
@@ -14,9 +14,14 @@ import './index.scss'
 
 interface Props {
   validators: any[]
+  delegations: any[]
   pool: any
   sortBy: string
   updateSortby: any
+
+  isSelect?: boolean
+  currentValidator?: string
+  history?: any
 }
 
 class Page extends Component<Props, any> {
@@ -26,6 +31,7 @@ class Page extends Component<Props, any> {
     this.state = {
       keyword: '',
       actionsheetVisible: false,
+      selectedValidator: null,
     }
   }
 
@@ -40,6 +46,7 @@ class Page extends Component<Props, any> {
       <div className="validators-wrap">
         {this.renderBar()}
         {this.renderList()}
+        {this.renderToolbar()}
         {actionsheetVisible && (
           <ActionSheet
             options={['delegators', 'bonded_tokens', 'yield'].map(o => ({ locale: t(o), key: o }))}
@@ -85,8 +92,8 @@ class Page extends Component<Props, any> {
   }
 
   renderList() {
-    const { validators, pool, sortBy } = this.props
-    const { keyword } = this.state
+    const { validators, pool, sortBy, isSelect, currentValidator } = this.props
+    const { keyword, selectedValidator } = this.state
 
     if (!validators || !validators.length) return <Loading />
 
@@ -95,6 +102,11 @@ class Page extends Component<Props, any> {
      * only display the bonded validator (status === 2)
      */
     const bondedValidators = validators.filter(v => {
+      // filter current validator
+      if (isSelect) {
+        return !v.jailed && v.status === 2 && v.operator_address !== currentValidator
+      }
+
       return !v.jailed && v.status === 2
     })
 
@@ -123,22 +135,58 @@ class Page extends Component<Props, any> {
     return (
       <div className="validator-list">
         {
-          sortedList.map((v, i) => {
-            return <ValidatorCard validator={v} key={v.operator_address} pool={pool} index={i} />
-          })
+          sortedList.map((v, i) => <ValidatorCard
+            validator={v}
+            key={v.operator_address}
+            pool={pool}
+            index={i}
+            selectedValidator={selectedValidator}
+            onSelect={isSelect ? this.onSelect : null }
+          />)
         }
       </div>
     )
   }
 
+  renderToolbar() {
+    const { isSelect } = this.props
+    if (!isSelect) return null
+
+    const disabled = !this.state.selectedValidator
+
+    const xStyle = { marginBottom: isiPhoneX() ? 20 : 0 }
+
+    return (
+      <div className="toolbar">
+        <button disabled={disabled} className="form-button" onClick={this.onSubmit} style={xStyle}>
+          <span>{t('confirm')}</span>
+        </button>
+      </div>
+    )
+  }
+
   onChange = (event) => {
-    this.setState({ keyword: event.target.value })
+    this.setState({ keyword: event.target.value, selectedValidator: null })
+  }
+
+  onSelect = (validator) => {
+    this.setState({ selectedValidator: validator })
+  }
+
+  onSubmit = () => {
+    const { history, currentValidator } = this.props
+    const { selectedValidator } = this.state
+    const location = history.location
+
+    history.goBack()
+    history.replace(`/redelegate/${currentValidator}${location.search}&selected=${selectedValidator.operator_address}`)
   }
 }
 
 const mapStateToProps = state => {
   return {
     validators: selectValidators(state),
+    delegations: selectDelegations(state),
     pool: selectPool(state),
     sortBy: selectSortby(state),
   }

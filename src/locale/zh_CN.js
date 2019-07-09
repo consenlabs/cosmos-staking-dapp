@@ -80,6 +80,7 @@ const zh_CN = {
   search_validator: '搜索验证节点',
   delegation_status: '委托状态',
   completion: '到账',
+  select_validator: '更换委托至节点',
 }
 
 export default zh_CN

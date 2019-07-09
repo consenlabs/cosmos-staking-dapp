@@ -106,3 +106,10 @@ export const updateUnbondingDelegations = (unbondingDelegations) => {
     payload: unbondingDelegations
   }
 }
+
+export const updateSelectedValidator = (validator) => {
+  return {
+    type: types.UPDATE_SELECTED_VALIDATOR,
+    payload: validator
+  }
+}

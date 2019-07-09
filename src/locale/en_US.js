@@ -80,6 +80,7 @@ const en_US = {
   search_validator: 'Search validator',
   delegation_status: 'Delegation Status',
   completion: 'completion',
+  select_validator: 'select validator',
 }
 
 export default en_US

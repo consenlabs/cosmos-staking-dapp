@@ -361,7 +361,7 @@ class Page extends Component<Props, any> {
             <span>{t('delegate')}</span>
           </Link>
           <div className="vertical-line"></div>
-          <Link to={`/undelegate/${d.validator_address}`}>
+          <Link to={`/redelegate/${d.validator_address}`}>
             <img src={REDELEGATE} alt="redelegate" />
             <span>{t('redelegate')}</span>
           </Link>

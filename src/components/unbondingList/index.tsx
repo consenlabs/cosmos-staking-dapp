@@ -5,20 +5,21 @@ import { fAtom, t } from 'lib/utils'
 
 interface Props {
   entries: any[]
+  account: any
 }
 
 class UnbondingList extends Component<Props> {
 
   renderItem(entry) {
-
+    const { account } = this.props
     const date = dayjs(entry.completion_time).format('YYYY-MM-DD HH:mm:ss')
 
-    return <div className="entry-item">
+    return <a key={entry.completion_time} className="entry-item" href={`https://www.mintscan.io/account/${account.address}`}>
       <div className="i-left">
         <span>{`${fAtom(entry.balance)} ATOM`}</span>
         <i>{`${date} ${t('completion')}`}</i>
       </div>
-    </div>
+    </a>
   }
 
   render() {

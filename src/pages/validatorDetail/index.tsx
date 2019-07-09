@@ -322,7 +322,7 @@ class Page extends Component<Props, any> {
           <span>{t('undelegating')}</span>
           {entries.length >= MAX_LENGTH && <a href={`https://www.mintscan.io/account/${account.address}`}>{t('all')} <img src={ARROW_BLUE} alt="arrow" /></a>}
         </p>
-        <UnbondingList entries={entries.slice(0, MAX_LENGTH)} />
+        <UnbondingList entries={entries.slice(0, MAX_LENGTH)} account={account} />
       </div>
     )
   }

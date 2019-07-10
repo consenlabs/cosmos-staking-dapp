@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { withRouter, Link } from 'react-router-dom'
 import { selectValidators, selectAccountInfo, selectDelegations, selectValidatorRewards, selectPendingTxs, selectUnbondingDelegations } from '../../lib/redux/selectors'
-import { removePendingTx } from 'lib/redux/actions'
+import { removePendingTx, updateUnbondingDelegations } from 'lib/redux/actions'
 import { ellipsis, fAtom, fPercent, isiPhoneX, t, getLocale, getUnbondingBalance, getDailyReward } from '../../lib/utils'
 import ValidatorLogo from '../../components/validatorLogo'
 import Loading from '../../components/loading'
@@ -11,7 +11,7 @@ import UnbondingList from '../../components/unbondingList'
 import './index.scss'
 import logger from '../../lib/logger'
 import linkSVG from '../../assets/link.svg'
-import { getTxListByAddress } from '../../lib/api'
+import { getTxListByAddress, getUnbondingDelegations } from '../../lib/api'
 import bannerConfig from '../../config/banner'
 import campaignConfig from '../../config/campaign'
 import descConfig from '../../config/desc'
@@ -81,7 +81,17 @@ class Page extends Component<Props, any> {
 
   polling = () => {
     this.pollingTimer && clearInterval(this.pollingTimer)
-    this.pollingTimer = setInterval(() => this.updateTxs(this.props), 5000)
+    this.pollingTimer = setInterval(() => {
+      this.updateTxs(this.props)
+      this.updateUnbondingList()
+    }, 5000)
+  }
+
+  updateUnbondingList = () => {
+    const { account } = this.props
+    getUnbondingDelegations(account.address).then(data => {
+      updateUnbondingDelegations(data)
+    }).catch(console.warn)
   }
 
   updateTxs = (props) => {

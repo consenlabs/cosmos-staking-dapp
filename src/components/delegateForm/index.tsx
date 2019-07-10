@@ -247,7 +247,6 @@ class CMP extends Component<Props, any> {
           <span>{t('delegate')}</span>
         </button>
         {this.renderNotes()}
-        {this.renderDivider()}
         <div className="box" onClick={this.showExchangeModal}>
           <div>
             <p>

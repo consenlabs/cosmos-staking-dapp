@@ -40,6 +40,9 @@ interface Props {
  */
 const validatorTxsCache = {}
 
+//
+const OFFSET_HEIGHT = 80
+
 class Page extends Component<Props, any> {
 
   constructor(props) {
@@ -405,7 +408,7 @@ class Page extends Component<Props, any> {
     const lastScrollY = window.scrollY
 
     if (this.card) {
-      if (this.card.offsetTop - lastScrollY <= 80) {
+      if (this.card.offsetTop - lastScrollY <= OFFSET_HEIGHT) {
         if (!this.card.classList.contains('fixed')) {
           this.card.classList.add('fixed')
         }
@@ -416,9 +419,12 @@ class Page extends Component<Props, any> {
   }
 
   handleFlagClick = () => {
-    const offset = this.card.offsetTop - 80
-    if (offset >= 0) {
-      window.scrollTo(0, this.card.offsetTop - 80)
+    const offset = this.card.offsetTop - OFFSET_HEIGHT
+    const scrollHeight = document.body.scrollHeight
+    const wHeight = window.innerHeight
+
+    if (offset >= 0 && scrollHeight - wHeight > OFFSET_HEIGHT) {
+      window.scrollTo(0, offset)
     }
   }
 }

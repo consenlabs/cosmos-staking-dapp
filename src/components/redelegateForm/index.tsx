@@ -46,7 +46,7 @@ class CMP extends Component<Props, any> {
 
   render() {
     const { amount, sourceObject } = this.state
-    const disabled = !amount
+    const disabled = !amount || !sourceObject.key
     return (
       <div className="form-inner">
         <div className="form-header">

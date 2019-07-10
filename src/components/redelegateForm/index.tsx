@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import './index.scss'
 import { uatom, fAtom, createTxPayload, createRedelegateMsg, Toast } from 'lib/utils'
 import { sendTransaction } from 'lib/sdk'
@@ -74,23 +73,37 @@ class CMP extends Component<Props, any> {
   }
 
   renderSwitchValidator() {
-    const { validator } = this.props
-    const { amount, sourceObject } = this.state
+    const { sourceObject } = this.state
     const key = sourceObject.key
 
     return (
-      <Link className="select-validator" to={`/select-validator/${validator.operator_address}?amount=${amount}`}>
+      <div className="select-validator" onClick={this.handleSelect}>
         {
           key ? <span>{t(key)} <span>{ellipsis(sourceObject.validator_src_address)}</span></span> :
           <span>{t('select_validator')}</span>
         }
         <b></b>
-      </Link>
+      </div>
     )
   }
 
   getFeeAmount = () => {
     return getFeeAmountByType(msgTypes.redelegate)
+  }
+
+  handleSelect = () => {
+    const { history, validator, redelegations } = this.props
+    const { amount } = this.state
+    const redelegation = redelegations.find(r => r.validator_dst_address === validator.operator_address)
+    if (redelegation && Array.isArray(redelegation.entries)) {
+      // if completion_time is later than now, can't redelegate
+      if (redelegation.entries.some(e => new Date(e.completion_time).getTime() > new Date().getTime())) {
+        Toast.warn(t('redelegate_incompletion'), { hideAfter: 5 })
+        return
+      }
+    }
+    const url = `/select-validator/${validator.operator_address}?amount=${amount}`
+    history.push(url)
   }
 
   onSubmit = () => {

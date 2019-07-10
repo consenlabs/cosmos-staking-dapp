@@ -183,7 +183,7 @@ class CMP extends Component<Props> {
   doExchange = () => {
     const { exchangeToken, account } = this.props
     if (exchangeToken && exchangeToken.makerToken && exchangeToken.takerToken) {
-      logger().track('go_tokenlon_exchange', { page: 'home' })
+      logger().track('go_tokenlon_exchange', { page: 'home', result: 'confirm' })
       routeTo({
         screen: 'Tokenlon',
         passProps: {
@@ -250,7 +250,10 @@ class CMP extends Component<Props> {
 
     return (
       <div className="reward-toolbar">
-        <div onClick={() => { this.showModal(2) }}>
+        <div onClick={() => {
+          logger().track('go_tokenlon_exchange', { page: 'home' })
+          this.showModal(2)
+        }}>
           <img src={buyAtomIcon} alt="exchange_atom" />
           <p>{t('exchange_atom')}</p>
         </div>

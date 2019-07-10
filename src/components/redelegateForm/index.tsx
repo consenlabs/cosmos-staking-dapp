@@ -116,16 +116,17 @@ class CMP extends Component<Props, any> {
       return Toast.error(t(msg))
     }
 
+    const distAddress = sourceObject.validator_src_address
     const state = history.location.state
     const from = (state && state.from) ? state.from : 'detail'
-    const logOpt = { validator: validator.operator_address, moniker: validator.description.moniker, from }
+    const logOpt = { validator: validator.operator_address, moniker: validator.description.moniker, from, distValidator: distAddress }
     const logKey = 'submit_redelegate'
     logger().track(logKey, logOpt)
     const msgs = [
       createRedelegateMsg(
         address,
         validator.operator_address,
-        sourceObject.validator_src_address,
+        distAddress,
         uatom(amount),
         getNetworkConfig().denom)
     ]

@@ -1,6 +1,8 @@
 .validator-detail-page {
   display: flex;
   flex-direction: column;
+  padding-top: 40px;
+
   section {
     padding: 20px;
     padding-bottom: 0;
@@ -55,10 +57,16 @@
   }
   section:first-child {
     .top {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #191B31;
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
       text-decoration: none;
+      padding: 20px;
     .left {
         flex: 1;
         padding: 2px 0;
@@ -266,13 +274,25 @@
 .modal-card {
   background-color: #fff;
   padding: 6px 20px;
-  border-radius: 4px 4px 0px 0px;
   margin-top: 25px;
+  border-radius: 4px 4px 0px 0px;
+
+  &.fixed {
+    .flag {
+      position: fixed;
+      top: 80px;
+      left: 0;
+      right: 0;
+      padding-top: 6px;
+    }
+  }
 
   .flag {
+    background-color: #fff;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    border-radius: 4px 4px 0px 0px;
     padding-bottom: 18px;
     > div {
       width: 54px;

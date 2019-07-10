@@ -51,10 +51,12 @@ class Page extends Component<Props, any> {
   componentWillMount() {
     this.updateTxs(this.props)
     this.polling()
+    window.addEventListener('scroll', this.handleScroll, true)
   }
 
   componentWillUnmount() {
     this.pollingTimer && clearInterval(this.pollingTimer)
+    window.removeEventListener('scroll', this.handleScroll, true)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -78,6 +80,8 @@ class Page extends Component<Props, any> {
   }
 
   pollingTimer: any = null
+
+  card: any = null
 
   polling = () => {
     this.pollingTimer && clearInterval(this.pollingTimer)
@@ -264,7 +268,7 @@ class Page extends Component<Props, any> {
     if ((!txs || !txs.length) && (!v || !d) && (!unBonding || !unBonding.entries)) return null
 
     return (
-      <div className="modal-card">
+      <div className="modal-card" ref={(ref) => this.card = ref}>
         <div className="flag"><div /></div>
         {this.renderDelegation()}
         {this.renderUnbondingList()}
@@ -392,6 +396,20 @@ class Page extends Component<Props, any> {
         </div>
       </div>
     )
+  }
+
+  handleScroll = (_e) => {
+    const lastScrollY = window.scrollY
+
+    if (this.card) {
+      if (this.card.offsetTop - lastScrollY <= 80) {
+        if (!this.card.classList.contains('fixed')) {
+          this.card.classList.add('fixed')
+        }
+      } else {
+        this.card.classList.remove('fixed')
+      }
+    }
   }
 }
 

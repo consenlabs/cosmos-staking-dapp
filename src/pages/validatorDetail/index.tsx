@@ -270,9 +270,11 @@ class Page extends Component<Props, any> {
     return (
       <div className="modal-card" ref={(ref) => this.card = ref}>
         <div className="flag"><div /></div>
-        {this.renderDelegation()}
-        {this.renderUnbondingList()}
-        {this.renderTxs()}
+        <div className="card-inner">
+          {this.renderDelegation()}
+          {this.renderUnbondingList()}
+          {this.renderTxs()}
+        </div>
       </div>
     )
   }

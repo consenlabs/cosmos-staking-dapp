@@ -284,6 +284,7 @@
       left: 0;
       right: 0;
       padding-top: 6px;
+      padding-bottom: 18px;
     }
   }
 
@@ -293,13 +294,16 @@
     flex-direction: row;
     justify-content: center;
     border-radius: 4px 4px 0px 0px;
-    padding-bottom: 18px;
     > div {
       width: 54px;
       height: 4px;
       background: #EAECF6;
       border-radius: 2px;
     }
+  }
+
+  .card-inner {
+    padding-top: 18px;
   }
 
   .split-line {

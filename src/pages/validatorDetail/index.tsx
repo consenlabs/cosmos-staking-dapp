@@ -20,6 +20,7 @@ import DELETATE from '../../assets/delegate.svg'
 import REDELEGATE from '../../assets/redelegate.svg'
 import WITHDRAW from '../../assets/withdraw.svg'
 import ARROW_BLUE from '../../assets/arrow-blue.svg'
+import FLAG from '../../assets/flag.svg'
 import dayjs from 'dayjs'
 
 interface Props {
@@ -269,7 +270,7 @@ class Page extends Component<Props, any> {
 
     return (
       <div className="modal-card" ref={(ref) => this.card = ref}>
-        <div className="flag"><div /></div>
+        <div className="flag" onClick={this.handleFlagClick}><img src={FLAG} alt="flag" /></div>
         <div className="card-inner">
           {this.renderDelegation()}
           {this.renderUnbondingList()}
@@ -412,6 +413,10 @@ class Page extends Component<Props, any> {
         this.card.classList.remove('fixed')
       }
     }
+  }
+
+  handleFlagClick = () => {
+    window.scrollTo(0, this.card.offsetTop - 80)
   }
 }
 

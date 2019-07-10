@@ -7,13 +7,14 @@
     flex-direction: row;
     background: #FAFBFC;
     border-radius: 4px 4px 0px 0px;
-    padding: 6px 9px;
+    padding: 7px 9px;
 }
 
 .search-wrap {
     position: relative;
     display: flex;
     flex: 1;
+    height: 32px;
 
     input {
         flex: 1;
@@ -40,6 +41,8 @@
 }
 
 .validators-wrap {
+    padding-top: 10px;
+
     .toolbar {
         position: fixed;
         bottom: 0;

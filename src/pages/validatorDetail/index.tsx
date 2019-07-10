@@ -371,7 +371,7 @@ class Page extends Component<Props, any> {
     if (!d) {
       const v = validators.find(v => v.operator_address === id)
       return (
-        <div className="toolbar" style={{ paddingBottom: isiPhoneX() ? 40 : 0 }}>
+        <div className="toolbar" style={{ paddingBottom: isiPhoneX() ? 40 : 10 }}>
           <Link to={`/delegate/${v.operator_address}`} className="btn">
             <span>{t('delegate')}</span>
           </Link>
@@ -416,7 +416,10 @@ class Page extends Component<Props, any> {
   }
 
   handleFlagClick = () => {
-    window.scrollTo(0, this.card.offsetTop - 80)
+    const offset = this.card.offsetTop - 80
+    if (offset >= 0) {
+      window.scrollTo(0, this.card.offsetTop - 80)
+    }
   }
 }
 

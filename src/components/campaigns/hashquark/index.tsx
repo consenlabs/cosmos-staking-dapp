@@ -112,7 +112,7 @@ class HashQuark extends Component<Props, any> {
       <div className="hashquark" style={{ paddingBottom: isiPhoneX() ? 100 : 80 }}>
         <img src={hashquark.banner[locale]} alt="hashquark banner" className="banner" />
         <div className="content">
-          <ValidatorCard validator={validator} pool={pool} />
+          <ValidatorCard validator={validator} pool={pool} index={0} />
           {this.renderInfoCard()}
           {this.renderDivider()}
           <Detail

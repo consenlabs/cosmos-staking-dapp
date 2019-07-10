@@ -214,10 +214,9 @@ class CMP extends Component<Props, any> {
     const displayAmount = fAtom(sourceObject.value, 6, '0')
     return (
       <div className="form-inner">
-        <div className="form-header" onClick={this.showDelegateSourceModal}>
+        <div className="form-header">
           <span>{t(sourceObject.key)}</span>
           <i>{displayAmount} ATOM</i>
-          <b></b>
         </div>
         {!isWithdraw &&
           <input

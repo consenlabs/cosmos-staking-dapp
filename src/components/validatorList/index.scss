@@ -1,3 +1,73 @@
 .validators {
     padding: 0 10px;
 }
+
+.search-bar {
+    display: flex;
+    flex-direction: row;
+    background: #FAFBFC;
+    border-radius: 4px 4px 0px 0px;
+    padding: 6px 9px;
+}
+
+.search-wrap {
+    position: relative;
+    display: flex;
+    flex: 1;
+
+    input {
+        flex: 1;
+        box-sizing: border-box;
+        height: 32px;
+        background: #FFFFFF;
+        border: 0.5px solid #D2D4DD;
+        border-radius: 4px;
+        padding-left: 26px;
+        outline: none;
+        box-shadow: none;
+        -webkit-appearance: none;
+    }
+
+    .search-icon {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    }
+}
+
+.sort-bar {
+    padding: 0 5px 0 12px;
+}
+
+.validators-wrap {
+    .toolbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #22273A;
+        opacity: 0.86;
+        backdrop-filter: blur(26.5609px);
+        padding: 10px 15px;
+    }
+
+    .form-button {
+        -webkit-appearance: none;
+        border: none;
+        width: 100%;
+        height: 46px;
+        border-radius: 8px;
+        background-color: #098de6;
+        font-family: 'PingFang SC';
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.43;
+        letter-spacing: 0.3px;
+        color: #ffffff;
+        outline: none;
+
+        &:disabled {
+            background-color: #ddd;
+        }
+    }
+}

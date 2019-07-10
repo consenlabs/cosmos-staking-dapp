@@ -1,13 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-    <g fill="none" fill-rule="evenodd" stroke="#949EA6" transform="translate(0 5)">
-        <rect width="20" height="13" x=".5" y=".5" fill="#FFF" rx="2"/>
-        <path fill="#FFF" d="M4.5.5H2A1.5 1.5 0 0 0 .5 2v2.5a4 4 0 0 0 4-4zM4.5 13.5H2A1.5 1.5 0 0 1 .5 12V9.5a4 4 0 0 1 4 4zM16.5.5H19A1.5 1.5 0 0 1 20.5 2v2.5a4 4 0 0 1-4-4z"/>
-        <g stroke-linecap="round" stroke-linejoin="round">
-            <path d="M11.648 5.185c0-.768-.517-1.167-1.175-1.167-.659 0-1.192.4-1.192 1.167 0 .769.396.928 1.192 1.392.793.462 1.19.622 1.19 1.39 0 .768-.532 1.159-1.19 1.159-.659 0-1.192-.391-1.192-1.159M10.472 3.327v.609M10.472 9.208v.607"/>
-        </g>
-        <ellipse cx="18" cy="13.5" fill="#FFF" rx="5" ry="1.5"/>
-        <ellipse cx="18" cy="11.5" fill="#FFF" rx="5" ry="1.5"/>
-        <ellipse cx="18" cy="9.5" fill="#FFF" rx="5" ry="1.5"/>
-        <ellipse cx="18" cy="7.5" fill="#FFF" rx="5" ry="1.5"/>
-    </g>
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M19 9.99952C19 14.9703 14.9702 19 9.99936 19C5.02977 19 1 14.9703 1 9.99952C1 5.02878 5.02977 1 9.99936 1C14.9702 1 19 5.02878 19 9.99952Z" stroke="#43454F" stroke-linecap="square"/>
+<path d="M9.91263 10V15" stroke="#43454F" stroke-width="1.02857" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13 9L10 6L7 9" stroke="#43454F" stroke-width="1.02857" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13 12L10 9L7 12" stroke="#43454F" stroke-width="1.02857" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

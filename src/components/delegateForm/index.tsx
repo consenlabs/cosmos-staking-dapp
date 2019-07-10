@@ -227,10 +227,9 @@ class CMP extends Component<Props, any> {
     const disabled = !amount
     return (
       <div className="form-inner">
-        <div className="form-header" onClick={this.showDelegateSourceModal}>
+        <div className="form-header">
           <span>{t(sourceObject.key)}</span>
           <i>{fAtom(sourceObject.value, 6, '0')} ATOM</i>
-          <b></b>
         </div>
         <input
           type="number"
@@ -248,7 +247,6 @@ class CMP extends Component<Props, any> {
           <span>{t('delegate')}</span>
         </button>
         {this.renderNotes()}
-        {this.renderDivider()}
         <div className="box" onClick={this.showExchangeModal}>
           <div>
             <p>

@@ -1,20 +1,25 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { withRouter, Link } from 'react-router-dom'
-import { selectValidators, selectAccountInfo, selectDelegations, selectValidatorRewards, selectPendingTxs } from '../../lib/redux/selectors'
-import { removePendingTx } from 'lib/redux/actions'
-import { ellipsis, fAtom, fPercent, isiPhoneX, t, getLocale } from '../../lib/utils'
+import { selectValidators, selectAccountInfo, selectDelegations, selectValidatorRewards, selectPendingTxs, selectUnbondingDelegations } from '../../lib/redux/selectors'
+import { removePendingTx, updateUnbondingDelegations } from 'lib/redux/actions'
+import { ellipsis, fAtom, fPercent, isiPhoneX, t, getLocale, getUnbondingBalance, getDailyReward } from '../../lib/utils'
 import ValidatorLogo from '../../components/validatorLogo'
 import Loading from '../../components/loading'
 import TxList from '../../components/txList'
+import UnbondingList from '../../components/unbondingList'
 import './index.scss'
 import logger from '../../lib/logger'
 import linkSVG from '../../assets/link.svg'
-import { getTxListByAddress } from '../../lib/api'
+import { getTxListByAddress, getUnbondingDelegations } from '../../lib/api'
 import bannerConfig from '../../config/banner'
 import campaignConfig from '../../config/campaign'
 import descConfig from '../../config/desc'
 import Arrow from '../../assets/arrow.svg'
+import DELETATE from '../../assets/delegate.svg'
+import REDELEGATE from '../../assets/redelegate.svg'
+import WITHDRAW from '../../assets/withdraw.svg'
+import ARROW_BLUE from '../../assets/arrow-blue.svg'
 import dayjs from 'dayjs'
 
 interface Props {
@@ -25,6 +30,7 @@ interface Props {
   account: any
   match: any
   history: any
+  unbondingDelegations: any[]
   removePendingTx: (value: any) => any
 }
 
@@ -75,7 +81,17 @@ class Page extends Component<Props, any> {
 
   polling = () => {
     this.pollingTimer && clearInterval(this.pollingTimer)
-    this.pollingTimer = setInterval(() => this.updateTxs(this.props), 5000)
+    this.pollingTimer = setInterval(() => {
+      this.updateTxs(this.props)
+      this.updateUnbondingList()
+    }, 5000)
+  }
+
+  updateUnbondingList = () => {
+    const { account } = this.props
+    getUnbondingDelegations(account.address).then(data => {
+      updateUnbondingDelegations(data)
+    }).catch(console.warn)
   }
 
   updateTxs = (props) => {
@@ -161,16 +177,9 @@ class Page extends Component<Props, any> {
 
         </section>
 
-        {this.renderTxs()}
+        {this.renderModalCard()}
 
-        <div className="toolbar" style={{ paddingBottom: isiPhoneX() ? 40 : 0 }}>
-          <Link to={`/undelegate/${v.operator_address}`}>
-            <span>{t('withdraw')}</span>
-          </Link>
-          <Link to={`/delegate/${v.operator_address}`}>
-            <span>{t('delegate')}</span>
-          </Link>
-        </div>
+        {this.renderToolbar()}
       </div>
     )
   }
@@ -244,22 +253,145 @@ class Page extends Component<Props, any> {
     )
   }
 
+  renderModalCard() {
+    const { txs } = this.state
+    const { validators, match, delegations, unbondingDelegations } = this.props
+    const id = match.params.id
+    const d = delegations.find(d => d.validator_address === id)
+    const v = validators.find(v => v.operator_address === id)
+    const unBonding = unbondingDelegations.find(un => un.validator_address === id)
+
+    if ((!txs || !txs.length) && (!v || !d) && (!unBonding || !unBonding.entries)) return null
+
+    return (
+      <div className="modal-card">
+        <div className="flag"><div /></div>
+        {this.renderDelegation()}
+        {this.renderUnbondingList()}
+        {this.renderTxs()}
+      </div>
+    )
+  }
+
+  renderDelegation() {
+    const { validators, match, validatorRewards, delegations, unbondingDelegations } = this.props
+    const id = match.params.id
+    const reward = validatorRewards[id] || 0
+    const unDels = unbondingDelegations.filter(un => un.validator_address === id)
+    const unbonding = getUnbondingBalance(unDels) || 0
+    const d = delegations.find(d => d.validator_address === id)
+    const v = validators.find(v => v.operator_address === id)
+
+    if (!v || !d) return null
+
+    return (
+      <div className="delegation list-section">
+        <p className="title">{t('delegation_status')}</p>
+        <div className="bottom">
+          <div>
+            <div>
+              <span>{t('delegations')}</span>
+              <i>{fAtom(d.shares)}</i>
+            </div>
+
+            <div>
+              <span>{t('undelegating')}</span>
+              <i>{fAtom(unbonding)}</i>
+            </div>
+          </div>
+          <div className="split-line"></div>
+          <div>
+            <div>
+              <span>{t('rewards')}</span>
+              <i>{fAtom(reward)}</i>
+            </div>
+
+            <div>
+              <span>{t('rewards_per_day')}</span>
+              <i>{d.shares && v.annualized_returns ? `+${getDailyReward(d.shares, v.annualized_returns)}` : '~'}</i>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  renderUnbondingList() {
+    const { match, account, unbondingDelegations } = this.props
+    const id = match.params.id
+    const unBonding = unbondingDelegations.find(un => un.validator_address === id)
+
+    if (!unBonding || !unBonding.entries) return null
+
+    const entries = unBonding.entries
+    const MAX_LENGTH = 5
+
+    return (
+      <div className="list-section">
+        <p className="title">
+          <span>{t('undelegating')}</span>
+          {entries.length >= MAX_LENGTH && <a href={`https://www.mintscan.io/account/${account.address}`}>{t('all')} <img src={ARROW_BLUE} alt="arrow" /></a>}
+        </p>
+        <UnbondingList entries={entries.slice(0, MAX_LENGTH)} account={account} />
+      </div>
+    )
+  }
+
   renderTxs() {
     const { txs } = this.state
     const { account } = this.props
 
     if (!txs || !txs.length) return null
+    const MAX_LENGTH = 5
 
     return (
-      <section className="list-area" style={{ 'paddingBottom': isiPhoneX() ? '100px' : '60px' }}>
+      <div className="list-section" style={{ 'paddingBottom': isiPhoneX() ? '100px' : '60px' }}>
         <p className="title">
           <span>{t('transactions')}</span>
-          {txs.length >= 100 && <a href={`https://www.mintscan.io/account/${account.address}`}>{t('all')}</a>}
+          {txs.length >= MAX_LENGTH && <a href={`https://www.mintscan.io/account/${account.address}`}>{t('all')} <img src={ARROW_BLUE} alt="arrow" /></a>}
         </p>
-        <TxList txs={txs} />
-      </section>
+        <TxList txs={txs.slice(0, MAX_LENGTH)} />
+      </div>
     )
 
+  }
+
+  renderToolbar() {
+    const { match, validators, delegations } = this.props
+    const id = match.params.id
+    const d = delegations.find(d => d.validator_address === id)
+
+    if (!d) {
+      const v = validators.find(v => v.operator_address === id)
+      return (
+        <div className="toolbar" style={{ paddingBottom: isiPhoneX() ? 40 : 0 }}>
+          <Link to={`/delegate/${v.operator_address}`} className="btn">
+            <span>{t('delegate')}</span>
+          </Link>
+        </div>
+      )
+    }
+
+    return (
+      <div className="toolbar" style={{ padding: 0 }}>
+        <div className="toolbar-row" style={{ paddingBottom: isiPhoneX() ? 40 : 0 }}>
+          <Link to={`/delegate/${d.validator_address}`}>
+            <img src={DELETATE} alt="delegate" />
+            <span>{t('delegate')}</span>
+          </Link>
+          <div className="vertical-line"></div>
+          <Link to={`/redelegate/${d.validator_address}`}>
+            <img src={REDELEGATE} alt="redelegate" />
+            <span>{t('redelegate')}</span>
+          </Link>
+          <div className="vertical-line"></div>
+          <Link to={`/undelegate/${d.validator_address}`}>
+            <img src={WITHDRAW} alt="delegate" />
+            <span>{t('withdraw')}</span>
+          </Link>
+        </div>
+      </div>
+    )
   }
 }
 
@@ -270,6 +402,7 @@ const mapStateToProps = state => {
     account: selectAccountInfo(state),
     validatorRewards: selectValidatorRewards(state),
     pendingTxs: selectPendingTxs(state),
+    unbondingDelegations: selectUnbondingDelegations(state),
   }
 }
 

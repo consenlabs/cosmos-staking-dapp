@@ -77,6 +77,10 @@ const zh_CN = {
   redelegate_state: '更换委托立即生效，但再次更换委托将需要等待 21 天',
   more_details: '更多详情',
   campaign_over: '活动已结束',
+  search_validator: '搜索验证节点',
+  delegation_status: '委托状态',
+  completion: '到账',
+  select_validator: '更换委托至节点',
 }
 
 export default zh_CN

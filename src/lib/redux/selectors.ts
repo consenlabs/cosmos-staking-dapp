@@ -8,3 +8,5 @@ export const selectSortby = state => state.sortBy
 export const selectRedelegations = state => state.redelegations
 export const selectPendingTxs = state => state.pendingTxs
 export const selectExchangeToken = state => state.exchangeToken
+export const selectUnbondingDelegations = state => state.unbondingDelegations
+export const selectSelectedValidator = state => state.selectedValidator

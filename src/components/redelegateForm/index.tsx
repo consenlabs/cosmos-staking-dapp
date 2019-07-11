@@ -68,6 +68,16 @@ class CMP extends Component<Props, any> {
         <button disabled={disabled} className="form-button" onClick={this.onSubmit}>
           <span>{t('redelegate')}</span>
         </button>
+        {this.renderNotes()}
+      </div>
+    )
+  }
+
+  renderNotes() {
+    return (
+      <div className="delegation-notes">
+        <p className="item-title">{t('state')}</p>
+        <p className="item-desc">{t('redelegate_state')}</p>
       </div>
     )
   }

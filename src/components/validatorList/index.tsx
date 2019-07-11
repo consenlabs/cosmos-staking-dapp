@@ -128,7 +128,8 @@ class Page extends Component<Props, any> {
     // filter search validator
     if (keyword) {
       sortedList = sortedList.filter(v => {
-        return (new RegExp(keyword, 'ig')).test(v.description.moniker)
+        const kw = keyword.replace(/[\?\*\[\]\(\)\{\}\\\^\$]/g, '\\$&')
+        return (new RegExp(kw, 'ig')).test(v.description.moniker)
       })
     }
 

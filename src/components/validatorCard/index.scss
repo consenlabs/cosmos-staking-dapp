@@ -3,8 +3,8 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  height: 41px;
-  padding: 15px;
+  height: 40px;
+  padding: 15px 15px 15px 20px;
   border-bottom: 0.5px solid #EAECF6;
   background-color: #ffffff;
   text-decoration: none;
@@ -18,7 +18,7 @@
 
   .v-left {
       flex: 1;
-      height: 42px;
+      height: 40px;
       margin-left: 10px;
       display: flex;
       flex-direction: column;

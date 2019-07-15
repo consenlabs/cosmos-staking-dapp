@@ -171,7 +171,13 @@ class Page extends Component<Props, any> {
   }
 
   onSelect = (validator) => {
-    this.setState({ selectedValidator: validator })
+    const { selectedValidator } = this.state
+    if (selectedValidator &&
+      selectedValidator.operator_address === validator.operator_address) {
+      this.setState({ selectedValidator: null })
+    } else {
+      this.setState({ selectedValidator: validator })
+    }
   }
 
   onSubmit = () => {

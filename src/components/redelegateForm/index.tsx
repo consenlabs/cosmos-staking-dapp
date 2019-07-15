@@ -49,7 +49,7 @@ class CMP extends Component<Props, any> {
     return (
       <div className="form-inner">
         <div className="form-header">
-          <span>{t('available_balance')}</span>
+          <span>{t('delegated')}</span>
           <i>{fAtom(sourceObject.value, 6, '0')} ATOM</i>
         </div>
         <input

@@ -100,8 +100,8 @@ class CMP extends Component<Props, any> {
       <div className="delegation-notes">
         <p className="item-title">{t('delegations')}</p>
         <p className="item-desc">{t('delegations_state')}</p>
-        <p className="item-title">{t('rewards')}</p>
-        <p className="item-desc">{t('rewards_state')}</p>
+        {/* <p className="item-title">{t('rewards')}</p>
+        <p className="item-desc">{t('rewards_state')}</p> */}
         <p className="item-title">{t('risk')}</p>
         <p className="item-desc">
           {t('risk_state')}

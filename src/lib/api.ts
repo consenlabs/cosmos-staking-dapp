@@ -101,12 +101,24 @@ export const getDelegations = (address) => {
 
 export const getRewards = (delegatorAddr) => {
   const url = `distribution/delegators/${delegatorAddr}/rewards`
-  return get(url, {}).then(rewards => rewards || [])
+  return get(url, {}).then(rewards => rewards || []).catch(err => {
+    if (err.message.includes(`null response`)) {
+      return []
+    } else {
+      throw err
+    }
+  })
 }
 
 export const getUnbondingDelegations = (address) => {
   const url = `staking/delegators/${address}/unbonding_delegations`
-  return get(url, {}).then(unbondingDelegations => unbondingDelegations || [])
+  return get(url, {}).then(unbondingDelegations => unbondingDelegations || []).catch(err => {
+    if (err.message.includes(`null response`)) {
+      return []
+    } else {
+      throw err
+    }
+  })
 }
 
 export const getDelegationTx = (delegatorAddr) => {

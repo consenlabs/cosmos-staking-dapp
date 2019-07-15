@@ -157,6 +157,7 @@
     left: 0;
     right: 0;
     bottom: 0;
+    z-index: 1000;
     display: flex;
     justify-content: center;
     padding: 10px 15px;
@@ -273,9 +274,25 @@
 .modal-card {
   background-color: #fff;
   padding: 6px 20px;
-  margin-top: 25px;
+  margin-top: 0px;
   border-radius: 4px 4px 0px 0px;
-  overflow: hidden;
+  max-height: 100%;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+  position: fixed;
+  left: 0;
+  right: 0;
+
+  &.draggable-source--is-dragging {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  &.draggable-mirror {
+    width: 100%;
+  }
 
   &.fixed {
     .flag {

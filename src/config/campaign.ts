@@ -1,11 +1,11 @@
-import HYPERBLOCKS_ZH_BIG from '../assets/banners/hyperblocks-zh-big.png'
-import HYPERBLOCKS_ZH_SMALL from '../assets/banners/hyperblocks-zh-small.png'
-import HYPERBLOCKS_EN_BIG from '../assets/banners/hyperblocks-en-big.png'
-import HYPERBLOCKS_EN_SMALL from '../assets/banners/hyperblocks-en-small.png'
-import HASHQUARK_ZH_BIG from '../assets/banners/hashquark-zh-big.png'
-import HASHQUARK_ZH_SMALL from '../assets/banners/hashquark-zh-small.png'
-import HASHQUARK_EN_BIG from '../assets/banners/hashquark-en-big.png'
-import HASHQUARK_EN_SMALL from '../assets/banners/hashquark-en-small.png'
+import HYPERBLOCKS_ZH_BIG from '../assets/campaign/hyperblocks-zh-big.png'
+import HYPERBLOCKS_ZH_SMALL from '../assets/campaign/hyperblocks-zh-small.png'
+import HYPERBLOCKS_EN_BIG from '../assets/campaign/hyperblocks-en-big.png'
+import HYPERBLOCKS_EN_SMALL from '../assets/campaign/hyperblocks-en-small.png'
+import HASHQUARK_ZH_BIG from '../assets/campaign/hashquark-zh-big.png'
+import HASHQUARK_ZH_SMALL from '../assets/campaign/hashquark-zh-small.png'
+import HASHQUARK_EN_BIG from '../assets/campaign/hashquark-en-big.png'
+import HASHQUARK_EN_SMALL from '../assets/campaign/hashquark-en-small.png'
 
 export default [
   {

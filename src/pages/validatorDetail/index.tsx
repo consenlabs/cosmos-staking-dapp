@@ -22,6 +22,8 @@ import WITHDRAW from '../../assets/withdraw.svg'
 import ARROW_BLUE from '../../assets/arrow-blue.svg'
 import FLAG from '../../assets/flag.svg'
 import dayjs from 'dayjs'
+import Drawer from 'react-drag-drawer'
+import Draggable from 'react-draggable'
 
 interface Props {
   validators: any
@@ -49,6 +51,7 @@ class Page extends Component<Props, any> {
     super(props)
     this.state = {
       txs: [],
+      open: false,
     }
   }
 
@@ -86,6 +89,7 @@ class Page extends Component<Props, any> {
   pollingTimer: any = null
 
   card: any = null
+  draggerCard: any = null
 
   polling = () => {
     this.pollingTimer && clearInterval(this.pollingTimer)
@@ -185,7 +189,8 @@ class Page extends Component<Props, any> {
 
         </section>
 
-        {this.renderModalCard()}
+        {this.renderDraggerModal()}
+        {this.renderDrawerModal()}
 
         {this.renderToolbar()}
       </div>
@@ -261,22 +266,52 @@ class Page extends Component<Props, any> {
     )
   }
 
-  renderModalCard() {
-    const { txs } = this.state
+  renderDraggerModal() {
+    const { txs, open } = this.state
 
-    if (!txs || !txs.length) return null
+    if (!txs || !txs.length || open) return null
 
     const top = this.getModalTop()
 
     return (
-      <div className="modal-card" ref={(ref) => this.card = ref} style={{ top }}>
-        <div className="flag" onClick={this.handleFlagClick}><img src={FLAG} alt="flag" /></div>
-        <div className="card-inner">
-          {this.renderDelegation()}
-          {this.renderUnbondingList()}
-          {this.renderTxs()}
+      <Draggable
+        axis="y"
+        onStart={this.handleStart}
+        onDrag={this.handleDrag}
+        onStop={this.handleStop}>
+        <div className="modal-card draggable" ref={(ref) => this.draggerCard = ref} style={{ top }}>
+          <div className="flag" onClick={this.handleFlagClick}><img src={FLAG} alt="flag" /></div>
+          <div className="card-inner">
+            {this.renderDelegation()}
+            {this.renderUnbondingList()}
+            {this.renderTxs()}
+          </div>
         </div>
-      </div>
+      </Draggable>
+    )
+  }
+
+  renderDrawerModal() {
+    const { txs, open } = this.state
+    if (!txs || !txs.length) return null
+
+    return (
+      <Drawer
+        open={open}
+        onRequestClose={this.handleClose}
+        onDrag={(e) => console.log(e)}
+        containerElementClass="drawer"
+        modalElementClass="drawer-modal"
+      >
+        <div className="modal-card" ref={(ref) => this.card = ref}>
+          <div className="flag" onClick={this.handleFlagClick}><img src={FLAG} alt="flag" /></div>
+          <div className="card-inner">
+            {this.renderDelegation()}
+            {this.renderUnbondingList()}
+            {this.renderTxs()}
+          </div>
+        </div>
+      </Drawer>
     )
   }
 
@@ -417,6 +452,30 @@ class Page extends Component<Props, any> {
     const wHeight = window.innerHeight
     const top = wHeight - 300
     return top
+  }
+
+  handleClose = () => {
+    this.setState({ open: false })
+  }
+
+  handleStart = (e, data) => {
+    e.preventDefault()
+    e.stopPropagation()
+    // console.log('Event: ', e)
+    console.log('handleStart: ', data)
+  }
+
+  handleDrag = (e, data) => {
+    e.preventDefault()
+    e.stopPropagation()
+    console.log('handleDrag: ', data)
+  }
+
+  handleStop = (e, data) => {
+    e.preventDefault()
+    e.stopPropagation()
+    console.log('handleStop: ', data)
+    this.setState({ open: true })
   }
 
   handleScroll = (_e) => {

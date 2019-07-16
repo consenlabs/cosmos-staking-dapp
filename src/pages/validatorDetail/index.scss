@@ -1,3 +1,19 @@
+body {
+  user-select: none;
+  .drawer {
+    top: 80px;
+    background-color: rgba(55, 56, 56, 0) !important;
+
+    > div {
+      width: 100%;
+    }
+    .drawer-modal {
+      position: absolute;
+      top: 0;
+    }
+  }
+}
+
 .validator-detail-page {
   display: flex;
   flex-direction: column;
@@ -277,11 +293,18 @@
   margin-top: 0px;
   border-radius: 4px 4px 0px 0px;
   max-height: 100%;
-  -webkit-overflow-scrolling: touch;
+  // -webkit-overflow-scrolling: touch;
   box-sizing: border-box;
-  position: fixed;
-  left: 0;
-  right: 0;
+  // position: fixed;
+  // left: 0;
+  // right: 0;
+
+  &.draggable {
+    position: fixed;
+    top: 400px;
+    left: 0;
+    right: 0;
+  }
 
   &.draggable-source--is-dragging {
     opacity: 0;

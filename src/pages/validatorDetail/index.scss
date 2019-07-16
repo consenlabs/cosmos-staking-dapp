@@ -24,7 +24,7 @@ body {
 .validator-detail-page {
   display: flex;
   flex-direction: column;
-  padding-top: 40px;
+  // padding-top: 40px;
   overflow: auto;
   box-sizing: border-box;
   // -webkit-overflow-scrolling: touch;
@@ -83,16 +83,16 @@ body {
   }
   section:first-child {
     .top {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: #191B31;
+      // position: fixed;
+      // top: 0;
+      // left: 0;
+      // right: 0;
+      // background: #191B31;
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
       text-decoration: none;
-      padding: 20px;
+      // padding: 20px;
     .left {
         flex: 1;
         padding: 2px 0;

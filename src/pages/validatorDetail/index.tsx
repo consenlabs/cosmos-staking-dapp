@@ -477,11 +477,10 @@ class Page extends Component<Props, any> {
   handleFlagClick = () => {
     const { open } = this.state
     if (open) {
-      this.stopDragger()
-    } else {
       this.stopDrawer()
+    } else {
+      this.stopDragger()
     }
-    this.setState({ open: !open })
   }
 
   handleBan = () => {

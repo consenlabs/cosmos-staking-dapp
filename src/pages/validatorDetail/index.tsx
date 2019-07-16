@@ -23,7 +23,7 @@ import ARROW_BLUE from '../../assets/arrow-blue.svg'
 import FLAG from '../../assets/flag.svg'
 import dayjs from 'dayjs'
 import Drawer from 'react-drag-drawer'
-import Draggable from 'react-draggable'
+import dragger from './dragger'
 
 interface Props {
   validators: any
@@ -43,7 +43,11 @@ interface Props {
 const validatorTxsCache = {}
 
 //
-const OFFSET_HEIGHT = 80
+// const OFFSET_HEIGHT = 80
+
+const MODAL_HEIGHT = 200
+const TOOLBAR_HEIGHT = 54
+const IPHONEX_HEIGHT = 40
 
 class Page extends Component<Props, any> {
 
@@ -58,12 +62,10 @@ class Page extends Component<Props, any> {
   componentWillMount() {
     this.updateTxs(this.props)
     this.polling()
-    window.addEventListener('scroll', this.handleScroll, true)
   }
 
   componentWillUnmount() {
     this.pollingTimer && clearInterval(this.pollingTimer)
-    window.removeEventListener('scroll', this.handleScroll, true)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -83,7 +85,7 @@ class Page extends Component<Props, any> {
     }
     this.setState({ txs: this.mergeWithPendingTx(txs) })
     logger().track('to_validator_detail', { validator: id, moniker: v ? v.description.moniker : '' })
-
+    this.enableDragger()
   }
 
   pollingTimer: any = null
@@ -149,8 +151,10 @@ class Page extends Component<Props, any> {
 
     if (!v) return <Loading />
 
+    const height = window.innerHeight - MODAL_HEIGHT - TOOLBAR_HEIGHT - (isiPhoneX() ? IPHONEX_HEIGHT : 0)
+
     return (
-      <div className="validator-detail-page">
+      <div className="validator-detail-page" style={{ height }}>
         <section>
           <a className="top" href={v.description.website || '#'}>
             <ValidatorLogo url={v.description.logo} />
@@ -274,20 +278,14 @@ class Page extends Component<Props, any> {
     const top = this.getModalTop()
 
     return (
-      <Draggable
-        axis="y"
-        onStart={this.handleStart}
-        onDrag={this.handleDrag}
-        onStop={this.handleStop}>
-        <div className="modal-card draggable" ref={(ref) => this.draggerCard = ref} style={{ top }}>
-          <div className="flag" onClick={this.handleFlagClick}><img src={FLAG} alt="flag" /></div>
-          <div className="card-inner">
-            {this.renderDelegation()}
-            {this.renderUnbondingList()}
-            {this.renderTxs()}
-          </div>
+      <div className="modal-card draggable" ref={(ref) => this.draggerCard = ref} style={{ top }}>
+        <div className="flag" onClick={this.handleFlagClick}><img src={FLAG} alt="flag" /></div>
+        <div className="card-inner">
+          {this.renderDelegation()}
+          {this.renderUnbondingList()}
+          {this.renderTxs()}
         </div>
-      </Draggable>
+      </div>
     )
   }
 
@@ -298,13 +296,13 @@ class Page extends Component<Props, any> {
     return (
       <Drawer
         open={open}
-        onRequestClose={this.handleClose}
+        onRequestClose={this.stopDrawer}
         onDrag={(e) => console.log(e)}
         containerElementClass="drawer"
         modalElementClass="drawer-modal"
       >
         <div className="modal-card" ref={(ref) => this.card = ref}>
-          <div className="flag" onClick={this.handleFlagClick}><img src={FLAG} alt="flag" /></div>
+          <div className="flag drawer-flag" onClick={this.handleFlagClick}><img src={FLAG} alt="flag" /></div>
           <div className="card-inner">
             {this.renderDelegation()}
             {this.renderUnbondingList()}
@@ -387,9 +385,10 @@ class Page extends Component<Props, any> {
 
     if (!txs || !txs.length) return null
     const MAX_LENGTH = 5
+    const paddingBottom = isiPhoneX() ? TOOLBAR_HEIGHT + IPHONEX_HEIGHT : TOOLBAR_HEIGHT
 
     return (
-      <div className="list-section" style={{ 'paddingBottom': isiPhoneX() ? '100px' : '60px' }}>
+      <div className="list-section" style={{ paddingBottom }}>
         <p className="title">
           <span>{t('transactions')}</span>
           {txs.length >= MAX_LENGTH && <a href={`https://www.mintscan.io/account/${account.address}`}>{t('all')} <img src={ARROW_BLUE} alt="arrow" /></a>}
@@ -410,7 +409,7 @@ class Page extends Component<Props, any> {
     if (txs && txs.length) {
       return (
         <div className="toolbar" style={{ padding: 0 }}>
-          <div className="toolbar-row" style={{ paddingBottom: isiPhoneX() ? 40 : 0 }}>
+          <div className="toolbar-row" style={{ paddingBottom: isiPhoneX() ? IPHONEX_HEIGHT : 0 }}>
             <Link to={`/delegate/${v.operator_address}`}>
               <img src={DELETATE} alt="delegate" />
               <span>{t('delegate')}</span>
@@ -440,7 +439,7 @@ class Page extends Component<Props, any> {
     }
 
     return (
-      <div className="toolbar" style={{ paddingBottom: isiPhoneX() ? 40 : 10 }}>
+      <div className="toolbar" style={{ paddingBottom: isiPhoneX() ? IPHONEX_HEIGHT : 10 }}>
         <Link to={`/delegate/${v.operator_address}`} className="btn">
           <span>{t('delegate')}</span>
         </Link>
@@ -450,56 +449,39 @@ class Page extends Component<Props, any> {
 
   getModalTop = () => {
     const wHeight = window.innerHeight
-    const top = wHeight - 300
+    const top = wHeight - MODAL_HEIGHT - TOOLBAR_HEIGHT - (isiPhoneX() ? IPHONEX_HEIGHT : 0)
     return top
   }
 
-  handleClose = () => {
-    this.setState({ open: false })
+  enableDragger = () => {
+    setTimeout(() => {
+      dragger.init({ onStop: this.stopDragger })
+    }, 700)
   }
 
-  handleStart = (e, data) => {
-    e.preventDefault()
-    e.stopPropagation()
-    // console.log('Event: ', e)
-    console.log('handleStart: ', data)
+  destroyDragger = () => {
+    dragger.destroy()
   }
 
-  handleDrag = (e, data) => {
-    e.preventDefault()
-    e.stopPropagation()
-    console.log('handleDrag: ', data)
+  stopDrawer = () => {
+    this.setState({ open: false }, () => {
+      this.enableDragger()
+    })
   }
 
-  handleStop = (e, data) => {
-    e.preventDefault()
-    e.stopPropagation()
-    console.log('handleStop: ', data)
+  stopDragger = () => {
     this.setState({ open: true })
-  }
-
-  handleScroll = (_e) => {
-    // const lastScrollY = window.scrollY
-
-    // if (this.card) {
-    //   if (this.card.offsetTop - lastScrollY <= OFFSET_HEIGHT) {
-    //     if (!this.card.classList.contains('fixed')) {
-    //       this.card.classList.add('fixed')
-    //     }
-    //   } else {
-    //     this.card.classList.remove('fixed')
-    //   }
-    // }
+    this.destroyDragger()
   }
 
   handleFlagClick = () => {
-    if (this.card.style.top !== '80px') {
-      this.card.style.top = `${OFFSET_HEIGHT}px`
-      this.card.classList.add('top')
+    const { open } = this.state
+    if (open) {
+      this.stopDragger()
     } else {
-      this.card.classList.remove('top')
-      this.card.style.top = `${this.getModalTop()}px`
+      this.stopDrawer()
     }
+    this.setState({ open: !open })
   }
 
   handleBan = () => {

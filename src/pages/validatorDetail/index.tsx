@@ -22,7 +22,6 @@ import WITHDRAW from '../../assets/withdraw.svg'
 import ARROW_BLUE from '../../assets/arrow-blue.svg'
 import FLAG from '../../assets/flag.svg'
 import dayjs from 'dayjs'
-import dragger from './dragger'
 
 interface Props {
   validators: any
@@ -42,7 +41,7 @@ interface Props {
 const validatorTxsCache = {}
 
 //
-// const OFFSET_HEIGHT = 80
+const OFFSET_HEIGHT = 80
 
 class Page extends Component<Props, any> {
 
@@ -82,7 +81,6 @@ class Page extends Component<Props, any> {
     this.setState({ txs: this.mergeWithPendingTx(txs) })
     logger().track('to_validator_detail', { validator: id, moniker: v ? v.description.moniker : '' })
 
-    this.handleDragger()
   }
 
   pollingTimer: any = null
@@ -273,12 +271,10 @@ class Page extends Component<Props, any> {
 
     if ((!txs || !txs.length) && (!v || !d) && (!unBonding || !unBonding.entries)) return null
 
-    // set modal position
-    const wHeight = window.innerHeight
-    const top = wHeight - 300
+    const top = this.getModalTop()
 
     return (
-      <div className="modal-card" ref={(ref) => this.card = ref} style={{ top }} onScroll={this.handleModalScroll}>
+      <div className="modal-card" ref={(ref) => this.card = ref} style={{ top }}>
         <div className="flag" onClick={this.handleFlagClick}><img src={FLAG} alt="flag" /></div>
         <div className="card-inner">
           {this.renderDelegation()}
@@ -410,6 +406,12 @@ class Page extends Component<Props, any> {
     )
   }
 
+  getModalTop = () => {
+    const wHeight = window.innerHeight
+    const top = wHeight - 300
+    return top
+  }
+
   handleScroll = (_e) => {
     // const lastScrollY = window.scrollY
 
@@ -425,31 +427,13 @@ class Page extends Component<Props, any> {
   }
 
   handleFlagClick = () => {
-    // const offset = this.card.offsetTop - OFFSET_HEIGHT
-    // const scrollHeight = document.body.scrollHeight
-    // const wHeight = window.innerHeight
-
-    // if (offset >= 0 && scrollHeight - wHeight > OFFSET_HEIGHT) {
-    //   window.scrollTo(0, offset)
-    // }
-  }
-
-  handleDragger = () => {
-    setTimeout(() => {
-      dragger()
-    }, 1000)
-  }
-
-  modalScrollTop = 0
-  handleModalScroll = (e) => {
-    const scrollTop = e.target.scrollTop
-
-    // upscroll
-    if (scrollTop < this.modalScrollTop && scrollTop <= 0) {
-      dragger()
+    if (this.card.style.top !== '80px') {
+      this.card.style.top = `${OFFSET_HEIGHT}px`
+      this.card.classList.add('top')
+    } else {
+      this.card.classList.remove('top')
+      this.card.style.top = `${this.getModalTop()}px`
     }
-
-    this.modalScrollTop = scrollTop <= 0 ? 0 : scrollTop
   }
 }
 

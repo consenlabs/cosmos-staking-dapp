@@ -81,6 +81,7 @@ const en_US = {
   delegation_status: 'Delegation Status',
   completion: 'completion',
   select_validator: 'select validator',
+  no_delegation: 'No Delegation',
 }
 
 export default en_US

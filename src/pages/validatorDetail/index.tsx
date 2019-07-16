@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { withRouter, Link } from 'react-router-dom'
 import { selectValidators, selectAccountInfo, selectDelegations, selectValidatorRewards, selectPendingTxs, selectUnbondingDelegations } from '../../lib/redux/selectors'
 import { removePendingTx, updateUnbondingDelegations } from 'lib/redux/actions'
-import { ellipsis, fAtom, fPercent, isiPhoneX, t, getLocale, getUnbondingBalance, getDailyReward } from '../../lib/utils'
+import { ellipsis, fAtom, fPercent, isiPhoneX, t, getLocale, getUnbondingBalance, getDailyReward, Toast } from '../../lib/utils'
 import ValidatorLogo from '../../components/validatorLogo'
 import Loading from '../../components/loading'
 import TxList from '../../components/txList'
@@ -263,13 +263,8 @@ class Page extends Component<Props, any> {
 
   renderModalCard() {
     const { txs } = this.state
-    const { validators, match, delegations, unbondingDelegations } = this.props
-    const id = match.params.id
-    const d = delegations.find(d => d.validator_address === id)
-    const v = validators.find(v => v.operator_address === id)
-    const unBonding = unbondingDelegations.find(un => un.validator_address === id)
 
-    if ((!txs || !txs.length) && (!v || !d) && (!unBonding || !unBonding.entries)) return null
+    if (!txs || !txs.length) return null
 
     const top = this.getModalTop()
 
@@ -287,14 +282,16 @@ class Page extends Component<Props, any> {
 
   renderDelegation() {
     const { validators, match, validatorRewards, delegations, unbondingDelegations } = this.props
+    const { txs } = this.state
     const id = match.params.id
     const reward = validatorRewards[id] || 0
     const unDels = unbondingDelegations.filter(un => un.validator_address === id)
     const unbonding = getUnbondingBalance(unDels) || 0
-    const d = delegations.find(d => d.validator_address === id)
-    const v = validators.find(v => v.operator_address === id)
+    const d = delegations.find(d => d.validator_address === id) || {}
+    const v = validators.find(v => v.operator_address === id) || {}
+    const shares = d.shares || 0
 
-    if (!v || !d) return null
+    if (!txs || !txs.length) return null
 
     return (
       <div className="delegation list-section">
@@ -303,7 +300,7 @@ class Page extends Component<Props, any> {
           <div>
             <div>
               <span>{t('delegations')}</span>
-              <i>{fAtom(d.shares)}</i>
+              <i>{fAtom(shares)}</i>
             </div>
 
             <div>
@@ -320,7 +317,7 @@ class Page extends Component<Props, any> {
 
             <div>
               <span>{t('rewards_per_day')}</span>
-              <i>{d.shares && v.annualized_returns ? `+${getDailyReward(d.shares, v.annualized_returns)}` : '~'}</i>
+              <i>{shares && v.annualized_returns ? `+${getDailyReward(shares, v.annualized_returns)}` : '0'}</i>
             </div>
           </div>
         </div>
@@ -369,39 +366,49 @@ class Page extends Component<Props, any> {
   }
 
   renderToolbar() {
+    const { txs } = this.state
     const { match, validators, delegations } = this.props
     const id = match.params.id
     const d = delegations.find(d => d.validator_address === id)
+    const v = validators.find(v => v.operator_address === id)
 
-    if (!d) {
-      const v = validators.find(v => v.operator_address === id)
+    if (txs && txs.length) {
       return (
-        <div className="toolbar" style={{ paddingBottom: isiPhoneX() ? 40 : 10 }}>
-          <Link to={`/delegate/${v.operator_address}`} className="btn">
-            <span>{t('delegate')}</span>
-          </Link>
+        <div className="toolbar" style={{ padding: 0 }}>
+          <div className="toolbar-row" style={{ paddingBottom: isiPhoneX() ? 40 : 0 }}>
+            <Link to={`/delegate/${v.operator_address}`}>
+              <img src={DELETATE} alt="delegate" />
+              <span>{t('delegate')}</span>
+            </Link>
+            <div className="vertical-line"></div>
+
+            {d ? <Link to={`/redelegate/${v.operator_address}`}>
+              <img src={REDELEGATE} alt="redelegate" />
+              <span>{t('redelegate')}</span>
+            </Link> : <a onClick={this.handleBan}>
+                <img src={REDELEGATE} alt="redelegate" />
+                <span>{t('redelegate')}</span>
+            </a>}
+
+            <div className="vertical-line"></div>
+
+            {d ? <Link to={`/undelegate/${v.operator_address}`}>
+              <img src={WITHDRAW} alt="delegate" />
+              <span>{t('withdraw')}</span>
+            </Link> : <a onClick={this.handleBan}>
+                <img src={WITHDRAW} alt="delegate" />
+                <span>{t('withdraw')}</span>
+            </a>}
+          </div>
         </div>
       )
     }
 
     return (
-      <div className="toolbar" style={{ padding: 0 }}>
-        <div className="toolbar-row" style={{ paddingBottom: isiPhoneX() ? 40 : 0 }}>
-          <Link to={`/delegate/${d.validator_address}`}>
-            <img src={DELETATE} alt="delegate" />
-            <span>{t('delegate')}</span>
-          </Link>
-          <div className="vertical-line"></div>
-          <Link to={`/redelegate/${d.validator_address}`}>
-            <img src={REDELEGATE} alt="redelegate" />
-            <span>{t('redelegate')}</span>
-          </Link>
-          <div className="vertical-line"></div>
-          <Link to={`/undelegate/${d.validator_address}`}>
-            <img src={WITHDRAW} alt="delegate" />
-            <span>{t('withdraw')}</span>
-          </Link>
-        </div>
+      <div className="toolbar" style={{ paddingBottom: isiPhoneX() ? 40 : 10 }}>
+        <Link to={`/delegate/${v.operator_address}`} className="btn">
+          <span>{t('delegate')}</span>
+        </Link>
       </div>
     )
   }
@@ -434,6 +441,10 @@ class Page extends Component<Props, any> {
       this.card.classList.remove('top')
       this.card.style.top = `${this.getModalTop()}px`
     }
+  }
+
+  handleBan = () => {
+    Toast.warn(t('no_delegation'), { hideAfter: 2 })
   }
 }
 

@@ -193,8 +193,8 @@ class Page extends Component<Props, any> {
 
         </section>
 
-        {this.renderDraggerModal()}
         {this.renderDrawerModal()}
+        {this.renderDraggerModal()}
 
         {this.renderToolbar()}
       </div>

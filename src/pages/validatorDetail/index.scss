@@ -324,6 +324,7 @@ body {
     top: 400px;
     left: 0;
     right: 0;
+    z-index: 100;
   }
 
   &.draggable-source--is-dragging {

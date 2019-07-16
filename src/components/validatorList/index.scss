@@ -1,5 +1,27 @@
 .validators {
     padding: 0 10px;
+
+    .empty {
+        background: #FAFBFC;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        padding-top: 118px;
+
+        img {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        span {
+            font-family: PingFangSC;
+            font-size: 13px;
+            line-height: 22px;
+            text-align: center;
+            letter-spacing: 0.167143px;
+            color: #949EA6;
+        }
+    }
 }
 
 .search-bar {

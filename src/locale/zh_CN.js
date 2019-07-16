@@ -78,6 +78,7 @@ const zh_CN = {
   more_details: '更多详情',
   campaign_over: '活动已结束',
   search_validator: '搜索验证节点名称',
+  search_for_nothing: '搜索不到该节点',
   delegation_status: '委托状态',
   completion: '到账',
   select_validator: '选择验证节点',

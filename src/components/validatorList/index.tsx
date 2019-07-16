@@ -7,6 +7,7 @@ import Loading from '../../components/loading'
 import { t, isiPhoneX } from '../../lib/utils'
 import SORT from '../../assets/sort.svg'
 import SEARCH from '../../assets/search.svg'
+import NO_DATA from '../../assets/no-data.svg'
 import ActionSheet from '../../components/actionsheet'
 import { updateSortby } from '../../lib/redux/actions'
 import { selectSortby } from '../../lib/redux/selectors'
@@ -133,6 +134,10 @@ class Page extends Component<Props, any> {
       })
     }
 
+    if (keyword && sortedList.length === 0) {
+      return this.renderEmpty()
+    }
+
     return (
       <div className="validator-list">
         {
@@ -145,6 +150,16 @@ class Page extends Component<Props, any> {
             onSelect={isSelect ? this.onSelect : null }
           />)
         }
+      </div>
+    )
+  }
+
+  renderEmpty() {
+    const height = window.innerHeight - 320
+    return (
+      <div className="empty" style={{ height }}>
+        <img src={NO_DATA} alt="no data"/>
+        <span>{t('search_for_nothing')}</span>
       </div>
     )
   }

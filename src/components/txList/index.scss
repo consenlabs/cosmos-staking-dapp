@@ -57,9 +57,10 @@
                 }
             }
             img {
-                width: 11px;
-                height: 11px;
-                margin-right: 6px;
+                width: 9px;
+                height: 9px;
+                margin: 0px;
+                margin-right: 5px;
                 animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
             }
         }

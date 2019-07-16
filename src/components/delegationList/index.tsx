@@ -42,7 +42,7 @@ class CMP extends Component<Props> {
         <div>
           <div>
             <span>{t('delegations')}</span>
-            <i>{fAtom(d.shares)}</i>
+            <i>{fAtom(d.shares || 0)}</i>
           </div>
 
           <div>
@@ -59,7 +59,7 @@ class CMP extends Component<Props> {
 
           <div>
             <span>{t('rewards_per_day')}</span>
-            <i>{d.shares && v.annualized_returns ? `+${getDailyReward(d.shares, v.annualized_returns)}` : '~'}</i>
+            <i>{d.shares && v.annualized_returns ? `+${getDailyReward(d.shares, v.annualized_returns)}` : '0'}</i>
           </div>
         </div>
       </div>
@@ -68,7 +68,9 @@ class CMP extends Component<Props> {
   }
 
   render() {
-    const { delegations, validators } = this.props
+    const { validators } = this.props
+
+    const delegations = this.mergeDeles()
 
     if (!delegations || !delegations.length) return null
 
@@ -80,6 +82,17 @@ class CMP extends Component<Props> {
         })}
       </div>
     )
+  }
+
+  mergeDeles = () => {
+    const { delegations, unbondingDelegations } = this.props
+    const deles = delegations.slice(0)
+    unbondingDelegations.forEach(udel => {
+      if (!deles.find(del => del.validator_address === udel.validator_address)) {
+        deles.push(udel)
+      }
+    })
+    return deles
   }
 }
 

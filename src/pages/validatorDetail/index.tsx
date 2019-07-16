@@ -47,7 +47,6 @@ const OFFSET_HEIGHT = 80
 const MODAL_HEIGHT = 200
 const TOOLBAR_HEIGHT = 54
 const IPHONEX_HEIGHT = 40
-const EXTRA_HEIGHT = 20
 
 class Page extends Component<Props, any> {
 
@@ -151,7 +150,7 @@ class Page extends Component<Props, any> {
 
     if (!v) return <Loading />
 
-    const height = window.innerHeight - MODAL_HEIGHT - TOOLBAR_HEIGHT - (isiPhoneX() ? IPHONEX_HEIGHT + EXTRA_HEIGHT : EXTRA_HEIGHT)
+    const height = window.innerHeight - MODAL_HEIGHT - TOOLBAR_HEIGHT - (isiPhoneX() ? IPHONEX_HEIGHT : 0)
 
     return (
       <div className="validator-detail-page" style={{ height }}>

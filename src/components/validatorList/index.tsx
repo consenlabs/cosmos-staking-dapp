@@ -29,10 +29,21 @@ class Page extends Component<Props, any> {
 
   constructor(props) {
     super(props)
+    const { history, validators } = props
+
+    let selectedValidator = null
+    if (history.location) {
+      const params = new URLSearchParams(history.location.search) as any
+      const distAddress = params.get('dist')
+      if (distAddress) {
+        selectedValidator = validators.find(v => v.operator_address === distAddress)
+      }
+    }
+
     this.state = {
       keyword: '',
       actionsheetVisible: false,
-      selectedValidator: null,
+      selectedValidator,
     }
   }
 

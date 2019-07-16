@@ -27,7 +27,7 @@ class CMP extends Component<Props, any> {
   constructor(props) {
     super(props)
     const { delegations, validator } = props
-    const d = delegations.find(d => d.validator_address === validator.operator_address)
+    const d = delegations.find(d => d.validator_address === validator.operator_address) || {}
     this.state = {
       amount: '',
       modalVisible: false,
@@ -103,7 +103,7 @@ class CMP extends Component<Props, any> {
 
   handleSelect = () => {
     const { history, validator, redelegations } = this.props
-    const { amount } = this.state
+    const { amount, sourceObject } = this.state
     const redelegation = redelegations.find(r => r.validator_dst_address === validator.operator_address)
     if (redelegation && Array.isArray(redelegation.entries)) {
       // if completion_time is later than now, can't redelegate
@@ -112,7 +112,7 @@ class CMP extends Component<Props, any> {
         return
       }
     }
-    const url = `/select-validator/${validator.operator_address}?amount=${amount}`
+    const url = `/select-validator/${validator.operator_address}?amount=${amount}&dist=${sourceObject.validator_src_address}`
     history.push(url)
   }
 

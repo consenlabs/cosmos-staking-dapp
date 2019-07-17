@@ -22,8 +22,7 @@ import WITHDRAW from '../../assets/withdraw.svg'
 import ARROW_BLUE from '../../assets/arrow-blue.svg'
 import FLAG from '../../assets/flag.svg'
 import dayjs from 'dayjs'
-import Drawer from 'react-drag-drawer'
-import dragger from './dragger'
+import Drawer from '../../components/draggableDrawer'
 
 interface Props {
   validators: any
@@ -84,16 +83,10 @@ class Page extends Component<Props, any> {
     }
     this.setState({ txs: this.mergeWithPendingTx(txs) })
     logger().track('to_validator_detail', { validator: id, moniker: v ? v.description.moniker : '' })
-
-    setTimeout(() => {
-      this.enableDragger()
-    }, 800)
   }
 
   pollingTimer: any = null
-
   card: any = null
-  draggerCard: any = null
 
   polling = () => {
     this.pollingTimer && clearInterval(this.pollingTimer)
@@ -195,8 +188,7 @@ class Page extends Component<Props, any> {
 
         </section>
 
-        {this.renderDrawerModal()}
-        {this.renderDraggerModal()}
+        {this.renderCardModal()}
 
         {this.renderToolbar()}
       </div>
@@ -272,40 +264,25 @@ class Page extends Component<Props, any> {
     )
   }
 
-  renderDraggerModal() {
-    const { txs, open } = this.state
-
-    if (!txs || !txs.length || open) return null
-
-    const top = this.getModalTop()
-
-    return (
-      <div className="modal-card draggable" ref={(ref) => this.draggerCard = ref} style={{ top }}>
-        <div className="flag" onClick={this.handleFlagClick}><img src={FLAG} alt="flag" /></div>
-        <div className="card-inner">
-          {this.renderDelegation()}
-          {this.renderUnbondingList()}
-          {this.renderTxs()}
-        </div>
-      </div>
-    )
-  }
-
-  renderDrawerModal() {
-    const { txs, open } = this.state
+  renderCardModal() {
+    const { txs } = this.state
     if (!txs || !txs.length) return null
 
     const minHeight = window.innerHeight - OFFSET_HEIGHT
+    const top = {
+      min: OFFSET_HEIGHT,
+      max: this.getModalTop(),
+    }
 
     return (
       <Drawer
-        open={open}
-        onRequestClose={this.stopDrawer}
-        onDrag={(e) => console.log(e)}
+        range={top}
+        onDrag={() => {}}
         containerElementClass="drawer"
         modalElementClass="drawer-modal"
+        ref={(ref) => this.card = ref}
       >
-        <div className="modal-card" ref={(ref) => this.card = ref} style={{ minHeight }}>
+        <div className="modal-card" style={{ minHeight }}>
           <div className="flag drawer-flag" onClick={this.handleFlagClick}><img src={FLAG} alt="flag" /></div>
           <div className="card-inner">
             {this.renderDelegation()}
@@ -457,29 +434,14 @@ class Page extends Component<Props, any> {
     return top
   }
 
-  enableDragger = () => {
-    dragger.init({ onStop: this.stopDragger })
-  }
-
-  destroyDragger = () => {
-    dragger.destroy()
-  }
-
-  stopDrawer = () => {
-    this.setState({ open: false }, this.enableDragger)
-  }
-
-  stopDragger = () => {
-    this.setState({ open: true }, this.destroyDragger)
-  }
-
   handleFlagClick = () => {
     const { open } = this.state
     if (open) {
-      this.stopDrawer()
+      this.card.showDrawer()
     } else {
-      this.stopDragger()
+      this.card.hideDrawer()
     }
+    this.setState({ open: !open })
   }
 
   handleBan = () => {

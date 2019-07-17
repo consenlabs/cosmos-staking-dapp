@@ -1,7 +1,6 @@
 body {
   .drawer {
-    top: 80px;
-    background-color: rgba(55, 56, 56, 0) !important;
+    // top: 80px;
 
     > div {
       width: 100%;
@@ -11,13 +10,13 @@ body {
       top: 0;
     }
 
-    .flag {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-    }
+    // .flag {
+    //   position: fixed;
+    //   top: 0;
+    //   left: 0;
+    //   right: 0;
+    //   z-index: 1000;
+    // }
   }
 }
 

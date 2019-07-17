@@ -1116,11 +1116,6 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
-"@shopify/draggable@^1.0.0-beta.8":
-  version "1.0.0-beta.8"
-  resolved "https://registry.npmjs.org/@shopify/draggable/-/draggable-1.0.0-beta.8.tgz#2eb3c2f72298ce3e53fe16f34ab124cc495cd4fc"
-  integrity sha512-9IeBPQM93Ad4qFKUopwuTClzoST/1OId4MaSd/8FB5ScCL2tl25UaOGNR8E2hjiL7xK4LN5+I1Ews6amS7YAiA==
-
 "@svgr/babel-plugin-add-jsx-attribute@^4.2.0":
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/@svgr/babel-plugin-add-jsx-attribute/-/babel-plugin-add-jsx-attribute-4.2.0.tgz#dadcb6218503532d6884b210e7f3c502caaa44b1"
@@ -8301,14 +8296,6 @@ prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.2, prop-types@^15.7.2:
     object-assign "^4.1.1"
     react-is "^16.8.1"
 
-prop-types@~15.6.1:
-  version "15.6.2"
-  resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
-  integrity sha512-3pboPvLiWD7dkI3qf3KbUe6hKFKa52w+AE0VCqECtf+QHAKgOL37tTaNCnuX1nAAQ4ZhyP+kYVKf8rLmJ/feDQ==
-  dependencies:
-    loose-envify "^1.3.1"
-    object-assign "^4.1.1"
-
 property-information@^5.0.0, property-information@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/property-information/-/property-information-5.0.1.tgz#c3b09f4f5750b1634c0b24205adbf78f18bdf94f"
@@ -8514,18 +8501,6 @@ react-dom@^16.8.6:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
     scheduler "^0.13.6"
-
-react-drag-drawer@^3.3.1:
-  version "3.3.1"
-  resolved "https://registry.npmjs.org/react-drag-drawer/-/react-drag-drawer-3.3.1.tgz#461256ccbb6a2f003997550b82fc455f9d927250"
-  integrity sha512-osltdeGy7b6kaV1VWD0HnPHi8YwwGavfYG5lKynt2dtFJAWA8+JMcHfoKgznalsPHZOZ3wG5/h8xcvTqGCcVPg==
-  dependencies:
-    emotion "~9.1.2"
-    global "~4.3.2"
-    intersection-observer "~0.5.0"
-    prop-types "~15.6.1"
-    react-intersection-observer "~3.0.3"
-    react-motion "~0.5.2"
 
 react-error-overlay@6.0.0-next.b0cbf2ca:
   version "6.0.0-next.b0cbf2ca"

@@ -15,7 +15,9 @@ function getBanner(size) {
     return current > (t.duration.start * 1000) && current < (t.duration.end * 1000)
   })
   // show previous event for now
-  campaign = campaign || campaignConfig[1]
+  if (!campaign) {
+    return {}
+  }
   return {
     img: campaign.imgs[locale][size],
     url: campaign.activity.campaignUrl,

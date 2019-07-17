@@ -78,7 +78,7 @@ const en_US = {
   more_details: 'More details here.',
   campaign_over: 'The event has ended',
   search_validator: 'Search validator name',
-  search_for_nothing: 'No data',
+  search_for_nothing: 'Not Found',
   delegation_status: 'Delegation Status',
   completion: 'completion',
   select_validator: 'select validator',

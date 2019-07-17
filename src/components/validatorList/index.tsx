@@ -166,7 +166,7 @@ class Page extends Component<Props, any> {
   }
 
   renderEmpty() {
-    const height = window.innerHeight - 320
+    const height = window.innerHeight - 66 - 46 - (isiPhoneX() ? 20 : 0)
     return (
       <div className="empty" style={{ height }}>
         <img src={NO_DATA} alt="no data"/>

@@ -99,7 +99,7 @@ class CMP extends Component<Props, any> {
         <p className="item-title">{t('risk')}</p>
         <p className="item-desc">
           {t('risk_state')}
-          <a href={`https://support.token.im/hc/${getLocale()}/sections/360004052613`}>{t('more_details')}</a>
+          <a href={`https://support.token.im/hc/${getLocale()}/articles/360024607373`}>{t('more_details')}</a>
         </p>
       </div>
     )

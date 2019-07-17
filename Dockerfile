@@ -10,7 +10,7 @@ COPY package.json /app/
 RUN npm install
 
 COPY ./ /app/
-RUN yarn run build
+RUN npm run build
 
 # Copy a configuration file from the current directory
 COPY nginx.conf /etc/nginx/

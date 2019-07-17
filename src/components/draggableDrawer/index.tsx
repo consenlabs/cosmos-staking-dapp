@@ -58,6 +58,13 @@ export default class DraggableDrawer extends Component<Props, any> {
 
   componentDidMount() {}
 
+  componentWillReceiveProps(nextPorps) {
+    if (nextPorps.range.min !== this.props.range.min ||
+      nextPorps.range.max !== this.props.range.max) {
+        this.setState({ top: nextPorps.range.max })
+    }
+  }
+
   componentDidUpdate() {
     if (this.drawer) {
       this.getNegativeScroll(this.drawer)

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/node": "^12.6.6",
     "axios": "^0.18.0",
     "big.js": "^5.2.2",
     "cogo-toast": "^1.0.4",

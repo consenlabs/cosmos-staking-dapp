@@ -84,7 +84,10 @@ class Page extends Component<Props, any> {
     }
     this.setState({ txs: this.mergeWithPendingTx(txs) })
     logger().track('to_validator_detail', { validator: id, moniker: v ? v.description.moniker : '' })
-    this.enableDragger()
+
+    setTimeout(() => {
+      this.enableDragger()
+    }, 800)
   }
 
   pollingTimer: any = null
@@ -455,9 +458,7 @@ class Page extends Component<Props, any> {
   }
 
   enableDragger = () => {
-    setTimeout(() => {
-      dragger.init({ onStop: this.stopDragger })
-    }, 700)
+    dragger.init({ onStop: this.stopDragger })
   }
 
   destroyDragger = () => {
@@ -465,14 +466,11 @@ class Page extends Component<Props, any> {
   }
 
   stopDrawer = () => {
-    this.setState({ open: false }, () => {
-      this.enableDragger()
-    })
+    this.setState({ open: false }, this.enableDragger)
   }
 
   stopDragger = () => {
-    this.setState({ open: true })
-    this.destroyDragger()
+    this.setState({ open: true }, this.destroyDragger)
   }
 
   handleFlagClick = () => {

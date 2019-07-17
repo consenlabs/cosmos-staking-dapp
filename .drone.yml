@@ -33,7 +33,8 @@ pipeline:
       branch: [ dev ]
   slack:
     image: plugins/slack
-    webhook: https://hooks.slack.com/services/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
+    webhook:
+      from_secret: slack_webhook
     when:
       status: [ success, failure ]
     template: >

@@ -7,10 +7,10 @@ RUN apk add nginx --no-cache --update && \
 RUN mkdir /app
 WORKDIR /app
 COPY package.json /app/
-RUN npm install
+RUN yarn
 
 COPY ./ /app/
-RUN npm run build
+RUN yarn run build
 
 # Copy a configuration file from the current directory
 COPY nginx.conf /etc/nginx/

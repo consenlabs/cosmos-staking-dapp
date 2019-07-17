@@ -7,7 +7,7 @@ RUN apk add nginx --no-cache --update && \
 RUN mkdir /app
 WORKDIR /app
 COPY package.json /app/
-RUN yarn
+RUN npm install
 
 COPY ./ /app/
 RUN yarn run build

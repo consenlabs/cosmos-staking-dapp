@@ -26,16 +26,12 @@ class CMP extends Component<Props, any> {
 
   constructor(props) {
     super(props)
-    const { delegations, validator } = props
-    const d = delegations.find(d => d.validator_address === validator.operator_address) || {}
     this.state = {
       amount: '',
       modalVisible: false,
       selectingDelegation: false,
       sourceType: 0,
-      sourceObject: {
-        value: d.shares,
-      },
+      sourceObject: {},
     }
   }
 
@@ -46,11 +42,13 @@ class CMP extends Component<Props, any> {
   render() {
     const { amount, sourceObject } = this.state
     const disabled = !amount || !sourceObject.key
+    const balance = this.getBalance()
+
     return (
       <div className="form-inner">
         <div className="form-header">
           <span>{t('delegated')}</span>
-          <i>{fAtom(sourceObject.value, 6, '0')} ATOM</i>
+          <i>{fAtom(balance, 6, '0')} ATOM</i>
         </div>
         <input
           type="number"
@@ -97,6 +95,12 @@ class CMP extends Component<Props, any> {
     )
   }
 
+  getBalance = () => {
+    const { delegations, validator } = this.props
+    const d = delegations.find(d => d.validator_address === validator.operator_address) || {}
+    return d.shares
+  }
+
   getFeeAmount = () => {
     return getFeeAmountByType(msgTypes.redelegate)
   }
@@ -120,8 +124,9 @@ class CMP extends Component<Props, any> {
     const { account, validator, history } = this.props
     const { amount, sourceObject } = this.state
     const { address } = account
+    const balance = this.getBalance()
     const isRedelegate = true
-    const [valid, msg] = validDelegate(uatom(amount), sourceObject.value, this.getFeeAmount(), isRedelegate, account.balance)
+    const [valid, msg] = validDelegate(uatom(amount), balance, this.getFeeAmount(), isRedelegate, account.balance)
     if (!valid) {
       return Toast.error(t(msg))
     }
@@ -191,7 +196,6 @@ class CMP extends Component<Props, any> {
         sourceObject: {
           key: validator.description.moniker,
           validator_src_address: validator.operator_address,
-          value: this.state.sourceObject.value,
         },
       })
     }

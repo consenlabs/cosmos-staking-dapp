@@ -10,8 +10,6 @@ import { getFeeAmountByType } from '../../config/fee'
 import msgTypes from '../../lib/msgTypes'
 import logger from '../../lib/logger'
 
-const selectLabels = ['delegated', 'rewards']
-
 interface Props {
   account: any
   reward: any
@@ -26,11 +24,11 @@ class CMP extends Component<Props, any> {
     super(props)
     this.state = {
       amount: '',
-      sourceObject: {
-        key: selectLabels[0],
-        value: props.delegation.shares,
-      }
     }
+  }
+
+  getBalance = () => {
+    return this.props.delegation.shares
   }
 
   getFeeAmount = () => {
@@ -40,10 +38,11 @@ class CMP extends Component<Props, any> {
   onSubmit = () => {
     const { account, history, validator } = this.props
     const { address, balance } = account
-    const { amount, sourceObject } = this.state
+    const { amount } = this.state
     const feeAmount = this.getFeeAmount()
+    const value = this.getBalance()
 
-    const [valid, msg] = validUndelegate(uatom(amount), sourceObject.value, feeAmount, balance)
+    const [valid, msg] = validUndelegate(uatom(amount), value, feeAmount, balance)
     if (!valid) {
       return Toast.error(t(msg))
     }
@@ -96,13 +95,14 @@ class CMP extends Component<Props, any> {
   }
 
   render() {
-    const { amount, sourceObject } = this.state
+    const { amount } = this.state
     const disabled = !amount
-    const displayAmount = fAtom(sourceObject.value, 6, '0')
+    const value = this.getBalance()
+    const displayAmount = fAtom(value, 6, '0')
     return (
       <div className="form-inner">
         <div className="form-header">
-          <span>{t(sourceObject.key)}</span>
+          <span>{t('delegated')}</span>
           <i>{displayAmount} ATOM</i>
         </div>
         <input

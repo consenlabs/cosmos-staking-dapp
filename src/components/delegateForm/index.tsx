@@ -14,8 +14,6 @@ import Arrow from '../../assets/arrow.svg'
 import buyAtomBigIcon from '../../assets/big-buy-atom.svg'
 import LOGO from '../../assets/cosmos.svg'
 
-const selectLabels = ['available_balance', 'rewards', 'other_delegations']
-
 interface Props {
   reward: any
   account: any
@@ -33,10 +31,6 @@ class CMP extends Component<Props, any> {
     super(props)
     this.state = {
       amount: '',
-      sourceObject: {
-        key: selectLabels[0],
-        value: props.account.balance,
-      },
       exchangeModalVisible: false,
     }
   }
@@ -112,13 +106,15 @@ class CMP extends Component<Props, any> {
   }
 
   render() {
-    const { amount, sourceObject } = this.state
+    const { amount } = this.state
     const disabled = !amount
+    const value = this.props.account.balance
+
     return (
       <div className="form-inner">
         <div className="form-header">
-          <span>{t(sourceObject.key)}</span>
-          <i>{fAtom(sourceObject.value, 6, '0')} ATOM</i>
+          <span>{t('available_balance')}</span>
+          <i>{fAtom(value, 6, '0')} ATOM</i>
         </div>
         <input
           type="number"
@@ -156,10 +152,11 @@ class CMP extends Component<Props, any> {
 
   onSubmit = () => {
     const { account, validator, history } = this.props
-    const { amount, sourceObject } = this.state
+    const { amount } = this.state
     const { address } = account
+    const balance = account.balance
     const isRedelegate = false
-    const [valid, msg] = validDelegate(uatom(amount), sourceObject.value, this.getFeeAmount(), isRedelegate, account.balance)
+    const [valid, msg] = validDelegate(uatom(amount), balance, this.getFeeAmount(), isRedelegate, balance)
     if (!valid) {
       return Toast.error(t(msg))
     }

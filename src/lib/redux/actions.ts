@@ -99,3 +99,17 @@ export const updateExchangeToken = ({ makerToken, takerToken }) => {
     }
   }
 }
+
+export const updateUnbondingDelegations = (unbondingDelegations) => {
+  return {
+    type: types.UPDATE_UNBONDING_DELEGATIONS,
+    payload: unbondingDelegations
+  }
+}
+
+export const updateSelectedValidator = (validator) => {
+  return {
+    type: types.UPDATE_SELECTED_VALIDATOR,
+    payload: validator
+  }
+}

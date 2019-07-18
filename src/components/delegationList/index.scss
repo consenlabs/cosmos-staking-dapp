@@ -57,35 +57,26 @@
     }
 
     .bottom {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      div {
+      // padding: 13px 0px;
+      > div  {
         display: flex;
-        flex-direction: column;
-        flex: 1;
-
-        &.first {
-          margin-right: 30px;
+        > div:first-child {
+          width: 204px;
         }
-
-        &.last {
-          text-align: right;
-        }
-
-        span {
-          font-family: 'PingFang SC';
-          font-size: 11px;
-          letter-spacing: normal;
-          color: #98a2a9;
-        }
-        i {
-          margin-top: 5px;
-          font-size: 13px;
-          font-style: normal;
-          letter-spacing: normal;
-          color: #43454f;
-        }
+      }
+      span {
+        display: block;
+        font-family: 'PingFang SC';
+        font-size: 11px;
+        letter-spacing: normal;
+        color: #98a2a9;
+      }
+      i {
+        margin-top: 5px;
+        font-size: 13px;
+        font-style: normal;
+        letter-spacing: normal;
+        color: #43454f;
       }
     }
   }

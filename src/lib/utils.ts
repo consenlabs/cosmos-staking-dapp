@@ -234,10 +234,10 @@ export const getAmountFromMsg = (msg) => {
  *   delegate: '委托',
  *   delegate_token_get_rewards: '委托 $s 获取收益 $s 每天',
  * }
- * 
+ *
  * t('delegate') ---> '委托'
  * t('delegate_token_get_rewards', 'Atom', 'Btom') --->  '委托 Atom 获取收益 Btom 每天'
- * 
+ *
  */
 let trans: any = null
 export const t = (key, ...args) => {

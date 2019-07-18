@@ -1,12 +1,21 @@
+import HASH_ZH_BIG from '../assets/banners/hash-zh-big.png'
+import HASH_ZH_SMALL from '../assets/banners/hash-zh-small.png'
+import HASH_EN_BIG from '../assets/banners/hash-en-big.png'
+import HASH_EN_SMALL from '../assets/banners/hash-en-small.png'
+import SPARKPOOL_ZH_BIG from '../assets/banners/sparkpool-zh-big.png'
+import SPARKPOOL_ZH_SMALL from '../assets/banners/sparkpool-zh-small.png'
+import SPARKPOOL_EN_BIG from '../assets/banners/sparkpool-en-big.png'
+import SPARKPOOL_EN_SMALL from '../assets/banners/sparkpool-en-small.png'
+
 export default [
   {
     name: 'hash',
     operator_address: 'cosmosvaloper1cgh5ksjwy2sd407lyre4l3uj2fdrqhpkzp06e6',
     imgs: {
-      zh_big: require('../assets/banners/hash-zh-big.png'),
-      zh_small: require('../assets/banners/hash-zh-small.png'),
-      en_big: require('../assets/banners/hash-en-big.png'),
-      en_small: require('../assets/banners/hash-en-small.png'),
+      zh_big: HASH_ZH_BIG,
+      zh_small: HASH_ZH_SMALL,
+      en_big: HASH_EN_BIG,
+      en_small: HASH_EN_SMALL,
     },
     activity: {
       name: {
@@ -28,10 +37,10 @@ export default [
     name: 'SparkPool',
     operator_address: 'cosmosvaloper1rwh0cxa72d3yle3r4l8gd7vyphrmjy2kpe4x72',
     imgs: {
-      zh_big: require('../assets/banners/sparkpool-zh-big.png'),
-      zh_small: require('../assets/banners/sparkpool-zh-small.png'),
-      en_big: require('../assets/banners/sparkpool-en-big.png'),
-      en_small: require('../assets/banners/sparkpool-en-small.png'),
+      zh_big: SPARKPOOL_ZH_BIG,
+      zh_small: SPARKPOOL_ZH_SMALL,
+      en_big: SPARKPOOL_EN_BIG,
+      en_small: SPARKPOOL_EN_SMALL,
     },
     desc: {
       zh: '星火矿池是全球第二大以太坊矿池，也是全球最大的 GPU 通用算力平台。三年来，星火矿池先后推出了 ETH 矿池、Beam 矿池、Grin 矿池、Cosmos 权益池以及 SparkOS 等产品，是全球范围内的顶尖矿池团队。',

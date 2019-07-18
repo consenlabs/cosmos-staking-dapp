@@ -11,6 +11,7 @@ import * as api from '../../../lib/api'
 import { pubsub } from 'lib/event'
 import logger from '../../../lib/logger'
 import dayjs from 'dayjs'
+import DELEGATE_SUCCESS from '../../../assets/campaign/delegate-success.png'
 
 const hashquark = campaignConfig.find(t => t.id === 'hashquark') as any
 const locale = getLocale()
@@ -112,7 +113,7 @@ class HashQuark extends Component<Props, any> {
       <div className="hashquark" style={{ paddingBottom: isiPhoneX() ? 100 : 80 }}>
         <img src={hashquark.banner[locale]} alt="hashquark banner" className="banner" />
         <div className="content">
-          <ValidatorCard validator={validator} pool={pool} />
+          <ValidatorCard validator={validator} pool={pool} index={0} />
           {this.renderInfoCard()}
           {this.renderDivider()}
           <Detail
@@ -207,7 +208,7 @@ class HashQuark extends Component<Props, any> {
         styles={{ margin: '0 40px', borderRadius: '16px', position: 'relative', top: '50%', transform: 'translateY(-50%)' }}
         appElement={document.body}>
         <div className="modal-success">
-          <img src={require('../../../assets/campaign/delegate-success.png')} />
+          <img src={DELEGATE_SUCCESS} />
 
           <p className="title">{`${t('success_delegate', fAtom(getAmountFromMsg(tx)))}`}</p>
           <p className="desc">{t('success_delegate_desc')}</p>

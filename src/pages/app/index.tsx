@@ -4,12 +4,14 @@ import { connect } from "react-redux"
 import { selectValidators } from '../../lib/redux/selectors'
 import Home from '../home'
 import Validators from '../validators'
+import SelectValidator from '../selectValidator'
 import ValidatorDetail from '../validatorDetail'
 import Delegate from '../delegate'
 import UnDelegate from '../undelegate'
+import ReDelegate from '../redelegate'
 import Vote from '../vote'
 import './index.scss'
-import { updateValidators, updateAccount, updateDelegations, updateRedelegations, updateValidatorRewards, updateAtomPrice, addPendingTx, updateExchangeToken } from 'lib/redux/actions'
+import { updateValidators, updateAccount, updateDelegations, updateRedelegations, updateValidatorRewards, updateAtomPrice, addPendingTx, updateExchangeToken, updateUnbondingDelegations } from 'lib/redux/actions'
 import * as api from 'lib/api'
 import * as sdk from 'lib/sdk'
 import * as utils from 'lib/utils'
@@ -28,6 +30,7 @@ interface Props {
   updateAtomPrice: (value: any) => any
   addPendingTx: (value: any) => any
   updateExchangeToken: (value: any) => any
+  updateUnbondingDelegations: (value: any) => any
 }
 
 class App extends Component<Props> {
@@ -79,7 +82,7 @@ class App extends Component<Props> {
   }
 
   updateAsyncData = () => {
-    const { updateAccount, updateDelegations, updateRedelegations, updateValidators, updateValidatorRewards, updateAtomPrice } = this.props
+    const { updateAccount, updateDelegations, updateRedelegations, updateValidators, updateValidatorRewards, updateAtomPrice, updateUnbondingDelegations } = this.props
 
     if (this.polling) clearTimeout(this.polling)
 
@@ -104,7 +107,10 @@ class App extends Component<Props> {
         updateAccount({ rewardBalance: b })
       }).catch(console.warn)
 
-      api.getUnbondingDelegations(address).then(utils.getUnbondingBalance).then(b => {
+      api.getUnbondingDelegations(address).then(data => {
+        updateUnbondingDelegations(data)
+        return data
+      }).then(utils.getUnbondingBalance).then(b => {
         updateAccount({ refundingBalance: b })
       }).catch(console.warn)
 
@@ -151,8 +157,10 @@ class App extends Component<Props> {
         <Route path="/validator/:id" component={ValidatorDetail} />
         <Route path="/delegate/:id" component={Delegate} />
         <Route path="/undelegate/:id" component={UnDelegate} />
+        <Route path="/redelegate/:id" component={ReDelegate} />
         <Route path="/campaign/:id" component={Campaign} />
         <Route path="/vote" component={Vote} />
+        <Route path="/select-validator/:id" component={SelectValidator} />
       </Switch>
       <SupportModal />
     </BrowserRouter>
@@ -174,6 +182,7 @@ const mapDispatchToProps = {
   updateAtomPrice,
   addPendingTx,
   updateExchangeToken,
+  updateUnbondingDelegations,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

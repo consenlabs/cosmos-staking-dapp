@@ -1,3 +1,12 @@
+import HYPERBLOCKS_ZH_BIG from '../assets/campaign/hyperblocks-zh-big.png'
+import HYPERBLOCKS_ZH_SMALL from '../assets/campaign/hyperblocks-zh-small.png'
+import HYPERBLOCKS_EN_BIG from '../assets/campaign/hyperblocks-en-big.png'
+import HYPERBLOCKS_EN_SMALL from '../assets/campaign/hyperblocks-en-small.png'
+import HASHQUARK_ZH_BIG from '../assets/campaign/hashquark-zh-big.png'
+import HASHQUARK_ZH_SMALL from '../assets/campaign/hashquark-zh-small.png'
+import HASHQUARK_EN_BIG from '../assets/campaign/hashquark-en-big.png'
+import HASHQUARK_EN_SMALL from '../assets/campaign/hashquark-en-small.png'
+
 export default [
   {
     id: 'hyperblocks',
@@ -9,12 +18,12 @@ export default [
     },
     imgs: {
       zh: {
-        big: require('../assets/campaign/hyperblocks-zh-big.png'),
-        small: require('../assets/campaign/hyperblocks-zh-small.png')
+        big: HYPERBLOCKS_ZH_BIG,
+        small: HYPERBLOCKS_ZH_SMALL
       },
       en: {
-        big: require('../assets/campaign/hyperblocks-en-big.png'),
-        small: require('../assets/campaign/hyperblocks-en-small.png')
+        big: HYPERBLOCKS_EN_BIG,
+        small: HYPERBLOCKS_EN_SMALL
       },
     },
     activity: {
@@ -37,17 +46,17 @@ export default [
     },
     imgs: {
       zh: {
-        big: require('../assets/campaign/hashquark-zh-big.png'),
-        small: require('../assets/campaign/hashquark-zh-small.png')
+        big: HASHQUARK_ZH_BIG,
+        small: HASHQUARK_ZH_SMALL
       },
       en: {
-        big: require('../assets/campaign/hashquark-en-big.png'),
-        small: require('../assets/campaign/hashquark-en-small.png')
+        big: HASHQUARK_EN_BIG,
+        small: HASHQUARK_EN_SMALL
       },
     },
     banner: {
-      zh: require('../assets/campaign/hashquark-zh-big.png'),
-      en: require('../assets/campaign/hashquark-en-big.png'),
+      zh: HASHQUARK_ZH_BIG,
+      en: HASHQUARK_EN_BIG,
     },
     activity: {
       name: {

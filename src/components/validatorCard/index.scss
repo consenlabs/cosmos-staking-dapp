@@ -3,17 +3,22 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  height: 41px;
-  padding: 15px;
-  margin-top: 10px;
-  border-radius: 4px;
-  box-shadow: 0 2px 8px 0 #00000019;
+  height: 40px;
+  padding: 15px 15px 15px 20px;
+  border-bottom: 0.5px solid #EAECF6;
   background-color: #ffffff;
   text-decoration: none;
   position: relative;
+  &.odd-row {
+      background-color: #FAFBFC;
+  }
+  &.selected {
+      background-color: rgba(236, 244, 253, 0.9);
+  }
+
   .v-left {
       flex: 1;
-      height: 42px;
+      height: 40px;
       margin-left: 10px;
       display: flex;
       flex-direction: column;

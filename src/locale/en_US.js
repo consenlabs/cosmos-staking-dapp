@@ -77,6 +77,12 @@ const en_US = {
   redelegate_state: 'The re-delegation will take effect immediately, i.e. your re-delegated ATOM will earn rewards. But, it will be locked for 21 days, meaning you won\'t be able to re-delegation again for 21 days.',
   more_details: 'More details here.',
   campaign_over: 'The event has ended',
+  search_validator: 'Search validator name',
+  search_for_nothing: 'Not Found',
+  delegation_status: 'Delegation Status',
+  completion: 'completion',
+  select_validator: 'select validator',
+  no_delegation: 'No Delegation',
 }
 
 export default en_US

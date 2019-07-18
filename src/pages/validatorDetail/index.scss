@@ -1,6 +1,34 @@
+body {
+  .drawer {
+    // top: 80px;
+
+    > div {
+      width: 100%;
+    }
+    .drawer-modal {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    // .flag {
+    //   position: fixed;
+    //   top: 0;
+    //   left: 0;
+    //   right: 0;
+    //   z-index: 1000;
+    // }
+  }
+}
+
 .validator-detail-page {
   display: flex;
   flex-direction: column;
+  padding-bottom: 25px;
+  overflow: auto;
+  box-sizing: border-box;
+  // -webkit-overflow-scrolling: touch;
+
   section {
     padding: 20px;
     padding-bottom: 0;
@@ -55,10 +83,16 @@
   }
   section:first-child {
     .top {
+      // position: fixed;
+      // top: 0;
+      // left: 0;
+      // right: 0;
+      // background: #191B31;
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
       text-decoration: none;
+      // padding: 20px;
     .left {
         flex: 1;
         padding: 2px 0;
@@ -149,29 +183,60 @@
     left: 0;
     right: 0;
     bottom: 0;
+    z-index: 1000;
     display: flex;
     justify-content: center;
-    padding: 7px 15px;
+    padding: 10px 15px;
     background-color: rgba(25, 27, 49, 0.85);
-    a {
+    .btn {
       flex: 1;
-      height: 45px;
+      height: 46px;
+      line-height: 46px;
       border-radius: 8px;
-      &:first-child {
-        margin-right: 15px;
-        background-color: #01c6d0;
-      }
-      &:last-child {
-        background-color: #098de6;
-      }
+      background-color: #098de6;
       font-family: 'PingFang SC';
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 500;
-      line-height: 45px;
       letter-spacing: 0.3px;
       text-align: center;
       color: #ffffff;
       text-decoration: none;
+    }
+
+    .toolbar-row {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      background: #FAFBFC;
+      // border-top: 0.5px solid #D2D4DD;
+
+      a {
+        flex: 1;
+        height: 54px;
+        line-height: 54px;
+        box-sizing: border-box;
+        background: #FAFBFC;
+        font-size: 13px;
+        text-align: center;
+        color: #43454F;
+
+        img {
+          vertical-align: middle;
+        }
+
+        span {
+          vertical-align: middle;
+          padding-left: 6px;
+        }
+      }
+
+      .vertical-line {
+        height: 18px;
+        width: 1px;
+        background-color: #D2D4DD;
+      }
+
     }
   }
 
@@ -181,8 +246,8 @@
     justify-content: space-between;
     text-decoration: none;
     border-radius: 4px;
-    border: solid 0.5px rgba(119, 122, 140, 0.39);
-    background-color: #1b2138;
+    // border: solid 0.5px rgba(119, 122, 140, 0.39);
+    background: #21233A;
     padding: 18px 18px 15px 18px;
 
     p {
@@ -229,5 +294,109 @@
         color: #777a8c;
       }
     }
+  }
+}
+
+.flag {
+    padding-top: 6px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border-radius: 4px 4px 0px 0px;
+    > div {
+      width: 54px;
+      height: 4px;
+      background: #EAECF6;
+      border-radius: 2px;
+    }
+  }
+
+.modal-card {
+  background-color: #fff;
+  padding: 0px 20px 50px 20px;
+  margin-top: 0px;
+  border-radius: 4px 4px 0px 0px;
+  // max-height: 100%;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+
+  &.draggable {
+    position: fixed;
+    top: 400px;
+    left: 0;
+    right: 0;
+    z-index: 100;
+  }
+
+  &.draggable-source--is-dragging {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  &.draggable-mirror {
+    width: 100%;
+  }
+
+
+  .card-inner {
+    padding-top: 18px;
+  }
+
+  .split-line {
+    height: 0px;
+    margin: 12px 0;
+    border-bottom: 0.5px solid #D2D4DD;
+  }
+
+  .delegation {
+    border-bottom: 0.5px solid #D2D4DD;
+
+    .bottom {
+      padding: 15px 0px;
+      > div  {
+        display: flex;
+        > div:first-child {
+          width: 204px;
+        }
+      }
+      span {
+        display: block;
+        font-family: 'PingFang SC';
+        font-size: 11px;
+        letter-spacing: normal;
+        color: #98a2a9;
+      }
+      i {
+        margin-top: 5px;
+        font-size: 13px;
+        font-style: normal;
+        letter-spacing: normal;
+        color: #43454f;
+      }
+    }
+  }
+
+  .list-section {
+    margin-bottom: 25px;
+
+    .title {
+      font-family: PingFangSC;
+      font-size: 13px;
+      line-height: 22px;
+      color: #777A8C;
+      margin: 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      > a {
+        font-family: 'PingFangSC';
+        font-size: 13px;
+        color: #098DE6;
+      }
+    }
+
   }
 }

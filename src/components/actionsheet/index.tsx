@@ -15,12 +15,10 @@ class ActionSheet extends Component<Props, any> {
     return (
       <div className="actionsheet" onClick={close}>
         <div className="wrap" onClick={(e) => e.stopPropagation()} style={{ paddingBottom: isiPhoneX() ? '23px' : '10px' }}>
+          {title && (
+            <p className="title">{title}</p>
+          )}
           <div className="options">
-            {title && (
-              <div className="item">
-                <p className="title">{title}</p>
-              </div>
-            )}
             {(options || []).map((option) => {
               return (
                 <div key={option.key} className="item" onClick={() => this.onSelect(option)}>

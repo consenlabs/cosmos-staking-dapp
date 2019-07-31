@@ -1,3 +1,6 @@
+import { selectExchangeToken, selectAccountInfo } from 'lib/redux/selectors'
+import { Toast, t } from 'lib/utils'
+
 window['imToken'] = window['imToken'] || {
   callPromisifyAPI: (apiName: string, payload: any): Promise<any> => {
     switch (apiName) {
@@ -62,4 +65,20 @@ export function getHeaders() {
 
 export function sendTransaction(payload) {
   return imToken.callPromisifyAPI('cosmos.sendTransaction', payload)
+}
+
+export function goTokenlon(state) {
+  const exchangeToken = selectExchangeToken(state)
+  const account = selectAccountInfo(state)
+  if (exchangeToken && exchangeToken.makerToken && exchangeToken.takerToken) {
+    routeTo({
+      screen: 'Tokenlon',
+      passProps: {
+        ...exchangeToken,
+        xChainReceiver: account.address,
+      }
+    })
+  } else {
+    Toast.error(t('cant_exchange_now'))
+  }
 }

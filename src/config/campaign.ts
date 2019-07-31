@@ -6,8 +6,33 @@ import HASHQUARK_ZH_BIG from '../assets/campaign/hashquark-zh-big.png'
 import HASHQUARK_ZH_SMALL from '../assets/campaign/hashquark-zh-small.png'
 import HASHQUARK_EN_BIG from '../assets/campaign/hashquark-en-big.png'
 import HASHQUARK_EN_SMALL from '../assets/campaign/hashquark-en-small.png'
+import TOKENLON_ATOM_EN_SMALL from '../assets/campaign/tokenlon-atom-en-small.png'
+import TOKENLON_ATOM_ZH_SMALL from '../assets/campaign/tokenlon-atom-zh-small.png'
+import TOKENLON_ATOM_EN_BIG from '../assets/campaign/tokenlon-atom-en-big.png'
+import TOKENLON_ATOM_ZH_BIG from '../assets/campaign/tokenlon-atom-zh-big.png'
+
+import { goTokenlon } from 'lib/sdk'
 
 export default [
+  {
+    id: 'tokenlon-atom',
+    duration: {
+      start: 1564541800,
+      end: 1567133800,
+    },
+    imgs: {
+      zh: {
+        big: TOKENLON_ATOM_ZH_BIG,
+        small: TOKENLON_ATOM_ZH_SMALL
+      },
+      en: {
+        big: TOKENLON_ATOM_EN_BIG,
+        small: TOKENLON_ATOM_EN_SMALL
+      },
+    },
+    // event
+    onClick: goTokenlon,
+  },
   {
     id: 'hyperblocks',
     name: 'HyperBlocks',

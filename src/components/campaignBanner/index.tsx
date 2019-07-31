@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from "react-redux"
 import { Link } from 'react-router-dom'
 import './index.scss'
 import { getLocale } from '../../lib/utils'
@@ -6,6 +7,7 @@ import campaignConfig from '../../config/campaign'
 
 interface Props {
   size: 'big' | 'small'
+  store: any
 }
 
 function getBanner(size) {
@@ -18,9 +20,11 @@ function getBanner(size) {
   if (!campaign) {
     return {}
   }
+  const activity = campaign.activity
   return {
     img: campaign.imgs[locale][size],
-    url: campaign.activity.campaignUrl,
+    url: activity ? activity.campaignUrl : '',
+    onClick: campaign.onClick
   }
 }
 
@@ -30,12 +34,21 @@ class CMP extends Component<Props, any> {
   constructor(props) {
     super(props)
     this.state = getBanner(props.size)
-    console.log(this.state)
   }
 
   render() {
-    const { img, url } = this.state
-    if (!url) return null
+    const { store } = this.props
+    const { img, url, onClick } = this.state
+    if (!img) return null
+    if (onClick) {
+      return (
+        <Link className="banner" to={{}}>
+          <div onClick={() => onClick(store)}>
+            <img src={img} alt="staking" />
+          </div>
+        </Link>
+      )
+    }
     return <Link className="banner" to={{ pathname: url, state: { size: this.props.size } }}>
       <div>
         <img src={img} alt="staking" />
@@ -44,4 +57,14 @@ class CMP extends Component<Props, any> {
   }
 }
 
-export default CMP
+const mapStateToProps = state => {
+  return {
+    store: state
+  }
+}
+
+const mapDispatchToProps = {
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CMP)

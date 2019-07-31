@@ -93,12 +93,31 @@ class HashQuark extends Component<Props, any> {
   }
 
   fetchInfo = () => {
-    const { account } = this.props
-    api.getHashquarkRankList(account.address).then((data) => {
-      if (data) {
-        this.setState({ info: data })
+    // const { account } = this.props
+    // api.getHashquarkRankList(account.address).then((data) => {
+    //   if (data) {
+    //     this.setState({ info: data })
+    //   }
+    // }).catch(console.warn)
+
+    this.setState({
+      info: {
+        "end_time": 1560506400,
+        "delegated_shares": 0.0,
+        "total_delegated": 532509000941.0,
+        "total_delegator": 532,
+        "top_delegations": [{
+          "address": "cosmos106xssa6wrykexh6763dyfsn7h5antr4xazjv57",
+          "delegated": 200000000032.0
+        }, {
+          "address": "cosmos1r5hph3jn4hjvde5yz3ksuv7mlqtn7eejey39zs",
+          "delegated": 24062000000.0
+        }, {
+          "address": "cosmos1mtnj4a4hplm65r950jtyynvp280h94hmzlmqe2",
+          "delegated": 20535923607.0
+        }]
       }
-    }).catch(console.warn)
+    });
   }
 
   render() {

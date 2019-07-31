@@ -42,7 +42,7 @@ class CMP extends Component<Props, any> {
     if (!img) return null
     if (onClick) {
       return (
-        <Link className="banner">
+        <Link className="banner" to={{}}>
           <div onClick={() => onClick(store)}>
             <img src={img} alt="staking" />
           </div>

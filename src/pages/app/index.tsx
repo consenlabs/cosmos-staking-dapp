@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 import { connect } from "react-redux"
 import { selectValidators } from '../../lib/redux/selectors'
 import Home from '../home'
@@ -154,7 +154,11 @@ class App extends Component<Props> {
   render() {
     return <BrowserRouter basename="/cosmos">
       <Switch>
-        <Route exact path="/" component={Home} />
+        <Route exact path="/" render={() => (
+          !window['imToken']['callAPI'] ? (
+            <Redirect to="/validators" />
+          ) : (<Home />)
+        )} />
         <Route exact path="/validators" component={Validators} />
         <Route path="/validator/:id" component={ValidatorDetail} />
         <Route path="/delegate/:id" component={Delegate} />

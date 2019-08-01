@@ -15,7 +15,7 @@ import { updateValidators, updateAccount, updateDelegations, updateRedelegations
 import * as api from 'lib/api'
 import * as sdk from 'lib/sdk'
 import * as utils from 'lib/utils'
-import { t, isReload } from '../../lib/utils'
+import { isReload } from '../../lib/utils'
 import { pubsub } from 'lib/event'
 import Campaign from '../campaign'
 import SupportModal from '../../components/supportModal'
@@ -37,11 +37,11 @@ interface Props {
 class App extends Component<Props> {
 
   componentDidMount() {
-    if (!window['imToken']['callAPI']) {
-      setTimeout(() => {
-        utils.Toast.warn(t('please_open_in_imtoken'), { hideAfter: 5, position: 'top-center' })
-      }, 6000)
-    }
+    // if (!window['imToken']['callAPI']) {
+    //   setTimeout(() => {
+    //     utils.Toast.warn(t('please_open_in_imtoken'), { hideAfter: 5, position: 'top-center' })
+    //   }, 6000)
+    // }
     new OpenApp()
   }
 

@@ -7144,7 +7144,7 @@ onetime@^2.0.0:
 
 "open-app@git+https://github.com/xwartz/open-app":
   version "1.0.0"
-  resolved "git+https://github.com/xwartz/open-app#e61cd3755a08e72e380f9368b5c5f836e1c08d16"
+  resolved "git+https://github.com/xwartz/open-app#0c77c2fdf67215d2a3005eb4e2039256e51873f2"
 
 opn@5.4.0:
   version "5.4.0"

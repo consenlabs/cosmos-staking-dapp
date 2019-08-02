@@ -11,8 +11,6 @@ import TOKENLON_ATOM_ZH_SMALL from '../assets/campaign/tokenlon-atom-zh-small.pn
 import TOKENLON_ATOM_EN_BIG from '../assets/campaign/tokenlon-atom-en-big.png'
 import TOKENLON_ATOM_ZH_BIG from '../assets/campaign/tokenlon-atom-zh-big.png'
 
-import { goTokenlon } from 'lib/sdk'
-
 export default [
   {
     id: 'tokenlon-atom',
@@ -31,7 +29,7 @@ export default [
       },
     },
     // event
-    onClick: goTokenlon,
+    actionType: 'goTokenlon',
   },
   {
     id: 'hyperblocks',

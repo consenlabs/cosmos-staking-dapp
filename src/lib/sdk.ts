@@ -1,5 +1,5 @@
-import { selectExchangeToken, selectAccountInfo } from 'lib/redux/selectors'
 import { Toast, t } from 'lib/utils'
+import logger from 'lib/logger'
 
 window['imToken'] = window['imToken'] || {
   callPromisifyAPI: (apiName: string, payload: any): Promise<any> => {
@@ -67,10 +67,10 @@ export function sendTransaction(payload) {
   return imToken.callPromisifyAPI('cosmos.sendTransaction', payload)
 }
 
-export function goTokenlon(state) {
-  const exchangeToken = selectExchangeToken(state)
-  const account = selectAccountInfo(state)
+export function goTokenlon(props) {
+  const { exchangeToken, account } = props
   if (exchangeToken && exchangeToken.makerToken && exchangeToken.takerToken) {
+    logger().track('go_tokenlon_exchange', { page: 'home', result: 'confirm' })
     routeTo({
       screen: 'Tokenlon',
       passProps: {

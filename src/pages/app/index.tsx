@@ -42,7 +42,9 @@ class App extends Component<Props> {
     //     utils.Toast.warn(t('please_open_in_imtoken'), { hideAfter: 5, position: 'top-center' })
     //   }, 6000)
     // }
-    new OpenApp()
+    new OpenApp({
+      timeout: 4000,
+    })
   }
 
   _autoRefresh: any = null

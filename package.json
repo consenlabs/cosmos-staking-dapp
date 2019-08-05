@@ -14,7 +14,7 @@
     "immer": "^3.0.0",
     "intersection-observer": "~0.5.0",
     "numeral": "^2.0.6",
-    "open-app": "git+https://github.com/xwartz/open-app#0c77c2fdf6",
+    "open-app": "git+https://github.com/xwartz/open-app#a9842f508",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-intersection-observer": "~3.0.3",

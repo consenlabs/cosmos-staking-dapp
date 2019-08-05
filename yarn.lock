@@ -7142,9 +7142,9 @@ onetime@^2.0.0:
   dependencies:
     mimic-fn "^1.0.0"
 
-"open-app@git+https://github.com/xwartz/open-app#0c77c2fdf6":
+"open-app@git+https://github.com/xwartz/open-app#a9842f508":
   version "1.0.0"
-  resolved "git+https://github.com/xwartz/open-app#0c77c2fdf67215d2a3005eb4e2039256e51873f2"
+  resolved "git+https://github.com/xwartz/open-app#a9842f5086332dcfb45496ac9ddf1cfe2bbfc6f1"
 
 opn@5.4.0:
   version "5.4.0"

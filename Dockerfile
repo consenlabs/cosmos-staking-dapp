@@ -1,6 +1,6 @@
 FROM node:10.15.3-alpine
 
-RUN apk add nginx --no-cache --update && \
+RUN apk add nginx git python alpine-sdk --no-cache --update && \
     rm -rf /var/cache/apk/* && \
     chown -R nginx:www-data /var/lib/nginx
 

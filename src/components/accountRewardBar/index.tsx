@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { t, createWithdrawMsg, createDelegateMsg, createTxPayload, Toast, toBN, fAtom, isiPhoneX } from '../../lib/utils'
 import { getFeeParamsByMsgs } from '../../config/fee'
-import { sendTransaction, routeTo } from '../../lib/sdk'
+import { sendTransaction, goTokenlon } from '../../lib/sdk'
 import * as api from '../../lib/api'
 import { selectAccountInfo, selectDelegations, selectValidatorRewards, selectExchangeToken } from '../../lib/redux/selectors'
 import './index.scss'
@@ -181,20 +181,7 @@ class CMP extends Component<Props> {
   }
 
   doExchange = () => {
-    const { exchangeToken, account } = this.props
-    if (exchangeToken && exchangeToken.makerToken && exchangeToken.takerToken) {
-      logger().track('go_tokenlon_exchange', { page: 'home', result: 'confirm' })
-      routeTo({
-        screen: 'Tokenlon',
-        passProps: {
-          ...exchangeToken,
-          xChainReceiver: account.address,
-        }
-      })
-    } else {
-      Toast.error(t('cant_exchange_now'))
-    }
-
+    goTokenlon(this.props)
     this.hideModal()
   }
 

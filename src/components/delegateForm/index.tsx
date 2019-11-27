@@ -176,7 +176,7 @@ class CMP extends Component<Props, any> {
     ]
 
     // send delegate apiCall
-    const memo = 'delegate from imToken'
+    const memo = 'imToken-DeFiApi'
 
     const txPayload = createTxPayload(
       address,

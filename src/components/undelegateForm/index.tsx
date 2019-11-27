@@ -59,7 +59,7 @@ class CMP extends Component<Props, any> {
         getNetworkConfig().denom)
     ]
 
-    const memo = 'undelegate from imToken'
+    const memo = 'imToken-DeFiApi'
 
     // send delegate apiCall
     const txPayload = createTxPayload(

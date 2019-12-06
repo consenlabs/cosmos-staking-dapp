@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { withRouter } from 'react-router-dom'
 import Item from './item'
 import { selectValidators } from '../../lib/redux/selectors'
-import { newCampaigns } from '../../config/campaign'
+import { randomNewCampaigns } from '../../config/campaign'
 
 interface Props {
   locale: string
@@ -35,16 +35,11 @@ class CMP extends Component<Props, any> {
 
   getCampaign = () => {
     const { validators, type } = this.props
-    // 临时全局存储
-    const oldCamp = window[`campaigns_${type}`]
-    if (oldCamp) {
-      return oldCamp
-    }
+    const index = type === 'home' ? 0 : randomNewCampaigns.length - 1
+    const campaign = randomNewCampaigns[index]
 
-    const campaign = newCampaigns[Math.floor(Math.random() * newCampaigns.length)]
     if (validators && validators.length) {
       const validator = validators.find(v => v.operator_address === campaign.operator_address)
-      window[`campaigns_${type}`] = validator
       return validator
     }
   }

@@ -34,6 +34,8 @@ export const newCampaigns = [
   },
 ]
 
+export const randomNewCampaigns = newCampaigns.sort(() => 0.5 - Math.random()).slice(0, 2)
+
 export default [
   {
     id: 'tokenlon-atom',

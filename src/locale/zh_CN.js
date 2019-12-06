@@ -83,6 +83,7 @@ const zh_CN = {
   completion: '到账',
   select_validator: '选择验证节点',
   no_delegation: '暂无委托',
+  recommend: '推荐',
 }
 
 export default zh_CN

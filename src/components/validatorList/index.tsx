@@ -107,6 +107,8 @@ class Page extends Component<Props, any> {
     const { validators, pool, sortBy, isSelect, currentValidator } = this.props
     const { keyword, selectedValidator } = this.state
 
+    console.log('validators', validators)
+
     if (!validators || !validators.length) return <Loading />
 
     /**

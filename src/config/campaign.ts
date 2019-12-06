@@ -11,6 +11,31 @@ import TOKENLON_ATOM_ZH_SMALL from '../assets/campaign/tokenlon-atom-zh-small.pn
 import TOKENLON_ATOM_EN_BIG from '../assets/campaign/tokenlon-atom-en-big.png'
 import TOKENLON_ATOM_ZH_BIG from '../assets/campaign/tokenlon-atom-zh-big.png'
 
+export const newCampaigns = [
+  {
+    name: 'P2P.ORG - P2P Validator',
+    operator_address: 'cosmosvaloper132juzk0gdmwuxvx4phug7m3ymyatxlh9734g4w',
+  },
+  {
+    name: 'ATEAM',
+    operator_address: 'cosmosvaloper14l0fp639yudfl46zauvv8rkzjgd4u0zk2aseys',
+  },
+  {
+    name: 'Ztake.org',
+    operator_address: 'cosmosvaloper102ruvpv2srmunfffxavttxnhezln6fnc54at8c',
+  },
+  {
+    name: 'validator.network',
+    operator_address: 'cosmosvaloper1sxx9mszve0gaedz5ld7qdkjkfv8z992ax69k08',
+  },
+  {
+    name: 'Certus One',
+    operator_address: 'cosmosvaloper1qwl879nx9t6kef4supyazayf7vjhennyh568ys',
+  },
+]
+
+export const randomNewCampaigns = newCampaigns.sort(() => 0.5 - Math.random()).slice(0, 2)
+
 export default [
   {
     id: 'tokenlon-atom',

@@ -83,6 +83,7 @@ const en_US = {
   completion: 'completion',
   select_validator: 'select validator',
   no_delegation: 'No Delegation',
+  recommend: 'Recommend',
 }
 
 export default en_US

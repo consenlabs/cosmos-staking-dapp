@@ -8,6 +8,7 @@ import CampaignBanner from '../../components/campaignBanner'
 import WaterMark from '../../components/walletMark'
 import './index.scss'
 import logger from '../../lib/logger'
+import NewCampaigns from '../../components/newCampaigns'
 
 interface Props {
   validators: any[]
@@ -32,6 +33,7 @@ class Page extends Component<Props, any> {
         <WaterMark />
         <NavBar index={1} />
         <CampaignBanner size="small" />
+        <NewCampaigns type="validators" />
         <ValidatorList />
       </div>
     )

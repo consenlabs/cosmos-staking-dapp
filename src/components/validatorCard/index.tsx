@@ -8,7 +8,7 @@ import SELECTED from '../../assets/selected.svg'
 
 interface Props {
   validator: any
-  pool: any
+  pool?: any
   isHideBadge?: boolean
   index: number
   onSelect?: any

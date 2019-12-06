@@ -33,7 +33,7 @@ class Page extends Component<Props, any> {
         <WaterMark />
         <NavBar index={1} />
         <CampaignBanner size="small" />
-        <NewCampaigns />
+        <NewCampaigns type="validators" />
         <ValidatorList />
       </div>
     )

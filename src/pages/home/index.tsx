@@ -36,7 +36,7 @@ class Page extends Component<Props, any> {
         <DelegationList />
         {this.renderDivider()}
         <CampaignBanner size="big" />
-        <NewCampaigns size="big" />
+        <NewCampaigns type="home" />
         {this.renderBlocks()}
       </div>
     )

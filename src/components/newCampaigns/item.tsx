@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './index.scss'
 import { t } from '../../lib/utils'
 import ValidatorCard from '../validatorCard'
+import { loggerGA } from '../../lib/logger'
 
 interface Props {
   validator: any
@@ -41,7 +42,11 @@ class CMP extends Component<Props, any> {
 
   onSelect = () => {
     const { history, validator } = this.props
-    // logger().track('go_validator_delegate', { moniker: 'hashquark' })
+    loggerGA({
+      eventCategory: 'recommend',
+      eventAction: 'click',
+      eventLabel: validator.description.moniker
+    })
     history.push(`/validator/${validator.operator_address}`, { from: 'campaign' })
   }
 }

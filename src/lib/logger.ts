@@ -20,4 +20,20 @@ const logger = (): { track: Function } => {
   }
 }
 
+
+interface Params {
+  eventCategory: string
+  eventAction: string
+  eventLabel: string
+}
+export const loggerGA = (params: Params) => {
+  const ga = (window as any).ga
+  ga && ga('send', {
+    hitType: 'event',
+    eventCategory: params.eventCategory,
+    eventAction: params.eventAction,
+    eventLabel: params.eventLabel,
+  })
+}
+
 export default logger

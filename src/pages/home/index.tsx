@@ -13,6 +13,7 @@ import LOGO from '../../assets/cosmos.svg'
 import FAQ from '../../assets/faq.svg'
 import TURTORIAL from '../../assets/turtorial.svg'
 import { t, getLocale } from '../../lib/utils'
+import NewCampaigns from '../../components/newCampaigns'
 
 interface Props {
   validators: any[]
@@ -35,6 +36,7 @@ class Page extends Component<Props, any> {
         <DelegationList />
         {this.renderDivider()}
         <CampaignBanner size="big" />
+        <NewCampaigns size="big" />
         {this.renderBlocks()}
       </div>
     )

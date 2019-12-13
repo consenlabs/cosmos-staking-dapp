@@ -5,10 +5,10 @@ import msgTypes from '../lib/msgTypes'
 export const gasPrice = 0.003
 
 export const gasLimitMap = {
-  [msgTypes.send]: 30000,
+  [msgTypes.send]: 50000,
   [msgTypes.delegate]: 150000,
   [msgTypes.undelegate]: 150000,
-  [msgTypes.withdraw]: 80000,
+  [msgTypes.withdraw]: 90000,
   [msgTypes.redelegate]: 220000
 }
 

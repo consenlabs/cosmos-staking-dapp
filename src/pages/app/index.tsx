@@ -51,10 +51,7 @@ class App extends Component<Props> {
   polling: any = null
 
   componentWillMount() {
-    const win = window as any
-    if (win.imToken) {
-      win.imToken.callAPI('navigator.configure', { orientation: 'portrait', navigationStyle: 'default', navigatorColor: '#191b31' })
-    }
+    sdk.navigatorConfigure({ navigatorColor: '#191b31' })
 
     const { addPendingTx } = this.props
     this.updateAsyncData()

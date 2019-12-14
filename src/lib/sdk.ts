@@ -49,6 +49,10 @@ export function routeTo(payload) {
   return imToken.callPromisifyAPI('navigator.routeTo', payload).catch(err => console.warn(err))
 }
 
+export function navigatorConfigure(payload) {
+  return imToken.callPromisifyAPI('navigator.configure', payload).catch(err => console.warn(err))
+}
+
 export function getHeaders() {
   return imToken.callPromisifyAPI('private.getHeaders')
     .then(headers => JSON.parse(headers))

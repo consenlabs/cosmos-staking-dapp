@@ -265,8 +265,10 @@ class Page extends Component<Props, any> {
   }
 
   renderCardModal() {
-    const { txs } = this.state
-    if (!txs || !txs.length) return null
+    const { match, delegations } = this.props
+    const id = match.params.id
+    const d = delegations.find(d => d.validator_address === id)
+    if (!d) return null
 
     const minHeight = window.innerHeight - OFFSET_HEIGHT
     const top = {
@@ -296,7 +298,6 @@ class Page extends Component<Props, any> {
 
   renderDelegation() {
     const { validators, match, validatorRewards, delegations, unbondingDelegations } = this.props
-    const { txs } = this.state
     const id = match.params.id
     const reward = validatorRewards[id] || 0
     const unDels = unbondingDelegations.filter(un => un.validator_address === id)
@@ -304,8 +305,6 @@ class Page extends Component<Props, any> {
     const d = delegations.find(d => d.validator_address === id) || {}
     const v = validators.find(v => v.operator_address === id) || {}
     const shares = d.shares || 0
-
-    if (!txs || !txs.length) return null
 
     return (
       <div className="delegation list-section">
@@ -381,13 +380,12 @@ class Page extends Component<Props, any> {
   }
 
   renderToolbar() {
-    const { txs } = this.state
     const { match, validators, delegations } = this.props
     const id = match.params.id
     const d = delegations.find(d => d.validator_address === id)
     const v = validators.find(v => v.operator_address === id)
 
-    if (txs && txs.length) {
+    if (d) {
       return (
         <div className="toolbar" style={{ padding: 0 }}>
           <div className="toolbar-row" style={{ paddingBottom: isiPhoneX() ? IPHONEX_HEIGHT : 0 }}>

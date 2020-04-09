@@ -1,46 +1,238 @@
-pipeline:
-  build:
-    image: plugins/docker
+---
+kind: pipeline
+name: cosmos-staking-dapp
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: install-modules
+  image: node:10.15.3
+  commands:
+  - npm i -g yarn
+  - yarn
+  volumes:
+  - name: cache-node
+    path: /drone/src/node_modules
+
+- name: publish-on-develop-cosmos-staking-dapp
+  image: plugins/docker
+  settings:
+    daemon_off: true
+    dockerfile: Dockerfile
+    password:
+      from_secret: docker-password
+    registry: registry.cn-hongkong.aliyuncs.com
     repo: registry.cn-hongkong.aliyuncs.com/imtoken/cosmos-staking-dapp
-    environment:
-      - PLUGIN_DAEMON_OFF=true
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /root/.docker/config.json:/root/.docker/config.json
     tags:
-      - ${DRONE_COMMIT_BRANCH}
-      - ${DRONE_COMMIT_BRANCH}-${DRONE_BUILD_NUMBER}
-    when:
-      branch: [master, dev]
-      local: false
-  deploy-gcp-dev:
-    image: registry.cn-hongkong.aliyuncs.com/imtoken/drone-kubernetes
-    deployment: cosmos-staking-dapp-dev
+    - ${DRONE_COMMIT_SHA:0:8}
+    username:
+      from_secret: docker-username
+  volumes:
+  - name: docker
+    path: /var/run/docker.sock
+  when:
+    branch:
+    - hotfix/*
+    - feature/*
+    - support/*
+
+- name: publish-on-release-cosmos-staking-dapp
+  image: plugins/docker
+  settings:
+    daemon_off: true
+    dockerfile: Dockerfile
+    password:
+      from_secret: docker-password
+    registry: registry.cn-hongkong.aliyuncs.com
+    repo: registry.cn-hongkong.aliyuncs.com/imtoken/cosmos-staking-dapp
+    tags:
+    - ${DRONE_COMMIT_SHA:0:8}
+    - staging
+    username:
+      from_secret: docker-username
+  volumes:
+  - name: docker
+    path: /var/run/docker.sock
+  when:
+    branch:
+    - release/*
+
+- name: publish-on-stable-branch-cosmos-staking-dapp
+  image: plugins/docker
+  settings:
+    daemon_off: true
+    dockerfile: Dockerfile
+    password:
+      from_secret: docker-password
+    registry: registry.cn-hongkong.aliyuncs.com
+    repo: registry.cn-hongkong.aliyuncs.com/imtoken/cosmos-staking-dapp
+    tags:
+    - ${DRONE_COMMIT_SHA:0:8}
+    - ${DRONE_COMMIT_BRANCH}
+    - ${DRONE_COMMIT_BRANCH}-${DRONE_COMMIT_SHA:0:8}
+    username:
+      from_secret: docker-username
+  volumes:
+  - name: docker
+    path: /var/run/docker.sock
+  when:
+    branch:
+    - develop
+    - master
+
+- name: publish-on-tag-cosmos-staking-dapp
+  image: plugins/docker
+  settings:
+    auto_tag: true
+    daemon_off: true
+    dockerfile: Dockerfile
+    password:
+      from_secret: docker-password
+    registry: registry.cn-hongkong.aliyuncs.com
+    repo: registry.cn-hongkong.aliyuncs.com/imtoken/cosmos-staking-dapp
+    username:
+      from_secret: docker-username
+  volumes:
+  - name: docker
+    path: /var/run/docker.sock
+  when:
+    event:
+    - tag
+
+- name: deploy-develop
+  image: registry.cn-hongkong.aliyuncs.com/imtoken/drone-k8s:latest
+  settings:
+    deployment:
+    - cosmos-staking-dapp-dev:cosmos-staking-dapp
+    kubernetes_server:
+      from_secret: gcp-server-dev
+    kubernetes_token:
+      from_secret: gcp-token-dev
     namespace: biz
-    context: gcp-dev
-    volumes:
-      - /configs/kubernetes/config:/root/.kube/config
-    when:
-      branch: [ dev ]
-  deploy-gcp-staging:
-    image: registry.cn-hongkong.aliyuncs.com/imtoken/drone-kubernetes
-    deployment: cosmos-staking-dapp-staging
+    repo: registry.cn-hongkong.aliyuncs.com/imtoken/cosmos-staking-dapp
+    tag: ${DRONE_COMMIT_SHA:0:8}
+  when:
+    branch:
+    - feature/*
+    - hotfix/*
+    event:
+    - push
+
+- name: deploy-staging
+  image: registry.cn-hongkong.aliyuncs.com/imtoken/drone-k8s:latest
+  settings:
+    deployment:
+    - cosmos-staking-dapp-staging:cosmos-staking-dapp
+    kubernetes_server:
+      from_secret: gcp-server-staging
+    kubernetes_token:
+      from_secret: gcp-token-staging
     namespace: biz
-    context: gcp-staging
-    volumes:
-      - /configs/kubernetes/config:/root/.kube/config
-    when:
-      branch: [ dev ]
-  slack:
-    image: plugins/slack
+    repo: registry.cn-hongkong.aliyuncs.com/imtoken/cosmos-staking-dapp
+    tag: ${DRONE_COMMIT_SHA:0:8}
+  when:
+    branch:
+    - release/*
+    - develop
+    event:
+    - push
+
+- name: slack
+  image: plugins/slack
+  settings:
+    template: "{{#if build.pull }}\n*{{#success build.status}}✔{{ else }}✘{{/success}} {{ uppercasefirst build.status }}*: <https://github.com/{{ repo.owner }}/{{ repo.name }}/pull/{{ build.pull }}|Pull Request #{{ build.pull }}>\n{{else}}\n*{{#success build.status}}✔{{ else }}✘{{/success}} {{ uppercasefirst build.status }}: Build #{{ build.number }}* (type: `{{ build.event }}`)\n{{/if}}\nCommit: {{ build.message.title }}(<https://github.com/{{ repo.owner }}/{{ repo.name }}/commit/{{ build.commit }}|{{ truncate build.commit 8 }}>)\n{{#if build.tag }}\nTag: <https://github.com/{{ repo.owner }}/{{ repo.name }}/commits/{{ build.tag }}|{{ repo.name }} {{ build.tag }}>\n{{else}}\nBranch: <https://github.com/{{ repo.owner }}/{{ repo.name }}/commits/{{ build.branch }}|{{ repo.name }} {{ build.branch }}>\n{{/if}}\nAuthor: {{ build.author }}\n<{{ build.link }}|Visit build page ↗>\n"
     webhook:
-      from_secret: slack_webhook
-    when:
-      status: [ success, failure ]
-    template: >
-      {{repo.name}}:{{build.branch}} | {{build.event}} | {{build.commit}} | {{build.author}} | {{build.link}} {{build.pull}} {{build.tag}}
-      {{#success build.status}}
-        👍
-      {{else}}
-        👎
-      {{/success}}
+      from_secret: drone-slack
+  when:
+    status:
+    - success
+    - failure
+
+volumes:
+- name: cache-node
+  host:
+    path: /usr/local/var/cache/drone/cosmos-staking-dapp/node
+- name: docker
+  host:
+    path: /var/run/docker.sock
+
+trigger:
+  event:
+  - push
+  - tag
+  ref:
+  - refs/heads/develop
+  - refs/heads/master
+  - refs/heads/hotfix/*
+  - refs/heads/feature/*
+  - refs/heads/support/*
+  - refs/heads/release/*
+  - refs/tags/*
+
+---
+kind: secret
+name: gcp-bucket-sa
+
+get:
+  path: drone-gcp-sa-secrets
+  name: sa
+
+---
+kind: secret
+name: docker-username
+
+get:
+  path: image-registry-aliyun
+  name: username
+
+---
+kind: secret
+name: docker-password
+
+get:
+  path: image-registry-aliyun
+  name: password
+
+---
+kind: secret
+name: gcp-server-dev
+
+get:
+  path: drone-kubeconfig-gcp-dev
+  name: server
+
+---
+kind: secret
+name: gcp-token-dev
+
+get:
+  path: drone-kubeconfig-gcp-dev
+  name: token
+
+---
+kind: secret
+name: gcp-server-staging
+
+get:
+  path: drone-kubeconfig-gcp-staging
+  name: server
+
+---
+kind: secret
+name: gcp-token-staging
+
+get:
+  path: drone-kubeconfig-gcp-staging
+  name: token
+
+---
+kind: secret
+name: drone-slack
+
+get:
+  path: drone-slack-secrets
+  name: slack_webhook
+
+...

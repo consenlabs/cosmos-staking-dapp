@@ -180,7 +180,7 @@ export const getDeletationBalance = (delegations) => {
   let balance = 0
   if (Array.isArray(delegations)) {
     delegations.forEach(d => {
-      balance += d.shares * 1
+      balance += d.balance * 1
     })
   }
   return balance.toFixed(0)

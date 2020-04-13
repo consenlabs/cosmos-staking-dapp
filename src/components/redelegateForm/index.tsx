@@ -88,7 +88,7 @@ class CMP extends Component<Props, any> {
       <div className="select-validator" onClick={this.handleSelect}>
         {
           key ? <span>{t(key)} <span>{ellipsis(sourceObject.validator_src_address)}</span></span> :
-          <span>{t('select_validator')}</span>
+            <span>{t('select_validator')}</span>
         }
         <b></b>
       </div>
@@ -98,7 +98,7 @@ class CMP extends Component<Props, any> {
   getBalance = () => {
     const { delegations, validator } = this.props
     const d = delegations.find(d => d.validator_address === validator.operator_address) || {}
-    return d.shares
+    return d.balance
   }
 
   getFeeAmount = () => {

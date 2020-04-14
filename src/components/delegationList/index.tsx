@@ -42,7 +42,7 @@ class CMP extends Component<Props> {
         <div>
           <div>
             <span>{t('delegations')}</span>
-            <i>{fAtom(d.shares || 0)}</i>
+            <i>{fAtom(d.balance || 0)}</i>
           </div>
 
           <div>
@@ -59,7 +59,7 @@ class CMP extends Component<Props> {
 
           <div>
             <span>{t('rewards_per_day')}</span>
-            <i>{d.shares && v.annualized_returns ? `+${getDailyReward(d.shares, v.annualized_returns)}` : '0'}</i>
+            <i>{d.balance && v.annualized_returns ? `+${getDailyReward(d.balance, v.annualized_returns)}` : '0'}</i>
           </div>
         </div>
       </div>

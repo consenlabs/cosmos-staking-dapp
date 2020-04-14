@@ -279,7 +279,7 @@ class Page extends Component<Props, any> {
     return (
       <Drawer
         range={top}
-        onDrag={() => {}}
+        onDrag={() => { }}
         containerElementClass="drawer"
         modalElementClass="drawer-modal"
         ref={(ref) => this.card = ref}
@@ -304,7 +304,7 @@ class Page extends Component<Props, any> {
     const unbonding = getUnbondingBalance(unDels) || 0
     const d = delegations.find(d => d.validator_address === id) || {}
     const v = validators.find(v => v.operator_address === id) || {}
-    const shares = d.shares || 0
+    const shares = d.balance || 0
 
     return (
       <div className="delegation list-section">
@@ -401,7 +401,7 @@ class Page extends Component<Props, any> {
             </Link> : <a onClick={this.handleBan}>
                 <img src={REDELEGATE} alt="redelegate" />
                 <span>{t('redelegate')}</span>
-            </a>}
+              </a>}
 
             <div className="vertical-line"></div>
 
@@ -411,7 +411,7 @@ class Page extends Component<Props, any> {
             </Link> : <a onClick={this.handleBan}>
                 <img src={WITHDRAW} alt="delegate" />
                 <span>{t('withdraw')}</span>
-            </a>}
+              </a>}
           </div>
         </div>
       )

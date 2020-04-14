@@ -94,7 +94,7 @@ export const getDelegations = (address) => {
   return get(url, {}).then(delegations => {
     console.log(delegations)
     return (delegations || []).sort(
-      (a, b) => b.shares - a.shares
+      (a, b) => b.balance - a.balance
     )
   })
 }

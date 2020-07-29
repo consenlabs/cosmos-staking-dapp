@@ -89,6 +89,17 @@ export function createRedelegateMsg(delegatorAddress, validatorSrcAddress, valid
   }
 }
 
+export function createVoteMsg(from, proposalId, option) {
+  return {
+    type: msgTypes.vote,
+    value: {
+      voter: from,
+      proposal_id: proposalId,
+      option,
+    }
+  }
+}
+
 export const ellipsis = (str: string, lead: number = 12, tail: number = 6): string => {
   if (str && str.length > lead + tail + 8) {
     return `${str.substring(0, lead)}...${str.substring(str.length - tail, str.length)}`

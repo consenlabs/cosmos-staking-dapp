@@ -1,6 +1,7 @@
 .form-inner {
   padding: 0px 20px 10px 20px;
-  button, input {
+  button,
+  input {
     width: 100%;
   }
   .form-header {
@@ -9,7 +10,7 @@
     align-items: center;
     min-height: 50px;
     border-radius: 4px;
-    background: #21233A;
+    background: #21233a;
     // border: solid 0.5px #ffffff2c;
     span {
       display: block;
@@ -18,14 +19,14 @@
       text-overflow: ellipsis;
       white-space: nowrap;
       padding-left: 20px;
-      font-family: 'PingFang SC';
+      font-family: "PingFang SC";
       font-size: 15px;
-      color: #777A8C;
+      color: #777a8c;
     }
     i {
       margin-left: auto;
       margin-right: 15px;
-      font-family: 'PingFang SC';
+      font-family: "PingFang SC";
       font-size: 13px;
       font-style: normal;
       line-height: 1.54;
@@ -33,13 +34,13 @@
       color: #fff;
     }
     b {
-        width: 7px;
-        height: 7px;
-        margin: -3px 15px 0 12px;
-        transform: rotate(-45deg);
-        border: solid 1px #c2c8cc;
-        border-top: none;
-        border-right: none;
+      width: 7px;
+      height: 7px;
+      margin: -3px 15px 0 12px;
+      transform: rotate(-45deg);
+      border: solid 1px #c2c8cc;
+      border-top: none;
+      border-right: none;
     }
   }
   .form-footer {
@@ -47,7 +48,7 @@
     flex-direction: row;
     justify-content: space-between;
     margin: 10px 0;
-    font-family: 'PingFang SC';
+    font-family: "PingFang SC";
     font-size: 13px;
     font-style: normal;
     letter-spacing: 0.2px;
@@ -55,22 +56,23 @@
     > div:last-child {
       margin-left: auto;
     }
-    span, i {
+    span,
+    i {
       padding-right: 4px;
     }
   }
   .fee {
-    color: #FFFFFF;
+    color: #ffffff;
   }
   input {
-    -webkit-appearance:none;
+    -webkit-appearance: none;
     height: 50px;
     margin-top: 10px;
     box-sizing: border-box;
     border-radius: 4px;
     border: solid 0.5px #ffffff2c;
     background-color: #191b31;
-    font-family: 'PingFang SC';
+    font-family: "PingFang SC";
     font-size: 15px;
     line-height: 1.4;
     letter-spacing: 0.2px;
@@ -80,13 +82,13 @@
     outline: none;
   }
   .form-button {
-    -webkit-appearance:none;
+    -webkit-appearance: none;
     border: none;
     height: 46px;
     margin-top: 15px;
     border-radius: 8px;
     background-color: #098de6;
-    font-family: 'PingFang SC';
+    font-family: "PingFang SC";
     font-size: 14px;
     font-weight: 500;
     line-height: 1.43;
@@ -105,7 +107,7 @@
   .delegation-notes {
     margin: 25px 0 15px 0;
     padding: 17px 20px;
-    background: #21233A;
+    background: #21233a;
     border-radius: 4px;
     p {
       margin: 0;
@@ -147,7 +149,7 @@
     text-decoration: none;
     border-radius: 4px;
     // border: solid 0.5px rgba(119, 122, 140, 0.39);
-    background: #21233A;
+    background: #21233a;
     padding: 18px 18px 15px 18px;
     margin-top: 0px;
 

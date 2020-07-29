@@ -9,7 +9,8 @@ export const gasLimitMap = {
   [msgTypes.delegate]: 200000,
   [msgTypes.undelegate]: 200000,
   [msgTypes.withdraw]: 90000,
-  [msgTypes.redelegate]: 250000
+  [msgTypes.redelegate]: 250000,
+  [msgTypes.vote]: 100000,
 }
 
 export const getFeeAmountByType = (type) => {

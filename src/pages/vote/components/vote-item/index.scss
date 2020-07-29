@@ -1,0 +1,167 @@
+.vote-item {
+  position: relative;
+  margin: 10px 10px 0 10px;
+  background: #ffffff;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 17px 20px 13px 20px;
+
+  .v-top {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    margin-bottom: 10px;
+    padding-bottom: 14px;
+    border-bottom: 0.5px solid #eaecf6;
+  }
+
+  .chart {
+    width: 70px;
+    height: 70px;
+    margin-top: 5px;
+    border-radius: 70px;
+    background-color: #6dc9a1;
+  }
+
+  .content {
+    flex: 1;
+    margin-left: 10px;
+
+    h2 {
+      margin: 4px 0 10px 0;
+      font-size: 15px;
+      line-height: 19px;
+      letter-spacing: 0.166667px;
+      font-weight: 500;
+
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      a {
+        color: #191c1e;
+      }
+    }
+
+    > div {
+      display: flex;
+      flex-direction: row;
+      color: #777a8c;
+      .split {
+        width: 0.5px;
+        height: 32px;
+        margin-right: 25px;
+        background: #eaecf6;
+      }
+      span {
+        display: block;
+        margin-bottom: 4px;
+        width: 83px;
+        font-size: 11px;
+        line-height: 13px;
+      }
+
+      strong {
+        width: 83px;
+        font-size: 13px;
+        line-height: 16px;
+        color: #191c1e;
+        font-weight: 500;
+      }
+
+      .quorum-percent {
+        display: block;
+      }
+    }
+  }
+
+  .v-stage {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    > div {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .v-time {
+      span {
+        font-size: 11px;
+        line-height: 20px;
+        letter-spacing: 0.16px;
+        color: #777a8c;
+      }
+      time {
+        margin-top: 5px;
+        font-size: 13px;
+        line-height: 12px;
+        color: #777a8c;
+      }
+    }
+
+    .v-button {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 81px;
+      height: 32px;
+      border: 1px solid #259ae8;
+      border-radius: 16px;
+      font-size: 15px;
+      font-weight: 500;
+      color: #259ae8;
+      text-indent: 20px;
+      img {
+        width: 5px;
+        margin-left: 13px;
+      }
+    }
+  }
+
+  .v-me {
+    text-align: right;
+    span {
+      font-size: 11px;
+      line-height: 20px;
+      letter-spacing: 0.16px;
+      color: #777a8c;
+    }
+    em {
+      margin-top: 5px;
+      font-style: normal;
+      font-size: 13px;
+      line-height: 12px;
+      color: #777a8c;
+    }
+  }
+
+  .v-badge {
+    position: absolute;
+    left: -6px;
+    top: 6px;
+    height: 20px;
+    line-height: 20px;
+    padding: 0 7px 0 4px;
+    font-size: 11px;
+    letter-spacing: -0.6px;
+    color: #ffffff;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background: linear-gradient(156.08deg, #4a6ee2 -39.04%, #098de6 100%);
+    &.badge-Passed {
+      background: linear-gradient(296.96deg, #6dc9a1 23.93%, #56ba8f 100%);
+    }
+    &.badge-Rejected {
+      background: linear-gradient(300.61deg, #f6606e 23.93%, #e34150 100%);
+    }
+    &.badge-Deposit {
+      background: linear-gradient(298.56deg, #98a2a9 23.93%, #777a8c 100%);
+    }
+  }
+}

@@ -45,6 +45,10 @@ class App extends Component<Props> {
     new OpenApp()
   }
 
+  isVote = () => {
+    return window.location.pathname === '/vote'
+  }
+
   _autoRefresh: any = null
   MAX_REFRESH_INTERVAL: number = 30 * 1000
   _refreshInterval: number = 10 * 1000
@@ -71,6 +75,7 @@ class App extends Component<Props> {
   }
 
   fetchTradeToken = () => {
+    if (this.isVote()) return false
     const { updateExchangeToken } = this.props
     api.getTradeTokenList().then((data) => {
       const tokenlist = data || []
@@ -86,6 +91,7 @@ class App extends Component<Props> {
   }
 
   updateAsyncData = () => {
+    if (this.isVote()) return false
     const { updateAccount, updateDelegations, updateRedelegations, updateValidators, updateValidatorRewards, updateAtomPrice, updateUnbondingDelegations } = this.props
 
     if (this.polling) clearTimeout(this.polling)

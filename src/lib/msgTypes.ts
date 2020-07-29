@@ -3,5 +3,6 @@ export default {
   delegate: 'cosmos-sdk/MsgDelegate',
   undelegate: 'cosmos-sdk/MsgUndelegate',
   withdraw: 'cosmos-sdk/MsgWithdrawDelegationReward',
-  redelegate: 'cosmos-sdk/MsgBeginRedelegate'
+  redelegate: 'cosmos-sdk/MsgBeginRedelegate',
+  vote: 'cosmos-sdk/MsgVote'
 }

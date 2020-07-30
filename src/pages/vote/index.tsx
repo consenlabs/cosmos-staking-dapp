@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { withRouter } from 'react-router-dom'
-import { t, Toast, createVoteMsg, createTxPayload } from '../../lib/utils'
+import { t, isiPhoneX, Toast, createVoteMsg, createTxPayload } from '../../lib/utils'
 import { getProposals, getStakePool, IVote } from 'lib/api'
 import VoteItem from './components/vote-item'
 import Modal from 'components/modal'
@@ -68,7 +68,7 @@ class Page extends Component<any, StateProps> {
       return <Loading />
     }
     return (
-      <div className="vote-page">
+      <div className="vote-page" style={{ paddingBottom: isiPhoneX() ? 30 : 10 }}>
         {
           votes.map(vote => {
             return <VoteItem

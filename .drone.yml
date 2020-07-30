@@ -150,14 +150,6 @@ steps:
     - success
     - failure
 
-volumes:
-- name: cache-node
-  host:
-    path: /usr/local/var/cache/drone/cosmos-staking-dapp/node
-- name: docker
-  host:
-    path: /var/run/docker.sock
-
 trigger:
   event:
   - push

@@ -2,6 +2,9 @@ import { Toast, t } from 'lib/utils'
 import logger from 'lib/logger'
 
 window['imToken'] = window['imToken'] || {
+  callAPI: () => {
+    console.error('当前不是 imToken 环境')
+  },
   callPromisifyAPI: (apiName: string, payload: any): Promise<any> => {
     switch (apiName) {
       case 'cosmos.getAccounts':
@@ -69,6 +72,11 @@ export function getHeaders() {
 
 export function sendTransaction(payload) {
   return imToken.callPromisifyAPI('cosmos.sendTransaction', payload)
+}
+
+export function setTitle(title) {
+  document.title = title
+  imToken.callAPI('navigator.setTitle', title)
 }
 
 export function goTokenlon(props) {

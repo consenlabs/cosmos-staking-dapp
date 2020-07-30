@@ -33,7 +33,7 @@ class SupportModal extends Component<Props, State> {
 
   checkSupport = () => {
     // not open in imToken
-    if (!window['imToken']['callAPI']) return
+    if (!window['imToken']['version']) return
 
     // imToken version too low
     const version = (window['imTokenAgent'] || '').split(':')[1]

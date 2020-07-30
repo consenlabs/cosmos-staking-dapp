@@ -4,10 +4,12 @@ import { IVote } from 'lib/api'
 import { fPercent } from 'lib/utils'
 import voteArrowImg from 'assets/vote-arrow.png'
 import './index.scss'
+import { getProposalVoters } from 'lib/api'
 import dayjs from 'dayjs'
 
 interface Props {
   vote: IVote
+  account: string
   bondedTokens: number
   onVote: (IVote) => void
 }
@@ -15,7 +17,26 @@ interface Props {
 
 class CMP extends Component<Props> {
 
+  state = {
+    myVoteOption: ''
+  }
+
   componentDidMount() {
+    const { vote, account } = this.props
+    if (account) {
+      getProposalVoters(vote.id).then(voters => {
+        if (voters && Array.isArray(voters)) {
+          const myVote = voters.find(v => {
+            return v.voter === account
+          })
+          if (myVote) {
+            this.setState({
+              myVoteOption: myVote.option.toLowerCase(),
+            })
+          }
+        }
+      })
+    }
   }
 
   renderBadge = (status) => {
@@ -24,6 +45,7 @@ class CMP extends Component<Props> {
 
   renderStage = (vote: IVote) => {
     const { onVote } = this.props
+    const { myVoteOption } = this.state
     const status = vote.proposal_status
 
     let label = ''
@@ -43,7 +65,6 @@ class CMP extends Component<Props> {
 
     const formatedTime = dayjs.unix(new Date(time).getTime() / 1000).format('YYYY-MM-DD HH:mm:ss')
     const isVoting = status === 'Voting'
-    const myVoteLabel = 'yes'
     return <div className="v-stage">
       <div className="v-time">
         <span>{label}</span>
@@ -54,12 +75,12 @@ class CMP extends Component<Props> {
           Vote
           <img src={voteArrowImg} />
         </div>}
-        {
+        {!!myVoteOption &&
           <div>
             <span>your vote</span>
             <div>
-              <i className={`vote-option-icon v-icon-${myVoteLabel}`}></i>
-              <em>{myVoteLabel}</em>
+              <i className={`vote-option-icon v-icon-${myVoteOption}`}></i>
+              <em>{myVoteOption}</em>
             </div>
           </div>
         }

@@ -202,7 +202,7 @@ export const getStakingPool = () => {
   return get(url, {}).then(pool => pool)
 }
 
-export const getProposalVotes = (id) => {
+export const getProposalVoters = (id) => {
   const url = `gov/proposals/${id}/votes`
   return get(url, {})
 }

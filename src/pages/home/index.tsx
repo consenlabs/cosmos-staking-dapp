@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import './index.scss'
 import NavBar from '../../components/navBar'
 import AccountCard from '../../components/accountCard'
@@ -12,6 +12,7 @@ import logger from '../../lib/logger'
 import LOGO from '../../assets/cosmos.svg'
 import FAQ from '../../assets/faq.svg'
 import TURTORIAL from '../../assets/turtorial.svg'
+import VOTE_ICON from 'assets/goVote.svg'
 import { t, getLocale } from '../../lib/utils'
 import NewCampaigns from '../../components/newCampaigns'
 
@@ -59,15 +60,20 @@ class Page extends Component<Props, any> {
     const tutorialLink = `https://support.token.im/hc/${language}/sections/360004052613`
     return (
       <div className='blocks'>
-        <a className='block-item' style={{ marginRight: 7 }} href={faqLink}>
+        <a className='block-item' href={faqLink}>
           <img src={FAQ} alt="faq" />
           <span>{t('faq')}</span>
         </a>
 
-        <a className='block-item' style={{ marginLeft: 7 }} href={tutorialLink}>
+        <a className='block-item' href={tutorialLink}>
           <img src={TURTORIAL} alt="turtorial" />
           <span>{t('tutorial')}</span>
         </a>
+
+        <Link className='block-item' to="/vote">
+          <img src={VOTE_ICON} alt="vote" />
+          <span>{t('go_vote')}</span>
+        </Link>
       </div>
     )
   }

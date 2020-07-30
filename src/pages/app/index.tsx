@@ -46,7 +46,7 @@ class App extends Component<Props> {
   }
 
   isVote = () => {
-    return window.location.pathname === '/vote'
+    return window.location.pathname === '/vote' || window.location.pathname === '/cosmos/vote'
   }
 
   _autoRefresh: any = null

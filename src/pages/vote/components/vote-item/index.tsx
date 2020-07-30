@@ -15,6 +15,13 @@ interface Props {
   onVote: (IVote) => void
 }
 
+enum VOTE_STAGE {
+  passed = 'Passed',
+  deposit = 'Deposit',
+  rejected = 'Rejected',
+  voting = 'Voting'
+}
+
 
 class CMP extends Component<Props> {
 
@@ -39,121 +46,6 @@ class CMP extends Component<Props> {
       })
     }
   }
-
-  renderBadge = (status) => {
-    return <div className={`v-badge badge-${status}`}>{t(status)}</div>
-  }
-
-  renderStage = (vote: IVote) => {
-    const { onVote } = this.props
-    const { myVoteOption } = this.state
-    const status = vote.proposal_status
-
-    let label = ''
-    let time = ''
-    switch (status) {
-      case 'Passed':
-      case 'Rejected':
-      case 'Voting':
-        label = 'voting_end'
-        time = vote.voting_end_time
-        break
-      case 'Deposit':
-        label = 'deposit_end_time'
-        time = vote.deposit_end_time
-        break
-    }
-
-    const formatedTime = dayjs.unix(new Date(time).getTime() / 1000).format('YYYY-MM-DD HH:mm:ss')
-    const isVoting = status === 'Voting'
-    return <div className="v-stage">
-      <div className="v-time">
-        <span>{t(label)}</span>
-        <time>{formatedTime}</time>
-      </div>
-      <div className="v-me">
-        {!isVoting && <div className="v-button" onClick={() => onVote(vote)}>
-          Vote
-          <img src={voteArrowImg} />
-        </div>}
-        {!!myVoteOption &&
-          <div>
-            <span>{t('your_vote')}</span>
-            <div>
-              <i className={`vote-option-icon v-icon-${myVoteOption}`}></i>
-              <em>{t(myVoteOption)}</em>
-            </div>
-          </div>
-        }
-      </div>
-    </div>
-  }
-
-  renderChart = (vote) => {
-
-    const colorYes = '#6CC8A1'
-    const colorNo = '#2C3058'
-    const colorDefault = '#C1C6D6'
-
-    const { final_tally_result: ftr, proposal_status: state } = vote
-    const vYes = Number(ftr.yes)
-    const vNo = Number(ftr.no)
-    const vAbstain = Number(ftr.abstain)
-    const vNoWithVeto = Number(ftr.no_with_veto)
-
-    let segments: any = []
-    switch (state) {
-      case 'Passed':
-        segments = [{
-          color: colorYes,
-          value: vYes,
-        }, {
-          color: colorDefault,
-          value: vNo + vAbstain + vNoWithVeto
-        }]
-        break
-      case 'Rejected':
-        segments = [{
-          color: colorNo,
-          value: vNo,
-        }, {
-          color: colorDefault,
-          value: vYes + vAbstain + vNoWithVeto
-        }]
-        break
-      case 'Voting':
-        segments = [
-          {
-            color: colorYes,
-            value: vYes,
-          },
-          {
-            color: colorNo,
-            value: vNo,
-          }, {
-            color: colorDefault,
-            value: vAbstain + vNoWithVeto
-          }]
-        break
-      case 'Deposit':
-        segments = [
-          {
-            color: colorDefault,
-            value: 100
-          }
-        ]
-        break
-    }
-
-    return <ComplexDonut
-      size={70}
-      radius={26}
-      segments={segments}
-      thickness={18}
-      startAngle={0}
-    />
-  }
-
 
   render() {
     const { vote, bondedTokens } = this.props
@@ -201,6 +93,121 @@ class CMP extends Component<Props> {
       {this.renderStage(vote)}
       {this.renderBadge(vote.proposal_status)}
     </div>
+  }
+
+  renderBadge = (status) => {
+    return <div className={`v-badge badge-${status}`}>{t(status)}</div>
+  }
+
+  renderStage = (vote: IVote) => {
+    const { onVote } = this.props
+    const { myVoteOption } = this.state
+    const status = vote.proposal_status
+
+    let label = ''
+    let time = ''
+
+    switch (status) {
+      case VOTE_STAGE.passed:
+      case VOTE_STAGE.rejected:
+      case VOTE_STAGE.voting:
+        label = 'voting_end'
+        time = vote.voting_end_time
+        break
+      case VOTE_STAGE.deposit:
+        label = 'deposit_end_time'
+        time = vote.deposit_end_time
+        break
+    }
+
+    const formatedTime = dayjs.unix(new Date(time).getTime() / 1000).format('YYYY-MM-DD HH:mm:ss')
+    const isVoting = status === 'Voting'
+
+    return <div className="v-stage">
+      <div className="v-time">
+        <span>{t(label)}</span>
+        <time>{formatedTime}</time>
+      </div>
+      <div className="v-me">
+        {isVoting && <div className="v-button" onClick={() => onVote(vote)}>
+          Vote
+          <img src={voteArrowImg} />
+        </div>}
+        {!!myVoteOption &&
+          <div>
+            <span>{t('your_vote')}</span>
+            <div>
+              <i className={`vote-option-icon v-icon-${myVoteOption}`}></i>
+              <em>{t(myVoteOption)}</em>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  renderChart = (vote) => {
+    const colorYes = '#6CC8A1'
+    const colorNo = '#2C3058'
+    const colorDefault = '#C1C6D6'
+
+    const { final_tally_result: ftr, proposal_status: state } = vote
+    const vYes = Number(ftr.yes)
+    const vNo = Number(ftr.no)
+    const vAbstain = Number(ftr.abstain)
+    const vNoWithVeto = Number(ftr.no_with_veto)
+
+    let segments: any = []
+    switch (state) {
+      case VOTE_STAGE.passed:
+        segments = [{
+          color: colorYes,
+          value: vYes,
+        }, {
+          color: colorDefault,
+          value: vNo + vAbstain + vNoWithVeto
+        }]
+        break
+      case VOTE_STAGE.rejected:
+        segments = [{
+          color: colorNo,
+          value: vNo,
+        }, {
+          color: colorDefault,
+          value: vYes + vAbstain + vNoWithVeto
+        }]
+        break
+      case VOTE_STAGE.voting:
+        segments = [
+          {
+            color: colorYes,
+            value: vYes,
+          },
+          {
+            color: colorNo,
+            value: vNo,
+          }, {
+            color: colorDefault,
+            value: vAbstain + vNoWithVeto
+          }]
+        break
+      case VOTE_STAGE.deposit:
+        segments = [
+          {
+            color: colorDefault,
+            value: 100
+          }
+        ]
+        break
+    }
+
+    return <ComplexDonut
+      size={70}
+      radius={26}
+      segments={segments}
+      thickness={18}
+      startAngle={0}
+    />
   }
 }
 

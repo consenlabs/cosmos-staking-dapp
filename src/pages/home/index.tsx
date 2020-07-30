@@ -72,7 +72,7 @@ class Page extends Component<Props, any> {
 
         <Link className='block-item' to="/vote">
           <img src={VOTE_ICON} alt="vote" />
-          <span>{t('go_vote')}</span>
+          <span>{t('vote_title')}</span>
         </Link>
       </div>
     )

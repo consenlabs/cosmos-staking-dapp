@@ -37,7 +37,7 @@ class Page extends Component<any, StateProps> {
   }
 
   componentWillMount() {
-    setTitle('Cosmos Governance')
+    setTitle(t('vote_title'))
 
     getAccounts().then(accounts => {
       if (accounts.length) {
@@ -84,7 +84,7 @@ class Page extends Component<any, StateProps> {
           onRequestClose={this.hideModal}
           appElement={document.body}>
           <div className="vote-modal-inner">
-            <span className="v-modal-title">{('vote')}</span>
+            <span className="v-modal-title">{t('vote')}</span>
             <div className="desc">{`#${selectedVote.id} ${selectedVote.content.value.title}`} </div>
             <div className="v-option-list">
               {this.options.map(o => {

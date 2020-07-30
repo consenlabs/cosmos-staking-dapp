@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 // import { Link } from 'react-router-dom'
 import { IVote } from 'lib/api'
-import { fPercent } from 'lib/utils'
+import { fPercent, t } from 'lib/utils'
 import voteArrowImg from 'assets/vote-arrow.png'
 import './index.scss'
 import { getProposalVoters } from 'lib/api'
@@ -40,7 +40,7 @@ class CMP extends Component<Props> {
   }
 
   renderBadge = (status) => {
-    return <div className={`v-badge badge-${status}`}>{status}</div>
+    return <div className={`v-badge badge-${status}`}>{t(status)}</div>
   }
 
   renderStage = (vote: IVote) => {
@@ -67,7 +67,7 @@ class CMP extends Component<Props> {
     const isVoting = status === 'Voting'
     return <div className="v-stage">
       <div className="v-time">
-        <span>{label}</span>
+        <span>{t(label)}</span>
         <time>{formatedTime}</time>
       </div>
       <div className="v-me">
@@ -77,10 +77,10 @@ class CMP extends Component<Props> {
         </div>}
         {!!myVoteOption &&
           <div>
-            <span>your vote</span>
+            <span>{t('your_vote')}</span>
             <div>
               <i className={`vote-option-icon v-icon-${myVoteOption}`}></i>
-              <em>{myVoteOption}</em>
+              <em>{t(myVoteOption)}</em>
             </div>
           </div>
         }
@@ -116,15 +116,15 @@ class CMP extends Component<Props> {
           </h2>
           <div>
             <div>
-              <span>Quorum</span>
+              <span>{t('quorum')}</span>
               <strong className="quorum-percent">{quorum}</strong>
             </div>
             <div className="split"></div>
             <div>
-              <span>Most Voted On</span>
+              <span>{t('most_vote_on')}</span>
               <div>
                 <i className={`vote-option-icon v-icon-${mostVotedLabel}`}></i>
-                <strong>{mostVotedLabel} {mostVotedPercent}</strong>
+                <strong>{t('mostVotedLabel')} {mostVotedPercent}</strong>
               </div>
             </div>
           </div>

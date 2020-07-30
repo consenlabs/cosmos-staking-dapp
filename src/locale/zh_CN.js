@@ -84,6 +84,26 @@ const zh_CN = {
   select_validator: '选择验证节点',
   no_delegation: '暂无委托',
   recommend: '推荐',
+
+
+
+  // Vote
+  vote_title: '提案投票',
+  vote: '投票',
+  yes: 'Yes',
+  no: 'No',
+  no_with_veto: 'NoWithVeto',
+  abstain: 'Abstain',
+  Passed: 'Passed',
+  Rejected: 'Rejected',
+  Deposit: 'Deposit',
+  Voting: 'Voting',
+  quorum: 'Quorum',
+  most_voted_on: 'Most Voted On',
+  your_vote: 'your vote',
+  voting_end: 'Voting End',
+  deposit_end_time: 'Deposit End Time',
+
 }
 
 export default zh_CN

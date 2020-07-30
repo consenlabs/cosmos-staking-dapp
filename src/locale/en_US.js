@@ -84,6 +84,24 @@ const en_US = {
   select_validator: 'select validator',
   no_delegation: 'No Delegation',
   recommend: 'Recommend',
+
+
+  // Vote
+  vote_title: 'Cosmos Governance',
+  vote: 'Vote',
+  yes: 'Yes',
+  no: 'No',
+  no_with_veto: 'NoWithVeto',
+  abstain: 'Abstain',
+  Passed: 'Passed',
+  Rejected: 'Rejected',
+  Deposit: 'Deposit',
+  Voting: 'Voting',
+  quorum: 'Quorum',
+  most_voted_on: 'Most Voted On',
+  your_vote: 'your vote',
+  voting_end: 'Voting End',
+  deposit_end_time: 'Deposit End Time',
 }
 
 export default en_US

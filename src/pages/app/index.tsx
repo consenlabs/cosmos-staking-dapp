@@ -18,7 +18,6 @@ import * as utils from 'lib/utils'
 import { isReload } from '../../lib/utils'
 import { pubsub } from 'lib/event'
 import Campaign from '../campaign'
-import SupportModal from '../../components/supportModal'
 import OpenApp from 'open-app'
 
 interface Props {
@@ -172,7 +171,6 @@ class App extends Component<Props> {
         <Route path="/vote" component={Vote} />
         <Route path="/select-validator/:id" component={SelectValidator} />
       </Switch>
-      <SupportModal />
     </BrowserRouter>
   }
 }

@@ -22,10 +22,10 @@ interface StateProps {
 class Page extends Component<any, StateProps> {
 
   options = [
-    'yes',
-    'no',
-    'no_with_veto',
-    'abstain'
+    'Yes',
+    'No',
+    'NoWithVeto',
+    'Abstain'
   ]
 
   state: StateProps = {
@@ -146,6 +146,7 @@ class Page extends Component<any, StateProps> {
         timestamp: (Date.now() / 1000).toFixed(0)
       })
       Toast.success(txHash, { heading: t('sent_successfully') })
+      this.hideModal()
       this.fetchData()
     }).catch(e => {
       if (e.errorCode !== 1001) {

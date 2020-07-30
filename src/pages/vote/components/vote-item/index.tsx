@@ -6,6 +6,7 @@ import voteArrowImg from 'assets/vote-arrow.png'
 import './index.scss'
 import { getProposalVoters } from 'lib/api'
 import dayjs from 'dayjs'
+import ComplexDonut from 'components/complexDonut'
 
 interface Props {
   vote: IVote
@@ -88,6 +89,71 @@ class CMP extends Component<Props> {
     </div>
   }
 
+  renderChart = (vote) => {
+
+    const colorYes = '#6CC8A1'
+    const colorNo = '#2C3058'
+    const colorDefault = '#C1C6D6'
+
+    const { final_tally_result: ftr, proposal_status: state } = vote
+    const vYes = Number(ftr.yes)
+    const vNo = Number(ftr.no)
+    const vAbstain = Number(ftr.abstain)
+    const vNoWithVeto = Number(ftr.no_with_veto)
+
+    let segments: any = []
+    switch (state) {
+      case 'Passed':
+        segments = [{
+          color: colorYes,
+          value: vYes,
+        }, {
+          color: colorDefault,
+          value: vNo + vAbstain + vNoWithVeto
+        }]
+        break
+      case 'Rejected':
+        segments = [{
+          color: colorNo,
+          value: vNo,
+        }, {
+          color: colorDefault,
+          value: vYes + vAbstain + vNoWithVeto
+        }]
+        break
+      case 'Voting':
+        segments = [
+          {
+            color: colorYes,
+            value: vYes,
+          },
+          {
+            color: colorNo,
+            value: vNo,
+          }, {
+            color: colorDefault,
+            value: vAbstain + vNoWithVeto
+          }]
+        break
+      case 'Deposit':
+        segments = [
+          {
+            color: colorDefault,
+            value: 100
+          }
+        ]
+        break
+    }
+
+    return <ComplexDonut
+      size={70}
+      radius={26}
+      segments={segments}
+      thickness={18}
+      startAngle={0}
+    />
+  }
+
 
   render() {
     const { vote, bondedTokens } = this.props
@@ -107,7 +173,9 @@ class CMP extends Component<Props> {
 
     return <div className="vote-item" key={vote.id}>
       <div className="v-top">
-        <div className="chart"></div>
+        <div className="chart">
+          {this.renderChart(vote)}
+        </div>
         <div className="content">
           <h2>
             <a href={`https://www.mintscan.io/proposals/${vote.id}`}>
@@ -124,7 +192,7 @@ class CMP extends Component<Props> {
               <span>{t('most_vote_on')}</span>
               <div>
                 <i className={`vote-option-icon v-icon-${mostVotedLabel}`}></i>
-                <strong>{t('mostVotedLabel')} {mostVotedPercent}</strong>
+                <strong>{t(mostVotedLabel)} {mostVotedPercent}</strong>
               </div>
             </div>
           </div>

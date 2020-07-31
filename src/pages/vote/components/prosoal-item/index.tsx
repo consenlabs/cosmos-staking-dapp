@@ -1,21 +1,21 @@
 import React, { Component } from 'react'
 // import { Link } from 'react-router-dom'
-import { IVote } from 'lib/api'
-import { fPercent, t } from 'lib/utils'
+import { IProposal } from 'lib/api'
+import { fPercent, fAtom, t } from 'lib/utils'
 import voteArrowImg from 'assets/vote-arrow.png'
 import './index.scss'
-import { getProposalVoters } from 'lib/api'
+import { getProposalVoters, getProposalDepositByAddress } from 'lib/api'
 import dayjs from 'dayjs'
 import ComplexDonut from 'components/complexDonut'
 
 interface Props {
-  vote: IVote
+  proposal: IProposal
   account: string
   bondedTokens: number
-  onVote: (IVote) => void
+  onVote: (IProposal) => void
 }
 
-enum VOTE_STAGE {
+enum PROPOSAL_STAGE {
   passed = 'Passed',
   deposit = 'Deposit',
   rejected = 'Rejected',
@@ -26,15 +26,16 @@ enum VOTE_STAGE {
 class CMP extends Component<Props> {
 
   state = {
-    myVoteOption: ''
+    myVoteOption: '',
+    myDepositedAmount: '',
   }
 
   componentDidMount() {
-    const { vote, account } = this.props
+    const { proposal, account } = this.props
     if (account) {
-      getProposalVoters(vote.id).then(voters => {
-        if (voters && Array.isArray(voters)) {
-          const myVote = voters.find(v => {
+      getProposalVoters(proposal.id).then(votes => {
+        if (votes && Array.isArray(votes)) {
+          const myVote = votes.find(v => {
             return v.voter === account
           })
           if (myVote) {
@@ -44,12 +45,22 @@ class CMP extends Component<Props> {
           }
         }
       })
+
+      if (Number(proposal.id) >= 23) {
+        getProposalDepositByAddress(proposal.id, account).then(deposit => {
+          if (deposit.amount && Array.isArray(deposit.amount)) {
+            this.setState({
+              myDepositedAmount: fAtom(deposit.amount[0].amount, 2)
+            })
+          }
+        })
+      }
     }
   }
 
   render() {
-    const { vote, bondedTokens } = this.props
-    const { final_tally_result: ftr } = vote
+    const { proposal, bondedTokens } = this.props
+    const { final_tally_result: ftr } = proposal
     const totalVoted = Number(ftr.abstain) + Number(ftr.yes) + Number(ftr.no) + Number(ftr.no_with_veto)
     const quorum = !!bondedTokens ? fPercent(totalVoted / bondedTokens, 2) : '~'
     const mostVoted = Math.max(
@@ -63,15 +74,15 @@ class CMP extends Component<Props> {
       return Number(ftr[label]) === mostVoted
     })
 
-    return <div className="vote-item" key={vote.id}>
-      <div className="v-top">
+    return <div className="prosoal-item" key={proposal.id}>
+      <div className="p-top">
         <div className="chart">
-          {this.renderChart(vote)}
+          {this.renderChart(proposal)}
         </div>
         <div className="content">
           <h2>
-            <a href={`https://www.mintscan.io/proposals/${vote.id}`}>
-              {`#${vote.id} ${vote.content.value.title}`}
+            <a href={`https://www.mintscan.io/proposals/${proposal.id}`}>
+              {`#${proposal.id} ${proposal.content.value.title}`}
             </a>
           </h2>
           <div>
@@ -90,46 +101,47 @@ class CMP extends Component<Props> {
           </div>
         </div>
       </div>
-      {this.renderStage(vote)}
-      {this.renderBadge(vote.proposal_status)}
+      {this.renderStage(proposal)}
+      {this.renderBadge(proposal.proposal_status)}
     </div>
   }
 
   renderBadge = (status) => {
-    return <div className={`v-badge badge-${status}`}>{t(status)}</div>
+    return <div className={`p-badge badge-${status}`}>{t(status)}</div>
   }
 
-  renderStage = (vote: IVote) => {
+  renderStage = (proposal: IProposal) => {
     const { onVote } = this.props
-    const { myVoteOption } = this.state
-    const status = vote.proposal_status
+    const { myVoteOption, myDepositedAmount } = this.state
+    const status = proposal.proposal_status
 
     let label = ''
     let time = ''
 
     switch (status) {
-      case VOTE_STAGE.passed:
-      case VOTE_STAGE.rejected:
-      case VOTE_STAGE.voting:
+      case PROPOSAL_STAGE.passed:
+      case PROPOSAL_STAGE.rejected:
+      case PROPOSAL_STAGE.voting:
         label = 'voting_end'
-        time = vote.voting_end_time
+        time = proposal.voting_end_time
         break
-      case VOTE_STAGE.deposit:
+      case PROPOSAL_STAGE.deposit:
         label = 'deposit_end_time'
-        time = vote.deposit_end_time
+        time = proposal.deposit_end_time
         break
     }
 
     const formatedTime = dayjs.unix(new Date(time).getTime() / 1000).format('YYYY-MM-DD HH:mm:ss')
-    const isVoting = status === 'Voting'
+    const isVoting = status === PROPOSAL_STAGE.voting
+    const isDepositing = status === PROPOSAL_STAGE.deposit
 
-    return <div className="v-stage">
-      <div className="v-time">
+    return <div className="p-stage">
+      <div className="p-time">
         <span>{t(label)}</span>
         <time>{formatedTime}</time>
       </div>
       <div className="v-me">
-        {isVoting && <div className="v-button" onClick={() => onVote(vote)}>
+        {isVoting && <div className="v-button" onClick={() => onVote(proposal)}>
           Vote
           <img src={voteArrowImg} />
         </div>}
@@ -142,16 +154,24 @@ class CMP extends Component<Props> {
             </div>
           </div>
         }
+        {isDepositing && !!myDepositedAmount &&
+          <div>
+            <span>{t('your_deposit')}</span>
+            <div>
+              <em>{myDepositedAmount}</em>
+            </div>
+          </div>
+        }
       </div>
     </div>
   }
 
-  renderChart = (vote) => {
+  renderChart = (proposal) => {
     const colorYes = '#6CC8A1'
     const colorNo = '#2C3058'
     const colorDefault = '#C1C6D6'
 
-    const { final_tally_result: ftr, proposal_status: state } = vote
+    const { final_tally_result: ftr, proposal_status: state } = proposal
     const vYes = Number(ftr.yes)
     const vNo = Number(ftr.no)
     const vAbstain = Number(ftr.abstain)
@@ -159,7 +179,7 @@ class CMP extends Component<Props> {
 
     let segments: any = []
     switch (state) {
-      case VOTE_STAGE.passed:
+      case PROPOSAL_STAGE.passed:
         segments = [{
           color: colorYes,
           value: vYes,
@@ -168,7 +188,7 @@ class CMP extends Component<Props> {
           value: vNo + vAbstain + vNoWithVeto
         }]
         break
-      case VOTE_STAGE.rejected:
+      case PROPOSAL_STAGE.rejected:
         segments = [{
           color: colorNo,
           value: vNo,
@@ -177,7 +197,7 @@ class CMP extends Component<Props> {
           value: vYes + vAbstain + vNoWithVeto
         }]
         break
-      case VOTE_STAGE.voting:
+      case PROPOSAL_STAGE.voting:
         segments = [
           {
             color: colorYes,
@@ -191,7 +211,7 @@ class CMP extends Component<Props> {
             value: vAbstain + vNoWithVeto
           }]
         break
-      case VOTE_STAGE.deposit:
+      case PROPOSAL_STAGE.deposit:
         segments = [
           {
             color: colorDefault,

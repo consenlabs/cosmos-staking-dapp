@@ -1,4 +1,4 @@
-.vote-item {
+.prosoal-item {
   position: relative;
   margin: 10px 10px 0 10px;
   background: #ffffff;
@@ -10,7 +10,7 @@
 
   padding: 17px 20px 13px 20px;
 
-  .v-top {
+  .p-top {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
@@ -79,7 +79,7 @@
     }
   }
 
-  .v-stage {
+  .p-stage {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -89,7 +89,7 @@
       flex-direction: column;
     }
 
-    .v-time {
+    .p-time {
       span {
         font-size: 11px;
         line-height: 20px;
@@ -140,7 +140,7 @@
     }
   }
 
-  .v-badge {
+  .p-badge {
     position: absolute;
     left: -6px;
     top: 6px;

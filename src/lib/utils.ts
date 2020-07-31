@@ -100,6 +100,44 @@ export function createVoteMsg(from, proposalId, option) {
   }
 }
 
+export function createProposalMsg(from, title, description, amount, denom) {
+  return {
+    type: msgTypes.proposal,
+    value: {
+      content: {
+        type: 'cosmos-sdk/TextProposal',
+        value: {
+          title,
+          description,
+        }
+      },
+      initial_deposit: [
+        {
+          denom: denom,
+          amount,
+        }
+      ],
+      proposer: from,
+    }
+  }
+}
+
+export function createDepositMsg(from, proposalId, amount, denom) {
+  return {
+    type: msgTypes.deposit,
+    value: {
+      proposal_id: proposalId,
+      depositor: from,
+      amount: [
+        {
+          denom,
+          amount,
+        }
+      ]
+    }
+  }
+}
+
 export const ellipsis = (str: string, lead: number = 12, tail: number = 6): string => {
   if (str && str.length > lead + tail + 8) {
     return `${str.substring(0, lead)}...${str.substring(str.length - tail, str.length)}`

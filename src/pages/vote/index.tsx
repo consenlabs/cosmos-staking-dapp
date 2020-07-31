@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { withRouter } from 'react-router-dom'
 import { t, isiPhoneX, Toast, createVoteMsg, createTxPayload } from '../../lib/utils'
-import { getProposals, getStakePool, IVote } from 'lib/api'
-import VoteItem from './components/vote-item'
+import { getProposals, getStakePool, IProposal } from 'lib/api'
+import VoteItem from './components/prosoal-item'
 import Modal from 'components/modal'
 import Loading from 'components/loading'
 import selectedSvg from 'assets/selected.svg'
@@ -12,10 +12,10 @@ import { pubsub } from 'lib/event'
 import './index.scss'
 
 interface StateProps {
-  votes: IVote[],
+  prosoals: IProposal[],
   bondedTokens: number
   option: string
-  selectedVote: IVote
+  selectedProsoal: IProposal
   account: string
 }
 
@@ -30,9 +30,9 @@ class Page extends Component<any, StateProps> {
 
   state: StateProps = {
     account: '',
-    votes: [],
+    prosoals: [],
     bondedTokens: 0,
-    selectedVote: null as any,
+    selectedProsoal: null as any,
     option: '',
   }
 
@@ -49,9 +49,9 @@ class Page extends Component<any, StateProps> {
   }
 
   fetchData = () => {
-    getProposals().then(votes => {
+    getProposals().then(prosoals => {
       this.setState({
-        votes: votes
+        prosoals: prosoals
       })
     })
     getStakePool().then(pool => {
@@ -62,30 +62,30 @@ class Page extends Component<any, StateProps> {
   }
 
   render() {
-    const { votes, bondedTokens, option, selectedVote, account } = this.state
+    const { prosoals, bondedTokens, option, selectedProsoal, account } = this.state
 
-    if (!votes.length) {
+    if (!prosoals.length) {
       return <Loading />
     }
     return (
       <div className="vote-page" style={{ paddingBottom: isiPhoneX() ? 30 : 10 }}>
         {
-          votes.map(vote => {
+          prosoals.map(prosoal => {
             return <VoteItem
               account={account}
-              key={vote.id}
-              vote={vote}
+              key={prosoal.id}
+              proposal={prosoal}
               onVote={this.showVoteModal}
               bondedTokens={bondedTokens} />
           })
         }
-        {!!selectedVote && <Modal isOpen={!!selectedVote}
+        {!!selectedProsoal && <Modal isOpen={!!selectedProsoal}
           contentLabel="Vote Modal"
           onRequestClose={this.hideModal}
           appElement={document.body}>
           <div className="vote-modal-inner">
             <span className="v-modal-title">{t('vote')}</span>
-            <div className="desc">{`#${selectedVote.id} ${selectedVote.content.value.title}`} </div>
+            <div className="desc">{`#${selectedProsoal.id} ${selectedProsoal.content.value.title}`} </div>
             <div className="v-option-list">
               {this.options.map(o => {
                 return <div onClick={() => this.selectVoteOption(o)} key={o}>
@@ -115,13 +115,13 @@ class Page extends Component<any, StateProps> {
   }
 
   vote = () => {
-    const { option, account, selectedVote } = this.state
-    if (!option || !account || !selectedVote) return false
+    const { option, account, selectedProsoal } = this.state
+    if (!option || !account || !selectedProsoal) return false
 
     const msgs = [
       createVoteMsg(
         account,
-        selectedVote.id,
+        selectedProsoal.id,
         option)
     ]
 
@@ -156,15 +156,15 @@ class Page extends Component<any, StateProps> {
     })
   }
 
-  showVoteModal = (vote) => {
+  showVoteModal = (prosoal: IProposal) => {
     this.setState({
-      selectedVote: vote,
+      selectedProsoal: prosoal,
     })
   }
 
   hideModal = () => {
     this.setState({
-      selectedVote: null as any,
+      selectedProsoal: null as any,
       option: '',
     })
   }

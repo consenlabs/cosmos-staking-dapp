@@ -177,49 +177,23 @@ class CMP extends Component<Props> {
     const vAbstain = Number(ftr.abstain)
     const vNoWithVeto = Number(ftr.no_with_veto)
 
-    let segments: any = []
-    switch (state) {
-      case PROPOSAL_STAGE.passed:
-        segments = [{
+    let segments = state === PROPOSAL_STAGE.deposit ?
+      [{
+        color: colorDefault,
+        value: 1
+      }]
+      : [
+        {
           color: colorYes,
           value: vYes,
-        }, {
-          color: colorDefault,
-          value: vNo + vAbstain + vNoWithVeto
-        }]
-        break
-      case PROPOSAL_STAGE.rejected:
-        segments = [{
+        },
+        {
           color: colorNo,
           value: vNo,
         }, {
           color: colorDefault,
-          value: vYes + vAbstain + vNoWithVeto
+          value: vAbstain + vNoWithVeto
         }]
-        break
-      case PROPOSAL_STAGE.voting:
-        segments = [
-          {
-            color: colorYes,
-            value: vYes,
-          },
-          {
-            color: colorNo,
-            value: vNo,
-          }, {
-            color: colorDefault,
-            value: vAbstain + vNoWithVeto
-          }]
-        break
-      case PROPOSAL_STAGE.deposit:
-        segments = [
-          {
-            color: colorDefault,
-            value: 100
-          }
-        ]
-        break
-    }
 
     return <ComplexDonut
       size={70}

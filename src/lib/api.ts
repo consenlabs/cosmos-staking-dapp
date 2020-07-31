@@ -15,7 +15,7 @@ export async function initRequestDependency() {
   return {
     // headers: _headers || await getHeaders(),
     provider: _provider || await getProvider()
-    // provider:  'https://cosmosapi-testnet.tokenlon.im' 
+    // provider: 'https://cosmosapi-testnet.tokenlon.im' || _provider || await getProvider()
   }
 }
 
@@ -172,7 +172,7 @@ export const getMyRewardByValidator = (delegatorAddr, validatorAddr) => {
 
 export interface IProposal {
   id: string // '1'
-  proposal_status: 'Passed' | 'Rejected' | 'Deposit' | 'Voting' // 'Passed'
+  proposal_status: 'Passed' | 'Rejected' | 'DepositPeriod' | 'Voting' // 'Passed'
   content: {
     type: string  // 'cosmos-sdk/TextProposal'
     value: {

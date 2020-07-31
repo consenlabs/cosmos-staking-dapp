@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { withRouter } from 'react-router-dom'
-import { t, isiPhoneX, Toast, createVoteMsg, createTxPayload } from '../../lib/utils'
+import { t, isiPhoneX, Toast, uatom, createVoteMsg, createTxPayload, createProposalMsg, createDepositMsg } from '../../lib/utils'
 import { getProposals, getStakePool, IProposal } from 'lib/api'
 import ProposalItem from './components/prosoal-item'
 import Modal from 'components/modal'
@@ -25,6 +25,8 @@ interface StateInterface {
   bondedTokens: number
   option: string
   selectedProsoal: IProposal
+  depositProposal: IProposal
+  depositAmount: string
   account: string
 }
 
@@ -41,6 +43,8 @@ class Page extends Component<Props, StateInterface> {
     account: '',
     bondedTokens: 0,
     selectedProsoal: null as any,
+    depositProposal: null as any,
+    depositAmount: '',
     option: '',
   }
 
@@ -67,7 +71,7 @@ class Page extends Component<Props, StateInterface> {
 
   render() {
     const { proposals, pool } = this.props
-    const { option, selectedProsoal, account } = this.state
+    const { option, selectedProsoal, account, depositProposal, depositAmount } = this.state
     const bondedTokens = pool && pool.bonded_tokens
 
     if (!proposals.length) {
@@ -82,6 +86,7 @@ class Page extends Component<Props, StateInterface> {
               key={prosoal.id}
               proposal={prosoal}
               onVote={this.showVoteModal}
+              onDeposit={this.showDepostiModal}
               bondedTokens={bondedTokens} />
           })
         }
@@ -106,6 +111,32 @@ class Page extends Component<Props, StateInterface> {
             <div className="buttons">
               <div className="button cancel-button" onClick={this.hideModal}>{t('cancel')}</div>
               <div className={`button confirm-button ${!!option ? '' : 'disable'}`} onClick={this.vote}>{t('confirm')}</div>
+            </div>
+          </div>
+        </Modal>
+        }
+
+        {!!depositProposal && <Modal
+          isOpen={!!depositProposal}
+          contentLabel="Deposit Modal"
+          onRequestClose={this.hideDepositModal}
+          appElement={document.body}>
+          <div className="vote-modal-inner">
+            <span className="v-modal-title">{t('deposit')}</span>
+            <div className="desc">{`#${depositProposal.id} ${depositProposal.content.value.title}`} </div>
+            <div className="v-option-list">
+              <div className="d-input-wrapper">
+                <input
+                  type="number"
+                  placeholder="Input deposit amount"
+                  value={depositAmount}
+                  onChange={this.depositValueChange}
+                />
+              </div>
+            </div>
+            <div className="buttons">
+              <div className="button cancel-button" onClick={this.hideDepositModal}>{t('cancel')}</div>
+              <div className={`button confirm-button`} onClick={this.onDeposit}>{t('confirm')}</div>
             </div>
           </div>
         </Modal>
@@ -162,9 +193,113 @@ class Page extends Component<Props, StateInterface> {
     })
   }
 
+  showDepostiModal = (proposal) => {
+    this.setState({
+      depositProposal: proposal
+    })
+  }
+
+  depositValueChange = (e) => {
+    this.setState({
+      depositAmount: e.target.value
+    })
+  }
+
+  onDeposit = () => {
+    const { account, depositProposal, depositAmount } = this.state
+
+    const amount = Number(depositAmount)
+    if (!amount || isNaN(amount)) {
+      Toast.warn('amount invalid')
+      return false
+    }
+
+    const msgs = [
+      createDepositMsg(
+        account,
+        depositProposal.id,
+        uatom(amount),
+        'uatom'
+      )
+    ]
+
+    const memo = 'imToken-DeFiApi'
+
+    const txPayload = createTxPayload(
+      account,
+      msgs,
+      memo,
+    )
+
+    sendTransaction(txPayload).then(txHash => {
+      // logger().track(logKey, { result: 'successful', ...logOpt })
+      console.log(txHash)
+
+      pubsub.emit('sendTxSuccess', {
+        txHash,
+        status: 'PENDING',
+        msgType: msgs[0].type,
+        value: msgs[0].value,
+        fee: txPayload.fee,
+        timestamp: (Date.now() / 1000).toFixed(0)
+      })
+      Toast.success(txHash, { heading: t('sent_successfully') })
+      this.hideDepositModal()
+      this.fetchData()
+    }).catch(e => {
+      if (e.errorCode !== 1001) {
+        // logger().track(logKey, { result: 'failed', message: e.message, ...logOpt })
+        Toast.error(e.message, { heading: t('failed_to_send') })
+      }
+    })
+  }
+
+  testSubmitProposal = () => {
+    const { account } = this.state
+    const msgs = [
+      createProposalMsg(
+        account,
+        'Hello, is anybody there?',
+        'Just nod if you can hear me.',
+        '1000',
+        'uatom'
+      )
+    ]
+
+    const memo = 'imToken-DeFiApi'
+
+    const txPayload = createTxPayload(
+      account,
+      msgs,
+      memo,
+    )
+
+    sendTransaction(txPayload).then(txHash => {
+      // logger().track(logKey, { result: 'successful', ...logOpt })
+      console.log(txHash)
+
+      pubsub.emit('sendTxSuccess', {
+        txHash,
+        status: 'PENDING',
+        msgType: msgs[0].type,
+        value: msgs[0].value,
+        fee: txPayload.fee,
+        timestamp: (Date.now() / 1000).toFixed(0)
+      })
+      Toast.success(txHash, { heading: t('sent_successfully') })
+      this.hideModal()
+      this.fetchData()
+    }).catch(e => {
+      if (e.errorCode !== 1001) {
+        // logger().track(logKey, { result: 'failed', message: e.message, ...logOpt })
+        Toast.error(e.message, { heading: t('failed_to_send') })
+      }
+    })
+  }
+
   showVoteModal = (prosoal: IProposal) => {
     this.setState({
-      selectedProsoal: prosoal,
+      depositProposal: prosoal,
     })
   }
 
@@ -172,6 +307,12 @@ class Page extends Component<Props, StateInterface> {
     this.setState({
       selectedProsoal: null as any,
       option: '',
+    })
+  }
+
+  hideDepositModal = () => {
+    this.setState({
+      depositProposal: null as any,
     })
   }
 }

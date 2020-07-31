@@ -13,11 +13,12 @@ interface Props {
   account: string
   bondedTokens: number
   onVote: (IProposal) => void
+  onDeposit: (IProposal) => void
 }
 
 enum PROPOSAL_STAGE {
   passed = 'Passed',
-  deposit = 'Deposit',
+  deposit = 'DepositPeriod',
   rejected = 'Rejected',
   voting = 'Voting'
 }
@@ -118,7 +119,7 @@ class CMP extends Component<Props> {
   }
 
   renderStage = (proposal: IProposal) => {
-    const { onVote } = this.props
+    const { onVote, onDeposit, account } = this.props
     const { myVoteOption, myDepositedAmount } = this.state
     const status = proposal.proposal_status
 
@@ -148,7 +149,7 @@ class CMP extends Component<Props> {
         <time>{formatedTime}</time>
       </div>
       <div className="v-me">
-        {isVoting && <div className="v-button" onClick={() => onVote(proposal)}>
+        {isVoting && account && <div className="v-button" onClick={() => onVote(proposal)}>
           Vote
           <img src={voteArrowImg} />
         </div>}
@@ -161,6 +162,10 @@ class CMP extends Component<Props> {
             </div>
           </div>
         }
+        {isDepositing && account && <div className="v-button" onClick={() => onDeposit(proposal)}>
+          Deposit
+          <img src={voteArrowImg} />
+        </div>}
         {isDepositing && !!myDepositedAmount &&
           <div>
             <span>{t('your_deposit')}</span>

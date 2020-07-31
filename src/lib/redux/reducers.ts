@@ -25,17 +25,17 @@ const initialState = {
       "minTradeAmount": 0.01,
       "maxTradeAmount": 30,
       "opposites": [
-          "ATOM",
-          "ELF",
-          "EOS",
-          "KNC",
-          "MANA",
-          "PAX",
-          "SNT",
-          "TUSD",
-          "USDC",
-          "USDT",
-          "ZRX"
+        "ATOM",
+        "ELF",
+        "EOS",
+        "KNC",
+        "MANA",
+        "PAX",
+        "SNT",
+        "TUSD",
+        "USDC",
+        "USDT",
+        "ZRX"
       ],
       "xChainType": null,
       "xChainAddress": null
@@ -55,6 +55,10 @@ const initialState = {
   },
   unbondingDelegations: [],
   selectedValidtor: null,
+
+
+  // vote
+  proposals: [],
 }
 
 export default function device(state = initialState, action) {
@@ -106,6 +110,8 @@ export default function device(state = initialState, action) {
       case types.UPDATE_SELECTED_VALIDATOR:
         draft.selectedValidtor = action.payload
         return
+      case types.UPDATE_PROPOSALS:
+        draft.proposals = action.payload
       default:
         return draft
     }

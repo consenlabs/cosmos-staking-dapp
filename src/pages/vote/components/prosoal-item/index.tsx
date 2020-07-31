@@ -32,30 +32,37 @@ class CMP extends Component<Props> {
 
   componentDidMount() {
     const { proposal, account } = this.props
-    if (account) {
-      getProposalVoters(proposal.id).then(votes => {
-        if (votes && Array.isArray(votes)) {
-          const myVote = votes.find(v => {
-            return v.voter === account
-          })
-          if (myVote) {
-            this.setState({
-              myVoteOption: myVote.option.toLowerCase(),
-            })
-          }
-        }
-      })
+    this.getMyVoteAndDeposit(account, proposal)
+  }
 
-      if (Number(proposal.id) >= 23) {
-        getProposalDepositByAddress(proposal.id, account).then(deposit => {
-          if (deposit.amount && Array.isArray(deposit.amount)) {
-            this.setState({
-              myDepositedAmount: fAtom(deposit.amount[0].amount, 2)
-            })
-          }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.account !== this.props.account) {
+      this.getMyVoteAndDeposit(nextProps.account, nextProps.proposal)
+    }
+  }
+
+  getMyVoteAndDeposit = (account, proposal) => {
+    if (!account || Number(proposal.id) < 23) return false
+    getProposalVoters(proposal.id).then(votes => {
+      if (votes && Array.isArray(votes)) {
+        const myVote = votes.find(v => {
+          return v.voter === account
+        })
+        if (myVote) {
+          this.setState({
+            myVoteOption: myVote.option.toLowerCase(),
+          })
+        }
+      }
+    })
+
+    getProposalDepositByAddress(proposal.id, account).then(deposit => {
+      if (deposit.amount && Array.isArray(deposit.amount)) {
+        this.setState({
+          myDepositedAmount: fAtom(deposit.amount[0].amount, 2)
         })
       }
-    }
+    })
   }
 
   render() {

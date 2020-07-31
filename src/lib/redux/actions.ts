@@ -113,3 +113,11 @@ export const updateSelectedValidator = (validator) => {
     payload: validator
   }
 }
+
+
+export const updateProposals = (proposals) => {
+  return {
+    type: types.UPDATE_PROPOSALS,
+    payload: proposals
+  }
+}

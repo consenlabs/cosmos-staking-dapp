@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { withRouter } from 'react-router-dom'
 import { t, isiPhoneX, Toast, createVoteMsg, createTxPayload } from '../../lib/utils'
 import { getProposals, getStakePool, IProposal } from 'lib/api'
-import VoteItem from './components/prosoal-item'
+import ProposalItem from './components/prosoal-item'
 import Modal from 'components/modal'
 import Loading from 'components/loading'
 import selectedSvg from 'assets/selected.svg'
@@ -11,15 +11,24 @@ import { getAccounts, setTitle, sendTransaction } from 'lib/sdk'
 import { pubsub } from 'lib/event'
 import './index.scss'
 
-interface StateProps {
-  prosoals: IProposal[],
+import { selectProposals, selectPool } from 'lib/redux/selectors'
+import { updateProposals, updatePool } from 'lib/redux/actions'
+
+interface Props {
+  proposals: IProposal[],
+  pool: any
+  updateProposals: (any) => void
+  updatePool: (any) => void
+}
+
+interface StateInterface {
   bondedTokens: number
   option: string
   selectedProsoal: IProposal
   account: string
 }
 
-class Page extends Component<any, StateProps> {
+class Page extends Component<Props, StateInterface> {
 
   options = [
     'Yes',
@@ -28,9 +37,8 @@ class Page extends Component<any, StateProps> {
     'Abstain'
   ]
 
-  state: StateProps = {
+  state: StateInterface = {
     account: '',
-    prosoals: [],
     bondedTokens: 0,
     selectedProsoal: null as any,
     option: '',
@@ -49,29 +57,27 @@ class Page extends Component<any, StateProps> {
   }
 
   fetchData = () => {
-    getProposals().then(prosoals => {
-      this.setState({
-        prosoals: prosoals
-      })
+    getProposals().then(proposals => {
+      this.props.updateProposals(proposals)
     })
     getStakePool().then(pool => {
-      this.setState({
-        bondedTokens: pool.bonded_tokens
-      })
+      this.props.updatePool(pool)
     })
   }
 
   render() {
-    const { prosoals, bondedTokens, option, selectedProsoal, account } = this.state
+    const { proposals, pool } = this.props
+    const { option, selectedProsoal, account } = this.state
+    const bondedTokens = pool && pool.bonded_tokens
 
-    if (!prosoals.length) {
+    if (!proposals.length) {
       return <Loading />
     }
     return (
       <div className="vote-page" style={{ paddingBottom: isiPhoneX() ? 30 : 10 }}>
         {
-          prosoals.map(prosoal => {
-            return <VoteItem
+          proposals.map(prosoal => {
+            return <ProposalItem
               account={account}
               key={prosoal.id}
               proposal={prosoal}
@@ -170,9 +176,17 @@ class Page extends Component<any, StateProps> {
   }
 }
 
-const mapStateToProps = _state => {
+const mapDispatchToProps = {
+  updateProposals,
+  updatePool
+}
+
+
+const mapStateToProps = state => {
   return {
+    proposals: selectProposals(state),
+    pool: selectPool(state)
   }
 }
 
-export default withRouter(connect(mapStateToProps)(Page))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Page))

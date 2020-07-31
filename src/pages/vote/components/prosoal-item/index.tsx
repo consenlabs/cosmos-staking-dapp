@@ -184,7 +184,9 @@ class CMP extends Component<Props> {
     const vAbstain = Number(ftr.abstain)
     const vNoWithVeto = Number(ftr.no_with_veto)
 
-    let segments = state === PROPOSAL_STAGE.deposit ?
+    const vTotal = vYes + vNo + vAbstain + vNoWithVeto
+
+    let segments = state === PROPOSAL_STAGE.deposit || vTotal === 0 ?
       [{
         color: colorDefault,
         value: 1

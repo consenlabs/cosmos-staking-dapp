@@ -1,24 +1,28 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { withRouter } from 'react-router-dom'
-import { t, isiPhoneX, Toast, uatom, createVoteMsg, createTxPayload, createProposalMsg, createDepositMsg } from '../../lib/utils'
-import { getProposals, getStakePool, IProposal } from 'lib/api'
+import { t, isiPhoneX, toBN, Toast, uatom, fAtom, createVoteMsg, createTxPayload, createDepositMsg, getBalanceFromAccount } from '../../lib/utils'
+import { getProposals, getStakePool, IProposal, getAccount as getAccountInfo } from 'lib/api'
 import ProposalItem from './components/prosoal-item'
 import Modal from 'components/modal'
 import Loading from 'components/loading'
 import selectedSvg from 'assets/selected.svg'
 import { getAccounts, setTitle, sendTransaction } from 'lib/sdk'
+import { getFeeAmountByType } from 'config/fee'
+import msgTypes from 'lib/msgTypes'
 import { pubsub } from 'lib/event'
 import './index.scss'
 
-import { selectProposals, selectPool } from 'lib/redux/selectors'
-import { updateProposals, updatePool } from 'lib/redux/actions'
+import { selectProposals, selectPool, selectAccountInfo } from 'lib/redux/selectors'
+import { updateProposals, updatePool, updateAccount } from 'lib/redux/actions'
 
 interface Props {
   proposals: IProposal[],
   pool: any
   updateProposals: (any) => void
   updatePool: (any) => void
+  updateAccount: (any) => void
+  accountInfo: any
 }
 
 interface StateInterface {
@@ -49,11 +53,19 @@ class Page extends Component<Props, StateInterface> {
   }
 
   componentWillMount() {
+    const { updateAccount } = this.props
     setTitle(t('vote_title'))
 
     getAccounts().then(accounts => {
       if (accounts.length) {
-        this.setState({ account: accounts[0] })
+        const address = accounts[0]
+        this.setState({ account: address })
+        getAccountInfo(address).then(accountInfo => {
+          const balance = getBalanceFromAccount(accountInfo)
+          updateAccount({ ...accountInfo, balance, address })
+        }).catch(e => {
+          Toast.warn(e.message)
+        })
       }
     })
 
@@ -128,7 +140,7 @@ class Page extends Component<Props, StateInterface> {
               <div className="d-input-wrapper">
                 <input
                   type="number"
-                  placeholder="Input deposit amount"
+                  placeholder={t('input_deposit_amount')}
                   value={depositAmount}
                   onChange={this.depositValueChange}
                 />
@@ -206,11 +218,18 @@ class Page extends Component<Props, StateInterface> {
   }
 
   onDeposit = () => {
+    const { accountInfo } = this.props
+    const { balance } = accountInfo
     const { account, depositProposal, depositAmount } = this.state
 
     const amount = Number(depositAmount)
     if (!amount || isNaN(amount)) {
-      Toast.warn('amount invalid')
+      Toast.warn(t('invalid_number'))
+      return false
+    }
+    const fee = getFeeAmountByType(msgTypes.deposit)
+    if (toBN(uatom(amount)).plus(fee).gt(balance)) {
+      Toast.warn(`${t('more_than_available')} : ${fAtom(Math.max(balance - fee, 0))}`)
       return false
     }
 
@@ -254,49 +273,6 @@ class Page extends Component<Props, StateInterface> {
     })
   }
 
-  testSubmitProposal = () => {
-    const { account } = this.state
-    const msgs = [
-      createProposalMsg(
-        account,
-        'Hello, is anybody there?',
-        'Just nod if you can hear me.',
-        '1000',
-        'uatom'
-      )
-    ]
-
-    const memo = 'imToken-DeFiApi'
-
-    const txPayload = createTxPayload(
-      account,
-      msgs,
-      memo,
-    )
-
-    sendTransaction(txPayload).then(txHash => {
-      // logger().track(logKey, { result: 'successful', ...logOpt })
-      console.log(txHash)
-
-      pubsub.emit('sendTxSuccess', {
-        txHash,
-        status: 'PENDING',
-        msgType: msgs[0].type,
-        value: msgs[0].value,
-        fee: txPayload.fee,
-        timestamp: (Date.now() / 1000).toFixed(0)
-      })
-      Toast.success(txHash, { heading: t('sent_successfully') })
-      this.hideModal()
-      this.fetchData()
-    }).catch(e => {
-      if (e.errorCode !== 1001) {
-        // logger().track(logKey, { result: 'failed', message: e.message, ...logOpt })
-        Toast.error(e.message, { heading: t('failed_to_send') })
-      }
-    })
-  }
-
   showVoteModal = (prosoal: IProposal) => {
     this.setState({
       depositProposal: prosoal,
@@ -318,6 +294,7 @@ class Page extends Component<Props, StateInterface> {
 }
 
 const mapDispatchToProps = {
+  updateAccount,
   updateProposals,
   updatePool
 }
@@ -326,6 +303,7 @@ const mapDispatchToProps = {
 const mapStateToProps = state => {
   return {
     proposals: selectProposals(state),
+    accountInfo: selectAccountInfo(state),
     pool: selectPool(state)
   }
 }

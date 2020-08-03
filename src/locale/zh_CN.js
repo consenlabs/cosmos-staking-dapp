@@ -94,15 +94,16 @@ const zh_CN = {
   no: 'No',
   no_with_veto: 'NoWithVeto',
   abstain: 'Abstain',
-  Passed: 'Passed',
-  Rejected: 'Rejected',
-  Deposit: 'Deposit',
+  passed: 'Passed',
+  rejected: 'Rejected',
+  deposit: 'Deposit',
   Voting: 'Voting',
   quorum: 'Quorum',
   most_voted_on: 'Most Voted On',
   your_vote: 'your vote',
   voting_end: 'Voting End',
   deposit_end_time: 'Deposit End Time',
+  input_deposit_amount: 'Input Deposit Amount',
 
 }
 

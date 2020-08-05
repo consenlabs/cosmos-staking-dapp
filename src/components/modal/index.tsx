@@ -10,7 +10,7 @@ const customStyles = {
     right: '0',
     bottom: '0',
     background: '#F7F8F9',
-    borderRadius: '4px 4px 0 0',
+    borderRadius: '8px 8px 0 0',
     border: 'none',
     margin: '0',
     padding: isiPhoneX() ? '0 0 16px 0' : '0',

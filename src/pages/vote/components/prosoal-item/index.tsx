@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { IProposal } from 'lib/api'
 import { fPercent, fAtom, t } from 'lib/utils'
 import voteArrowImg from 'assets/vote-arrow.png'
+import linkImg from 'assets/out-link.svg'
 import './index.scss'
 import { getProposalVoters, getProposalDepositByAddress } from 'lib/api'
 import dayjs from 'dayjs'
@@ -111,6 +112,7 @@ class CMP extends Component<Props> {
       </div>
       {this.renderStage(proposal)}
       {this.renderBadge(proposal.proposal_status)}
+      <img src={linkImg} className="out-link-icon" />
     </div>
   }
 

@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import { withRouter } from 'react-router-dom'
 import { t, isiPhoneX, toBN, Toast, uatom, fAtom, createVoteMsg, createTxPayload, createDepositMsg, getBalanceFromAccount } from '../../lib/utils'
 import { getProposals, getStakePool, IProposal, getAccount as getAccountInfo } from 'lib/api'
+import getNetworkConfig from 'config/network'
 import ProposalItem from './components/prosoal-item'
 import Modal from 'components/modal'
 import Loading from 'components/loading'
@@ -107,7 +108,6 @@ class Page extends Component<Props, StateInterface> {
           onRequestClose={this.hideModal}
           appElement={document.body}>
           <div className="vote-modal-inner">
-            <span className="v-modal-title">{t('vote')}</span>
             <div className="desc">{`#${selectedProsoal.id} ${selectedProsoal.content.value.title}`} </div>
             <div className="v-option-list">
               {this.options.map(o => {
@@ -134,21 +134,19 @@ class Page extends Component<Props, StateInterface> {
           onRequestClose={this.hideDepositModal}
           appElement={document.body}>
           <div className="vote-modal-inner">
-            <span className="v-modal-title">{t('deposit')}</span>
             <div className="desc">{`#${depositProposal.id} ${depositProposal.content.value.title}`} </div>
-            <div className="v-option-list">
-              <div className="d-input-wrapper">
-                <input
-                  type="number"
-                  placeholder={t('input_deposit_amount')}
-                  value={depositAmount}
-                  onChange={this.depositValueChange}
-                />
-              </div>
+            <div className="d-input-wrapper">
+              <input
+                type="number"
+                placeholder={t('input_deposit_amount')}
+                value={depositAmount}
+                onChange={this.depositValueChange}
+              />
+              <span className="deposit-unit">ATOM</span>
             </div>
             <div className="buttons">
               <div className="button cancel-button" onClick={this.hideDepositModal}>{t('cancel')}</div>
-              <div className={`button confirm-button`} onClick={this.onDeposit}>{t('confirm')}</div>
+              <div className={`button confirm-button ${!!depositAmount ? '' : 'disable'}`} onClick={this.onDeposit}>{t('confirm')}</div>
             </div>
           </div>
         </Modal>
@@ -238,7 +236,7 @@ class Page extends Component<Props, StateInterface> {
         account,
         depositProposal.id,
         uatom(amount),
-        'uatom'
+        getNetworkConfig().denom,
       )
     ]
 

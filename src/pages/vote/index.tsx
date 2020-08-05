@@ -12,6 +12,7 @@ import { getAccounts, setTitle, sendTransaction } from 'lib/sdk'
 import { getFeeAmountByType } from 'config/fee'
 import msgTypes from 'lib/msgTypes'
 import { pubsub } from 'lib/event'
+import { loggerGA } from 'lib/logger'
 import './index.scss'
 
 import { selectProposals, selectPool, selectAccountInfo } from 'lib/redux/selectors'
@@ -181,7 +182,6 @@ class Page extends Component<Props, StateInterface> {
     )
 
     sendTransaction(txPayload).then(txHash => {
-      // logger().track(logKey, { result: 'successful', ...logOpt })
       console.log(txHash)
 
       pubsub.emit('sendTxSuccess', {
@@ -195,9 +195,10 @@ class Page extends Component<Props, StateInterface> {
       Toast.success(txHash, { heading: t('sent_successfully') })
       this.hideModal()
       this.fetchData()
+      loggerGA({ eventCategory: 'vote', eventAction: 'click', eventLabel: 'success' })
     }).catch(e => {
       if (e.errorCode !== 1001) {
-        // logger().track(logKey, { result: 'failed', message: e.message, ...logOpt })
+        loggerGA({ eventCategory: 'vote', eventAction: 'click', eventLabel: 'failed' })
         Toast.error(e.message, { heading: t('failed_to_send') })
       }
     })

@@ -113,8 +113,8 @@ class Page extends Component<Props, StateInterface> {
               {this.options.map(o => {
                 return <div onClick={() => this.selectVoteOption(o)} key={o}>
                   <div>
-                    <i className={`vote-option-icon v-icon-${o}`}></i>
-                    <span>{t(o)}</span>
+                    <i className={`vote-option-icon v-icon-${o.toLowerCase()}`}></i>
+                    <span>{t(o.toLowerCase())}</span>
                   </div>
                   {option === o ? <img src={selectedSvg} /> : <em></em>}
                 </div>
@@ -273,7 +273,7 @@ class Page extends Component<Props, StateInterface> {
 
   showVoteModal = (prosoal: IProposal) => {
     this.setState({
-      depositProposal: prosoal,
+      selectedProsoal: prosoal,
     })
   }
 

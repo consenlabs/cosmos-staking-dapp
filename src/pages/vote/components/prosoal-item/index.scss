@@ -124,7 +124,13 @@
       font-size: 15px;
       font-weight: 500;
       color: #259ae8;
-      // text-indent: 10px;
+      &.v-vote-button {
+        justify-content: space-between;
+        text-indent: 20px;
+        img {
+          margin-right: 12px;
+        }
+      }
       img {
         width: 5px;
         margin-left: 3px;

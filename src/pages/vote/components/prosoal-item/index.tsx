@@ -101,7 +101,7 @@ class CMP extends Component<Props> {
             </div>
             <div className="split"></div>
             <div>
-              <span>{t('most_vote_on')}</span>
+              <span>{t('most_voted_on')}</span>
               <div>
                 <i className={`vote-option-icon v-icon-${mostVotedLabel}`}></i>
                 <strong>{t(mostVotedLabel)} {mostVotedPercent}</strong>
@@ -117,13 +117,15 @@ class CMP extends Component<Props> {
   }
 
   renderBadge = (status) => {
-    return <div className={`p-badge badge-${status}`}>{t(status)}</div>
+    return <div className={`p-badge badge-${status}`}>{t(status.toLowerCase())}</div>
   }
 
   renderStage = (proposal: IProposal) => {
     const { onVote, onDeposit, account } = this.props
     const { myVoteOption, myDepositedAmount } = this.state
     const status = proposal.proposal_status
+
+    const testVoting = window['location'].search.indexOf('testVoting') !== -1
 
     let label = ''
     let time = ''
@@ -142,8 +144,8 @@ class CMP extends Component<Props> {
     }
 
     const formatedTime = dayjs.unix(new Date(time).getTime() / 1000).format('YYYY-MM-DD HH:mm:ss')
-    const isVoting = status === PROPOSAL_STAGE.voting
-    const isDepositing = status === PROPOSAL_STAGE.deposit
+    const isVoting = status === PROPOSAL_STAGE.voting || testVoting
+    const isDepositing = status === PROPOSAL_STAGE.deposit && !testVoting
 
     return <div className="p-stage">
       <div className="p-time">
@@ -151,8 +153,8 @@ class CMP extends Component<Props> {
         <time>{formatedTime}</time>
       </div>
       <div className="v-me">
-        {isVoting && account && <div className="v-button" onClick={() => onVote(proposal)}>
-          Vote
+        {isVoting && account && <div className="v-button v-vote-button" onClick={() => onVote(proposal)}>
+          {t('vote')}
           <img src={voteArrowImg} />
         </div>}
         {!!myVoteOption &&
@@ -164,8 +166,8 @@ class CMP extends Component<Props> {
             </div>
           </div>
         }
-        {isDepositing && account && <div className="v-button" onClick={() => onDeposit(proposal)}>
-          Deposit
+        {isDepositing && account && <div className="v-button v-deposit-button" onClick={() => onDeposit(proposal)}>
+          {t('deposit')}
           <img src={voteArrowImg} />
         </div>}
         {isDepositing && !!myDepositedAmount &&

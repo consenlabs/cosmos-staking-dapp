@@ -87,21 +87,24 @@ const en_US = {
 
 
   // Vote
-  vote_title: 'Cosmos Governance',
+  vote_title: 'Voting Proposal',
   vote: 'Vote',
+  deposit: 'Deposit',
   yes: 'Yes',
   no: 'No',
-  no_with_veto: 'NoWithVeto',
+  nowithveto: 'NoWithVeto',
   abstain: 'Abstain',
-  Passed: 'Passed',
-  Rejected: 'Rejected',
-  Deposit: 'Deposit',
+  passed: 'Passed',
+  rejected: 'Rejected',
+  depositperiod: 'DepositPeriod',
   Voting: 'Voting',
   quorum: 'Quorum',
   most_voted_on: 'Most Voted On',
   your_vote: 'your vote',
-  voting_end: 'Voting End',
+  your_deposit: 'your deposit',
+  voting_end: 'Voting End Time',
   deposit_end_time: 'Deposit End Time',
+  input_deposit_amount: 'Voting balance',
 }
 
 export default en_US

@@ -1,0 +1,83 @@
+.delegations {
+  margin-top: 10px;
+  .dl-card {
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    text-decoration: none;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    .top {
+      display: flex;
+      flex: 1;
+      justify-content: flex-start;
+      align-items: center;
+      text-decoration: none;
+      strong {
+        white-space: nowrap;
+        max-width: 180px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-left: 17px;
+        font-size: 15px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        letter-spacing: 0.2px;
+        color: #191c1e;
+      }
+      div:last-child {
+        margin-left: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        > span {
+          text-align: right;
+            font-family: 'PingFang SC';
+            font-size: 11px;
+            color: #98a2a9;
+        }
+        > i  {
+          margin-bottom: 5px;
+          font-size: 15px;
+          font-weight: 500;
+          font-style: normal;
+          color: #098de6;
+        }
+      }
+    }
+
+    .split-line {
+      height: 0px;
+      margin: 12px 0;
+      border-bottom: solid 0.5px #f0f2f8;
+    }
+
+    .bottom {
+      // padding: 13px 0px;
+      > div  {
+        display: flex;
+        > div:first-child {
+          width: 204px;
+        }
+      }
+      span {
+        display: block;
+        font-family: 'PingFang SC';
+        font-size: 11px;
+        letter-spacing: normal;
+        color: #98a2a9;
+      }
+      i {
+        margin-top: 5px;
+        font-size: 13px;
+        font-style: normal;
+        letter-spacing: normal;
+        color: #43454f;
+      }
+    }
+  }
+}

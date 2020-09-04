@@ -311,10 +311,22 @@ export const t = (key, ...args) => {
 
 /**
  * check current page is load by reload
- * https://stackoverflow.com/questions/5004978/check-if-page-gets-reloaded-or-refreshed-in-javascript
+ * https://developer.mozilla.org/en-US/docs/Web/API/PerformanceNavigationTiming/type
  */
 export const isReload = () => {
-  return window.performance && window.performance.navigation && window.performance.navigation.type === 1
+  let isReload = false
+
+  if (window.performance && performance.getEntriesByType) {
+    const perfEntries = performance.getEntriesByType("navigation")
+
+    for (var i = 0; i < perfEntries.length; i++) {
+      var p: any = perfEntries[i]
+      if (p.type === 'reload') {
+        isReload = true
+      }
+    }
+  }
+  return isReload
 }
 
 export function compareSemver(a, b) {

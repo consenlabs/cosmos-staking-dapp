@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@types/node": "^12.6.6",
-    "axios": "^0.18.0",
+    "axios": "^0.21.2",
     "big.js": "^5.2.2",
     "cogo-toast": "^1.0.4",
     "dayjs": "^1.8.12",
